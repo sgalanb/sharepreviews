@@ -1,5 +1,5 @@
 import { recordMetatags } from '@/app/lib/upstash'
-import { isValidUrl } from '@/utils'
+import { getRelativeUrl } from '@/app/utils'
 import he from 'he'
 import { internal_runWithWaitUntil as waitUntil } from 'next/dist/server/web/internal-edge-wait-until'
 import { parse } from 'node-html-parser'
@@ -49,18 +49,6 @@ export const getHeadChildNodes = (html: string) => {
   return { metaTags, title, linkTags }
 }
 
-export const getRelativeUrl = (url: string, imageUrl: string) => {
-  if (!imageUrl) {
-    return null
-  }
-  if (isValidUrl(imageUrl)) {
-    return imageUrl
-  }
-  const { protocol, host } = new URL(url)
-  const baseURL = `${protocol}//${host}`
-  return new URL(imageUrl, baseURL).toString()
-}
-
 export const getMetaTags = async (url: string) => {
   const html = await getHtml(url)
   if (!html) {
@@ -92,17 +80,20 @@ export const getMetaTags = async (url: string) => {
   const validatedMetatags = {
     title: titleTag ?? '',
     description: object['description'] ?? '',
-    'og-title': object['og:title'] ?? '',
-    'og-description': object['og:description'] ?? '',
-    'og-image': getRelativeUrl(url, object['og:image']) ?? '',
-    'og-image-width': object['og:image:width'] ?? '',
-    'og-image-height': object['og:image:height'] ?? '',
-    'og-image-type': object['og:image:type'] ?? '',
-    'og-url': object['og:url'] ?? '',
-    'twitter-title': object['twitter:title'] ?? '',
-    'twitter-description': object['twitter:description'] ?? '',
-    'twitter-image': getRelativeUrl(url, object['twitter:image']) ?? '',
-    'twitter-site': object['twitter:site'] ?? '',
+    'og:title': object['og:title'] ?? '',
+    'og:description': object['og:description'] ?? '',
+    'og:image': getRelativeUrl(url, object['og:image']) ?? '',
+    'og:image:width': object['og:image:width'] ?? '',
+    'og:image:height': object['og:image:height'] ?? '',
+    'og:image:type': object['og:image:type'] ?? '',
+    'og:url': object['og:url'] ?? '',
+    'twitter:title': object['twitter:title'] ?? '',
+    'twitter:description': object['twitter:description'] ?? '',
+    'twitter:image': getRelativeUrl(url, object['twitter:image']) ?? '',
+    'twitter:image:width': object['twitter:image:width'] ?? '',
+    'twitter:image:height': object['twitter:image:height'] ?? '',
+    'twitter:image:type': object['twitter:image:type'] ?? '',
+    'twitter:site': object['twitter:site'] ?? '',
   }
 
   waitUntil(async () => {

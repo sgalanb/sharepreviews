@@ -1,8 +1,8 @@
+import { getMetaTags } from '@/app/api/metatags/validate/utils'
 import { ratelimit } from '@/app/lib/upstash'
-import { isValidUrl } from '@/utils'
+import { isValidUrl } from '@/app/utils'
 import { ipAddress } from '@vercel/edge'
 import { NextRequest } from 'next/server'
-import { getMetaTags } from './utils'
 
 export const runtime = 'edge'
 

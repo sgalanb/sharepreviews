@@ -17,9 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex min-h-screen flex-col justify-between bg-zinc-100 text-black dark:bg-zinc-950 dark:text-white">
+        <div className="flex min-h-screen flex-col justify-between">
           <div className="flex flex-col justify-start">
-            <main className="mx-auto w-full max-w-5xl">{children}</main>
+            <main className="mx-auto w-full max-w-6xl">{children}</main>
           </div>
         </div>
       </body>

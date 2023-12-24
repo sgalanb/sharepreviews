@@ -1,4 +1,4 @@
-import { getDomainWithoutWWW } from '@/utils'
+import { getDomainWithoutWWW } from '@/app/utils'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
