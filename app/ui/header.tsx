@@ -43,7 +43,7 @@ export default function Header() {
           : 'border-transparent bg-neutral-100'
       } transition-colors duration-200 dark:bg-neutral-900`}
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-7xl">
         {/* Mobile */}
         <nav className="flex h-fit items-center justify-between py-4 pl-4 pr-0 md:hidden">
           <div className="flex w-full flex-col items-start justify-between">
@@ -83,7 +83,14 @@ export default function Header() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
+                <Link href="/generator" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Generator
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/validator" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Validator
                   </NavigationMenuLink>
