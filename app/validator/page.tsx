@@ -9,8 +9,8 @@ export default function Validator() {
           Preview Validator
         </TypographyH1>
         <TypographyP className="!mt-0 text-balance text-center">
-          Check how your links looks when shared on social media. Validate you
-          have the correct meta tags in place.
+          Check how your links looks when shared. Validate you have the correct
+          meta tags in place.
         </TypographyP>
       </div>
       <PreviewValidator />
