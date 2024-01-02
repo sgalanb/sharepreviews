@@ -1,5 +1,7 @@
 'use client'
 
+import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
+import { GOOGLE_FAVICON_URL } from '@/app/constants'
 import { Button } from '@/app/ui/components/Button'
 import { Input } from '@/app/ui/components/Input'
 import Spinner from '@/app/ui/components/Spinner'
@@ -12,7 +14,12 @@ import {
   TableRow,
 } from '@/app/ui/components/Table'
 import { TypographyH2, TypographyH3 } from '@/app/ui/components/typography'
-import { fetcher, getDomainWithoutWWW, getUrlFromString } from '@/app/utils'
+import {
+  fetcher,
+  getApexDomain,
+  getDomainWithoutWWW,
+  getUrlFromString,
+} from '@/app/utils'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -32,24 +39,7 @@ export default function PreviewValidator({
     data: metatags,
     isLoading,
   }: {
-    data: {
-      title: string
-      description: string
-      'og:title': string
-      'og:description': string
-      'og:image': string
-      'og:image:width': string
-      'og:image:height': string
-      'og:image:type': string
-      'og:url': string
-      'twitter:title': string
-      'twitter:description': string
-      'twitter:image': string
-      'twitter:image:width': string
-      'twitter:image:height': string
-      'twitter:image:type': string
-      'twitter:site': string
-    }
+    data: ValidatedMetatagsType
     isLoading: boolean
   } = useSWR<any>(
     normalizedUrl && `/api/metatags/validate?url=${normalizedUrl}`,
@@ -126,6 +116,16 @@ export default function PreviewValidator({
       status: metatags?.['og:url'] ? 'Good' : 'Missing',
     },
     {
+      name: 'og:site_name',
+      value: metatags?.['og:site_name'],
+      status: metatags?.['og:site_name'] ? 'Good' : 'Missing',
+    },
+    {
+      name: 'og:type',
+      value: metatags?.['og:type'],
+      status: metatags?.['og:type'] ? 'Good' : 'Missing',
+    },
+    {
       name: 'twitter:title',
       value: metatags?.['twitter:title'],
       status: metatags?.['twitter:title'].length > 60 ? 'Long' : 'Good',
@@ -134,6 +134,11 @@ export default function PreviewValidator({
       name: 'twitter:description',
       value: metatags?.['twitter:description'],
       status: metatags?.['twitter:description'].length > 160 ? 'Long' : 'Good',
+    },
+    {
+      name: 'twitter:card',
+      value: metatags?.['twitter:card'],
+      status: metatags?.['twitter:card'] ? 'Good' : 'Missing',
     },
     {
       name: 'twitter:image',
@@ -159,6 +164,11 @@ export default function PreviewValidator({
       name: 'twitter:site',
       value: metatags?.['twitter:site'],
       status: metatags?.['twitter:site'] ? 'Good' : 'Missing',
+    },
+    {
+      name: 'twitter:creator',
+      value: metatags?.['twitter:creator'],
+      status: metatags?.['twitter:creator'] ? 'Good' : 'Missing',
     },
   ]
 
@@ -199,7 +209,7 @@ export default function PreviewValidator({
                   <div className="flex items-center justify-center gap-4">
                     <Image
                       src="/social-icons/x-icon.svg"
-                      alt="icono de x/twitter"
+                      alt=""
                       width={20}
                       height={20}
                       className="h-5 w-5 dark:invert"
@@ -228,7 +238,7 @@ export default function PreviewValidator({
                   <div className="flex items-center justify-center gap-4">
                     <Image
                       src="/social-icons/facebook-icon.svg"
-                      alt="icono de x/twitter"
+                      alt=""
                       width={24}
                       height={24}
                       className="h-6 w-6 dark:invert"
@@ -236,7 +246,7 @@ export default function PreviewValidator({
                     <TypographyH3 className="">Facebook</TypographyH3>
                   </div>
 
-                  <div className="relative font-[Helvetica]">
+                  <div className="relative font-['Helvetica']">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={metatags['og:image']}
@@ -261,7 +271,7 @@ export default function PreviewValidator({
                   <div className="flex items-center justify-center gap-4">
                     <Image
                       src="/social-icons/linkedin-icon.svg"
-                      alt="icono de x/twitter"
+                      alt=""
                       width={24}
                       height={24}
                       className="h-6 w-6 dark:invert"
@@ -276,7 +286,7 @@ export default function PreviewValidator({
                       alt="Preview"
                       className="aspect-[1.91/1] w-full object-cover"
                     />
-                    <div className="flex flex-col items-start justify-center gap-2 border-b border-[#dddfe2] bg-[#EEF3F7] px-3 py-2 dark:border-[#3e4042] dark:bg-[#3A434E]">
+                    <div className="flex flex-col items-start justify-center gap-2 bg-[#EEF3F7] px-3 py-2 dark:bg-[#3A434E]">
                       <span className="line-clamp-2 text-ellipsis text-left text-sm font-semibold leading-5 text-[#000000e6] dark:text-[#ffffffe6]">
                         {metatags['og:title'] || metatags.title}
                       </span>
@@ -284,6 +294,54 @@ export default function PreviewValidator({
                         {getDomainWithoutWWW(normalizedUrl ?? '') +
                           ' • 1 min read'}
                       </span>
+                    </div>
+                  </div>
+                </div>
+                {/* Slack */}
+                <div className="flex w-full flex-col items-center justify-center gap-4">
+                  <div className="flex items-center justify-center gap-4">
+                    <Image
+                      src="/social-icons/slack-icon.svg"
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="h-6 w-6 dark:invert"
+                    />
+                    <TypographyH3 className="">Slack</TypographyH3>
+                  </div>
+                  <div className="flex font-[Slack-Lato,Slack-Fractions,appleLogo,sans-serif] antialiased">
+                    <div className="w-1 min-w-1 rounded-[8px] bg-[#dddddd] dark:bg-[#35373b]" />
+                    <div className="flex h-full flex-col items-start justify-center break-words px-3 text-[15px] leading-[22px]">
+                      <div className="flex items-center justify-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`${GOOGLE_FAVICON_URL}${getApexDomain(
+                            normalizedUrl ?? ''
+                          )}`}
+                          alt=""
+                          className="mr-2 aspect-square h-4 w-4 rounded-[2px]"
+                        />
+                        <span className="font-black text-[#1d1c1d] dark:text-[#d1d2d3]">
+                          {metatags['og:site_name'] ||
+                            getApexDomain(normalizedUrl ?? '')}
+                        </span>
+                      </div>
+                      <span className="cursor-pointer font-bold text-[#1264a3] hover:text-[#224B88] hover:underline dark:text-[#1d9bd1] dark:hover:text-[#62B0DF]">
+                        {metatags['og:title'] ||
+                          metatags['twitter:title'] ||
+                          metatags.title}
+                      </span>
+                      <span className="mb-[5px] font-normal text-[#1d1c1d] dark:text-[#d1d2d3]">
+                        {metatags['og:description'] ||
+                          metatags['twitter:description'] ||
+                          metatags.description}
+                      </span>
+                      <a
+                        style={{
+                          backgroundImage: `url(${metatags['og:image']})`,
+                        }}
+                        className="aspect-[1.91/1] h-full w-full max-w-[360px] cursor-zoom-in rounded-[8px] bg-cover bg-center bg-no-repeat shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
+                      />
                     </div>
                   </div>
                 </div>

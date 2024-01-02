@@ -49,15 +49,56 @@ export const getHeadChildNodes = (html: string) => {
   return { metaTags, title, linkTags }
 }
 
+export type ValidatedMetatagsType = {
+  title: string
+  description: string
+  'og:title': string
+  'og:description': string
+  'og:image': string
+  'og:image:width': string
+  'og:image:height': string
+  'og:image:type': string
+  'og:url': string
+  'og:site_name': string
+  'og:type': string
+  'twitter:title': string
+  'twitter:description': string
+  'twitter:card': string
+  'twitter:image': string
+  'twitter:image:width': string
+  'twitter:image:height': string
+  'twitter:image:type': string
+  'twitter:site': string
+  'twitter:creator': string
+}
+
 export const getMetaTags = async (url: string) => {
   const html = await getHtml(url)
   if (!html) {
     return {
-      title: url,
-      description: 'No description',
-      image: null,
+      title: '',
+      description: '',
+      'og:title': '',
+      'og:description': '',
+      'og:image': '',
+      'og:image:width': '',
+      'og:image:height': '',
+      'og:image:type': '',
+      'og:url': '',
+      'og:site_name': '',
+      'og:type': '',
+      'twitter:title': '',
+      'twitter:description': '',
+      'twitter:card': '',
+      'twitter:image': '',
+      'twitter:image:width': '',
+      'twitter:image:height': '',
+      'twitter:image:type': '',
+      'twitter:site': '',
+      'twitter:creator': '',
     }
   }
+
   const { metaTags, title: titleTag, linkTags } = getHeadChildNodes(html)
 
   let object: {
@@ -77,7 +118,7 @@ export const getMetaTags = async (url: string) => {
   }
 
   // Metatags to validate
-  const validatedMetatags = {
+  const validatedMetatags: ValidatedMetatagsType = {
     title: titleTag ?? '',
     description: object['description'] ?? '',
     'og:title': object['og:title'] ?? '',
@@ -87,18 +128,22 @@ export const getMetaTags = async (url: string) => {
     'og:image:height': object['og:image:height'] ?? '',
     'og:image:type': object['og:image:type'] ?? '',
     'og:url': object['og:url'] ?? '',
+    'og:site_name': object['og:site_name'] ?? '',
+    'og:type': object['og:type'] ?? '',
     'twitter:title': object['twitter:title'] ?? '',
     'twitter:description': object['twitter:description'] ?? '',
+    'twitter:card': object['twitter:card'] ?? '',
     'twitter:image': getRelativeUrl(url, object['twitter:image']) ?? '',
     'twitter:image:width': object['twitter:image:width'] ?? '',
     'twitter:image:height': object['twitter:image:height'] ?? '',
     'twitter:image:type': object['twitter:image:type'] ?? '',
     'twitter:site': object['twitter:site'] ?? '',
+    'twitter:creator': object['twitter:creator'] ?? '',
   }
 
   waitUntil(async () => {
     await recordMetatags(url, false)
   })
 
-  return validatedMetatags
+  return validatedMetatags as ValidatedMetatagsType
 }
