@@ -222,7 +222,7 @@ export default function PreviewValidator({
                     <TypographyH3 className="">Twitter/X</TypographyH3>
                   </div>
 
-                  <div className="relative">
+                  <div className="relative cursor-pointer">
                     <div className="absolute bottom-3 left-3">
                       <div className="flex h-5 items-center justify-center self-start rounded bg-black/30 px-1">
                         <span className="text-center text-[13px] font-normal leading-4 text-white">
@@ -251,7 +251,7 @@ export default function PreviewValidator({
                     <TypographyH3 className="">Facebook</TypographyH3>
                   </div>
 
-                  <div className="relative font-['Helvetica'] shadow-[0_1px_2px_rgb(0_0_0_/_0.2)]">
+                  <div className="relative cursor-pointer font-['Helvetica'] shadow-[0_1px_2px_rgb(0_0_0_/_0.2)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={metatags['og:image']}
@@ -289,13 +289,13 @@ export default function PreviewValidator({
                     <img
                       src={metatags['og:image']}
                       alt="Preview"
-                      className="aspect-[1.91/1] w-full object-cover"
+                      className="aspect-[1.91/1] w-full cursor-pointer object-cover"
                     />
-                    <div className="flex flex-col items-start justify-center gap-2 bg-[#EEF3F7] px-3 py-2 dark:bg-[#3A434E]">
-                      <span className="line-clamp-2 text-ellipsis text-left text-sm font-semibold leading-5 text-[#000000e6] dark:text-[#ffffffe6]">
+                    <div className="flex flex-col items-start justify-center bg-[#EEF3F7] px-3 py-2 dark:bg-[#3A434E]">
+                      <span className="line-clamp-2 w-full cursor-pointer text-ellipsis pb-2 text-left text-sm font-semibold leading-5 text-[#000000e6] dark:text-[#ffffffe6]">
                         {metatags['og:title'] || metatags.title}
                       </span>
-                      <span className="text-left text-xs font-normal leading-[15px] text-[#00000099] dark:text-[#ffffff99]">
+                      <span className="w-full cursor-pointer text-left text-xs font-normal leading-[15px] text-[#00000099] dark:text-[#ffffff99]">
                         {getDomainWithoutWWW(normalizedUrl ?? '') +
                           ' • 1 min read'}
                       </span>
