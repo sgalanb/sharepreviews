@@ -39,9 +39,9 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 border-b ${
         isScrolled || isOpenMobileHeader
-          ? 'border-gray-500/10 bg-neutral-100 dark:border-zinc-800'
-          : 'border-transparent bg-neutral-100'
-      } transition-colors duration-200 dark:bg-neutral-900`}
+          ? 'border-gray-500/10 dark:border-zinc-800'
+          : 'border-transparent'
+      } bg-background transition-colors duration-200`}
     >
       <div className="mx-auto w-full max-w-7xl">
         {/* Mobile */}
