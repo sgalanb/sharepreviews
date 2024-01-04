@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex min-h-screen flex-col justify-between bg-background text-foreground">
+          <div className="flex min-h-screen flex-col justify-between">
             <div className="flex flex-col justify-start">
               <Header />
               <main className="mx-auto w-full max-w-7xl">{children}</main>
