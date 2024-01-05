@@ -2,20 +2,20 @@
 
 import { Button } from '@/app/ui/components/Button'
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from '@/app/ui/components/NavigationMenu'
-import { MenuToggle } from '@/app/ui/menu-toggle'
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from '@/app/ui/components/Sheet'
 import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
+import { MenuIcon } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Header() {
-  const [isOpenMobileHeader, setIsOpenMobileHeader] = useState<boolean>(false)
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
 
   useEffect(() => {
@@ -37,92 +37,192 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b ${
-        isScrolled || isOpenMobileHeader
+      className={`${
+        isScrolled
           ? 'border-gray-500/10 dark:border-zinc-800'
           : 'border-transparent'
-      } bg-background transition-colors duration-200`}
+      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 md:flex md:h-screen md:w-64 md:border-none md:bg-neutral-100 md:p-2 md:dark:bg-neutral-800`}
     >
-      <div className="mx-auto w-full max-w-7xl">
-        {/* Mobile */}
-        <nav className="flex h-fit items-center justify-between py-4 pl-4 pr-0 md:hidden">
-          <div className="flex w-full flex-col items-start justify-between">
-            <Link href="/">
-              <p className="text-2xl font-bold tracking-tighter">
-                SharePreviews
-              </p>
-            </Link>
-          </div>
-          <div className="flex items-center justify-center gap-1">
-            <ThemeToggle />
-            <MenuToggle
-              toggle={() => setIsOpenMobileHeader(!isOpenMobileHeader)}
-              isOpen={isOpenMobileHeader}
-            />
-          </div>
-        </nav>
-        {isOpenMobileHeader && (
-          <div className="absolute left-0 top-20 z-50 w-full flex-col bg-white p-4 lg:hidden dark:bg-neutral-900">
-            <Link href="/" className="w-full">
-              <div
-                className="border-b border-gray-200 py-4 text-sm font-medium"
-                onClick={() => setIsOpenMobileHeader(false)}
-              >
-                Inicio
-              </div>
-            </Link>
-          </div>
-        )}
+      {/* Mobile */}
+      <div className="mx-auto w-full max-w-screen-2xl px-4 md:hidden">
+        <nav className="flex items-center justify-between py-2">
+          <Sheet>
+            <SheetTrigger>
+              <MenuIcon className="m-2 h-6 w-6" />
+            </SheetTrigger>
+            <SheetContent side="left" className="pt-12">
+              <div className="flex flex-col items-start justify-start gap-1">
+                <SheetClose asChild>
+                  <Button variant="ghost" asChild>
+                    <Link
+                      href="/validator"
+                      className={`${
+                        pathname == '/validator'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Validator
+                    </Link>
+                  </Button>
+                </SheetClose>
 
-        {/* Desktop */}
-        <div className="hidden h-20 w-full items-center justify-between p-3 lg:flex">
+                <SheetClose asChild>
+                  <Button variant="ghost" asChild>
+                    <Link
+                      href="/generator"
+                      className={`${
+                        pathname == '/generator'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Generator
+                    </Link>
+                  </Button>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Button variant="ghost" asChild>
+                    <Link
+                      href="/manager"
+                      className={`${
+                        pathname == '/manager'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Manager
+                    </Link>
+                  </Button>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Button variant="ghost" asChild>
+                    <Link
+                      href="/blog"
+                      className={`${
+                        pathname == '/blog'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Blog
+                    </Link>
+                  </Button>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Button variant="ghost" asChild>
+                    <Link
+                      href="/pricing"
+                      className={`${
+                        pathname == '/pricing'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Pricing
+                    </Link>
+                  </Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
           <Link href="/" className="flex items-center justify-center gap-2">
             <PictorialMark className="w-12 fill-primary" />
             <span className="font-bold">sharepreviews</span>
           </Link>
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <Link href="/generator" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Generator
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/validator" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Validator
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/manager" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Manager
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/blog" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Blog
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/pricing" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Pricing
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-          <div className="flex w-[10.70875rem] items-center justify-end gap-4">
-            <Button variant="outline">Sign In</Button>
-            <ThemeToggle />
+          <ThemeToggle ghost />
+        </nav>
+      </div>
+      {/* Desktop */}
+      <div className="hidden h-full w-full flex-col items-start justify-between md:flex">
+        <div className="flex w-full flex-col items-start justify-start gap-8">
+          <div className="w-full pt-4">
+            <Button variant="ghost" asChild>
+              <Link
+                href="/"
+                className="flex !h-fit w-full items-center !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent"
+              >
+                <PictorialMark className="h-6 fill-primary" />
+                <span className="text-base font-bold tracking-wide text-primary">
+                  sharepreviews
+                </span>
+              </Link>
+            </Button>
           </div>
+          <div className="flex w-full flex-col items-start justify-start gap-1">
+            <Button variant="ghost" asChild>
+              <Link
+                href="/validator"
+                className={`${
+                  pathname == '/validator'
+                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
+                    : ''
+                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+              >
+                Validator
+              </Link>
+            </Button>
+
+            <Button variant="ghost" asChild>
+              <Link
+                href="/generator"
+                className={`${
+                  pathname == '/generator'
+                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
+                    : ''
+                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+              >
+                Generator
+              </Link>
+            </Button>
+
+            <Button variant="ghost" asChild>
+              <Link
+                href="/manager"
+                className={`${
+                  pathname == '/manager'
+                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
+                    : ''
+                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+              >
+                Manager
+              </Link>
+            </Button>
+
+            <Button variant="ghost" asChild>
+              <Link
+                href="/blog"
+                className={`${
+                  pathname == '/blog'
+                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
+                    : ''
+                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+              >
+                Blog
+              </Link>
+            </Button>
+
+            <Button variant="ghost" asChild>
+              <Link
+                href="/pricing"
+                className={`${
+                  pathname == '/pricing'
+                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
+                    : ''
+                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+              >
+                Pricing
+              </Link>
+            </Button>
+          </div>
+        </div>
+        <div className="flex w-full flex-col gap-2">
+          {/* <ThemeToggle /> */}
+          <Button variant="outline">Sign In</Button>
+          <Button>Sign Up</Button>
         </div>
       </div>
     </header>

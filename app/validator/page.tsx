@@ -3,7 +3,7 @@ import PreviewValidator from '@/app/ui/preview-validator'
 
 export default function Validator() {
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-10 p-4">
+    <div className="flex w-full flex-col items-center justify-center gap-8 p-4">
       <div className="flex flex-col items-center justify-center gap-2">
         <TypographyH1 className="text-balance text-center">
           Preview Validator

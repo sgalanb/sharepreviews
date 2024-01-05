@@ -2,6 +2,15 @@
 
 import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
 import { Button } from '@/app/ui/components/Button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/app/ui/components/Card'
+
 import { Input } from '@/app/ui/components/Input'
 import Spinner from '@/app/ui/components/Spinner'
 import {
@@ -12,7 +21,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/app/ui/components/Table'
-import { TypographyH2 } from '@/app/ui/components/typography'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/ui/components/Tabs'
+import { TypographyP } from '@/app/ui/components/typography'
 import DiscordMockup from '@/app/ui/preview-mockups/discord-mockup'
 import FacebookMockup from '@/app/ui/preview-mockups/facebook-mockup'
 import LinkedInMockup from '@/app/ui/preview-mockups/linkedin-mockup'
@@ -73,107 +88,107 @@ export default function PreviewValidator({
     {
       name: 'title',
       value: metatags?.title,
-      status: metatags?.title.length > 60 ? 'Long' : 'Good',
+      status: metatags?.title ? '✅' : '❌',
     },
     {
       name: 'description',
       value: metatags?.description,
-      status: metatags?.description.length > 160 ? 'Long' : 'Good',
+      status: metatags?.description ? '✅' : '❌',
     },
     {
       name: 'og:title',
       value: metatags?.['og:title'],
-      status: metatags?.['og:title'].length > 60 ? 'Long' : 'Good',
+      status: metatags?.['og:title'] ? '⚠️' : '❌',
     },
     {
       name: 'og:description',
       value: metatags?.['og:description'],
-      status: metatags?.['og:description'].length > 160 ? 'Long' : 'Good',
+      status: metatags?.['og:description'] ? '✅' : '❌',
     },
     {
       name: 'og:image',
       value: metatags?.['og:image'],
-      status: metatags?.['og:image'] ? 'Good' : 'Missing',
+      status: metatags?.['og:image'] ? '✅' : '❌',
     },
     {
       name: 'og:image:width',
       value: metatags?.['og:image:width'],
-      status: metatags?.['og:image:width'] ? 'Good' : 'Missing',
+      status: metatags?.['og:image:width'] ? '✅' : '❌',
     },
     {
       name: 'og:image:height',
       value: metatags?.['og:image:height'],
-      status: metatags?.['og:image:height'] ? 'Good' : 'Missing',
+      status: metatags?.['og:image:height'] ? '✅' : '❌',
     },
     {
       name: 'og:image:type',
       value: metatags?.['og:image:type'],
-      status: metatags?.['og:image:type'] ? 'Good' : 'Missing',
+      status: metatags?.['og:image:type'] ? '✅' : '❌',
     },
     {
       name: 'og:url',
       value: metatags?.['og:url'],
-      status: metatags?.['og:url'] ? 'Good' : 'Missing',
+      status: metatags?.['og:url'] ? '✅' : '❌',
     },
     {
       name: 'og:site_name',
       value: metatags?.['og:site_name'],
-      status: metatags?.['og:site_name'] ? 'Good' : 'Missing',
+      status: metatags?.['og:site_name'] ? '✅' : '❌',
     },
     {
       name: 'og:type',
       value: metatags?.['og:type'],
-      status: metatags?.['og:type'] ? 'Good' : 'Missing',
+      status: metatags?.['og:type'] ? '✅' : '❌',
     },
     {
       name: 'twitter:title',
       value: metatags?.['twitter:title'],
-      status: metatags?.['twitter:title'].length > 60 ? 'Long' : 'Good',
+      status: metatags?.['twitter:title'] ? '✅' : '❌',
     },
     {
       name: 'twitter:description',
       value: metatags?.['twitter:description'],
-      status: metatags?.['twitter:description'].length > 160 ? 'Long' : 'Good',
+      status: metatags?.['twitter:description'] ? '✅' : '❌',
     },
     {
       name: 'twitter:card',
       value: metatags?.['twitter:card'],
-      status: metatags?.['twitter:card'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:card'] ? '✅' : '❌',
     },
     {
       name: 'twitter:image',
       value: metatags?.['twitter:image'],
-      status: metatags?.['twitter:image'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:image'] ? '✅' : '❌',
     },
     {
       name: 'twitter:image:width',
       value: metatags?.['twitter:image:width'],
-      status: metatags?.['twitter:image:width'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:image:width'] ? '✅' : '❌',
     },
     {
       name: 'twitter:image:height',
       value: metatags?.['twitter:image:height'],
-      status: metatags?.['twitter:image:height'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:image:height'] ? '✅' : '❌',
     },
     {
       name: 'twitter:image:type',
       value: metatags?.['twitter:image:type'],
-      status: metatags?.['twitter:image:type'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:image:type'] ? '✅' : '❌',
     },
     {
       name: 'twitter:site',
       value: metatags?.['twitter:site'],
-      status: metatags?.['twitter:site'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:site'] ? '✅' : '❌',
     },
     {
       name: 'twitter:creator',
       value: metatags?.['twitter:creator'],
-      status: metatags?.['twitter:creator'] ? 'Good' : 'Missing',
+      status: metatags?.['twitter:creator'] ? '✅' : '❌',
     },
   ]
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-20">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-8">
       <form
         onSubmit={onSubmitSite}
         className="flex w-full flex-col gap-4 xl:w-1/2"
@@ -199,69 +214,105 @@ export default function PreviewValidator({
         )}
       </form>
       {!inputOnly && (
-        <>
-          <div className="flex flex-col items-center justify-center gap-4">
-            <TypographyH2 className="w-full">Previews</TypographyH2>
-            {metatags && metatags['og:image'] && (
-              <div className="flex flex-col gap-4">
-                {/* Twitter/X */}
-                <TwitterMockup
-                  metatags={metatags}
-                  normalizedUrl={normalizedUrl || ''}
-                />
-                {/* Facebook */}
-                <FacebookMockup
-                  metatags={metatags}
-                  normalizedUrl={normalizedUrl || ''}
-                />
-                {/* LinkedIn */}
-                <LinkedInMockup
-                  metatags={metatags}
-                  normalizedUrl={normalizedUrl || ''}
-                />
-                {/* Slack */}
-                <SlackMockup
-                  metatags={metatags}
-                  normalizedUrl={normalizedUrl || ''}
-                />
-                {/* Discord */}
-                <DiscordMockup metatags={metatags} />
-                {/* Telegram */}
-                <TelegramMockup
-                  metatags={metatags}
-                  normalizedUrl={normalizedUrl || ''}
-                />
-                {/* WhatsApp */}
-                <WhatsAppMockup
-                  metatags={metatags}
-                  normalizedUrl={normalizedUrl || ''}
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="flex w-3/4 flex-col items-center justify-center gap-4">
-            <TypographyH2 className="w-full">Metatags</TypographyH2>
-            <Table className="rounded-xl">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="w-[100px]">Property</TableHead>
-                  <TableHead>Value</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {tableData.map((item) => (
-                  <TableRow key={item.name}>
-                    <TableCell>{item.status}</TableCell>
-                    <TableCell className="font-medium">{item.name}</TableCell>
-                    <TableCell>{item.value}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </>
+        <Tabs defaultValue="previews" className="w-full">
+          <TabsList className="grid w-60 grid-cols-2">
+            <TabsTrigger value="previews">Previews</TabsTrigger>
+            <TabsTrigger value="metatags">Metatags</TabsTrigger>
+          </TabsList>
+          <TabsContent value="previews">
+            <Card className="rounded-md">
+              <CardHeader className="">
+                <CardTitle>Previews</CardTitle>
+                <CardDescription>
+                  Description description description
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="">
+                {metatags && metatags['og:image'] && (
+                  <div className="grid grid-cols-3 gap-20">
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">Twitter/X</TypographyP>
+                      <TwitterMockup
+                        metatags={metatags}
+                        normalizedUrl={normalizedUrl || ''}
+                      />
+                    </div>
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">Facebook</TypographyP>
+                      <FacebookMockup
+                        metatags={metatags}
+                        normalizedUrl={normalizedUrl || ''}
+                      />
+                    </div>
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">LinkedIn</TypographyP>
+                      <LinkedInMockup
+                        metatags={metatags}
+                        normalizedUrl={normalizedUrl || ''}
+                      />
+                    </div>
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">Slack</TypographyP>
+                      <SlackMockup
+                        metatags={metatags}
+                        normalizedUrl={normalizedUrl || ''}
+                      />
+                    </div>
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">Discord</TypographyP>
+                      <DiscordMockup metatags={metatags} />
+                    </div>
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">Telegram</TypographyP>
+                      <TelegramMockup
+                        metatags={metatags}
+                        normalizedUrl={normalizedUrl || ''}
+                      />
+                    </div>
+                    <div className="flex w-full flex-col">
+                      <TypographyP className="text-sm">WhatsApp</TypographyP>
+                      <WhatsAppMockup
+                        metatags={metatags}
+                        normalizedUrl={normalizedUrl || ''}
+                      />
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="metatags">
+            <Card className="h-fit w-full">
+              <CardHeader>
+                <CardTitle>Metatags</CardTitle>
+                <CardDescription>5 errors, 2 warnings</CardDescription>
+              </CardHeader>
+              <CardContent className="">
+                <Table className="">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="w-[100px]">Property</TableHead>
+                      <TableHead>Value</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {tableData.map((item) => (
+                      <TableRow key={item.name}>
+                        <TableCell>{item.status}</TableCell>
+                        <TableCell className="font-medium">
+                          {item.name}
+                        </TableCell>
+                        <TableCell>{item.value}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+              <CardFooter className="">footer</CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>
       )}
     </div>
   )
