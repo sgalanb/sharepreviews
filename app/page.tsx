@@ -1,4 +1,4 @@
-import { TypographyH1, TypographyH2 } from '@/app/ui/components/Typography'
+import { TypographyH1, TypographyH2 } from '@/app/ui/components/typography'
 import PreviewValidator from '@/app/ui/preview-validator'
 
 export default async function Home() {

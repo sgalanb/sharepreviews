@@ -1,4 +1,4 @@
-import { TypographyH1, TypographyP } from '@/app/ui/components/Typography'
+import { TypographyH1, TypographyP } from '@/app/ui/components/typography'
 import PreviewValidator from '@/app/ui/preview-validator'
 
 export default function Validator() {
