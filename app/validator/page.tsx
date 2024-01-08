@@ -1,11 +1,11 @@
-import { TypographyH1, TypographyP } from '@/app/ui/components/typography'
+import { TypographyH1, TypographyP } from '@/app/ui/components/Typography'
 import PreviewValidator from '@/app/ui/preview-validator'
 
 export default function Validator() {
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-8 p-4">
-      <div className="flex flex-col items-center justify-center gap-2">
-        <TypographyH1 className="text-balance text-center">
+    <div className="flex w-full max-w-7xl flex-col items-start justify-center gap-8 px-4 py-4 lg:px-12">
+      <div className="flex flex-col items-start justify-center gap-2">
+        <TypographyH1 className="text-balance text-left">
           Preview Validator
         </TypographyH1>
         <TypographyP className="!mt-0 text-balance text-center">

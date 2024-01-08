@@ -21,10 +21,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers attribute="class" defaultTheme="system" enableSystem>
           <div className="flex min-h-dvh flex-col justify-between">
-            <div className="flex flex-col justify-start md:grid md:grid-cols-[256px,1fr] md:bg-neutral-100 md:dark:bg-neutral-800">
+            <div className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-100 lg:dark:bg-neutral-800">
               <Header />
-              <main className="mx-auto w-full rounded-lg md:pb-2 md:pr-2 md:pt-2">
-                <div className="mx-auto w-full rounded-lg md:min-h-full md:bg-background">
+              <main className="mx-auto w-full rounded-lg lg:pb-2 lg:pr-2 lg:pt-2">
+                <div className="mx-auto w-full rounded-lg lg:flex lg:min-h-full lg:justify-center lg:bg-background">
                   {children}
                 </div>
               </main>

@@ -6,13 +6,14 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/app/ui/components/Card'
 
 import { Input } from '@/app/ui/components/Input'
+import { Label } from '@/app/ui/components/Label'
 import Spinner from '@/app/ui/components/Spinner'
+import { Switch } from '@/app/ui/components/Switch'
 import {
   Table,
   TableBody,
@@ -27,13 +28,13 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/app/ui/components/Tabs'
-import { TypographyP } from '@/app/ui/components/typography'
 import DiscordMockup from '@/app/ui/preview-mockups/discord-mockup'
 import FacebookMockup from '@/app/ui/preview-mockups/facebook-mockup'
 import LinkedInMockup from '@/app/ui/preview-mockups/linkedin-mockup'
 import SlackMockup from '@/app/ui/preview-mockups/slack-mockup'
 import TelegramMockup from '@/app/ui/preview-mockups/telegram-mockup'
 import TwitterMockup from '@/app/ui/preview-mockups/twitter-mockup'
+import TwitterWebMockup from '@/app/ui/preview-mockups/twitter-web-mockup'
 import WhatsAppMockup from '@/app/ui/preview-mockups/whatsapp-mockup'
 import { fetcher, getUrlFromString } from '@/app/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -83,6 +84,82 @@ export default function PreviewValidator({
   useEffect(() => {
     inputRef?.current?.select()
   }, [])
+
+  const isSquare =
+    metatags &&
+    (metatags['twitter:card'] === 'summary' ||
+      (metatags['og:image:height'] === metatags['og:image:width'] &&
+        metatags['og:image:height'] &&
+        metatags['og:image:width']))
+
+  const previewsData = [
+    {
+      title: 'Twitter/X',
+      previewComponent: (
+        <TwitterMockup
+          metatags={metatags}
+          normalizedUrl={normalizedUrl || ''}
+          isSquare={!!isSquare}
+        />
+      ),
+    },
+    {
+      title: 'Facebook',
+      previewComponent: (
+        <FacebookMockup
+          metatags={metatags}
+          normalizedUrl={normalizedUrl || ''}
+          isSquare={!!isSquare}
+        />
+      ),
+    },
+    {
+      title: 'LinkedIn',
+      previewComponent: (
+        <LinkedInMockup
+          metatags={metatags}
+          normalizedUrl={normalizedUrl || ''}
+          isSquare={!!isSquare}
+        />
+      ),
+    },
+    {
+      title: 'Slack',
+      previewComponent: (
+        <SlackMockup
+          metatags={metatags}
+          normalizedUrl={normalizedUrl || ''}
+          isSquare={!!isSquare}
+        />
+      ),
+    },
+    {
+      title: 'Discord',
+      previewComponent: (
+        <DiscordMockup metatags={metatags} isSquare={!!isSquare} />
+      ),
+    },
+    {
+      title: 'Telegram',
+      previewComponent: (
+        <TelegramMockup
+          metatags={metatags}
+          normalizedUrl={normalizedUrl || ''}
+          isSquare={!!isSquare}
+        />
+      ),
+    },
+    {
+      title: 'WhatsApp',
+      previewComponent: (
+        <WhatsAppMockup
+          metatags={metatags}
+          normalizedUrl={normalizedUrl || ''}
+          isSquare={!!isSquare}
+        />
+      ),
+    },
+  ]
 
   const tableData = [
     {
@@ -187,8 +264,10 @@ export default function PreviewValidator({
     },
   ]
 
+  const [twitterPreview, setTwitterPreview] = useState<'app' | 'web'>('app')
+
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-8">
+    <div className="flex w-full flex-col items-start justify-center gap-8">
       <form
         onSubmit={onSubmitSite}
         className="flex w-full flex-col gap-4 xl:w-1/2"
@@ -213,73 +292,61 @@ export default function PreviewValidator({
           <div className="text-sm text-red-500">Please enter a valid URL.</div>
         )}
       </form>
-      {!inputOnly && (
+      {!inputOnly && metatags && (
         <Tabs defaultValue="previews" className="w-full">
           <TabsList className="grid w-60 grid-cols-2">
             <TabsTrigger value="previews">Previews</TabsTrigger>
             <TabsTrigger value="metatags">Metatags</TabsTrigger>
           </TabsList>
           <TabsContent value="previews">
-            <Card className="rounded-md">
-              <CardHeader className="">
-                <CardTitle>Previews</CardTitle>
-                <CardDescription>
-                  Description description description
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="">
-                {metatags && metatags['og:image'] && (
-                  <div className="grid grid-cols-3 gap-20">
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">Twitter/X</TypographyP>
-                      <TwitterMockup
-                        metatags={metatags}
-                        normalizedUrl={normalizedUrl || ''}
-                      />
-                    </div>
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">Facebook</TypographyP>
-                      <FacebookMockup
-                        metatags={metatags}
-                        normalizedUrl={normalizedUrl || ''}
-                      />
-                    </div>
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">LinkedIn</TypographyP>
-                      <LinkedInMockup
-                        metatags={metatags}
-                        normalizedUrl={normalizedUrl || ''}
-                      />
-                    </div>
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">Slack</TypographyP>
-                      <SlackMockup
-                        metatags={metatags}
-                        normalizedUrl={normalizedUrl || ''}
-                      />
-                    </div>
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">Discord</TypographyP>
-                      <DiscordMockup metatags={metatags} />
-                    </div>
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">Telegram</TypographyP>
-                      <TelegramMockup
-                        metatags={metatags}
-                        normalizedUrl={normalizedUrl || ''}
-                      />
-                    </div>
-                    <div className="flex w-full flex-col">
-                      <TypographyP className="text-sm">WhatsApp</TypographyP>
-                      <WhatsAppMockup
-                        metatags={metatags}
-                        normalizedUrl={normalizedUrl || ''}
-                      />
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <div
+              className={`${
+                isSquare
+                  ? 'lg:grid-cols-[repeat(auto-fill,minmax(420px,1fr))]'
+                  : 'lg:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]'
+              } grid w-full gap-6`}
+            >
+              {metatags &&
+                metatags['og:image'] &&
+                previewsData.map((item, index) => (
+                  <Card className="flex flex-col rounded-md" key={index}>
+                    <CardHeader className="flex-row !items-center justify-between !space-y-0 p-4 pb-0">
+                      <p className="text-base font-medium">{item.title}</p>
+                      {item.title === 'Twitter/X' && !isSquare && (
+                        <div className="flex h-6 items-center justify-center gap-2">
+                          <Label htmlFor="app-web" className="font-normal">
+                            App
+                          </Label>
+                          <Switch
+                            id="app-web"
+                            name="app-web"
+                            checked={twitterPreview === 'web'}
+                            onCheckedChange={() =>
+                              setTwitterPreview(
+                                twitterPreview === 'web' ? 'app' : 'web'
+                              )
+                            }
+                          />
+                          <Label htmlFor="app-web" className="font-normal">
+                            Web
+                          </Label>
+                        </div>
+                      )}
+                    </CardHeader>
+                    <CardContent className="flex h-full flex-col items-center justify-start p-4">
+                      {item.title === 'Twitter/X' &&
+                      twitterPreview === 'web' ? (
+                        <TwitterWebMockup
+                          metatags={metatags}
+                          normalizedUrl={normalizedUrl || ''}
+                        />
+                      ) : (
+                        item.previewComponent
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+            </div>
           </TabsContent>
           <TabsContent value="metatags">
             <Card className="h-fit w-full">
@@ -309,7 +376,6 @@ export default function PreviewValidator({
                   </TableBody>
                 </Table>
               </CardContent>
-              <CardFooter className="">footer</CardFooter>
             </Card>
           </TabsContent>
         </Tabs>

@@ -41,10 +41,10 @@ export default function Header() {
         isScrolled
           ? 'border-gray-500/10 dark:border-zinc-800'
           : 'border-transparent'
-      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 md:flex md:h-screen md:w-64 md:border-none md:bg-neutral-100 md:p-2 md:dark:bg-neutral-800`}
+      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-100 lg:p-2 lg:dark:bg-neutral-800`}
     >
       {/* Mobile */}
-      <div className="mx-auto w-full max-w-screen-2xl px-4 md:hidden">
+      <div className="mx-auto w-full max-w-screen-2xl px-4 lg:hidden">
         <nav className="flex items-center justify-between py-2">
           <Sheet>
             <SheetTrigger>
@@ -137,7 +137,7 @@ export default function Header() {
         </nav>
       </div>
       {/* Desktop */}
-      <div className="hidden h-full w-full flex-col items-start justify-between md:flex">
+      <div className="hidden h-full w-full flex-col items-start justify-between lg:flex">
         <div className="flex w-full flex-col items-start justify-start gap-8">
           <div className="w-full pt-4">
             <Button variant="ghost" asChild>
@@ -145,8 +145,8 @@ export default function Header() {
                 href="/"
                 className="flex !h-fit w-full items-center !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent"
               >
-                <PictorialMark className="h-6 fill-primary" />
-                <span className="text-base font-bold tracking-wide text-primary">
+                <PictorialMark className="w-12 fill-primary" />
+                <span className="text-base font-bold tracking-wide text-foreground">
                   sharepreviews
                 </span>
               </Link>
@@ -162,7 +162,7 @@ export default function Header() {
                     : ''
                 } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
               >
-                Validator
+                ✔️ Validator
               </Link>
             </Button>
 
@@ -175,7 +175,7 @@ export default function Header() {
                     : ''
                 } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
               >
-                Generator
+                ⚙ Generator
               </Link>
             </Button>
 
@@ -188,7 +188,7 @@ export default function Header() {
                     : ''
                 } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
               >
-                Manager
+                🔜 Manager
               </Link>
             </Button>
 
@@ -199,7 +199,7 @@ export default function Header() {
                   pathname == '/blog'
                     ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
                     : ''
-                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+                } mt-6 w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
               >
                 Blog
               </Link>
@@ -220,7 +220,7 @@ export default function Header() {
           </div>
         </div>
         <div className="flex w-full flex-col gap-2">
-          {/* <ThemeToggle /> */}
+          <ThemeToggle />
           <Button variant="outline">Sign In</Button>
           <Button>Sign Up</Button>
         </div>
