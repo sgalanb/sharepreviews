@@ -314,7 +314,14 @@ export default function PreviewValidator({
                       <p className="text-base font-medium">{item.title}</p>
                       {item.title === 'Twitter/X' && !isSquare && (
                         <div className="flex h-6 items-center justify-center gap-2">
-                          <Label htmlFor="app-web" className="font-normal">
+                          <Label
+                            htmlFor="app-web"
+                            className={`${
+                              twitterPreview == 'app'
+                                ? 'font-medium text-foreground'
+                                : 'font-normal text-muted-foreground'
+                            }`}
+                          >
                             App
                           </Label>
                           <Switch
@@ -326,8 +333,16 @@ export default function PreviewValidator({
                                 twitterPreview === 'web' ? 'app' : 'web'
                               )
                             }
+                            className="!bg-input"
                           />
-                          <Label htmlFor="app-web" className="font-normal">
+                          <Label
+                            htmlFor="app-web"
+                            className={`${
+                              twitterPreview == 'web'
+                                ? 'font-medium text-foreground'
+                                : 'font-normal text-muted-foreground'
+                            }`}
+                          >
                             Web
                           </Label>
                         </div>
