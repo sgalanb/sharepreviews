@@ -36,6 +36,13 @@ import TelegramMockup from '@/app/ui/preview-mockups/telegram-mockup'
 import TwitterMockup from '@/app/ui/preview-mockups/twitter-mockup'
 import TwitterWebMockup from '@/app/ui/preview-mockups/twitter-web-mockup'
 import WhatsAppMockup from '@/app/ui/preview-mockups/whatsapp-mockup'
+import Discord from '@/app/ui/svgs/social-icons/Discord'
+import Facebook from '@/app/ui/svgs/social-icons/Facebook'
+import LinkedIn from '@/app/ui/svgs/social-icons/LinkedIn'
+import Telegram from '@/app/ui/svgs/social-icons/Telegram'
+import WhatsApp from '@/app/ui/svgs/social-icons/WhatsApp'
+import X from '@/app/ui/svgs/social-icons/X'
+import Slack from '@/app/ui/svgs/social-icons/slack'
 import { fetcher, getUrlFromString } from '@/app/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -85,77 +92,126 @@ export default function PreviewValidator({
     inputRef?.current?.select()
   }, [])
 
-  const isSquare =
-    metatags &&
-    (metatags['twitter:card'] === 'summary' ||
-      (metatags['og:image:height'] === metatags['og:image:width'] &&
-        metatags['og:image:height'] &&
-        metatags['og:image:width']))
+  async function getImageSizeFromUrl(url: string) {
+    try {
+      const image = new Image()
+      image.src = url
+      await new Promise((resolve, reject) => {
+        image.onload = resolve
+        image.onerror = reject
+      })
+      return { width: image.width, height: image.height }
+    } catch (e) {
+      console.error(e)
+      throw new Error('Error getting image size')
+    }
+  }
+
+  const getImageSquare = async () => {
+    const dimensions = await getImageSizeFromUrl(
+      metatags['og:image'] || metatags['twitter:image']
+    )
+    return dimensions.width === dimensions.height
+  }
+
+  const [isImageSquare, setIsImageSquare] = useState<boolean | undefined>(
+    undefined
+  )
+
+  useEffect(() => {
+    if (metatags && metatags['og:image']) {
+      getImageSquare().then((result) => {
+        setIsImageSquare(result)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [metatags])
 
   const previewsData = [
     {
       title: 'Twitter/X',
+      icon: <X className="h-4 w-4 shrink-0" />,
       previewComponent: (
         <TwitterMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          isSquare={!!isSquare}
+          // Use twitter:card to determine if square
+          isSquare={metatags && metatags['twitter:card'] === 'summary'}
         />
       ),
     },
     {
       title: 'Facebook',
+      icon: <Facebook className="h-5 w-5 shrink-0" />,
       previewComponent: (
         <FacebookMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          isSquare={!!isSquare}
+          // Use image height and width to determine if square
+          isSquare={!!isImageSquare}
         />
       ),
     },
     {
       title: 'LinkedIn',
+      icon: <LinkedIn className="h-5 w-5 shrink-0" />,
       previewComponent: (
         <LinkedInMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          isSquare={!!isSquare}
+          // Use image height and width to determine if square
+          isSquare={!!isImageSquare}
         />
       ),
     },
     {
       title: 'Slack',
+      icon: <Slack className="h-5 w-5 shrink-0" />,
       previewComponent: (
         <SlackMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          isSquare={!!isSquare}
+          // Use twitter:card to determine if square
+          isSquare={metatags && metatags['twitter:card'] === 'summary'}
         />
       ),
     },
     {
       title: 'Discord',
+      icon: <Discord className="h-5 w-5 shrink-0" />,
       previewComponent: (
-        <DiscordMockup metatags={metatags} isSquare={!!isSquare} />
+        <DiscordMockup
+          metatags={metatags}
+          // Use twitter:card and image height and width to determine if square
+          isSquare={
+            !!isImageSquare &&
+            metatags &&
+            metatags['twitter:card'] === 'summary'
+          }
+        />
       ),
     },
     {
       title: 'Telegram',
+      icon: <Telegram className="h-5 w-5 shrink-0" />,
       previewComponent: (
         <TelegramMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          isSquare={!!isSquare}
+          // Use image height and width to determine if square
+          isSquare={!!isImageSquare}
         />
       ),
     },
     {
       title: 'WhatsApp',
+      icon: <WhatsApp className="h-5 w-5 shrink-0" />,
       previewComponent: (
         <WhatsAppMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          isSquare={!!isSquare}
+          // Use image height and width to determine if square
+          isSquare={!!isImageSquare}
         />
       ),
     },
@@ -284,15 +340,19 @@ export default function PreviewValidator({
             aria-invalid="true"
             onChange={() => setInputError(false)}
           />
-          <Button type="submit" className="!w-24">
-            {isLoading ? <Spinner /> : 'Validate'}
+          <Button type="submit" className="w-full max-w-24">
+            {inputUrl && (isLoading || isImageSquare === undefined) ? (
+              <Spinner className="h-7 w-7 fill-primary-foreground text-primary-foreground/25" />
+            ) : (
+              'Validate'
+            )}
           </Button>
         </div>
         {inputError && (
           <div className="text-sm text-red-500">Please enter a valid URL.</div>
         )}
       </form>
-      {!inputOnly && metatags && (
+      {!inputOnly && !isLoading && isImageSquare !== undefined && (
         <Tabs defaultValue="previews" className="w-full">
           <TabsList className="grid w-60 grid-cols-2">
             <TabsTrigger value="previews">Previews</TabsTrigger>
@@ -301,7 +361,7 @@ export default function PreviewValidator({
           <TabsContent value="previews">
             <div
               className={`${
-                isSquare
+                isImageSquare
                   ? 'lg:grid-cols-[repeat(auto-fill,minmax(420px,1fr))]'
                   : 'lg:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]'
               } grid w-full gap-6`}
@@ -309,46 +369,25 @@ export default function PreviewValidator({
               {metatags &&
                 metatags['og:image'] &&
                 previewsData.map((item, index) => (
-                  <Card className="flex flex-col rounded-md" key={index}>
-                    <CardHeader className="flex-row !items-center justify-between !space-y-0 p-4 pb-0">
-                      <p className="text-base font-medium">{item.title}</p>
-                      {item.title === 'Twitter/X' && !isSquare && (
-                        <div className="flex h-6 items-center justify-center gap-2">
-                          <Label
-                            htmlFor="app-web"
-                            className={`${
-                              twitterPreview == 'app'
-                                ? 'font-medium text-foreground'
-                                : 'font-normal text-muted-foreground'
-                            }`}
-                          >
-                            App
-                          </Label>
-                          <Switch
-                            id="app-web"
-                            name="app-web"
-                            checked={twitterPreview === 'web'}
-                            onCheckedChange={() =>
-                              setTwitterPreview(
-                                twitterPreview === 'web' ? 'app' : 'web'
-                              )
-                            }
-                            className="!bg-input"
-                          />
-                          <Label
-                            htmlFor="app-web"
-                            className={`${
-                              twitterPreview == 'web'
-                                ? 'font-medium text-foreground'
-                                : 'font-normal text-muted-foreground'
-                            }`}
-                          >
-                            Web
-                          </Label>
-                        </div>
-                      )}
+                  <Card
+                    className={`${
+                      item.title === 'Twitter/X' &&
+                      !isImageSquare &&
+                      metatags['twitter:card'] === 'summary'
+                        ? 'col-span-2'
+                        : ''
+                    } flex flex-col rounded-md`}
+                    key={index}
+                  >
+                    <CardHeader className="flex-row !items-center justify-between gap-4 !space-y-0 p-4 pb-0">
+                      <span className="h-[1px] w-full bg-border" />
+                      <div className="flex items-center justify-center gap-2">
+                        {item.icon}
+                        <p className="text-foreground">{`${item.title}`}</p>
+                      </div>
+                      <span className="h-[1px] w-full bg-border" />
                     </CardHeader>
-                    <CardContent className="flex h-full flex-col items-center justify-start p-4">
+                    <CardContent className="flex h-full flex-col items-center justify-between p-4">
                       {item.title === 'Twitter/X' &&
                       twitterPreview === 'web' ? (
                         <TwitterWebMockup
@@ -358,6 +397,42 @@ export default function PreviewValidator({
                       ) : (
                         item.previewComponent
                       )}
+                      {item.title === 'Twitter/X' &&
+                        metatags['twitter:card'] !== 'summary' && (
+                          <div className="flex w-full items-center justify-center gap-2 border-t pt-4">
+                            <Label
+                              htmlFor="app-web"
+                              className={`${
+                                twitterPreview == 'app'
+                                  ? 'font-medium text-foreground'
+                                  : 'font-normal text-muted-foreground'
+                              }`}
+                            >
+                              App
+                            </Label>
+                            <Switch
+                              id="app-web"
+                              name="app-web"
+                              checked={twitterPreview === 'web'}
+                              onCheckedChange={() =>
+                                setTwitterPreview(
+                                  twitterPreview === 'web' ? 'app' : 'web'
+                                )
+                              }
+                              className="!bg-input"
+                            />
+                            <Label
+                              htmlFor="app-web"
+                              className={`${
+                                twitterPreview == 'web'
+                                  ? 'font-medium text-foreground'
+                                  : 'font-normal text-muted-foreground'
+                              }`}
+                            >
+                              Web
+                            </Label>
+                          </div>
+                        )}
                     </CardContent>
                   </Card>
                 ))}

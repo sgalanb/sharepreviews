@@ -9,7 +9,7 @@ export default function TwitterWebMockup({
   normalizedUrl: string
 }) {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       <div className="relative w-full cursor-pointer">
         <div className="absolute bottom-3 left-3 right-3 line-clamp-1 w-fit">
           <div className="flex h-5 items-center justify-center self-start rounded bg-black/30 px-1">
