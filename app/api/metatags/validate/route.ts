@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   const ip = ipAddress(req) ?? ''
   const { success } = await ratelimit().limit(ip)
   if (!success) {
-    return new Response("Don't DDoS me pls 🥺", { status: 429 })
+    return new Response("You've hit the rate limit", { status: 429 })
   }
   //}
 

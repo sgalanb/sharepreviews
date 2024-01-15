@@ -1,7 +1,7 @@
 import ValidatorLaunchScreen from '@/app/validator/launch-screen'
 import PreviewValidator from '@/app/validator/preview-validator'
 
-export default function Validator({
+export default async function Validator({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
