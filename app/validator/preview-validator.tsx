@@ -326,8 +326,8 @@ export default function PreviewValidator() {
           href="/validator"
           className="flex items-center justify-center text-muted-foreground"
         >
-          <ChevronLeft className="h-8 w-8" />
-          <span>Validator</span>
+          <ChevronLeft className="ml-[-4px]" />
+          <span className="self-center text-sm">Validator</span>
         </Link>
         <div className="mb-4 flex w-full items-center justify-between">
           <h1 className="line-clamp-4 break-all text-4xl font-extrabold tracking-tight">
@@ -344,7 +344,7 @@ export default function PreviewValidator() {
 
         <div className="flex h-full w-full flex-col items-start justify-start gap-8">
           <Tabs defaultValue="previews" className="w-full">
-            <div className="flex flex-col gap-4 lg:flex-row lg:justify-between">
+            <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
               <ValidatorInput isLoading={!!isLoadingData} />
               <div className="flex gap-2">
                 <TabsList className="grid w-full grid-cols-2 border lg:w-60">
@@ -365,7 +365,7 @@ export default function PreviewValidator() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
-                    className="w-48"
+                    className="w-48 p-2"
                     align="end"
                     sideOffset={8}
                   >
@@ -376,7 +376,7 @@ export default function PreviewValidator() {
                           <span>Add to project</span>
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
-                          <DropdownMenuSubContent className="">
+                          <DropdownMenuSubContent className="p-2">
                             {/* TODO: Fetch projects and show them or show "no projects" text with button to create your first one */}
                             <DropdownMenuItem>
                               <span>Project 1</span>
