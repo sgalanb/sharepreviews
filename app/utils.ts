@@ -51,6 +51,36 @@ export const getUrlFromString = (str: string) => {
   }
 }
 
+export const getUrlFromStringWithoutWWW = (str: string) => {
+  if (isValidUrl(str)) {
+    return new URL(str).toString().replace(/^https?:\/\/(www\.)?/, 'https://')
+  }
+  try {
+    if (str.includes('.') && !str.includes(' ')) {
+      return new URL(`https://${str}`)
+        .toString()
+        .replace(/^https?:\/\/(www\.)?/, 'https://')
+    }
+  } catch (e) {
+    return null
+  }
+}
+
+export const getUrlFromStringWithoutWWWOrProtocol = (str: string) => {
+  if (isValidUrl(str)) {
+    return new URL(str).toString().replace(/^https?:\/\/(www\.)?/, '')
+  }
+  try {
+    if (str.includes('.') && !str.includes(' ')) {
+      return new URL(`https://${str}`)
+        .toString()
+        .replace(/^https?:\/\/(www\.)?/, '')
+    }
+  } catch (e) {
+    return null
+  }
+}
+
 export const getDomainWithoutWWW = (url: string) => {
   if (isValidUrl(url)) {
     return new URL(url).hostname.replace(/^www\./, '')
@@ -103,6 +133,21 @@ export const getApexDomain = (url: string) => {
     // otherwise, it's a subdomain (e.g. dub.vercel.app), so we return the last 2 parts
     return parts.slice(-2).join('.')
   }
-  // if it's a normal domain (e.g. dub.co), we return the domain
+  // if it's a normal domain, we return the domain
   return domain
+}
+
+export async function getImageSizeFromUrl(url: string) {
+  try {
+    const image = new Image()
+    image.src = url
+    await new Promise((resolve, reject) => {
+      image.onload = resolve
+      image.onerror = reject
+    })
+    return { width: image.width, height: image.height }
+  } catch (e) {
+    console.error(e)
+    throw new Error('Error getting image size')
+  }
 }

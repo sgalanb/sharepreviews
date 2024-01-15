@@ -1,5 +1,5 @@
 import { TypographyH1, TypographyH2 } from '@/app/ui/components/typography'
-import PreviewValidator from '@/app/ui/preview-validator'
+import PreviewValidator from '@/app/validator/preview-validator'
 
 export default async function Home() {
   return (
@@ -9,7 +9,7 @@ export default async function Home() {
         Stand out from the sea of links with a proper preview.
       </TypographyH2>
 
-      <PreviewValidator inputOnly />
+      <PreviewValidator />
     </div>
   )
 }

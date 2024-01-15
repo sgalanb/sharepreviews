@@ -65,6 +65,7 @@ export type ValidatedMetatagsType = {
   'twitter:description': string
   'twitter:card': string
   'twitter:image': string
+  'twitter:image:src': string
   'twitter:image:width': string
   'twitter:image:height': string
   'twitter:image:type': string
@@ -134,6 +135,7 @@ export const getMetaTags = async (url: string) => {
     'twitter:description': object['twitter:description'] ?? '',
     'twitter:card': object['twitter:card'] ?? '',
     'twitter:image': getRelativeUrl(url, object['twitter:image']) ?? '',
+    'twitter:image:src': getRelativeUrl(url, object['twitter:image:src']) ?? '',
     'twitter:image:width': object['twitter:image:width'] ?? '',
     'twitter:image:height': object['twitter:image:height'] ?? '',
     'twitter:image:type': object['twitter:image:type'] ?? '',

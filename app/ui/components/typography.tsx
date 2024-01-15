@@ -7,7 +7,7 @@ export function TypographyH1({
 }) {
   return (
     <h1
-      className={`${className} scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl`}
+      className={`${className} text-4xl font-extrabold tracking-tight lg:text-5xl`}
     >
       {children}
     </h1>
@@ -22,9 +22,7 @@ export function TypographyH2({
   className?: string
 }) {
   return (
-    <h2
-      className={`${className} scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0`}
-    >
+    <h2 className={`${className} text-3xl font-semibold tracking-tight`}>
       {children}
     </h2>
   )
@@ -38,9 +36,7 @@ export function TypographyH3({
   className?: string
 }) {
   return (
-    <h3
-      className={`${className} scroll-m-20 text-2xl font-semibold tracking-tight`}
-    >
+    <h3 className={`${className} text-2xl font-semibold tracking-tight`}>
       {children}
     </h3>
   )
@@ -54,9 +50,7 @@ export function TypographyH4({
   className?: string
 }) {
   return (
-    <h4
-      className={`${className} scroll-m-20 text-xl font-semibold tracking-tight`}
-    >
+    <h4 className={`${className} text-xl font-semibold tracking-tight`}>
       {children}
     </h4>
   )
@@ -69,11 +63,7 @@ export function TypographyP({
   children: React.ReactNode
   className?: string
 }) {
-  return (
-    <p className={`${className} leading-7 [&:not(:first-child)]:mt-6`}>
-      {children}
-    </p>
-  )
+  return <p className={`${className} leading-7`}>{children}</p>
 }
 
 export function TypographyMuted({

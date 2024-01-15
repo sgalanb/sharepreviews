@@ -9,7 +9,7 @@ import {
 } from '@/app/ui/components/Sheet'
 import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
-import { MenuIcon } from 'lucide-react'
+import { Globe, MenuIcon, MonitorCheck, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -41,7 +41,7 @@ export default function Header() {
         isScrolled
           ? 'border-gray-500/10 dark:border-zinc-800'
           : 'border-transparent'
-      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-100 lg:p-2 lg:dark:bg-neutral-800`}
+      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-white lg:p-2 lg:dark:bg-neutral-800`}
     >
       {/* Mobile */}
       <div className="mx-auto w-full max-w-screen-2xl px-4 lg:hidden">
@@ -160,9 +160,10 @@ export default function Header() {
                   pathname == '/validator'
                     ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
                     : ''
-                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+                } flex w-full !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent`}
               >
-                ✔️ Validator
+                <MonitorCheck className="h-4 w-4" />
+                Validator
               </Link>
             </Button>
 
@@ -173,9 +174,10 @@ export default function Header() {
                   pathname == '/generator'
                     ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
                     : ''
-                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+                } flex w-full !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent`}
               >
-                ⚙ Generator
+                <Zap className="h-4 w-4" />
+                Generator
               </Link>
             </Button>
 
@@ -186,9 +188,10 @@ export default function Header() {
                   pathname == '/manager'
                     ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
                     : ''
-                } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+                } flex w-full !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent`}
               >
-                🔜 Manager
+                <Globe className="h-4 w-4" />
+                Manager
               </Link>
             </Button>
 
@@ -205,7 +208,7 @@ export default function Header() {
               </Link>
             </Button>
 
-            <Button variant="ghost" asChild>
+            {/* <Button variant="ghost" asChild>
               <Link
                 href="/pricing"
                 className={`${
@@ -216,7 +219,7 @@ export default function Header() {
               >
                 Pricing
               </Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
         <div className="flex w-full flex-col gap-2">
