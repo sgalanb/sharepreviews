@@ -27,8 +27,6 @@ export async function GET(req: NextRequest) {
     clientId,
   })
 
-  // Use the information in `user` for further business logic.
-
   // Cleanup params and redirect to homepage
   const url = req.nextUrl.clone()
   url.searchParams.delete('code')
@@ -38,12 +36,11 @@ export async function GET(req: NextRequest) {
 
   // Create a JWT with the user's information
   const token = await new SignJWT({
-    // Here you might lookup and retrieve user details from your database
     user,
   })
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
     .setIssuedAt()
-    .setExpirationTime('1h')
+    .setExpirationTime('1y')
     .sign(secret)
 
   // Store in a cookie
