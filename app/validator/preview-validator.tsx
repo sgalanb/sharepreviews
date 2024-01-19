@@ -28,8 +28,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from '@/app/ui/components/Table'
 import {
@@ -345,7 +343,9 @@ export default function PreviewValidator() {
         <div className="flex h-full w-full flex-col items-start justify-start gap-8">
           <Tabs defaultValue="previews" className="w-full">
             <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
-              <ValidatorInput isLoading={!!isLoadingData} />
+              <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
+                <ValidatorInput isLoading={!!isLoadingData} />
+              </div>
               <div className="flex gap-2">
                 <TabsList className="grid w-full grid-cols-2 border lg:w-60">
                   <TabsTrigger value="previews" className="h-full py-[5px]">
@@ -406,6 +406,7 @@ export default function PreviewValidator() {
                 className="mt-4 w-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
               >
                 <TabsContent value="previews">
                   <div
@@ -491,30 +492,40 @@ export default function PreviewValidator() {
                   </div>
                 </TabsContent>
                 <TabsContent value="metatags">
-                  <Card className="h-fit w-full">
+                  <Card>
                     <CardHeader>
                       <CardTitle>Metatags</CardTitle>
                       <CardDescription>5 errors, 2 warnings</CardDescription>
                     </CardHeader>
-                    <CardContent className="">
-                      <Table className="">
-                        <TableHeader>
+                    <CardContent>
+                      <Table>
+                        {/* <TableHeader>
                           <TableRow>
                             <TableHead>Status</TableHead>
-                            <TableHead className="w-[100px]">
-                              Property
-                            </TableHead>
+                            <TableHead>Property</TableHead>
                             <TableHead>Value</TableHead>
                           </TableRow>
-                        </TableHeader>
+                        </TableHeader> */}
                         <TableBody>
                           {tableData.map((item) => (
                             <TableRow key={item.name}>
                               <TableCell>{item.status}</TableCell>
-                              <TableCell className="font-medium">
-                                {item.name}
+                              <TableCell>{item.name}</TableCell>
+                              <TableCell className="break-all">
+                                {item.name === 'og:image' ||
+                                item.name === 'twitter:image' ||
+                                item.name === 'og:url' ? (
+                                  <Link
+                                    href={item.value}
+                                    className="hover:underline"
+                                    target="_blank"
+                                  >
+                                    {item.value}
+                                  </Link>
+                                ) : (
+                                  item.value
+                                )}
                               </TableCell>
-                              <TableCell>{item.value}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>

@@ -24,7 +24,7 @@ export default function RootLayout({
             <div className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-white lg:dark:bg-neutral-800">
               <Header />
               <main className="mx-auto w-full rounded-lg lg:pb-2 lg:pr-2 lg:pt-2">
-                <div className="mx-auto w-full rounded-lg lg:flex lg:min-h-full lg:justify-center lg:bg-background">
+                <div className="mx-auto w-full rounded-lg lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
                   {children}
                 </div>
               </main>

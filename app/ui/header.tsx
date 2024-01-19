@@ -1,6 +1,8 @@
 'use client'
 
+import { Badge } from '@/app/ui/components/Badge'
 import { Button } from '@/app/ui/components/Button'
+import { Separator } from '@/app/ui/components/Separator'
 import {
   Sheet,
   SheetClose,
@@ -9,7 +11,7 @@ import {
 } from '@/app/ui/components/Sheet'
 import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
-import { Globe, MenuIcon, MonitorCheck, Zap } from 'lucide-react'
+import { BookText, Globe, MenuIcon, MonitorCheck, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -138,12 +140,12 @@ export default function Header() {
       </div>
       {/* Desktop */}
       <div className="hidden h-full w-full flex-col items-start justify-between lg:flex">
-        <div className="flex w-full flex-col items-start justify-start gap-8">
+        <div className="flex w-full flex-col items-start justify-start gap-4">
           <div className="w-full pt-4">
             <Button variant="ghost" asChild>
               <Link
                 href="/"
-                className="flex !h-fit w-full items-center !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent"
+                className="flex !h-fit w-full items-center gap-2 hover:bg-accent"
               >
                 <PictorialMark className="w-12 fill-primary" />
                 <span className="text-base font-bold tracking-wide text-foreground">
@@ -152,58 +154,96 @@ export default function Header() {
               </Link>
             </Button>
           </div>
-          <div className="flex w-full flex-col items-start justify-start gap-1">
+
+          <Separator />
+
+          <div className="flex w-full flex-col items-start justify-start gap-2">
             <Button variant="ghost" asChild>
               <Link
                 href="/validator"
                 className={`${
                   pathname == '/validator'
-                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
-                    : ''
-                } flex w-full !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent`}
+                    ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                    : 'text-foreground hover:bg-accent'
+                } flex w-full !justify-start gap-2`}
               >
                 <MonitorCheck className="h-4 w-4" />
                 Validator
               </Link>
             </Button>
 
-            <Button variant="ghost" asChild>
-              <Link
-                href="/generator"
-                className={`${
-                  pathname == '/generator'
-                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
-                    : ''
-                } flex w-full !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent`}
-              >
-                <Zap className="h-4 w-4" />
-                Generator
-              </Link>
-            </Button>
-
-            <Button variant="ghost" asChild>
+            {/* <Button variant="ghost" asChild>
               <Link
                 href="/manager"
                 className={`${
                   pathname == '/manager'
-                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
-                    : ''
-                } flex w-full !justify-start gap-2 hover:bg-neutral-200 dark:hover:bg-accent`}
+                     ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                    : 'text-foreground hover:bg-accent'
+                } flex w-full !justify-start gap-2`}
               >
                 <Globe className="h-4 w-4" />
                 Manager
               </Link>
+            </Button> */}
+
+            {/* <Button variant="ghost" asChild>
+              <Link
+                href="/generator"
+                className={`${
+                  pathname == '/generator'
+                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                    : 'text-foreground hover:bg-accent'
+                } flex w-full !justify-start gap-2`}
+              >
+                     <Zap className="h-4 w-4" />
+                Generator
+              </Link>
+            </Button> */}
+
+            <Button
+              variant="ghost"
+              className={`${
+                pathname == '/generator'
+                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background'
+                  : ''
+              } flex w-full items-center !justify-between gap-2 text-foreground opacity-50 hover:bg-accent`}
+            >
+              <div className="flex items-center justify-start gap-2">
+                <Globe className="h-4 w-4" />
+                Manager
+              </div>
+              <Badge variant="secondary">Coming Soon</Badge>
             </Button>
 
+            <Button
+              variant="ghost"
+              className={`${
+                pathname == '/generator'
+                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background'
+                  : ''
+              } flex w-full items-center !justify-between gap-2 text-foreground opacity-50 hover:bg-accent`}
+            >
+              <div className="flex items-center justify-start gap-2">
+                <Zap className="h-4 w-4" />
+                Generator
+              </div>
+              <Badge variant="secondary">Coming Soon</Badge>
+            </Button>
+          </div>
+
+          <Separator />
+
+          <div className="flex w-full flex-col items-start justify-start gap-2">
             <Button variant="ghost" asChild>
               <Link
                 href="/blog"
                 className={`${
                   pathname == '/blog'
-                    ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
-                    : ''
-                } mt-6 w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
+                    ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                    : 'text-foreground hover:bg-accent'
+                } flex w-full !justify-start gap-2`}
               >
+                <BookText className="h-4 w-4" />
                 Blog
               </Link>
             </Button>
