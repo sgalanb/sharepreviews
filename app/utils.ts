@@ -137,6 +137,20 @@ export const getApexDomain = (url: string) => {
   return domain
 }
 
+export async function isImageValid(url: string) {
+  try {
+    const image = new Image()
+    image.src = url
+    await new Promise((resolve, reject) => {
+      image.onload = resolve
+      image.onerror = reject
+    })
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 export async function getImageSizeFromUrl(url: string) {
   try {
     const image = new Image()
@@ -147,7 +161,6 @@ export async function getImageSizeFromUrl(url: string) {
     })
     return { width: image.width, height: image.height }
   } catch (e) {
-    console.error(e)
     throw new Error('Error getting image size')
   }
 }

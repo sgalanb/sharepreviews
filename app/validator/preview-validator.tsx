@@ -14,11 +14,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/app/ui/components/DropdownMenu'
 
@@ -58,7 +53,7 @@ import {
   getUrlFromStringWithoutWWW,
 } from '@/app/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeft, MoreHorizontal, Plus, ShieldAlert } from 'lucide-react'
+import { ChevronLeft, MoreHorizontal, ShieldAlert } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -73,9 +68,11 @@ export default function PreviewValidator() {
   const {
     data: metatags,
     isLoading,
+    error,
   }: {
     data: ValidatedMetatagsType
     isLoading: boolean
+    error: any
   } = useSWR<any>(
     normalizedUrl && `/api/metatags/validate?url=${normalizedUrl}`,
     fetcher,
@@ -86,10 +83,14 @@ export default function PreviewValidator() {
 
   // Previews
   const getImageIsSquare = async () => {
-    const dimensions = await getImageSizeFromUrl(
-      metatags['og:image'] || metatags['twitter:image']
-    )
-    return dimensions.width === dimensions.height
+    try {
+      const dimensions = await getImageSizeFromUrl(
+        metatags['og:image'] || metatags['twitter:image']
+      )
+      return dimensions.width === dimensions.height
+    } catch (error) {
+      return false
+    }
   }
 
   const [isImageSquare, setIsImageSquare] = useState<boolean | undefined>(
@@ -313,96 +314,89 @@ export default function PreviewValidator() {
         isImageSquare === undefined))
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4 lg:p-12"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4 lg:p-12">
+      <Link
+        href="/validator"
+        className="flex items-center justify-center text-muted-foreground"
       >
-        <Link
-          href="/validator"
-          className="flex items-center justify-center text-muted-foreground"
-        >
-          <ChevronLeft className="ml-[-4px]" />
-          <span className="self-center text-sm">Validator</span>
-        </Link>
-        <div className="mb-4 flex w-full items-center justify-between">
-          <h1 className="line-clamp-4 break-all text-4xl font-extrabold tracking-tight">
-            {titleUrl || 'Preview Validator'}
-          </h1>
-          {/* <ProgressCircle
+        <ChevronLeft className="ml-[-4px]" />
+        <span className="self-center text-sm">Validator</span>
+      </Link>
+      <div className="mb-4 flex w-full items-center justify-between">
+        <h1 className="line-clamp-4 break-all text-4xl font-extrabold tracking-tight">
+          {titleUrl || 'Preview Validator'}
+        </h1>
+        {/* <ProgressCircle
           value={72}
           radius={28}
           strokeWidth={8}
           color="green"
           showAnimation
         /> */}
-        </div>
+      </div>
 
-        <div className="flex h-full w-full flex-col items-start justify-start gap-8">
-          <Tabs defaultValue="previews" className="w-full">
-            <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
-              <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
-                <ValidatorInput isLoading={!!isLoadingData} />
-              </div>
-              <div className="flex gap-2">
-                <TabsList className="grid w-full grid-cols-2 border lg:w-60">
-                  <TabsTrigger value="previews" className="h-full py-[5px]">
-                    Previews
-                  </TabsTrigger>
-                  <TabsTrigger value="metatags" className="h-full py-[5px]">
-                    Metatags
-                  </TabsTrigger>
-                </TabsList>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="aspect-square w-10 p-0 "
-                    >
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    className="w-48 p-2"
-                    align="end"
-                    sideOffset={8}
-                  >
-                    <DropdownMenuGroup>
-                      <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>
-                          <Plus className="mr-2 h-4 w-4" />
-                          <span>Add to project</span>
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent className="p-2">
-                            {/* TODO: Fetch projects and show them or show "no projects" text with button to create your first one */}
-                            <DropdownMenuItem>
-                              <span>Project 1</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <span>Project 2</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                              <Plus className="mr-2 h-4 w-4" />
-                              <span>New project</span>
-                            </DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                      <DropdownMenuItem>
-                        <ShieldAlert className="mr-2 h-4 w-4" />
-                        Report issue
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+      <div className="flex h-full w-full flex-col items-start justify-start gap-8">
+        <Tabs defaultValue="previews" className="w-full">
+          <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
+            <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
+              <ValidatorInput isLoading={!!isLoadingData} />
             </div>
-            {!isLoadingData && (
+            <div className="flex gap-2">
+              <TabsList className="grid w-full grid-cols-2 border lg:w-60">
+                <TabsTrigger value="previews" className="h-full py-[5px]">
+                  Previews
+                </TabsTrigger>
+                <TabsTrigger value="metatags" className="h-full py-[5px]">
+                  Metatags
+                </TabsTrigger>
+              </TabsList>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="aspect-square w-10 p-0 ">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-48 p-2"
+                  align="end"
+                  sideOffset={8}
+                >
+                  <DropdownMenuGroup>
+                    {/* <DropdownMenuSub>
+                      <DropdownMenuSubTrigger>
+                        <Plus className="mr-2 h-4 w-4" />
+                        <span>Add to project</span>
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent className="p-2">
+                          TODO: Fetch projects and show them or show "no projects" text with button to create your first one
+                          <DropdownMenuItem>
+                            <span>Project 1</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <span>Project 2</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>
+                            <Plus className="mr-2 h-4 w-4" />
+                            <span>New project</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub> */}
+                    <DropdownMenuItem>
+                      <ShieldAlert className="mr-2 h-4 w-4" />
+                      Report issue
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+          <AnimatePresence>
+            {!isLoadingData && !error && (
               <motion.div
+                key="previews"
                 className="mt-4 w-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -535,9 +529,9 @@ export default function PreviewValidator() {
                 </TabsContent>
               </motion.div>
             )}
-          </Tabs>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+          </AnimatePresence>
+        </Tabs>
+      </div>
+    </div>
   )
 }

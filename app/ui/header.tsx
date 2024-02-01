@@ -43,7 +43,7 @@ export default function Header() {
         isScrolled
           ? 'border-gray-500/10 dark:border-zinc-800'
           : 'border-transparent'
-      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-white lg:p-2 lg:dark:bg-neutral-800`}
+      } sticky top-0 z-50 col-span-1 w-full border-b bg-background transition-colors duration-200 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800`}
     >
       {/* Mobile */}
       <div className="mx-auto w-full max-w-screen-2xl px-4 lg:hidden">

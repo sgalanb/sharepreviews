@@ -4,12 +4,12 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* #fafafa neutral-50 */
-    --foreground: 0 0% 0%; /* #000000 */
+    --background: 0 0% 100%; /* #ffffff */
+    --foreground: 0 0% 4%; /* #0a0a0a neutral-950 */
     --card: 0 0% 100%; /* #ffffff */
-    --card-foreground: 0 0% 0%; /* #000000 */
+    --card-foreground: 0 0% 4%; /* #0a0a0a neutral-950 */
     --popover: 0 0% 100%; /* #ffffff */
-    --popover-foreground: 0 0% 0%; /* #000000 */
+    --popover-foreground: 0 0% 4%; /* #0a0a0a neutral-950 */
     --primary: 19 100% 58%; /* #ff6d2a */
     --primary-foreground: 0 0% 100%; /* #ffffff */
     --secondary: 0 0% 90%; /* #e5e5e5 neutral-200 */
