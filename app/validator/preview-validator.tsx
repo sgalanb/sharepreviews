@@ -2,13 +2,7 @@
 
 import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
 import { Button } from '@/app/ui/components/Button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/app/ui/components/Card'
+import { Card, CardContent, CardHeader } from '@/app/ui/components/Card'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,12 +11,12 @@ import {
   DropdownMenuTrigger,
 } from '@/app/ui/components/DropdownMenu'
 
-import { Label } from '@/app/ui/components/Label'
-import { Switch } from '@/app/ui/components/Switch'
 import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
   TableRow,
 } from '@/app/ui/components/Table'
 import {
@@ -31,6 +25,12 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/app/ui/components/Tabs'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/app/ui/components/Tooltip'
 import DiscordMockup from '@/app/ui/preview-mockups/discord-mockup'
 import FacebookMockup from '@/app/ui/preview-mockups/facebook-mockup'
 import LinkedInMockup from '@/app/ui/preview-mockups/linkedin-mockup'
@@ -53,7 +53,14 @@ import {
   getUrlFromStringWithoutWWW,
 } from '@/app/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeft, MoreHorizontal, ShieldAlert } from 'lucide-react'
+import {
+  AlertCircle,
+  Check,
+  ChevronLeft,
+  MoreHorizontal,
+  ShieldAlert,
+  XCircle,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -202,106 +209,125 @@ export default function PreviewValidator() {
     },
   ]
 
-  const tableData = [
+  interface TableDataType {
+    name: string
+    value: string
+    status: 'valid' | 'warning' | 'invalid'
+    message?: string
+    message_url?: string
+  }
+
+  const tableData: TableDataType[] = [
     {
       name: 'title',
       value: metatags?.title,
-      status: metatags?.title ? '✅' : '❌',
+      status: !metatags?.title
+        ? 'invalid'
+        : metatags?.title.length > 100
+          ? 'warning'
+          : 'valid',
+      message: 'Title is required.',
+      message_url: 'https://ogp.me/#metadata',
     },
     {
       name: 'description',
       value: metatags?.description,
-      status: metatags?.description ? '✅' : '❌',
+      status: 'invalid',
+      message: 'No description.',
+      message_url: 'https://ogp.me/#metadata',
     },
     {
       name: 'og:title',
       value: metatags?.['og:title'],
-      status: metatags?.['og:title'] ? '⚠️' : '❌',
+      status: 'warning',
+      message: 'Title need to be between 50 and 100 characters.',
+      message_url: 'https://ogp.me/#metadata',
     },
     {
       name: 'og:description',
       value: metatags?.['og:description'],
-      status: metatags?.['og:description'] ? '✅' : '❌',
+      status: 'invalid',
+      message: 'Description needs to be between 50 and 300 characters.',
     },
     {
       name: 'og:image',
       value: metatags?.['og:image'],
-      status: metatags?.['og:image'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'og:image:width',
       value: metatags?.['og:image:width'],
-      status: metatags?.['og:image:width'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'og:image:height',
       value: metatags?.['og:image:height'],
-      status: metatags?.['og:image:height'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'og:image:type',
       value: metatags?.['og:image:type'],
-      status: metatags?.['og:image:type'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'og:url',
       value: metatags?.['og:url'],
-      status: metatags?.['og:url'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'og:site_name',
       value: metatags?.['og:site_name'],
-      status: metatags?.['og:site_name'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'og:type',
       value: metatags?.['og:type'],
-      status: metatags?.['og:type'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:title',
       value: metatags?.['twitter:title'],
-      status: metatags?.['twitter:title'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:description',
       value: metatags?.['twitter:description'],
-      status: metatags?.['twitter:description'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:card',
       value: metatags?.['twitter:card'],
-      status: metatags?.['twitter:card'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:image',
       value: metatags?.['twitter:image'],
-      status: metatags?.['twitter:image'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:image:width',
       value: metatags?.['twitter:image:width'],
-      status: metatags?.['twitter:image:width'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:image:height',
       value: metatags?.['twitter:image:height'],
-      status: metatags?.['twitter:image:height'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:image:type',
       value: metatags?.['twitter:image:type'],
-      status: metatags?.['twitter:image:type'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:site',
       value: metatags?.['twitter:site'],
-      status: metatags?.['twitter:site'] ? '✅' : '❌',
+      status: 'valid',
     },
     {
       name: 'twitter:creator',
       value: metatags?.['twitter:creator'],
-      status: metatags?.['twitter:creator'] ? '✅' : '❌',
+      status: 'valid',
     },
   ]
 
@@ -337,7 +363,8 @@ export default function PreviewValidator() {
 
       <div className="flex h-full w-full flex-col items-start justify-start gap-8">
         <Tabs defaultValue="previews" className="w-full">
-          <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
+          {/* TODO: Make this div sticky */}
+          <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-2">
             <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
               <ValidatorInput isLoading={!!isLoadingData} />
             </div>
@@ -397,7 +424,7 @@ export default function PreviewValidator() {
             {!isLoadingData && !error && (
               <motion.div
                 key="previews"
-                className="mt-4 w-full"
+                className="mt-6 w-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -431,8 +458,9 @@ export default function PreviewValidator() {
                           <span className="h-[1px] w-full bg-border" />
                         </CardHeader>
                         <CardContent className="flex h-full flex-col items-center justify-between p-4">
-                          {item.title === 'Twitter/X' &&
-                          twitterPreview === 'web' ? (
+                          {/* Uncomment code if Twitter app previews differ from web previews (again) */}
+                          {item.title === 'Twitter/X' ? (
+                            //&& twitterPreview === 'web'
                             <TwitterWebMockup
                               metatags={metatags}
                               normalizedUrl={normalizedUrl || ''}
@@ -440,7 +468,7 @@ export default function PreviewValidator() {
                           ) : (
                             item.previewComponent
                           )}
-                          {item.title === 'Twitter/X' &&
+                          {/* {item.title === 'Twitter/X' &&
                             metatags &&
                             (metatags['twitter:image'] ||
                               metatags['og:image']) &&
@@ -479,7 +507,7 @@ export default function PreviewValidator() {
                                   Web
                                 </Label>
                               </div>
-                            )}
+                            )} */}
                         </CardContent>
                       </Card>
                     ))}
@@ -487,40 +515,118 @@ export default function PreviewValidator() {
                 </TabsContent>
                 <TabsContent value="metatags">
                   <Card>
-                    <CardHeader>
-                      <CardTitle>Metatags</CardTitle>
-                      <CardDescription>5 errors, 2 warnings</CardDescription>
-                    </CardHeader>
-                    <CardContent>
+                    <CardContent className="p-0">
                       <Table>
-                        {/* <TableHeader>
+                        <TableHeader>
                           <TableRow>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Property</TableHead>
+                            <TableHead className="px-2.5"></TableHead>
+                            <TableHead className="min-w-52">Property</TableHead>
                             <TableHead>Value</TableHead>
                           </TableRow>
-                        </TableHeader> */}
+                        </TableHeader>
                         <TableBody>
                           {tableData.map((item) => (
-                            <TableRow key={item.name}>
-                              <TableCell>{item.status}</TableCell>
-                              <TableCell>{item.name}</TableCell>
-                              <TableCell className="break-all">
-                                {item.name === 'og:image' ||
-                                item.name === 'twitter:image' ||
-                                item.name === 'og:url' ? (
-                                  <Link
-                                    href={item.value}
-                                    className="hover:underline"
-                                    target="_blank"
+                            <>
+                              <TableRow
+                                key={item.name}
+                                className={`${
+                                  item.status !== 'valid' && item.message
+                                    ? 'border-b-0'
+                                    : ''
+                                }`}
+                              >
+                                <TableCell className="p-0 py-4 pl-4">
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        {item.status === 'valid' ? (
+                                          <Check className="h-5 w-5 stroke-green-500" />
+                                        ) : item.status === 'warning' ? (
+                                          <AlertCircle className="h-5 w-5 stroke-yellow-500" />
+                                        ) : (
+                                          <XCircle className="h-5 w-5 stroke-destructive" />
+                                        )}
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <span>
+                                          {item.status === 'valid'
+                                            ? 'Valid'
+                                            : item.status === 'warning'
+                                              ? 'Warning'
+                                              : 'Invalid'}
+                                        </span>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {item.name}
+                                </TableCell>
+                                <TableCell className="break-all">
+                                  {item.name === 'og:image' ||
+                                  item.name === 'twitter:image' ||
+                                  item.name === 'og:url' ? (
+                                    <Link
+                                      href={item.value}
+                                      className="text-blue-500 hover:underline"
+                                      target="_blank"
+                                    >
+                                      {item.value}
+                                    </Link>
+                                  ) : (
+                                    <span className="text-muted-foreground">
+                                      {item.value}
+                                    </span>
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                              {item.status === 'warning' && item.message && (
+                                <TableRow className="w-full border-0 border-b">
+                                  <TableCell
+                                    colSpan={3}
+                                    className="p-0 px-4 pb-4"
                                   >
-                                    {item.value}
-                                  </Link>
-                                ) : (
-                                  item.value
-                                )}
-                              </TableCell>
-                            </TableRow>
+                                    <div className="flex justify-start gap-2 rounded-sm bg-yellow-500/30 p-4">
+                                      {item.message}
+                                      {item.message_url && (
+                                        <Link
+                                          href={item.message_url}
+                                          target="_blank"
+                                          className=""
+                                        >
+                                          <span className="underline underline-offset-2 hover:opacity-80">
+                                            Learn more
+                                          </span>
+                                        </Link>
+                                      )}
+                                    </div>
+                                  </TableCell>
+                                </TableRow>
+                              )}
+                              {item.status === 'invalid' && item.message && (
+                                <TableRow className="w-full border-0 border-b">
+                                  <TableCell
+                                    colSpan={3}
+                                    className="p-0 px-4 pb-4"
+                                  >
+                                    <div className="flex justify-start gap-2 rounded-sm bg-destructive/30 p-4">
+                                      {item.message}
+                                      {item.message_url && (
+                                        <Link
+                                          href={item.message_url}
+                                          target="_blank"
+                                          className=""
+                                        >
+                                          <span className="underline underline-offset-2 hover:opacity-80">
+                                            Learn more
+                                          </span>
+                                        </Link>
+                                      )}
+                                    </div>
+                                  </TableCell>
+                                </TableRow>
+                              )}
+                            </>
                           ))}
                         </TableBody>
                       </Table>
