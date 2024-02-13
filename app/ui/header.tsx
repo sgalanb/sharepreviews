@@ -148,7 +148,7 @@ export default function Header() {
                 className="flex !h-fit w-full items-center gap-2 hover:bg-accent"
               >
                 <PictorialMark className="w-12 fill-primary" />
-                <span className="text-base font-bold tracking-wide text-foreground">
+                <span className="text-base font-semibold text-foreground">
                   sharepreviews
                 </span>
               </Link>

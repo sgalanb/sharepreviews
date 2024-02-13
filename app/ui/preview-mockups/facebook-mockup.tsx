@@ -1,29 +1,53 @@
+'use client'
+
 import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
 import EmptyMockup from '@/app/ui/preview-mockups/empty-mockup'
-import { getDomainWithoutWWW } from '@/app/utils'
+import { getDomainWithoutWWW, getImageSizeFromUrl } from '@/app/utils'
+import { useEffect, useState } from 'react'
 
 export default function FacebookMockup({
   metatags,
   normalizedUrl,
-  isSquare = false,
 }: {
   metatags?: ValidatedMetatagsType
   normalizedUrl: string
-  isSquare?: boolean
 }) {
   const isValid =
     metatags &&
-    (metatags.title || metatags['og:title'] || metatags['twitter:title'])
+    (metatags.title.value ||
+      metatags['og:title'].value ||
+      metatags['twitter:title'].value)
+
+  const [isSquare, setIsSquare] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (
+      metatags &&
+      metatags['twitter:card'].value === 'summary' &&
+      (metatags['og:image'].value || metatags['twitter:image'].value)
+    ) {
+      getImageSizeFromUrl(
+        metatags['og:image'].value || metatags['twitter:image'].value
+      ).then((size) => {
+        if (size) {
+          setIsSquare(size.width === size.height)
+        }
+      })
+    }
+  }, [metatags])
 
   return (
     <>
       {isValid ? (
         isSquare ? (
           <div className="flex max-h-32 w-full cursor-pointer border-b border-t border-[#cfd9de] font-['Helvetica'] antialiased dark:border-[#2f3336]">
-            {(metatags['og:image'] || metatags['twitter:image']) && (
+            {(metatags['og:image'].value ||
+              metatags['twitter:image'].value) && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={metatags['og:image'] || metatags['twitter:image']}
+                src={
+                  metatags['og:image'].value || metatags['twitter:image'].value
+                }
                 alt="Preview"
                 className="aspect-square w-full max-w-32 object-cover"
               />
@@ -33,27 +57,30 @@ export default function FacebookMockup({
                 {getDomainWithoutWWW(normalizedUrl ?? '')}
               </span>
               <span className="pointer-events-none line-clamp-1 select-none break-words text-[17px] font-semibold leading-5 text-black dark:text-[#E4E6EA]">
-                {metatags['twitter:title'] ||
-                  metatags['og:title'] ||
-                  metatags.title}
+                {metatags['twitter:title'].value ||
+                  metatags['og:title'].value ||
+                  metatags.title.value}
               </span>
-              {(metatags['og:description'] ||
-                metatags['twitter:description'] ||
-                metatags.description) && (
+              {(metatags['og:description'].value ||
+                metatags['twitter:description'].value ||
+                metatags.description.value) && (
                 <span className="pointer-events-none line-clamp-2 select-none break-words text-[15px] leading-5 text-[#65676b] dark:text-[#b0b3b8]">
-                  {metatags['og:description'] ||
-                    metatags['twitter:description'] ||
-                    metatags.description}
+                  {metatags['og:description'].value ||
+                    metatags['twitter:description'].value ||
+                    metatags.description.value}
                 </span>
               )}
             </div>
           </div>
         ) : (
           <div className="relative w-full cursor-pointer font-['Helvetica'] antialiased shadow-[0_1px_2px_rgb(0_0_0_/_0.2)]">
-            {(metatags['og:image'] || metatags['twitter:image']) && (
+            {(metatags['og:image'].value ||
+              metatags['twitter:image'].value) && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={metatags['og:image'] || metatags['twitter:image']}
+                src={
+                  metatags['og:image'].value || metatags['twitter:image'].value
+                }
                 alt="Preview"
                 className="aspect-[1.91/1] w-full object-cover"
               />
@@ -63,13 +90,13 @@ export default function FacebookMockup({
                 {getDomainWithoutWWW(normalizedUrl ?? '')}
               </span>
               <span className="mt-1.5 line-clamp-1 text-ellipsis text-left text-base font-semibold leading-5 text-[#1d2129] dark:text-[#e4e6eb]">
-                {metatags['og:title'] || metatags.title}
+                {metatags['og:title'].value || metatags.title.value}
               </span>
-              {(metatags['og:description'] ||
-                metatags['twitter:description'] ||
-                metatags.description) && (
+              {(metatags['og:description'].value ||
+                metatags.description.value) && (
                 <span className="leading-[18px ] line-clamp-1 text-ellipsis text-left text-sm font-normal text-[#606770] dark:text-[#b0b3b8]">
-                  {metatags['og:description'] || metatags.description}
+                  {metatags['og:description'].value ||
+                    metatags.description.value}
                 </span>
               )}
             </div>

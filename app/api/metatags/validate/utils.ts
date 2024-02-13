@@ -1,3 +1,45 @@
+import {
+  validateDescriptionErrors,
+  validateDescriptionWarnings,
+  validateOgDescriptionErrors,
+  validateOgDescriptionWarnings,
+  validateOgImageErrors,
+  validateOgImageHeightErrors,
+  validateOgImageHeightWarnings,
+  validateOgImageTypeErrors,
+  validateOgImageTypeWarnings,
+  validateOgImageWarnings,
+  validateOgImageWidthErrors,
+  validateOgImageWidthWarnings,
+  validateOgSiteNameErrors,
+  validateOgSiteNameWarnings,
+  validateOgTitleErrors,
+  validateOgTitleWarnings,
+  validateOgTypeErrors,
+  validateOgTypeWarnings,
+  validateOgUrlErrors,
+  validateOgUrlWarnings,
+  validateTitleErrors,
+  validateTitleWarnings,
+  validateTwitterCardErrors,
+  validateTwitterCardWarnings,
+  validateTwitterCreatorErrors,
+  validateTwitterCreatorWarnings,
+  validateTwitterDescriptionErrors,
+  validateTwitterDescriptionWarnings,
+  validateTwitterImageErrors,
+  validateTwitterImageHeightErrors,
+  validateTwitterImageHeightWarnings,
+  validateTwitterImageTypeErrors,
+  validateTwitterImageTypeWarnings,
+  validateTwitterImageWarnings,
+  validateTwitterImageWidthErrors,
+  validateTwitterImageWidthWarnings,
+  validateTwitterSiteErrors,
+  validateTwitterSiteWarnings,
+  validateTwitterTitleErrors,
+  validateTwitterTitleWarnings,
+} from '@/app/api/metatags/validate/tag-validations'
 import { recordMetatags } from '@/app/lib/upstash'
 import { getRelativeUrl } from '@/app/utils'
 import he from 'he'
@@ -30,7 +72,7 @@ export const getHtml = async (url: string) => {
 
 export const getHeadChildNodes = (html: string) => {
   const ast = parse(html) // parse the html into AST format with node-html-parser
-  const metaTags = ast.querySelectorAll('meta').map(({ attributes }) => {
+  const metatags = ast.querySelectorAll('meta').map(({ attributes }) => {
     const property = attributes.property || attributes.name || attributes.href
     return {
       property,
@@ -46,10 +88,10 @@ export const getHeadChildNodes = (html: string) => {
     }
   })
 
-  return { metaTags, title, linkTags }
+  return { metatags, title, linkTags }
 }
 
-export type ValidatedMetatagsType = {
+export type SortedMetatagsType = {
   title: string
   description: string
   'og:title': string
@@ -73,7 +115,7 @@ export type ValidatedMetatagsType = {
   'twitter:creator': string
 }
 
-export const getMetaTags = async (url: string) => {
+export const getMetatags = async (url: string) => {
   const html = await getHtml(url)
   if (!html) {
     return {
@@ -100,14 +142,14 @@ export const getMetaTags = async (url: string) => {
     }
   }
 
-  const { metaTags, title: titleTag, linkTags } = getHeadChildNodes(html)
+  const { metatags, title: titleTag, linkTags } = getHeadChildNodes(html)
 
   let object: {
     [key: string]: string
   } = {}
 
-  for (let k in metaTags) {
-    let { property, content } = metaTags[k]
+  for (let k in metatags) {
+    let { property, content } = metatags[k]
 
     property && (object[property] = content && he.decode(content))
   }
@@ -118,8 +160,7 @@ export const getMetaTags = async (url: string) => {
     rel && (object[rel] = href)
   }
 
-  // Metatags to validate
-  const validatedMetatags: ValidatedMetatagsType = {
+  const sortedMetatags: SortedMetatagsType = {
     title: titleTag ?? '',
     description: object['description'] ?? '',
     'og:title': object['og:title'] ?? '',
@@ -147,5 +188,173 @@ export const getMetaTags = async (url: string) => {
     await recordMetatags(url, false)
   })
 
-  return validatedMetatags as ValidatedMetatagsType
+  return sortedMetatags
+}
+
+export type ValidatedMetatagType = {
+  value: string
+  errors: string[]
+  warnings: string[]
+  info_url: string
+}
+
+export type ValidatedMetatagsType = {
+  [key: string]: ValidatedMetatagType
+}
+
+export const getValidatedMetatags = async (url: string) => {
+  const metatags = await getMetatags(url)
+  const validatedMetatags: ValidatedMetatagsType = {
+    title: {
+      value: metatags.title,
+      errors: validateTitleErrors(metatags.title),
+      warnings: validateTitleWarnings(metatags.title),
+      info_url: '/blog/everything-you-should-know-about-social-meta-tags#title',
+    },
+    description: {
+      value: metatags.description,
+      errors: validateDescriptionErrors(metatags.description),
+      warnings: validateDescriptionWarnings(metatags.description),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#description',
+    },
+    'og:title': {
+      value: metatags['og:title'],
+      errors: validateOgTitleErrors(metatags['og:title']),
+      warnings: validateOgTitleWarnings(metatags['og:title']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-title',
+    },
+    'og:description': {
+      value: metatags['og:description'],
+      errors: validateOgDescriptionErrors(metatags['og:description']),
+      warnings: validateOgDescriptionWarnings(metatags['og:description']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-description',
+    },
+    'og:image': {
+      value: metatags['og:image'],
+      errors: await validateOgImageErrors(metatags['og:image']),
+      warnings: await validateOgImageWarnings(metatags['og:image']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-image',
+    },
+    'og:image:width': {
+      value: metatags['og:image:width'],
+      errors: validateOgImageWidthErrors(metatags['og:image:width']),
+      warnings: validateOgImageWidthWarnings(metatags['og:image:width']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-image-width',
+    },
+    'og:image:height': {
+      value: metatags['og:image:height'],
+      errors: validateOgImageHeightErrors(metatags['og:image:height']),
+      warnings: validateOgImageHeightWarnings(metatags['og:image:height']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-image-height',
+    },
+    'og:image:type': {
+      value: metatags['og:image:type'],
+      errors: validateOgImageTypeErrors(metatags['og:image:type']),
+      warnings: validateOgImageTypeWarnings(metatags['og:image:type']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-image-type',
+    },
+    'og:url': {
+      value: metatags['og:url'],
+      errors: validateOgUrlErrors(metatags['og:url']),
+      warnings: validateOgUrlWarnings(metatags['og:url']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-url',
+    },
+    'og:site_name': {
+      value: metatags['og:site_name'],
+      errors: validateOgSiteNameErrors(metatags['og:site_name']),
+      warnings: validateOgSiteNameWarnings(metatags['og:site_name']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-site_name',
+    },
+    'og:type': {
+      value: metatags['og:type'],
+      errors: validateOgTypeErrors(metatags['og:type']),
+      warnings: validateOgTypeWarnings(metatags['og:type']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#og-type',
+    },
+    'twitter:title': {
+      value: metatags['twitter:title'],
+      errors: validateTwitterTitleErrors(metatags['twitter:title']),
+      warnings: validateTwitterTitleWarnings(metatags['twitter:title']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-title',
+    },
+    'twitter:description': {
+      value: metatags['twitter:description'],
+      errors: validateTwitterDescriptionErrors(metatags['twitter:description']),
+      warnings: validateTwitterDescriptionWarnings(
+        metatags['twitter:description']
+      ),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-description',
+    },
+    'twitter:card': {
+      value: metatags['twitter:card'],
+      errors: validateTwitterCardErrors(metatags['twitter:card']),
+      warnings: validateTwitterCardWarnings(metatags['twitter:card']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-card',
+    },
+    'twitter:image': {
+      value: metatags['twitter:image'],
+      errors: await validateTwitterImageErrors(metatags['twitter:image']),
+      warnings: await validateTwitterImageWarnings(metatags['twitter:image']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-image',
+    },
+    'twitter:image:width': {
+      value: metatags['twitter:image:width'],
+      errors: validateTwitterImageWidthErrors(metatags['twitter:image:width']),
+      warnings: validateTwitterImageWidthWarnings(
+        metatags['twitter:image:width']
+      ),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-image-width',
+    },
+    'twitter:image:height': {
+      value: metatags['twitter:image:height'],
+      errors: validateTwitterImageHeightErrors(
+        metatags['twitter:image:height']
+      ),
+      warnings: validateTwitterImageHeightWarnings(
+        metatags['twitter:image:height']
+      ),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-image-height',
+    },
+    'twitter:image:type': {
+      value: metatags['twitter:image:type'],
+      errors: validateTwitterImageTypeErrors(metatags['twitter:image:type']),
+      warnings: validateTwitterImageTypeWarnings(
+        metatags['twitter:image:type']
+      ),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-image-type',
+    },
+    'twitter:site': {
+      value: metatags['twitter:site'],
+      errors: validateTwitterSiteErrors(metatags['twitter:site']),
+      warnings: validateTwitterSiteWarnings(metatags['twitter:site']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-site',
+    },
+    'twitter:creator': {
+      value: metatags['twitter:creator'],
+      errors: validateTwitterCreatorErrors(metatags['twitter:creator']),
+      warnings: validateTwitterCreatorWarnings(metatags['twitter:creator']),
+      info_url:
+        '/blog/everything-you-should-know-about-social-meta-tags#twitter-creator',
+    },
+  }
+
+  return validatedMetatags
 }

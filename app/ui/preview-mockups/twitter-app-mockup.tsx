@@ -2,19 +2,19 @@ import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
 import EmptyMockup from '@/app/ui/preview-mockups/empty-mockup'
 import { getDomainWithoutWWW } from '@/app/utils'
 
-export default function TwitterMockup({
+export default function TwitterAppMockup({
   metatags,
   normalizedUrl,
-  isSquare = false,
 }: {
   metatags?: ValidatedMetatagsType
   normalizedUrl: string
-  isSquare?: boolean
 }) {
   const isValid =
     metatags &&
-    metatags['twitter:card'] &&
-    (metatags['twitter:image'] || metatags['og:image'])
+    metatags['twitter:card'].value &&
+    (metatags['twitter:image'].value || metatags['og:image'].value)
+
+  const isSquare = metatags && metatags['twitter:card'].value === 'summary'
 
   return (
     <>
@@ -23,7 +23,9 @@ export default function TwitterMockup({
           <div className="flex max-h-32 w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={metatags['twitter:image'] || metatags['og:image']}
+              src={
+                metatags['twitter:image'].value || metatags['og:image'].value
+              }
               alt="Preview"
               className="aspect-square w-full max-w-32 rounded-l-2xl border-b border-l border-t border-[#cfd9de] object-cover dark:border-[#2f3336]"
             />
@@ -32,14 +34,14 @@ export default function TwitterMockup({
                 {getDomainWithoutWWW(normalizedUrl ?? '')}
               </span>
               <span className="pointer-events-none line-clamp-1 select-none break-words text-[15px] leading-5 text-black dark:text-white">
-                {metatags['twitter:title'] ||
-                  metatags['og:title'] ||
-                  metatags.title}
+                {metatags['twitter:title'].value ||
+                  metatags['og:title'].value ||
+                  metatags.title.value}
               </span>
               <span className="pointer-events-none line-clamp-2 select-none break-words text-[15px] leading-5 text-[#536471] dark:text-[#71767b]">
-                {metatags['twitter:description'] ||
-                  metatags['og:description'] ||
-                  metatags.description}
+                {metatags['twitter:description'].value ||
+                  metatags['og:description'].value ||
+                  metatags.description.value}
               </span>
             </div>
           </div>
@@ -54,7 +56,9 @@ export default function TwitterMockup({
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={metatags['twitter:image'] || metatags['og:image']}
+              src={
+                metatags['twitter:image'].value || metatags['og:image'].value
+              }
               alt="Preview"
               className="aspect-[1.91/1] w-full rounded-2xl border border-[#cfd9de] object-cover dark:border-[#38444d]"
             />

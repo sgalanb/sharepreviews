@@ -1,21 +1,42 @@
+'use client'
+
 import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
 import EmptyMockup from '@/app/ui/preview-mockups/empty-mockup'
+import { getImageSizeFromUrl } from '@/app/utils'
+import { useEffect, useState } from 'react'
 
 export default function TelegramMockup({
   metatags,
   normalizedUrl,
-  isSquare = false,
 }: {
   metatags?: ValidatedMetatagsType
   normalizedUrl: string
-  isSquare?: boolean
 }) {
   const isValid =
     metatags &&
-    (metatags.title || metatags['og:title'] || metatags['twitter:title']) &&
-    (metatags.description ||
-      metatags['og:description'] ||
-      metatags['twitter:description'])
+    (metatags.title.value ||
+      metatags['og:title'].value ||
+      metatags['twitter:title'].value) &&
+    (metatags.description.value ||
+      metatags['og:description'].value ||
+      metatags['twitter:description'].value)
+
+  const [isSquare, setIsSquare] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (
+      metatags &&
+      (metatags['og:image'].value || metatags['twitter:image'].value)
+    ) {
+      getImageSizeFromUrl(
+        metatags['og:image'].value || metatags['twitter:image'].value
+      ).then((size) => {
+        if (size) {
+          setIsSquare(size.width === size.height)
+        }
+      })
+    }
+  }, [metatags])
 
   return (
     <>
@@ -32,26 +53,30 @@ export default function TelegramMockup({
             </span>
             <div className="my-1 flex w-full cursor-pointer items-center justify-between rounded-[4px] border-l-[3px] border-[#5ca853] bg-[#5ca8531a] py-1 pl-1.5 pr-1.5 hover:bg-[rgba(92,168,83,0.2)] dark:border-white dark:bg-[#ffffff1a] dark:hover:bg-[rgba(255,255,255,0.2)]">
               <div className="flex flex-col">
-                {metatags['og:site_name'] && (
+                {metatags['og:site_name'].value && (
                   <span className="text-sm font-medium leading-[18px] text-[#5ca853] hover:underline dark:text-white">
-                    {metatags['og:site_name']}
+                    {metatags['og:site_name'].value}
                   </span>
                 )}
                 <span className="cursor-pointer break-words text-sm font-medium leading-[18px] text-black dark:text-white">
-                  {metatags['og:title'] ||
-                    metatags['twitter:title'] ||
-                    metatags.title}
+                  {metatags['og:title'].value ||
+                    metatags['twitter:title'].value ||
+                    metatags.title.value}
                 </span>
                 <span className="whitespace-pre-line text-sm font-normal leading-[18px] text-black dark:text-white">
-                  {metatags['og:description'] ||
-                    metatags['twitter:description'] ||
-                    metatags.description}
+                  {metatags['og:description'].value ||
+                    metatags['twitter:description'].value ||
+                    metatags.description.value}
                 </span>
               </div>
-              {(metatags['og:image'] || metatags['twitter:image']) && (
+              {(metatags['og:image'].value ||
+                metatags['twitter:image'].value) && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={metatags['og:image'] || metatags['twitter:image']}
+                  src={
+                    metatags['og:image'].value ||
+                    metatags['twitter:image'].value
+                  }
                   alt="Preview"
                   className="my-[3px] aspect-square max-h-12 w-full max-w-12 shrink-0 cursor-pointer rounded-[4px] object-cover"
                 />
@@ -69,25 +94,29 @@ export default function TelegramMockup({
               {normalizedUrl}
             </span>
             <div className="my-1 flex w-full cursor-pointer flex-col rounded-[4px] border-l-[3px] border-[#5ca853] bg-[#5ca8531a] py-1 pl-1.5 pr-1.5 hover:bg-[rgba(92,168,83,0.2)] dark:border-white dark:bg-[#ffffff1a] dark:hover:bg-[rgba(255,255,255,0.2)]">
-              {metatags['og:site_name'] && (
+              {metatags['og:site_name'].value && (
                 <span className="text-sm font-medium leading-[18px] text-[#5ca853] hover:underline dark:text-white">
-                  {metatags['og:site_name']}
+                  {metatags['og:site_name'].value}
                 </span>
               )}
               <span className="cursor-pointer break-words text-sm font-medium leading-[18px] text-black dark:text-white">
-                {metatags['og:title'] ||
-                  metatags['twitter:title'] ||
-                  metatags.title}
+                {metatags['og:title'].value ||
+                  metatags['twitter:title'].value ||
+                  metatags.title.value}
               </span>
               <span className="whitespace-pre-line text-sm font-normal leading-[18px] text-black dark:text-white">
-                {metatags['og:description'] ||
-                  metatags['twitter:description'] ||
-                  metatags.description}
+                {metatags['og:description'].value ||
+                  metatags['twitter:description'].value ||
+                  metatags.description.value}
               </span>
-              {(metatags['og:image'] || metatags['twitter:image']) && (
+              {(metatags['og:image'].value ||
+                metatags['twitter:image'].value) && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={metatags['og:image'] || metatags['twitter:image']}
+                  src={
+                    metatags['og:image'].value ||
+                    metatags['twitter:image'].value
+                  }
                   alt="Preview"
                   className="my-[3px] aspect-[1.91/1] w-full cursor-pointer rounded-[4px] object-cover"
                 />

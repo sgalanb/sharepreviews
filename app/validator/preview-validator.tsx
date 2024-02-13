@@ -1,6 +1,9 @@
 'use client'
 
-import { ValidatedMetatagsType } from '@/app/api/metatags/validate/utils'
+import {
+  ValidatedMetatagType,
+  ValidatedMetatagsType,
+} from '@/app/api/metatags/validate/utils'
 import { Button } from '@/app/ui/components/Button'
 import { Card, CardContent, CardHeader } from '@/app/ui/components/Card'
 import {
@@ -10,7 +13,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/app/ui/components/DropdownMenu'
-
 import {
   Table,
   TableBody,
@@ -19,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/app/ui/components/Table'
+
 import {
   Tabs,
   TabsContent,
@@ -36,7 +39,6 @@ import FacebookMockup from '@/app/ui/preview-mockups/facebook-mockup'
 import LinkedInMockup from '@/app/ui/preview-mockups/linkedin-mockup'
 import SlackMockup from '@/app/ui/preview-mockups/slack-mockup'
 import TelegramMockup from '@/app/ui/preview-mockups/telegram-mockup'
-import TwitterMockup from '@/app/ui/preview-mockups/twitter-mockup'
 import TwitterWebMockup from '@/app/ui/preview-mockups/twitter-web-mockup'
 import WhatsAppMockup from '@/app/ui/preview-mockups/whatsapp-mockup'
 import Discord from '@/app/ui/svgs/social-icons/Discord'
@@ -88,43 +90,27 @@ export default function PreviewValidator() {
     }
   )
 
-  // Previews
-  const getImageIsSquare = async () => {
-    try {
-      const dimensions = await getImageSizeFromUrl(
-        metatags['og:image'] || metatags['twitter:image']
-      )
-      return dimensions.width === dimensions.height
-    } catch (error) {
-      return false
-    }
-  }
-
-  const [isImageSquare, setIsImageSquare] = useState<boolean | undefined>(
-    undefined
-  )
+  const [isImageSquare, setIsImageSquare] = useState<boolean>(false)
 
   useEffect(() => {
-    if (metatags && metatags['og:image']) {
-      getImageIsSquare().then((result) => {
-        setIsImageSquare(result)
+    if (
+      metatags &&
+      (metatags['og:image'].value || metatags['twitter:image'].value)
+    ) {
+      getImageSizeFromUrl(
+        metatags['og:image'].value || metatags['twitter:image'].value
+      ).then((size) => {
+        if (size) {
+          setIsImageSquare(size.width === size.height)
+        }
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metatags])
 
   const previewsData = [
     {
       title: 'Twitter/X',
       icon: <X className="h-4 w-4 shrink-0 dark:invert" />,
-      previewComponent: (
-        <TwitterMockup
-          metatags={metatags}
-          normalizedUrl={normalizedUrl || ''}
-          // Use twitter:card to determine if square
-          isSquare={metatags && metatags['twitter:card'] === 'summary'}
-        />
-      ),
     },
     {
       title: 'Facebook',
@@ -133,12 +119,6 @@ export default function PreviewValidator() {
         <FacebookMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          // Use twitter:card and image height and width to determine if square
-          isSquare={
-            metatags &&
-            metatags['twitter:card'] === 'summary' &&
-            !!isImageSquare
-          }
         />
       ),
     },
@@ -149,8 +129,6 @@ export default function PreviewValidator() {
         <LinkedInMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          // Use image height and width to determine if square
-          isSquare={!!isImageSquare}
         />
       ),
     },
@@ -158,30 +136,13 @@ export default function PreviewValidator() {
       title: 'Slack',
       icon: <Slack className="h-5 w-5 shrink-0" />,
       previewComponent: (
-        <SlackMockup
-          metatags={metatags}
-          normalizedUrl={normalizedUrl || ''}
-          // Use twitter:card or image height and width to determine if square
-          isSquare={
-            metatags &&
-            (metatags['twitter:card'] === 'summary' || !!isImageSquare)
-          }
-        />
+        <SlackMockup metatags={metatags} normalizedUrl={normalizedUrl || ''} />
       ),
     },
     {
       title: 'Discord',
       icon: <Discord className="h-5 w-5 shrink-0" />,
-      previewComponent: (
-        <DiscordMockup
-          metatags={metatags}
-          // Use twitter:card or image height and width to determine if square
-          isSquare={
-            metatags &&
-            (metatags['twitter:card'] === 'summary' || !!isImageSquare)
-          }
-        />
-      ),
+      previewComponent: <DiscordMockup metatags={metatags} />,
     },
     {
       title: 'Telegram',
@@ -190,8 +151,6 @@ export default function PreviewValidator() {
         <TelegramMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          // Use image height and width to determine if square
-          isSquare={!!isImageSquare}
         />
       ),
     },
@@ -202,142 +161,14 @@ export default function PreviewValidator() {
         <WhatsAppMockup
           metatags={metatags}
           normalizedUrl={normalizedUrl || ''}
-          // Use image height and width to determine if square
-          isSquare={!!isImageSquare}
         />
       ),
     },
   ]
 
-  interface TableDataType {
-    name: string
-    value: string
-    status: 'valid' | 'warning' | 'invalid'
-    message?: string
-    message_url?: string
-  }
+  // const [twitterPreview, setTwitterPreview] = useState<'app' | 'web'>('app')
 
-  const tableData: TableDataType[] = [
-    {
-      name: 'title',
-      value: metatags?.title,
-      status: !metatags?.title
-        ? 'invalid'
-        : metatags?.title.length > 100
-          ? 'warning'
-          : 'valid',
-      message: 'Title is required.',
-      message_url: 'https://ogp.me/#metadata',
-    },
-    {
-      name: 'description',
-      value: metatags?.description,
-      status: 'invalid',
-      message: 'No description.',
-      message_url: 'https://ogp.me/#metadata',
-    },
-    {
-      name: 'og:title',
-      value: metatags?.['og:title'],
-      status: 'warning',
-      message: 'Title need to be between 50 and 100 characters.',
-      message_url: 'https://ogp.me/#metadata',
-    },
-    {
-      name: 'og:description',
-      value: metatags?.['og:description'],
-      status: 'invalid',
-      message: 'Description needs to be between 50 and 300 characters.',
-    },
-    {
-      name: 'og:image',
-      value: metatags?.['og:image'],
-      status: 'valid',
-    },
-    {
-      name: 'og:image:width',
-      value: metatags?.['og:image:width'],
-      status: 'valid',
-    },
-    {
-      name: 'og:image:height',
-      value: metatags?.['og:image:height'],
-      status: 'valid',
-    },
-    {
-      name: 'og:image:type',
-      value: metatags?.['og:image:type'],
-      status: 'valid',
-    },
-    {
-      name: 'og:url',
-      value: metatags?.['og:url'],
-      status: 'valid',
-    },
-    {
-      name: 'og:site_name',
-      value: metatags?.['og:site_name'],
-      status: 'valid',
-    },
-    {
-      name: 'og:type',
-      value: metatags?.['og:type'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:title',
-      value: metatags?.['twitter:title'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:description',
-      value: metatags?.['twitter:description'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:card',
-      value: metatags?.['twitter:card'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:image',
-      value: metatags?.['twitter:image'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:image:width',
-      value: metatags?.['twitter:image:width'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:image:height',
-      value: metatags?.['twitter:image:height'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:image:type',
-      value: metatags?.['twitter:image:type'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:site',
-      value: metatags?.['twitter:site'],
-      status: 'valid',
-    },
-    {
-      name: 'twitter:creator',
-      value: metatags?.['twitter:creator'],
-      status: 'valid',
-    },
-  ]
-
-  const [twitterPreview, setTwitterPreview] = useState<'app' | 'web'>('app')
-
-  const isLoadingData =
-    inputUrl &&
-    (isLoading ||
-      ((metatags['og:image'] || metatags['twitter:image']) &&
-        isImageSquare === undefined))
+  const isLoadingData = inputUrl && isLoading
 
   return (
     <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4 lg:p-12">
@@ -443,7 +274,7 @@ export default function PreviewValidator() {
                           item.title === 'Twitter/X' &&
                           !isImageSquare &&
                           metatags &&
-                          metatags['twitter:card'] === 'summary'
+                          metatags['twitter:card'].value === 'summary'
                             ? 'col-span-2'
                             : ''
                         } flex flex-col rounded-md`}
@@ -466,6 +297,11 @@ export default function PreviewValidator() {
                               normalizedUrl={normalizedUrl || ''}
                             />
                           ) : (
+                            // twitterPreview === 'app'
+                            // <TwitterAppMockup
+                            //   metatags={metatags}
+                            //   normalizedUrl={normalizedUrl || ''}
+                            // />
                             item.previewComponent
                           )}
                           {/* {item.title === 'Twitter/X' &&
@@ -520,114 +356,162 @@ export default function PreviewValidator() {
                         <TableHeader>
                           <TableRow>
                             <TableHead className="px-2.5"></TableHead>
-                            <TableHead className="min-w-52">Property</TableHead>
-                            <TableHead>Value</TableHead>
+                            <TableHead className="min-w-40 lg:min-w-64">
+                              Property
+                            </TableHead>
+                            <TableHead className="w-full">Value</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {tableData.map((item) => (
-                            <>
-                              <TableRow
-                                key={item.name}
-                                className={`${
-                                  item.status !== 'valid' && item.message
-                                    ? 'border-b-0'
-                                    : ''
-                                }`}
-                              >
-                                <TableCell className="p-0 py-4 pl-4">
-                                  <TooltipProvider>
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        {item.status === 'valid' ? (
-                                          <Check className="h-5 w-5 stroke-green-500" />
-                                        ) : item.status === 'warning' ? (
-                                          <AlertCircle className="h-5 w-5 stroke-yellow-500" />
-                                        ) : (
-                                          <XCircle className="h-5 w-5 stroke-destructive" />
-                                        )}
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <span>
-                                          {item.status === 'valid'
-                                            ? 'Valid'
-                                            : item.status === 'warning'
-                                              ? 'Warning'
-                                              : 'Invalid'}
-                                        </span>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                </TableCell>
-                                <TableCell className="font-medium">
-                                  {item.name}
-                                </TableCell>
-                                <TableCell className="break-all">
-                                  {item.name === 'og:image' ||
-                                  item.name === 'twitter:image' ||
-                                  item.name === 'og:url' ? (
-                                    <Link
-                                      href={item.value}
-                                      className="text-blue-500 hover:underline"
-                                      target="_blank"
+                          {Object.entries(metatags).map(
+                            ([key, item]: [string, ValidatedMetatagType]) => (
+                              <>
+                                <TableRow
+                                  key={key}
+                                  className={`${
+                                    item.errors.length > 0 ||
+                                    item.warnings.length > 0
+                                      ? 'border-b-0'
+                                      : ''
+                                  }`}
+                                >
+                                  <TableCell className="p-0 py-4 pl-4">
+                                    <TooltipProvider>
+                                      <Tooltip>
+                                        <TooltipTrigger asChild>
+                                          {item.errors.length === 0 &&
+                                          item.warnings.length === 0 ? (
+                                            <Check className="h-5 w-5 stroke-green-500" />
+                                          ) : item.warnings.length === 0 ? (
+                                            <XCircle className="h-5 w-5 stroke-destructive" />
+                                          ) : (
+                                            <AlertCircle className="h-5 w-5 stroke-yellow-500" />
+                                          )}
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                          <span>
+                                            {item.errors.length === 0 &&
+                                            item.warnings.length === 0
+                                              ? 'Valid'
+                                              : item.warnings.length === 0
+                                                ? 'Invalid'
+                                                : 'Warning'}
+                                          </span>
+                                        </TooltipContent>
+                                      </Tooltip>
+                                    </TooltipProvider>
+                                  </TableCell>
+                                  <TableCell className="font-medium">
+                                    {key}
+                                  </TableCell>
+                                  <TableCell className="break-all">
+                                    {key === 'og:image' ||
+                                    key === 'twitter:image' ? (
+                                      <TooltipProvider>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Link
+                                              href={item.value}
+                                              className="text-blue-500 hover:underline"
+                                              target="_blank"
+                                            >
+                                              {item.value}
+                                            </Link>
+                                          </TooltipTrigger>
+                                          <TooltipContent className="py-3">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                              src={item.value}
+                                              alt=""
+                                              className="w-64"
+                                              onError={(e) => {
+                                                e.currentTarget.src = ''
+                                                e.currentTarget.alt =
+                                                  'Couldn’t load image'
+                                              }}
+                                            />
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </TooltipProvider>
+                                    ) : key === 'og:url' ? (
+                                      <Link
+                                        href={item.value}
+                                        className="text-blue-500 hover:underline"
+                                        target="_blank"
+                                      >
+                                        {item.value}
+                                      </Link>
+                                    ) : (
+                                      <span className="text-muted-foreground">
+                                        {item.value}
+                                      </span>
+                                    )}
+                                  </TableCell>
+                                </TableRow>
+                                {item.errors.map((error: string, index) => (
+                                  <TableRow
+                                    className={`${
+                                      item.warnings.length === 0 &&
+                                      index === item.errors.length - 1
+                                        ? 'border-0 border-b'
+                                        : 'border-0'
+                                    } w-full`}
+                                    key={index}
+                                  >
+                                    <TableCell
+                                      colSpan={3}
+                                      className="p-0 px-4 pb-4"
                                     >
-                                      {item.value}
-                                    </Link>
-                                  ) : (
-                                    <span className="text-muted-foreground">
-                                      {item.value}
-                                    </span>
-                                  )}
-                                </TableCell>
-                              </TableRow>
-                              {item.status === 'warning' && item.message && (
-                                <TableRow className="w-full border-0 border-b">
-                                  <TableCell
-                                    colSpan={3}
-                                    className="p-0 px-4 pb-4"
+                                      <div className="flex flex-col justify-start gap-2 rounded-sm border-2 border-destructive bg-destructive/20 px-4 py-3 md:flex-row">
+                                        {error}
+                                        {item.info_url && (
+                                          <Link
+                                            href={item.info_url}
+                                            target="_blank"
+                                            className=""
+                                          >
+                                            <span className="underline underline-offset-2 hover:opacity-80">
+                                              Learn more
+                                            </span>
+                                          </Link>
+                                        )}
+                                      </div>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                                {item.warnings.map((warning: string, index) => (
+                                  <TableRow
+                                    className={`${
+                                      index === item.warnings.length - 1
+                                        ? 'border-0 border-b'
+                                        : 'border-0'
+                                    } w-full`}
+                                    key={index}
                                   >
-                                    <div className="flex justify-start gap-2 rounded-sm bg-yellow-500/30 p-4">
-                                      {item.message}
-                                      {item.message_url && (
-                                        <Link
-                                          href={item.message_url}
-                                          target="_blank"
-                                          className=""
-                                        >
-                                          <span className="underline underline-offset-2 hover:opacity-80">
-                                            Learn more
-                                          </span>
-                                        </Link>
-                                      )}
-                                    </div>
-                                  </TableCell>
-                                </TableRow>
-                              )}
-                              {item.status === 'invalid' && item.message && (
-                                <TableRow className="w-full border-0 border-b">
-                                  <TableCell
-                                    colSpan={3}
-                                    className="p-0 px-4 pb-4"
-                                  >
-                                    <div className="flex justify-start gap-2 rounded-sm bg-destructive/30 p-4">
-                                      {item.message}
-                                      {item.message_url && (
-                                        <Link
-                                          href={item.message_url}
-                                          target="_blank"
-                                          className=""
-                                        >
-                                          <span className="underline underline-offset-2 hover:opacity-80">
-                                            Learn more
-                                          </span>
-                                        </Link>
-                                      )}
-                                    </div>
-                                  </TableCell>
-                                </TableRow>
-                              )}
-                            </>
-                          ))}
+                                    <TableCell
+                                      colSpan={3}
+                                      className="p-0 px-4 pb-4"
+                                    >
+                                      <div className="flex flex-col justify-start gap-2 rounded-sm border-2 border-yellow-500 bg-yellow-500/20 px-4 py-3 md:flex-row">
+                                        {warning}
+                                        {item.info_url && (
+                                          <Link
+                                            href={item.info_url}
+                                            target="_blank"
+                                            className=""
+                                          >
+                                            <span className="underline underline-offset-2 hover:opacity-80">
+                                              Learn more
+                                            </span>
+                                          </Link>
+                                        )}
+                                      </div>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </>
+                            )
+                          )}
                         </TableBody>
                       </Table>
                     </CardContent>

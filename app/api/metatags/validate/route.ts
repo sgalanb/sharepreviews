@@ -1,4 +1,4 @@
-import { getMetaTags } from '@/app/api/metatags/validate/utils'
+import { getValidatedMetatags } from '@/app/api/metatags/validate/utils'
 import { ratelimit } from '@/app/lib/upstash'
 import { isValidUrl } from '@/app/utils'
 import { ipAddress } from '@vercel/edge'
@@ -25,8 +25,8 @@ export async function GET(req: NextRequest) {
   }
   //}
 
-  const metatags = await getMetaTags(url)
-  return new Response(JSON.stringify(metatags), {
+  const validatedMetatags = await getValidatedMetatags(url)
+  return new Response(JSON.stringify(validatedMetatags), {
     status: 200,
     headers: {
       'Content-Type': 'application/json',

@@ -137,6 +137,18 @@ export const getApexDomain = (url: string) => {
   return domain
 }
 
+export async function isImageValidServer(url: string) {
+  try {
+    const res = await fetch(url)
+    const buff = await res.blob()
+
+    return buff.type.startsWith('image/')
+  } catch (e) {
+    return false
+  }
+}
+
+// client side only
 export async function isImageValid(url: string) {
   try {
     const image = new Image()
@@ -151,6 +163,7 @@ export async function isImageValid(url: string) {
   }
 }
 
+// client side only
 export async function getImageSizeFromUrl(url: string) {
   try {
     const image = new Image()
