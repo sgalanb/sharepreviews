@@ -16,7 +16,7 @@ export default function ValidatorLaunchScreen() {
         <TypographyH1 className="text-balance">Preview Validator</TypographyH1>
         <TypographyP className="mb-2 text-balance text-center">
           Check how your links look when shared. Validate you have the correct
-          meta tags in place.
+          metatags in place.
         </TypographyP>
         <ValidatorInput />
         <div className="mt-2 flex gap-4 text-muted-foreground">

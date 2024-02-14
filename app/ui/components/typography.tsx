@@ -17,12 +17,17 @@ export function TypographyH1({
 export function TypographyH2({
   children,
   className,
+  id,
 }: {
   children: React.ReactNode
   className?: string
+  id?: string
 }) {
   return (
-    <h2 className={`${className} text-3xl font-semibold tracking-tight`}>
+    <h2
+      className={`${className} text-3xl font-semibold tracking-tight`}
+      id={id}
+    >
       {children}
     </h2>
   )
@@ -63,7 +68,7 @@ export function TypographyP({
   children: React.ReactNode
   className?: string
 }) {
-  return <p className={`${className} leading-7`}>{children}</p>
+  return <p className={`${className} text-base leading-6`}>{children}</p>
 }
 
 export function TypographyMuted({

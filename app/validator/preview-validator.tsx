@@ -180,7 +180,7 @@ export default function PreviewValidator() {
         <span className="self-center text-sm">Validator</span>
       </Link>
       <div className="mb-4 flex w-full items-center justify-between">
-        <h1 className="line-clamp-4 break-all text-4xl font-extrabold tracking-tight">
+        <h1 className="line-clamp-4 break-all text-4xl font-extrabold leading-[3rem] tracking-tight">
           {titleUrl || 'Preview Validator'}
         </h1>
         {/* <ProgressCircle

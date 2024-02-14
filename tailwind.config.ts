@@ -129,6 +129,7 @@ const config: Config = {
         'tremor-full': '9999px',
       },
       boxShadow: {
+        'image-border': 'inset 0 0 0 1px rgba(0,0,0,.07)',
         // tremor theming variables
         // light
         'tremor-input': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
