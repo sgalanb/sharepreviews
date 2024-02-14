@@ -1,5 +1,10 @@
 import { Button } from '@/app/ui/components/Button'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Blog | sharepreviews',
+}
 
 export default function BlogPage() {
   return (

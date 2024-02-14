@@ -55,7 +55,7 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
           type="text"
           autoFocus
           defaultValue={urlWithoutWWWOrProtocol || ''}
-          placeholder="Enter your link URL"
+          placeholder="Enter a URL"
           aria-invalid="true"
           onChange={() => {
             setInputError(false)

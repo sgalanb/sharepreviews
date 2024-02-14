@@ -9,9 +9,18 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/app/ui/components/Sheet'
+import LaunchesInput from '@/app/ui/launches-input'
 import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
-import { BookText, Globe, MenuIcon, MonitorCheck, Zap } from 'lucide-react'
+import {
+  BookText,
+  Github,
+  Globe,
+  MenuIcon,
+  MonitorCheck,
+  Twitter,
+  Zap,
+} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -262,10 +271,32 @@ export default function Header() {
             </Button> */}
           </div>
         </div>
-        <div className="flex w-full flex-col gap-2">
-          <ThemeToggle />
-          <Button variant="outline">Sign In</Button>
-          <Button>Sign Up</Button>
+        <div className="flex w-full flex-col gap-4">
+          <LaunchesInput />
+          <Separator />
+          <div className="flex gap-2">
+            <ThemeToggle />
+            <Button variant="outline" asChild>
+              <Link
+                href="https://github.com/sgalanb/sharepreviews"
+                target="_blank"
+                className="w-full"
+              >
+                <Github className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link
+                href="https://x.com/sgalanb"
+                target="_blank"
+                className="w-full"
+              >
+                <Twitter className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          {/* <Button variant="outline">Sign In</Button>
+          <Button>Sign Up</Button> */}
         </div>
       </div>
     </header>

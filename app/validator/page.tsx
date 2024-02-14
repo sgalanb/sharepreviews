@@ -12,6 +12,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const inputUrl = searchParams?.url as string
 
+  if (!inputUrl) {
+    return {
+      title: 'Preview Validator | sharepreviews',
+    }
+  }
   return {
     title: `${inputUrl} | sharepreviews`,
   }

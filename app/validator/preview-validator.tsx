@@ -284,7 +284,7 @@ export default function PreviewValidator() {
                           <span className="h-[1px] w-full bg-border" />
                           <div className="flex items-center justify-center gap-2">
                             {item.icon}
-                            <p className="text-foreground">{`${item.title}`}</p>
+                            <p className="">{`${item.title}`}</p>
                           </div>
                           <span className="h-[1px] w-full bg-border" />
                         </CardHeader>
@@ -467,7 +467,6 @@ export default function PreviewValidator() {
                                         {item.info_url && (
                                           <Link
                                             href={item.info_url}
-                                            target="_blank"
                                             className=""
                                           >
                                             <span className="underline underline-offset-2 hover:opacity-80">
@@ -497,7 +496,6 @@ export default function PreviewValidator() {
                                         {item.info_url && (
                                           <Link
                                             href={item.info_url}
-                                            target="_blank"
                                             className=""
                                           >
                                             <span className="underline underline-offset-2 hover:opacity-80">

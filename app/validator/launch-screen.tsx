@@ -21,17 +21,17 @@ export default function ValidatorLaunchScreen() {
         <ValidatorInput />
         <div className="mt-2 flex gap-4 text-muted-foreground">
           <span>E.g.:</span>
-          <Link href="/validator?url=vercel.com" className="hover:underline">
-            vercel.com
-          </Link>
-          <Link href="/validator?url=figma.com" className="hover:underline">
-            figma.com
+          <Link href="/validator?url=arc.net" className="hover:underline">
+            arc.net
           </Link>
           <Link
             href="/validator?url=teenage.engineering"
             className="hover:underline"
           >
             teenage.engineering
+          </Link>
+          <Link href="/validator?url=dub.sh" className="hover:underline">
+            dub.sh
           </Link>
         </div>
       </motion.div>

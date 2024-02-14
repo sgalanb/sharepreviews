@@ -488,7 +488,6 @@ export const validateTwitterCreatorWarnings = (
   twitterCreator: string | undefined
 ): string[] => {
   const warnings: string[] = []
-  console.log('twitterCreator', twitterCreator)
   if (!twitterCreator) {
     warnings.push('Missing twitter:creator.')
     return warnings
