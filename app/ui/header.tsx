@@ -79,22 +79,7 @@ export default function Header() {
                 </SheetClose>
 
                 <SheetClose asChild>
-                  <Button variant="ghost" asChild>
-                    <Link
-                      href="/generator"
-                      className={`${
-                        pathname == '/generator'
-                          ? 'bg-accent text-accent-foreground'
-                          : ''
-                      } w-full !justify-start`}
-                    >
-                      Generator
-                    </Link>
-                  </Button>
-                </SheetClose>
-
-                <SheetClose asChild>
-                  <Button variant="ghost" asChild>
+                  {/* <Button variant="ghost" asChild>
                     <Link
                       href="/manager"
                       className={`${
@@ -105,6 +90,37 @@ export default function Header() {
                     >
                       Manager
                     </Link>
+                  </Button> */}
+                  <Button variant="ghost" asChild>
+                    <div className="flex w-full justify-between">
+                      <span className={`!justify-start text-muted-foreground`}>
+                        Manager
+                      </span>
+                      <Badge variant="secondary">Coming Soon</Badge>
+                    </div>
+                  </Button>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  {/* <Button variant="ghost" asChild>
+                    <Link
+                      href="/generator"
+                      className={`${
+                        pathname == '/generator'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Generator
+                    </Link>
+                  </Button> */}
+                  <Button variant="ghost" asChild>
+                    <div className="flex w-full justify-between">
+                      <span className={`!justify-start text-muted-foreground`}>
+                        Generator
+                      </span>
+                      <Badge variant="secondary">Coming Soon</Badge>
+                    </div>
                   </Button>
                 </SheetClose>
 
@@ -119,21 +135,6 @@ export default function Header() {
                       } w-full !justify-start`}
                     >
                       Blog
-                    </Link>
-                  </Button>
-                </SheetClose>
-
-                <SheetClose asChild>
-                  <Button variant="ghost" asChild>
-                    <Link
-                      href="/pricing"
-                      className={`${
-                        pathname == '/pricing'
-                          ? 'bg-accent text-accent-foreground'
-                          : ''
-                      } w-full !justify-start`}
-                    >
-                      Pricing
                     </Link>
                   </Button>
                 </SheetClose>
