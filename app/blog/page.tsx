@@ -27,8 +27,8 @@ export default function BlogPage() {
                 Everything You Should Know About Social Metatags
               </TypographyH2>
               <TypographyP className="text-muted-foreground xl:text-balance">
-                Learn how to use social metatags to control how your website is
-                displayed when shared on social media.
+                Learn how to use Open Graph and Twitter metatags to control how
+                your website is displayed when shared on social media.
               </TypographyP>
             </div>
             <div className="flex items-center justify-start gap-2">
@@ -40,8 +40,9 @@ export default function BlogPage() {
                 className="h-10 w-10 rounded-full object-cover"
               />
               <span className="text-balance font-medium leading-5">
-                Santiago Galán ·
+                Santiago Galán
               </span>
+              <span className="text-balance font-medium leading-5">·</span>
               <span className="text-muted-foreground">
                 {dayjs('02/14/2024').format('MMM D, YYYY')}
               </span>
@@ -49,7 +50,7 @@ export default function BlogPage() {
           </div>
         </div>
         <Image
-          src="/test.webp"
+          src="/mvp-thumbnail.webp"
           alt=""
           width={1200}
           height={630}

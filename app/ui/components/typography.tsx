@@ -7,7 +7,7 @@ export function TypographyH1({
 }) {
   return (
     <h1
-      className={`${className} text-4xl font-extrabold tracking-tight lg:text-5xl`}
+      className={`${className} text-4xl font-extrabold leading-[3rem] tracking-tight lg:text-5xl lg:leading-[4rem]`}
     >
       {children}
     </h1>
@@ -68,7 +68,7 @@ export function TypographyP({
   children: React.ReactNode
   className?: string
 }) {
-  return <p className={`${className} text-base leading-6`}>{children}</p>
+  return <p className={`${className} text-base leading-7`}>{children}</p>
 }
 
 export function TypographyMuted({
