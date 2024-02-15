@@ -19,6 +19,15 @@ export async function generateMetadata({
       alternates: {
         canonical: 'https://sharepreviews.com/validator',
       },
+      openGraph: {
+        url: 'https://sharepreviews.com/validator',
+        type: 'website',
+        siteName: 'sharepreviews',
+      },
+      twitter: {
+        site: '@sgalanb',
+        creator: '@sgalanb',
+      },
     }
   }
   return {
@@ -27,6 +36,15 @@ export async function generateMetadata({
       'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Both Open Graph and Twitter Cards.',
     alternates: {
       canonical: 'https://sharepreviews.com/validator',
+    },
+    openGraph: {
+      url: 'https://sharepreviews.com/validator',
+      type: 'website',
+      siteName: 'sharepreviews',
+    },
+    twitter: {
+      site: '@sgalanb',
+      creator: '@sgalanb',
     },
   }
 }

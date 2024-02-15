@@ -15,6 +15,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://sharepreviews.com/blog',
   },
+  openGraph: {
+    url: 'https://sharepreviews.com/blog',
+    type: 'website',
+    siteName: 'sharepreviews',
+  },
+  twitter: {
+    site: '@sgalanb',
+    creator: '@sgalanb',
+  },
 }
 
 export default function BlogPage() {

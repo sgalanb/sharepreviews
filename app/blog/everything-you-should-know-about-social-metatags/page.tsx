@@ -20,6 +20,15 @@ export const metadata: Metadata = {
     canonical:
       'https://sharepreviews.com/blog/everything-you-should-know-about-social-metatags',
   },
+  openGraph: {
+    url: 'https://sharepreviews.com/blog/everything-you-should-know-about-social-metatags',
+    type: 'article',
+    siteName: 'sharepreviews',
+  },
+  twitter: {
+    site: '@sgalanb',
+    creator: '@sgalanb',
+  },
 }
 
 export default function BlogPage() {

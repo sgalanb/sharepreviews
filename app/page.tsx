@@ -9,6 +9,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://sharepreviews.com',
   },
+  openGraph: {
+    url: 'https://sharepreviews.com',
+    type: 'website',
+    siteName: 'sharepreviews',
+  },
+  twitter: {
+    site: '@sgalanb',
+    creator: '@sgalanb',
+  },
 }
 
 export default async function Home() {
