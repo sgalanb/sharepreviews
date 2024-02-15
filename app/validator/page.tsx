@@ -1,15 +1,14 @@
 import ValidatorLaunchScreen from '@/app/validator/launch-screen'
 import PreviewValidator from '@/app/validator/preview-validator'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata(
-  { searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
   const inputUrl = searchParams?.url as string
 
   if (!inputUrl) {
@@ -32,11 +31,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function Validator({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
+export default async function Validator({ searchParams }: Props) {
   const inputUrl = searchParams?.url as string
 
   if (inputUrl) {
