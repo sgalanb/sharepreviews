@@ -45,6 +45,7 @@ export async function generateMetadata({
     twitter: {
       site: '@sgalanb',
       creator: '@sgalanb',
+      card: 'summary_large_image',
     },
   }
 }

@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     site: '@sgalanb',
     creator: '@sgalanb',
+    card: 'summary_large_image',
   },
 }
 
