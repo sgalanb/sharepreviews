@@ -26,6 +26,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tremor/react": "^3.13.1",
     "@upstash/ratelimit": "^1.0.0",
+    "@vercel/analytics": "^1.1.4",
     "@vercel/edge": "^1.1.1",
     "@workos-inc/node": "^5.1.1",
     "class-variance-authority": "^0.7.0",

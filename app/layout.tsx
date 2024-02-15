@@ -1,5 +1,6 @@
 import { Providers } from '@/app/providers'
 import Header from '@/app/ui/header'
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -30,6 +31,7 @@ export default function RootLayout({
             </div>
           </div>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
