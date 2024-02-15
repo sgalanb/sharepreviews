@@ -242,7 +242,7 @@ export default function PreviewValidator() {
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub> */}
-                    <DropdownMenuItem>
+                    <DropdownMenuItem disabled>
                       <ShieldAlert className="mr-2 h-4 w-4" />
                       Report issue
                     </DropdownMenuItem>
