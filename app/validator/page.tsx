@@ -15,10 +15,16 @@ export async function generateMetadata(
   if (!inputUrl) {
     return {
       title: 'Preview Validator | sharepreviews',
+      alternates: {
+        canonical: 'https://sharepreviews.com/validator',
+      },
     }
   }
   return {
     title: `${inputUrl} | sharepreviews`,
+    alternates: {
+      canonical: 'https://sharepreviews.com/validator',
+    },
   }
 }
 

@@ -209,84 +209,83 @@ export const getValidatedMetatags = async (url: string) => {
       value: metatags.title,
       errors: validateTitleErrors(metatags.title),
       warnings: validateTitleWarnings(metatags.title),
-      info_url: '/blog/everything-you-should-know-about-social-meta-tags#title',
+      info_url: '/blog/everything-you-should-know-about-social-metatags#title',
     },
     description: {
       value: metatags.description,
       errors: validateDescriptionErrors(metatags.description),
       warnings: validateDescriptionWarnings(metatags.description),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#description',
+        '/blog/everything-you-should-know-about-social-metatags#description',
     },
     'og:title': {
       value: metatags['og:title'],
       errors: validateOgTitleErrors(metatags['og:title']),
       warnings: validateOgTitleWarnings(metatags['og:title']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:title',
+        '/blog/everything-you-should-know-about-social-metatags#og:title',
     },
     'og:description': {
       value: metatags['og:description'],
       errors: validateOgDescriptionErrors(metatags['og:description']),
       warnings: validateOgDescriptionWarnings(metatags['og:description']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:description',
+        '/blog/everything-you-should-know-about-social-metatags#og:description',
     },
     'og:image': {
       value: metatags['og:image'],
       errors: await validateOgImageErrors(metatags['og:image']),
       warnings: await validateOgImageWarnings(metatags['og:image']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:image',
+        '/blog/everything-you-should-know-about-social-metatags#og:image',
     },
     'og:image:width': {
       value: metatags['og:image:width'],
       errors: validateOgImageWidthErrors(metatags['og:image:width']),
       warnings: validateOgImageWidthWarnings(metatags['og:image:width']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:image:dimensions',
+        '/blog/everything-you-should-know-about-social-metatags#og:image:dimensions',
     },
     'og:image:height': {
       value: metatags['og:image:height'],
       errors: validateOgImageHeightErrors(metatags['og:image:height']),
       warnings: validateOgImageHeightWarnings(metatags['og:image:height']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:image:dimensions',
+        '/blog/everything-you-should-know-about-social-metatags#og:image:dimensions',
     },
     'og:image:type': {
       value: metatags['og:image:type'],
       errors: validateOgImageTypeErrors(metatags['og:image:type']),
       warnings: validateOgImageTypeWarnings(metatags['og:image:type']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:image:type',
+        '/blog/everything-you-should-know-about-social-metatags#og:image:type',
     },
     'og:url': {
       value: metatags['og:url'],
       errors: validateOgUrlErrors(metatags['og:url']),
       warnings: validateOgUrlWarnings(metatags['og:url']),
-      info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:url',
+      info_url: '/blog/everything-you-should-know-about-social-metatags#og:url',
     },
     'og:site_name': {
       value: metatags['og:site_name'],
       errors: validateOgSiteNameErrors(metatags['og:site_name']),
       warnings: validateOgSiteNameWarnings(metatags['og:site_name']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:site_name',
+        '/blog/everything-you-should-know-about-social-metatags#og:site_name',
     },
     'og:type': {
       value: metatags['og:type'],
       errors: validateOgTypeErrors(metatags['og:type']),
       warnings: validateOgTypeWarnings(metatags['og:type']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#og:type',
+        '/blog/everything-you-should-know-about-social-metatags#og:type',
     },
     'twitter:title': {
       value: metatags['twitter:title'],
       errors: validateTwitterTitleErrors(metatags['twitter:title']),
       warnings: validateTwitterTitleWarnings(metatags['twitter:title']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:title',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:title',
     },
     'twitter:description': {
       value: metatags['twitter:description'],
@@ -295,21 +294,21 @@ export const getValidatedMetatags = async (url: string) => {
         metatags['twitter:description']
       ),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:description',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:description',
     },
     'twitter:card': {
       value: metatags['twitter:card'],
       errors: validateTwitterCardErrors(metatags['twitter:card']),
       warnings: validateTwitterCardWarnings(metatags['twitter:card']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:card',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:card',
     },
     'twitter:image': {
       value: metatags['twitter:image'],
       errors: await validateTwitterImageErrors(metatags['twitter:image']),
       warnings: await validateTwitterImageWarnings(metatags['twitter:image']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:image',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:image',
     },
     'twitter:image:width': {
       value: metatags['twitter:image:width'],
@@ -318,7 +317,7 @@ export const getValidatedMetatags = async (url: string) => {
         metatags['twitter:image:width']
       ),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:image:dimensions',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:image:dimensions',
     },
     'twitter:image:height': {
       value: metatags['twitter:image:height'],
@@ -329,7 +328,7 @@ export const getValidatedMetatags = async (url: string) => {
         metatags['twitter:image:height']
       ),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:image:dimensions',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:image:dimensions',
     },
     'twitter:image:type': {
       value: metatags['twitter:image:type'],
@@ -338,21 +337,21 @@ export const getValidatedMetatags = async (url: string) => {
         metatags['twitter:image:type']
       ),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:image:type',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:image:type',
     },
     'twitter:site': {
       value: metatags['twitter:site'],
       errors: validateTwitterSiteErrors(metatags['twitter:site']),
       warnings: validateTwitterSiteWarnings(metatags['twitter:site']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:site',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:site',
     },
     'twitter:creator': {
       value: metatags['twitter:creator'],
       errors: validateTwitterCreatorErrors(metatags['twitter:creator']),
       warnings: validateTwitterCreatorWarnings(metatags['twitter:creator']),
       info_url:
-        '/blog/everything-you-should-know-about-social-meta-tags#twitter:creator',
+        '/blog/everything-you-should-know-about-social-metatags#twitter:creator',
     },
   }
 

@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: 'Everything You Should Know About Social Metatags | sharepreviews',
   description:
     'Learn how to use Open Graph and Twitter metatags to control how your website is displayed when shared on social media.',
+  alternates: {
+    canonical:
+      'https://sharepreviews.com/blog/everything-you-should-know-about-social-metatags',
+  },
 }
 
 export default function BlogPage() {
@@ -27,7 +31,7 @@ export default function BlogPage() {
       </Link>
       <div className="flex w-full max-w-3xl flex-col items-start justify-start gap-4 self-center lg:px-4">
         <span className="self-center text-muted-foreground">
-          {dayjs('02/14/2024').format('MMM D, YYYY')}
+          {dayjs('02/15/2024').format('MMM D, YYYY')}
         </span>
         <TypographyH1 className="text-balance text-center">
           Everything You Should Know About Social Metatags

@@ -10,6 +10,9 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Blog | sharepreviews',
+  alternates: {
+    canonical: 'https://sharepreviews.com/blog',
+  },
 }
 
 export default function BlogPage() {
@@ -17,7 +20,7 @@ export default function BlogPage() {
     <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 lg:gap-12 lg:p-12">
       <TypographyH1 className="p-4 pb-0">Blog</TypographyH1>
       <Link
-        href="/blog/everything-you-should-know-about-social-meta-tags"
+        href="/blog/everything-you-should-know-about-social-metatags"
         className="flex flex-col gap-4 rounded-lg p-4 hover:bg-accent xl:flex-row"
       >
         <div className="order-2 w-full xl:order-1 xl:w-1/3">
@@ -44,7 +47,7 @@ export default function BlogPage() {
               </span>
               <span className="text-balance font-medium leading-5">·</span>
               <span className="text-muted-foreground">
-                {dayjs('02/14/2024').format('MMM D, YYYY')}
+                {dayjs('02/15/2024').format('MMM D, YYYY')}
               </span>
             </div>
           </div>

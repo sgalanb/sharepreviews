@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'sharepreviews | Boost your links engagement with stunning previews',
   description:
     'Stand out from a sea of links with auto-generated previews. Manage your presence across the web.',
+  alternates: {
+    canonical: 'https://sharepreviews.com',
+  },
 }
 
 export default async function Home() {
