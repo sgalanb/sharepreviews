@@ -10,6 +10,8 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Blog | sharepreviews',
+  description:
+    'Learn all about og metatags and how to boost your links engagement with stunning previews. Stay up to date with the latest updates to social media platform previews.',
   alternates: {
     canonical: 'https://sharepreviews.com/blog',
   },

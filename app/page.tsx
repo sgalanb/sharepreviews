@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 export const metadata: Metadata = {
   title: 'sharepreviews | Boost your links engagement with stunning previews',
   description:
-    'Stand out from a sea of links with auto-generated previews. Manage your presence across the web.',
+    'Check how your links look when shared on social media. Create auto-generated open graph images for your website. Manage all your links previews in one place.',
   alternates: {
     canonical: 'https://sharepreviews.com',
   },
