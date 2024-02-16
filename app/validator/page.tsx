@@ -16,7 +16,7 @@ export async function generateMetadata({
     return {
       title: 'Preview Validator | sharepreviews',
       description:
-        'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Both Open Graph and Twitter Cards.',
+        'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Open Graph and Twitter Cards.',
       alternates: {
         canonical: 'https://sharepreviews.com/validator',
       },
@@ -34,7 +34,7 @@ export async function generateMetadata({
   return {
     title: `${cleanUrl} | sharepreviews`,
     description:
-      'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Both Open Graph and Twitter Cards.',
+      'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Open Graph and Twitter Cards.',
     alternates: {
       canonical: 'https://sharepreviews.com/validator',
     },
