@@ -4,5 +4,5 @@
 </a>
 
 <p align="center">
-  An open-source preview (Open Graph/Twitter Cards) validator, generator and manager.
+  An open-source preview (Open Graph & Twitter Cards) validator, generator and manager.
 </p>
