@@ -91,6 +91,7 @@ export default function PreviewValidator() {
   )
 
   const [isImageSquare, setIsImageSquare] = useState<boolean>(false)
+  const [errorCount, setErrorCount] = useState<number>(0)
 
   useEffect(() => {
     if (
@@ -104,6 +105,17 @@ export default function PreviewValidator() {
           setIsImageSquare(size.width === size.height)
         }
       })
+    }
+  }, [metatags])
+
+  useEffect(() => {
+    if (metatags) {
+      setErrorCount(
+        Object.values(metatags).reduce(
+          (acc, item) => acc + item.errors.length,
+          0
+        )
+      )
     }
   }, [metatags])
 
@@ -204,8 +216,15 @@ export default function PreviewValidator() {
                 <TabsTrigger value="previews" className="h-full py-[5px]">
                   Previews
                 </TabsTrigger>
-                <TabsTrigger value="metatags" className="h-full py-[5px]">
-                  Metatags
+                <TabsTrigger value="metatags" className="h-full gap-1 py-[5px]">
+                  <span>Metatags</span>
+                  {errorCount > 0 && (
+                    <div className="flex h-5 w-fit items-center justify-center rounded-full bg-destructive px-1.5  text-destructive-foreground">
+                      <span className="min-w-2 text-center text-sm font-light leading-3">
+                        {errorCount}
+                      </span>
+                    </div>
+                  )}
                 </TabsTrigger>
               </TabsList>
               <DropdownMenu>
