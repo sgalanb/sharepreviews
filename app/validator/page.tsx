@@ -10,6 +10,7 @@ export async function generateMetadata({
   searchParams,
 }: Props): Promise<Metadata> {
   const inputUrl = searchParams?.url as string
+  const cleanUrl = inputUrl?.replace(/(^\w+:|^)\/\//, '')
 
   if (!inputUrl) {
     return {
@@ -31,7 +32,7 @@ export async function generateMetadata({
     }
   }
   return {
-    title: `${inputUrl} | sharepreviews`,
+    title: `${cleanUrl} | sharepreviews`,
     description:
       'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Both Open Graph and Twitter Cards.',
     alternates: {
