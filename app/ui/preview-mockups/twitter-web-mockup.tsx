@@ -11,8 +11,8 @@ export default function TwitterWebMockup({
 }) {
   const isValid =
     metatags &&
-    metatags['twitter:card'] &&
-    (metatags['twitter:image'] || metatags['og:image'])
+    metatags['twitter:card'].value &&
+    (metatags['twitter:image'].value || metatags['og:image'].value)
 
   const isSquare = metatags && metatags['twitter:card'].value === 'summary'
 
