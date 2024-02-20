@@ -16,10 +16,7 @@ export default function TelegramMockup({
     metatags &&
     (metatags.title.value ||
       metatags['og:title'].value ||
-      metatags['twitter:title'].value) &&
-    (metatags.description.value ||
-      metatags['og:description'].value ||
-      metatags['twitter:description'].value)
+      metatags['twitter:title'].value)
 
   const [isSquare, setIsSquare] = useState<boolean>(false)
 
