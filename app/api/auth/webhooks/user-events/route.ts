@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
 
   try {
     // Check if a user with this ID exists in the DB
-    const user = await db.query.users.findFirst({
+    const user = await db.query['users'].findFirst({
       where: eq(users.id, eventUserData.id),
     })
 
@@ -45,7 +45,6 @@ export async function POST(req: NextRequest) {
         firstName: eventUserData.first_name,
         lastName: eventUserData.last_name,
         emailVerified: eventUserData.email_verified,
-        createdAt: new Date(eventUserData.created_at),
         updatedAt: new Date(eventUserData.updated_at),
       })
     }

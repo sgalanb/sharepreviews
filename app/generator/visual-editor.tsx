@@ -65,6 +65,7 @@ interface ImageLayerInterface extends LayerInterface {
   type: 'image'
   cornerRadius: number
   src: string
+  objectFit: 'fill' | 'contain' | 'cover'
 }
 
 interface RectangleLayerInterface extends LayerInterface {
@@ -112,6 +113,7 @@ export default function VisualEditor() {
       opacity: 1,
       cornerRadius: 0,
       src: 'https://via.placeholder.com/100',
+      objectFit: 'cover',
     },
     {
       id: '3',

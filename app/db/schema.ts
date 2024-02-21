@@ -1,17 +1,28 @@
 import {
   boolean,
-  datetime,
-  mysqlTable,
+  pgTable,
   text,
+  timestamp,
+  uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core'
+} from 'drizzle-orm/pg-core'
 
-export const users = mysqlTable('users', {
-  id: varchar('id', { length: 31 }).primaryKey(),
-  email: varchar('email', { length: 255 }),
-  firstName: text('first_name'),
-  lastName: text('last_name'),
-  emailVerified: boolean('email_verified'),
-  createdAt: datetime('created_at', { mode: 'date' }),
-  updatedAt: datetime('updated_at', { mode: 'date' }),
-})
+export const users = pgTable(
+  'users',
+  {
+    id: varchar('id', { length: 31 }).primaryKey(),
+    email: varchar('email', { length: 255 }).notNull(),
+    firstName: text('first_name'),
+    lastName: text('last_name'),
+    emailVerified: boolean('email_verified'),
+    createdAt: timestamp('createdAt').defaultNow().notNull(),
+    updatedAt: timestamp('updatedAt').notNull(),
+  },
+  (users) => {
+    return {
+      uniqueIdx: uniqueIndex('unique_idx').on(users.email),
+    }
+  }
+)
+
+export type UserType = typeof users.$inferInsert

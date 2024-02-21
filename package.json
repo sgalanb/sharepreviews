@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migration:generate": "drizzle-kit generate:mysql",
-    "migration:push": "drizzle-kit push:mysql"
+    "migration:generate": "drizzle-kit generate:pg",
+    "migration:push": "drizzle-kit push:pg"
   },
   "dependencies": {
     "@dnd-kit/modifiers": "^7.0.0",
@@ -31,6 +31,7 @@
     "@upstash/ratelimit": "^1.0.0",
     "@vercel/analytics": "^1.1.4",
     "@vercel/edge": "^1.1.1",
+    "@vercel/postgres": "^0.7.2",
     "@workos-inc/node": "^5.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -40,10 +41,10 @@
     "he": "^1.2.0",
     "jose": "^5.2.0",
     "lucide-react": "^0.335.0",
-    "mysql2": "^3.7.0",
     "next": "14.0.4",
     "next-themes": "^0.2.1",
     "node-html-parser": "^6.1.11",
+    "pg": "^8.11.3",
     "prettier": "^3.1.1",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.9",

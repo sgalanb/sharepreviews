@@ -7,11 +7,10 @@ loadEnvConfig(cwd())
 export default {
   schema: './app/db/schema.ts',
   out: './drizzle',
-  driver: 'mysql2',
+  driver: 'pg',
   dbCredentials: {
-    uri: process.env.DATABASE_URL?.replace(
-      '?sslaccept=strict',
-      `?ssl={"rejectUnauthorized":true}`
-    ) as string,
+    connectionString: process.env.VERCEL_POSTGRES_URL!,
   },
+  verbose: true,
+  strict: true,
 } satisfies Config
