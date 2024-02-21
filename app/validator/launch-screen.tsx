@@ -13,10 +13,12 @@ export default function ValidatorLaunchScreen() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <TypographyH1 className="text-balance">Preview Validator</TypographyH1>
+        <TypographyH1 className="text-balance">
+          Preview Card Validator
+        </TypographyH1>
         <TypographyP className="mb-2 text-balance text-center">
           Check how your links look when shared. Validate you have the correct
-          metatags in place.
+          metatags in place with this free tool.
         </TypographyP>
         <ValidatorInput />
         <div className="mt-2 flex gap-4 text-muted-foreground">

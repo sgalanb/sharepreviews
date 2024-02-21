@@ -2,15 +2,15 @@
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
        <loc>https://sharepreviews.com</loc>
-     </url>
-        <url>
+      </url>
+      <url>
         <loc>https://sharepreviews.com/validator</loc>
-        </url>
-        <url>
+      </url>
+      <url>
         <loc>https://sharepreviews.com/blog</loc>
-        </url>
-        <url>
+      </url>
+      <url>
         <loc>https://sharepreviews.com/blog/everything-you-should-know-about-social-meta-tags</loc>
         <lastmod>2024-02-15</lastmod>
-        </url>
+      </url>
    </urlset>

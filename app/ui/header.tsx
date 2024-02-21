@@ -73,8 +73,31 @@ export default function Header() {
                           : ''
                       } w-full !justify-start`}
                     >
-                      Validator
+                      Preview Card Validator
                     </Link>
+                  </Button>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  {/* <Button variant="ghost" asChild>
+                    <Link
+                      href="/generator"
+                      className={`${
+                        pathname == '/generator'
+                          ? 'bg-accent text-accent-foreground'
+                          : ''
+                      } w-full !justify-start`}
+                    >
+                      Dynamic Image Generator
+                    </Link>
+                  </Button> */}
+                  <Button variant="ghost" asChild>
+                    <div className="flex w-full justify-between">
+                      <span className={`!justify-start text-muted-foreground`}>
+                        Dynamic Image Generator
+                      </span>
+                      <Badge variant="secondary">Coming Soon</Badge>
+                    </div>
                   </Button>
                 </SheetClose>
 
@@ -95,29 +118,6 @@ export default function Header() {
                     <div className="flex w-full justify-between">
                       <span className={`!justify-start text-muted-foreground`}>
                         Manager
-                      </span>
-                      <Badge variant="secondary">Coming Soon</Badge>
-                    </div>
-                  </Button>
-                </SheetClose>
-
-                <SheetClose asChild>
-                  {/* <Button variant="ghost" asChild>
-                    <Link
-                      href="/generator"
-                      className={`${
-                        pathname == '/generator'
-                          ? 'bg-accent text-accent-foreground'
-                          : ''
-                      } w-full !justify-start`}
-                    >
-                      Generator
-                    </Link>
-                  </Button> */}
-                  <Button variant="ghost" asChild>
-                    <div className="flex w-full justify-between">
-                      <span className={`!justify-start text-muted-foreground`}>
-                        Generator
                       </span>
                       <Badge variant="secondary">Coming Soon</Badge>
                     </div>
@@ -178,11 +178,41 @@ export default function Header() {
                 } flex w-full !justify-start gap-2`}
               >
                 <MonitorCheck className="h-4 w-4" />
-                Validator
+                Preview Card Validator
               </Link>
             </Button>
 
-            {/* <Button variant="ghost" asChild>
+            <Button variant="ghost" asChild>
+              <Link
+                href="/generator"
+                className={`${
+                  pathname == '/generator'
+                    ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                    : 'text-foreground hover:bg-accent'
+                } flex w-full !justify-start gap-2`}
+              >
+                <Zap className="h-4 w-4" />
+                Dynamic Image Generator
+              </Link>
+            </Button>
+
+            <Button
+              variant="ghost"
+              className={`${
+                pathname == '/manager'
+                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background'
+                  : ''
+              } flex w-full items-center !justify-between gap-2 text-foreground opacity-50 hover:bg-accent`}
+            >
+              <div className="flex items-center justify-start gap-2">
+                <Globe className="h-4 w-4" />
+                Manager
+              </div>
+              <Badge variant="secondary">Coming Soon</Badge>
+            </Button>
+          </div>
+
+          {/* <Button variant="ghost" asChild>
               <Link
                 href="/manager"
                 className={`${
@@ -195,51 +225,6 @@ export default function Header() {
                 Manager
               </Link>
             </Button> */}
-
-            {/* <Button variant="ghost" asChild>
-              <Link
-                href="/generator"
-                className={`${
-                  pathname == '/generator'
-                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
-                    : 'text-foreground hover:bg-accent'
-                } flex w-full !justify-start gap-2`}
-              >
-                     <Zap className="h-4 w-4" />
-                Generator
-              </Link>
-            </Button> */}
-
-            <Button
-              variant="ghost"
-              className={`${
-                pathname == '/generator'
-                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background'
-                  : ''
-              } flex w-full items-center !justify-between gap-2 text-foreground opacity-50 hover:bg-accent`}
-            >
-              <div className="flex items-center justify-start gap-2">
-                <Globe className="h-4 w-4" />
-                Manager
-              </div>
-              <Badge variant="secondary">Coming Soon</Badge>
-            </Button>
-
-            <Button
-              variant="ghost"
-              className={`${
-                pathname == '/generator'
-                  ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background'
-                  : ''
-              } flex w-full items-center !justify-between gap-2 text-foreground opacity-50 hover:bg-accent`}
-            >
-              <div className="flex items-center justify-start gap-2">
-                <Zap className="h-4 w-4" />
-                Generator
-              </div>
-              <Badge variant="secondary">Coming Soon</Badge>
-            </Button>
-          </div>
 
           <Separator />
 

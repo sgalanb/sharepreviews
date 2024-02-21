@@ -65,7 +65,7 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
               https://
             </Label>
           }
-          className="bg-card"
+          className="bg-card pl-[4.75rem]"
         />
         <Button type="submit" className="min-w-24">
           {isLoading ? (

@@ -51,7 +51,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border ring-ring;
   }
   body {
     @apply scroll-smooth bg-background text-foreground selection:bg-primary/50;

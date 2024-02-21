@@ -85,7 +85,7 @@ export default function LaunchesInput() {
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <span>Use another email</span>
+                <span className="font-medium">Use another email</span>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
