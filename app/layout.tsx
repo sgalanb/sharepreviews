@@ -38,13 +38,13 @@ export default async function RootLayout({
                 user={user}
               />
               {isAuthenticated ? (
-                <main className="mx-auto w-full max-w-7xl">{children}</main>
-              ) : (
                 <main className="mx-auto w-full rounded-lg lg:pb-2 lg:pr-2 lg:pt-2">
                   <div className="mx-auto w-full rounded-lg lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
                     {children}
                   </div>
                 </main>
+              ) : (
+                <main className="mx-auto w-full max-w-7xl">{children}</main>
               )}
             </div>
           </div>

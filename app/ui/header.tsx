@@ -317,8 +317,11 @@ export default function Header({
             {/* Desktop Landing */}
             <Link href="/" className="flex items-center justify-center gap-2">
               <PictorialMark className="w-12 fill-primary" />
-              <span className="font-bold">sharepreviews</span>
+              <span className="text-base font-semibold text-foreground">
+                sharepreviews
+              </span>
             </Link>
+
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -326,7 +329,7 @@ export default function Header({
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
-                      Generator
+                      Dynamic Image Generator
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -335,7 +338,7 @@ export default function Header({
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
-                      Validator
+                      Preview Card Validator
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -359,7 +362,7 @@ export default function Header({
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            <div className="flex w-[10.70875rem] items-center justify-end gap-4">
+            <div className="flex items-center justify-end gap-4">
               <Button asChild>
                 <Link href={authorizationUrl}>Get Started</Link>
               </Button>
