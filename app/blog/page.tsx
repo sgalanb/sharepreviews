@@ -1,3 +1,4 @@
+import { getUser } from '@/app/lib/workos'
 import {
   TypographyH1,
   TypographyH2,
@@ -27,21 +28,27 @@ export const metadata: Metadata = {
   },
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const { isAuthenticated } = await getUser()
+
   return (
-    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 lg:gap-12 lg:p-12">
-      <TypographyH1 className="p-4 pb-0">Blog</TypographyH1>
+    <div
+      className={`${
+        isAuthenticated ? 'lg:p-12' : 'lg:pt-8'
+      } flex w-full max-w-7xl flex-col items-center justify-start gap-4 lg:gap-8`}
+    >
+      <TypographyH1 className="pt-4 lg:p-0">Blog</TypographyH1>
       <Link
         href="/blog/everything-you-should-know-about-social-metatags"
-        className="flex flex-col gap-4 rounded-lg p-4 hover:bg-accent xl:flex-row"
+        className="flex flex-col gap-4 rounded-lg p-4 hover:bg-accent lg:flex-row"
       >
-        <div className="order-2 w-full xl:order-1 xl:w-1/3">
+        <div className="order-2 w-full lg:order-1 lg:w-1/3">
           <div className="flex h-full flex-col justify-between gap-4">
             <div className="flex flex-col gap-4">
-              <TypographyH2 className="xl:text-balance">
+              <TypographyH2 className="lg:text-balance">
                 Everything You Should Know About Social Metatags
               </TypographyH2>
-              <TypographyP className="text-muted-foreground xl:text-balance">
+              <TypographyP className="text-muted-foreground lg:text-balance">
                 Learn how to use Open Graph and Twitter metatags to control how
                 your website is displayed when shared on social media.
               </TypographyP>
@@ -69,7 +76,7 @@ export default function BlogPage() {
           alt=""
           width={1200}
           height={630}
-          className="order-1 w-full rounded-md object-cover xl:order-2 xl:w-2/3"
+          className="order-1 w-full rounded-md object-cover lg:order-2 lg:w-2/3"
         />
       </Link>
     </div>

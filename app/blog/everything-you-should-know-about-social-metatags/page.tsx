@@ -1,3 +1,4 @@
+import { getUser } from '@/app/lib/workos'
 import { Card, CardContent } from '@/app/ui/components/Card'
 import CodeBlock from '@/app/ui/components/CodeBlock'
 import { Separator } from '@/app/ui/components/Separator'
@@ -32,12 +33,20 @@ export const metadata: Metadata = {
   },
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const { isAuthenticated } = await getUser()
+
   return (
-    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4 lg:p-12">
+    <div
+      className={`${
+        isAuthenticated ? 'lg:p-12' : ''
+      } flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4`}
+    >
       <Link
         href="/blog"
-        className="flex items-center justify-center text-muted-foreground lg:px-4"
+        className={`${
+          isAuthenticated ? 'lg:px-4' : ''
+        } flex items-center justify-center text-muted-foreground`}
       >
         <ChevronLeft className="ml-[-4px]" />
         <span className="self-center text-sm">Blog</span>

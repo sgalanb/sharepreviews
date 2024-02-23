@@ -1,3 +1,4 @@
+import { getUser } from '@/app/lib/workos'
 import ValidatorLaunchScreen from '@/app/validator/launch-screen'
 import PreviewValidator from '@/app/validator/preview-validator'
 import { Metadata } from 'next'
@@ -54,9 +55,11 @@ export async function generateMetadata({
 export default async function Validator({ searchParams }: Props) {
   const inputUrl = searchParams?.url as string
 
+  const { isAuthenticated } = await getUser()
+
   if (inputUrl) {
-    return <PreviewValidator />
+    return <PreviewValidator isAuthenticated={isAuthenticated} />
   } else {
-    return <ValidatorLaunchScreen />
+    return <ValidatorLaunchScreen isAuthenticated={isAuthenticated} />
   }
 }

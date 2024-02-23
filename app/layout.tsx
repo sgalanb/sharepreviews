@@ -44,7 +44,9 @@ export default async function RootLayout({
                   </div>
                 </main>
               ) : (
-                <main className="mx-auto w-full max-w-7xl">{children}</main>
+                <main className="mx-auto h-[calc(100vh-72px)] w-full max-w-7xl">
+                  {children}
+                </main>
               )}
             </div>
           </div>

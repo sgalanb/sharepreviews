@@ -1,7 +1,6 @@
 import { User, WorkOS } from '@workos-inc/node'
 import { jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
 const workos = new WorkOS(process.env.WORKOS_API_KEY as string)
 const clientId = process.env.WORKOS_CLIENT_ID
@@ -49,5 +48,4 @@ export async function logOutUser() {
   cookies().set('token', '', {
     expires: new Date(0),
   })
-  redirect('/')
 }

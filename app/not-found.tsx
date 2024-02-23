@@ -12,7 +12,6 @@ export default function NotFound() {
     >
       <span className="text-4xl font-bold">404</span>
       <span className="pt-4">This page could not be found.</span>
-      <span className="pt-2">But it still has a nice preview 😉.</span>
     </motion.div>
   )
 }

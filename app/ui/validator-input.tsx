@@ -45,9 +45,9 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
   return (
     <form
       onSubmit={onSubmitSite}
-      className="flex w-full flex-col gap-1 lg:max-w-xl"
+      className="flex w-full flex-col gap-2 lg:max-w-xl lg:flex-row"
     >
-      <div className="flex w-full gap-2">
+      <div className="flex w-full flex-col gap-1">
         <Input
           ref={inputRef}
           name="url"
@@ -67,17 +67,17 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
           }
           className="bg-card pl-[4.75rem]"
         />
-        <Button type="submit" className="min-w-24">
-          {isLoading ? (
-            <Spinner className="h-7 w-7 fill-primary-foreground text-primary-foreground/25" />
-          ) : (
-            'Validate'
-          )}
-        </Button>
+        {inputError && (
+          <div className="text-sm text-red-500">Please enter a valid URL.</div>
+        )}
       </div>
-      {inputError && (
-        <div className="text-sm text-red-500">Please enter a valid URL.</div>
-      )}
+      <Button type="submit" className="min-w-24">
+        {isLoading ? (
+          <Spinner className="h-7 w-7 fill-primary-foreground text-primary-foreground/25" />
+        ) : (
+          'Validate'
+        )}
+      </Button>
     </form>
   )
 }
