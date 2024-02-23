@@ -1,4 +1,3 @@
-import { getAuthorizationUrl } from '@/app/lib/workos'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -22,8 +21,6 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const authorizationUrl = getAuthorizationUrl()
-
   redirect('/validator')
 
   return (

@@ -1,5 +1,6 @@
 'use server'
 
+import { logOutUser } from '@/app/lib/workos'
 import { Resend } from 'resend'
 
 export async function addContactToGeneralAudience(formData: FormData) {
@@ -13,4 +14,8 @@ export async function addContactToGeneralAudience(formData: FormData) {
     email: rawFormData.email,
     audienceId: '814b11f0-62c3-4187-a593-4d8e94bf3fd9', // General audience id
   })
+}
+
+export async function logout() {
+  logOutUser()
 }
