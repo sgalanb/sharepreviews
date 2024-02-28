@@ -9,7 +9,7 @@ export default {
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.VERCEL_POSTGRES_URL!,
+    connectionString: process.env.NEON_POSTGRES_URL!,
   },
   verbose: true,
   strict: true,

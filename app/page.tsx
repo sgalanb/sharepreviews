@@ -1,9 +1,10 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'sharepreviews | Boost your links engagement with stunning previews',
+  title:
+    'sharepreviews | Boost your links engagement with stunning preview cards',
   description:
-    'Check how your links look when shared on social media. Create auto-generated open graph images for your website. Manage all your links previews in one place.',
+    'Create auto-generated open graph images for your website. Check how your links look when shared on social media.',
   alternates: {
     canonical: 'https://sharepreviews.com',
   },

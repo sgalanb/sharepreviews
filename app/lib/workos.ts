@@ -7,6 +7,7 @@ const clientId = process.env.WORKOS_CLIENT_ID
 const secret = new Uint8Array(
   Buffer.from(process.env.JWT_SECRET_KEY as string, 'base64')
 )
+const redirectUri = process.env.WORKOS_REDIRECT_URI ?? ''
 
 export function getAuthorizationUrl() {
   if (!clientId) {
@@ -16,7 +17,7 @@ export function getAuthorizationUrl() {
     // Specify that we'd like AuthKit to handle the authentication flow
     provider: 'authkit',
     // The callback endpoint that WorkOS will redirect to after a user authenticates
-    redirectUri: 'http://localhost:3000/api/auth/callback',
+    redirectUri,
     clientId,
   })
 
