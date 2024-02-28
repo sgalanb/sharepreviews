@@ -10,7 +10,7 @@ import {
   getUrlFromStringWithoutWWWOrProtocol,
 } from '@/app/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
   const router = useRouter()
@@ -38,9 +38,6 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
   }
 
   const inputRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    inputRef?.current?.select()
-  }, [])
 
   return (
     <form
