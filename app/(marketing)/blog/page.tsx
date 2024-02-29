@@ -1,4 +1,3 @@
-import { getUser } from '@/app/lib/workos'
 import {
   TypographyH1,
   TypographyH2,
@@ -29,14 +28,8 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
-  const { isAuthenticated } = await getUser()
-
   return (
-    <div
-      className={`${
-        isAuthenticated ? 'lg:p-12' : 'lg:pt-8'
-      } flex w-full max-w-7xl flex-col items-center justify-start gap-4 lg:gap-8`}
-    >
+    <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-4 lg:gap-8 lg:pt-8">
       <TypographyH1 className="pt-4 lg:p-0">Blog</TypographyH1>
       <Link
         href="/blog/everything-you-should-know-about-social-metatags"
