@@ -12,7 +12,13 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 
-export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
+export default function ValidatorInput({
+  isApp,
+  isLoading,
+}: {
+  isApp: boolean
+  isLoading?: boolean
+}) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
@@ -31,7 +37,15 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
     )
 
     if (!!normalizedUrl) {
-      router.push(`${eventUrl ? `/validator?url=${normalizedUrl}` : ''}`)
+      router.push(
+        `${
+          eventUrl
+            ? isApp
+              ? `/validator?url=${normalizedUrl}`
+              : `/card-validator?url=${normalizedUrl}`
+            : ''
+        }`
+      )
     } else {
       setInputError(true)
     }

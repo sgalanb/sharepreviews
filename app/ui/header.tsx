@@ -1,8 +1,18 @@
 'use client'
 
 import { logout } from '@/app/actions'
+import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Badge } from '@/app/ui/components/Badge'
 import { Button } from '@/app/ui/components/Button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/app/ui/components/DropdownMenu'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -23,6 +33,8 @@ import { User } from '@workos-inc/node'
 import {
   BookText,
   Github,
+  LayoutGrid,
+  LogOut,
   MenuIcon,
   MonitorCheck,
   Twitter,
@@ -34,11 +46,11 @@ import { useEffect, useState } from 'react'
 
 export default function Header({
   authorizationUrl,
-  isAuthenticated,
+  isApp,
   user,
 }: {
   authorizationUrl: string
-  isAuthenticated: boolean
+  isApp: boolean
   user: User | undefined
 }) {
   const pathname = usePathname()
@@ -68,7 +80,7 @@ export default function Header({
           ? 'border-gray-500/10 dark:border-zinc-800'
           : 'border-transparent'
       } ${
-        isAuthenticated
+        isApp
           ? 'col-span-1 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800'
           : 'lg:h-[4.5rem]'
       } sticky top-0 z-50 w-full border-b bg-background transition-colors duration-200`}
@@ -144,7 +156,7 @@ export default function Header({
           <ThemeToggle ghost />
         </nav>
       </div>
-      {isAuthenticated ? (
+      {isApp ? (
         <>
           {/* Desktop App */}
           <div className="hidden h-full w-full flex-col items-start justify-between lg:flex">
@@ -152,7 +164,7 @@ export default function Header({
               <div className="w-full pt-4">
                 <Button variant="ghost" asChild>
                   <Link
-                    href="/"
+                    href="/overview"
                     className="flex !h-fit w-full items-center gap-2 hover:bg-accent"
                   >
                     <PictorialMark className="w-12 fill-primary" />
@@ -168,15 +180,15 @@ export default function Header({
               <div className="flex w-full flex-col items-start justify-start gap-2">
                 <Button variant="ghost" asChild>
                   <Link
-                    href="/validator"
+                    href="/overview"
                     className={`${
-                      pathname == '/validator'
+                      pathname == '/overview'
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
                   >
-                    <MonitorCheck className="h-4 w-4" />
-                    Card Validator
+                    <LayoutGrid className="h-4 w-4" />
+                    Overview
                   </Link>
                 </Button>
 
@@ -193,6 +205,20 @@ export default function Header({
                     Dynamic Image Generator
                   </Link>
                 </Button>
+
+                <Button variant="ghost" asChild>
+                  <Link
+                    href="/validator"
+                    className={`${
+                      pathname == '/validator'
+                        ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                        : 'text-foreground hover:bg-accent'
+                    } flex w-full !justify-start gap-2`}
+                  >
+                    <MonitorCheck className="h-4 w-4" />
+                    Card Validator
+                  </Link>
+                </Button>
               </div>
 
               <Separator />
@@ -206,6 +232,7 @@ export default function Header({
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
+                    target="_blank"
                   >
                     <BookText className="h-4 w-4" />
                     Blog
@@ -275,7 +302,7 @@ export default function Header({
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <Link href="/validator" legacyBehavior passHref>
+                    <Link href="/card-validator" legacyBehavior passHref>
                       <NavigationMenuLink
                         className={navigationMenuTriggerStyle()}
                       >
@@ -303,12 +330,55 @@ export default function Header({
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-              <div className="flex items-center justify-end gap-4">
-                <ThemeToggle ghost />
-                <Button asChild>
-                  <Link href={authorizationUrl}>Get Started</Link>
-                </Button>
-              </div>
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar>
+                      <AvatarImage src={user.profilePictureUrl ?? ''} alt="" />
+                      {user.firstName && user.lastName ? (
+                        <AvatarFallback>
+                          {user.firstName[0] + user.lastName[0]}
+                        </AvatarFallback>
+                      ) : (
+                        <AvatarFallback>
+                          {user.email[0] + user.email[1]}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-52  p-2"
+                    align="end"
+                    sideOffset={8}
+                  >
+                    <DropdownMenuLabel>
+                      <div className="full flex flex-col items-start justify-center gap-1">
+                        <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
+                        <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => logout()}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <div className="flex items-center justify-end gap-4">
+                  <ThemeToggle ghost />
+                  <Button asChild>
+                    <Link href={authorizationUrl}>Get Started</Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </>

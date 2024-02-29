@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
 import { DndContext } from '@dnd-kit/core'
+import { DragEndEvent } from '@dnd-kit/core/dist/types'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import {
   SortableContext,
@@ -34,7 +35,6 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { DragEndEvent } from '../../node_modules/@dnd-kit/core/dist/types'
 
 interface LayerInterface {
   id: string

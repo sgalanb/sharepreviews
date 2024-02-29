@@ -1,7 +1,6 @@
 'use server'
 
 import { logOutUser } from '@/app/lib/workos'
-import { redirect } from 'next/navigation'
 import { Resend } from 'resend'
 
 export async function addContactToGeneralAudience(formData: FormData) {
@@ -19,5 +18,4 @@ export async function addContactToGeneralAudience(formData: FormData) {
 
 export async function logout() {
   logOutUser()
-  redirect('/')
 }

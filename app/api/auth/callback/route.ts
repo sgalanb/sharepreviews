@@ -13,6 +13,7 @@ const clientId = process.env.WORKOS_CLIENT_ID
 export async function GET(req: NextRequest) {
   // The authorization code returned by AuthKit
   const code = req.nextUrl.searchParams.get('code')
+  const state = req.nextUrl.searchParams.get('state')
 
   if (!code) {
     return NextResponse.redirect('/')
@@ -27,10 +28,15 @@ export async function GET(req: NextRequest) {
     clientId,
   })
 
-  // Cleanup params and redirect to homepage
+  // Cleanup params and redirect
   const url = req.nextUrl.clone()
   url.searchParams.delete('code')
-  url.pathname = '/'
+  if (state) {
+    url.pathname = state
+    url.searchParams.delete('state')
+  } else {
+    url.pathname = '/'
+  }
 
   const response = NextResponse.redirect(url)
 

@@ -5,16 +5,12 @@ import ValidatorInput from '@/app/ui/validator-input'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 
-export default function ValidatorLaunchScreen({
-  isAuthenticated,
-}: {
-  isAuthenticated: boolean
-}) {
+export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
   return (
     <AnimatePresence>
       <motion.div
         className={`${
-          isAuthenticated ? 'lg:p-12' : 'lg:pt-8'
+          isApp ? 'lg:p-12' : 'lg:pt-8'
         } flex w-full max-w-7xl flex-col items-center justify-center gap-4 p-4`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -27,19 +23,33 @@ export default function ValidatorLaunchScreen({
           Check how your links look when shared. Validate you have the correct
           metatags in place.
         </TypographyP>
-        <ValidatorInput />
+        <ValidatorInput isApp={isApp} />
         <div className="mt-2 flex gap-4 text-muted-foreground">
           <span>E.g.:</span>
-          <Link href="/validator?url=arc.net" className="hover:underline">
+          <Link
+            href={
+              isApp ? '/validator?url=arc.net' : '/card-validator?url=arc.net'
+            }
+            className="hover:underline"
+          >
             arc.net
           </Link>
           <Link
-            href="/validator?url=teenage.engineering"
+            href={
+              isApp
+                ? '/validator?url=teenage.engineering'
+                : '/card-validator?url=teenage.engineering'
+            }
             className="hover:underline"
           >
             teenage.engineering
           </Link>
-          <Link href="/validator?url=dub.sh" className="hover:underline">
+          <Link
+            href={
+              isApp ? '/validator?url=dub.sh' : '/card-validator?url=dub.sh'
+            }
+            className="hover:underline"
+          >
             dub.sh
           </Link>
         </div>

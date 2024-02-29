@@ -54,6 +54,6 @@
     @apply border-border ring-ring;
   }
   body {
-    @apply scroll-smooth bg-background text-foreground selection:bg-primary/50;
+    @apply scroll-smooth bg-background text-sm text-foreground selection:bg-primary/50;
   }
 }

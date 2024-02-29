@@ -9,7 +9,7 @@ const secret = new Uint8Array(
 )
 const redirectUri = process.env.WORKOS_REDIRECT_URI ?? ''
 
-export function getAuthorizationUrl() {
+export function getAuthorizationUrl(redirectPathname?: string) {
   if (!clientId) {
     throw new Error('WORKOS_CLIENT_ID is not defined')
   }
@@ -19,6 +19,7 @@ export function getAuthorizationUrl() {
     // The callback endpoint that WorkOS will redirect to after a user authenticates
     redirectUri,
     clientId,
+    state: redirectPathname,
   })
 
   return authorizationUrl

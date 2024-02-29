@@ -68,11 +68,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-export default function PreviewValidator({
-  isAuthenticated,
-}: {
-  isAuthenticated: boolean
-}) {
+export default function PreviewValidator({ isApp }: { isApp: boolean }) {
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
   const normalizedUrl = getUrlFromStringWithoutWWW(inputUrl)
@@ -190,20 +186,20 @@ export default function PreviewValidator({
     <AnimatePresence>
       <motion.div
         className={`${
-          isAuthenticated
-            ? 'min-h-[calc(100vh-18px)] lg:p-12'
-            : 'min-h-[calc(100vh-72px)]'
+          isApp
+            ? 'min-h-[calc(100dvh-18px)] lg:p-12'
+            : 'min-h-[calc(100dvh-72px)]'
         } flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <Link
-          href="/validator"
+          href={isApp ? '/validator' : '/card-validator'}
           className="flex items-center justify-center text-muted-foreground"
         >
           <ChevronLeft className="ml-[-4px]" />
-          <span className="self-center text-sm">Validator</span>
+          <span className="self-center text-sm">Back</span>
         </Link>
         <div className="mb-4 flex w-full items-center justify-between">
           <h1 className="line-clamp-4 break-all text-4xl font-extrabold leading-[3rem] tracking-tight">
@@ -223,7 +219,7 @@ export default function PreviewValidator({
             {/* TODO: Make this div sticky */}
             <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-2">
               <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
-                <ValidatorInput isLoading={!!isLoadingData} />
+                <ValidatorInput isApp={isApp} isLoading={!!isLoadingData} />
               </div>
               <div className="flex gap-2">
                 <TabsList className="grid w-full grid-cols-2 border lg:w-60">
