@@ -255,12 +255,55 @@ export default function Header({
             </div>
             <div className="flex w-full flex-col gap-4">
               {user && (
-                <div className="flex flex-col gap-2">
-                  <span>{user.email}</span>
-                  <form action={logout}>
-                    <Button variant="outline">Log Out</Button>
-                  </form>
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Avatar className="h-7 w-7">
+                        <AvatarImage
+                          src={user.profilePictureUrl ?? ''}
+                          alt=""
+                        />
+                        {user.firstName && user.lastName ? (
+                          <AvatarFallback className="text-xs">
+                            {user.firstName[0] + user.lastName[0]}
+                          </AvatarFallback>
+                        ) : (
+                          <AvatarFallback className="text-xs">
+                            {user.email[0] + user.email[1]}
+                          </AvatarFallback>
+                        )}
+                      </Avatar>
+                      <p className="line-clamp-1">{`${user.firstName}`}</p>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-60 p-2"
+                    align="start"
+                    sideOffset={8}
+                  >
+                    <DropdownMenuLabel>
+                      <div className="full flex flex-col items-start justify-center gap-1">
+                        <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
+                        <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => logout()}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
               <Separator />
               <div className="flex gap-2">
