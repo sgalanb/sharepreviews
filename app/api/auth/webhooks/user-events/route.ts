@@ -1,12 +1,15 @@
-import { db } from '@/app/db'
-import { users } from '@/app/db/schema'
+import {
+  createDbUser,
+  deleteDbUser,
+  getDbUserById,
+  updateDbUser,
+} from '@/app/db/operations/users'
 import WorkOS from '@workos-inc/node'
-import { eq } from 'drizzle-orm'
 import { NextRequest } from 'next/server'
 
 type TypeEventType = 'user.created' | 'user.updated' | 'user.deleted'
 
-type TypeEventUserData = {
+export type TypeEventUserData = {
   id: string
   email: string
   first_name: string
@@ -33,39 +36,21 @@ export async function POST(req: NextRequest) {
 
   try {
     // Check if a user with this ID exists in the DB
-    const user = await db.query['users'].findFirst({
-      where: eq(users.id, eventUserData.id),
-    })
+    const user = await getDbUserById(eventUserData.id)
 
     // If the user doesn't exist in the DB and the event is a creation, add the new user to the DB
     if (!user && eventType === 'user.created') {
-      await db.insert(users).values({
-        id: eventUserData.id,
-        email: eventUserData.email,
-        firstName: eventUserData.first_name,
-        lastName: eventUserData.last_name,
-        emailVerified: eventUserData.email_verified,
-        updatedAt: new Date(eventUserData.updated_at),
-      })
+      await createDbUser(eventUserData)
     }
 
     // If the user exists in the DB and the event is an update, update the user in the DB
     if (!!user && eventType === 'user.updated') {
-      await db
-        .update(users)
-        .set({
-          email: eventUserData.email,
-          firstName: eventUserData.first_name,
-          lastName: eventUserData.last_name,
-          emailVerified: eventUserData.email_verified,
-          updatedAt: new Date(eventUserData.updated_at),
-        })
-        .where(eq(users.id, eventUserData.id))
+      await updateDbUser(eventUserData)
     }
 
     // If the user exists in the DB and the event is a deletion, delete the user from the DB
     if (!!user && eventType === 'user.deleted') {
-      await db.delete(users).where(eq(users.id, eventUserData.id))
+      await deleteDbUser(eventUserData.id)
     }
 
     // If the user doesn't exist in the DB and the event is an update or deletion (which shouldn't happen), return an error response so the webhook fails and WorkOS notifies us

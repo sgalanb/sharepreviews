@@ -15,6 +15,13 @@
       "when": 1709334527342,
       "tag": "0001_same_felicia_hardy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709416099402,
+      "tag": "0002_medical_manta",
+      "breakpoints": true
     }
   ]
 }

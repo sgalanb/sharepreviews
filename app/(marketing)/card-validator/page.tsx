@@ -1,5 +1,5 @@
-import ValidatorLaunchScreen from '@/app/(app)/validator/launch-screen'
-import PreviewValidator from '@/app/(app)/validator/preview-validator'
+import ValidatorLaunchScreen from '@/app/(marketing)/card-validator/launch-screen'
+import PreviewValidator from '@/app/(marketing)/card-validator/preview-validator'
 import { Metadata } from 'next'
 
 type Props = {

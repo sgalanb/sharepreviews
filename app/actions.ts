@@ -1,8 +1,8 @@
 'use server'
 
-import { db } from '@/app/db'
-import { projects } from '@/app/db/schema'
+import { createProject } from '@/app/db/operations/projects'
 import { logOutUser } from '@/app/lib/workos'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { Resend } from 'resend'
 
@@ -24,7 +24,7 @@ export async function logout() {
   redirect('/')
 }
 
-export async function createProject({
+export async function createProjectAction({
   formData,
   userId,
 }: {
@@ -35,11 +35,12 @@ export async function createProject({
     name: formData.get('name') as string,
   }
 
-  await db.insert(projects).values({
+  await createProject({
     name: rawFormData.name,
     userId: userId,
-    updatedAt: new Date(),
   })
+
+  revalidatePath('/', 'layout')
 }
 
 export async function createTemplate(formData: FormData) {}

@@ -1,6 +1,6 @@
 'use client'
 
-import { createProject } from '@/app/actions'
+import { createProjectAction } from '@/app/actions'
 import { Button } from '@/app/ui/components/Button'
 import {
   Dialog,
@@ -32,7 +32,7 @@ export default function NewProjectDialog({
         <form
           action={(formData: FormData) => {
             if (formData.get('name')) {
-              createProject({
+              createProjectAction({
                 formData,
                 userId: userId,
               })

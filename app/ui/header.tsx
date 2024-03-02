@@ -1,9 +1,18 @@
 'use client'
 
 import { logout } from '@/app/actions'
+import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Badge } from '@/app/ui/components/Badge'
 import { Button } from '@/app/ui/components/Button'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandSeparator,
+} from '@/app/ui/components/Command'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +29,11 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/app/ui/components/NavigationMenu'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/app/ui/components/Popover'
 import { Separator } from '@/app/ui/components/Separator'
 import {
   Sheet,
@@ -29,30 +43,37 @@ import {
 } from '@/app/ui/components/Sheet'
 import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
+import { cn } from '@/app/utils'
 import { User } from '@workos-inc/node'
 import {
   BookText,
+  Check,
+  ChevronsUpDown,
   Github,
   LayoutGrid,
   LogOut,
   MenuIcon,
   MonitorCheck,
+  Plus,
   Twitter,
   Zap,
 } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Header({
   authorizationUrl,
   isApp,
   user,
+  userProjects,
 }: {
   authorizationUrl: string
   isApp: boolean
   user: User | undefined
+  userProjects: ProjectType[]
 }) {
+  const router = useRouter()
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
 
@@ -72,6 +93,22 @@ export default function Header({
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  // App Project Selector
+  const [openProjectsCombobox, setOpenProjectsCombobox] =
+    useState<boolean>(false)
+  const [projectsComboboxValue, setProjectsComboboxValue] = useState<string>(
+    pathname.split('/')[1]
+  )
+
+  const projectsList = userProjects?.map((project) => ({
+    value: project.pathname,
+    label: project.name,
+  }))
+
+  useEffect(() => {
+    setProjectsComboboxValue(pathname.split('/')[1])
+  }, [pathname])
 
   return (
     <header
@@ -164,7 +201,7 @@ export default function Header({
               <div className="w-full pt-4">
                 <Button variant="ghost" asChild>
                   <Link
-                    href="/overview"
+                    href="/"
                     className="flex !h-fit w-full items-center gap-2 hover:bg-accent"
                   >
                     <PictorialMark className="w-12 fill-primary" />
@@ -180,9 +217,9 @@ export default function Header({
               <div className="flex w-full flex-col items-start justify-start gap-2">
                 <Button variant="ghost" asChild>
                   <Link
-                    href="/overview"
+                    href={`/${pathname.split('/')[1]}`}
                     className={`${
-                      pathname == '/overview'
+                      pathname == `/${pathname.split('/')[1]}`
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
@@ -194,29 +231,15 @@ export default function Header({
 
                 <Button variant="ghost" asChild>
                   <Link
-                    href="/generator"
+                    href={`/${pathname.split('/')[1]}/generator`}
                     className={`${
-                      pathname == '/generator'
+                      pathname == `/${pathname.split('/')[1]}/generator`
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
                   >
                     <Zap className="h-4 w-4" />
-                    Dynamic Image Generator
-                  </Link>
-                </Button>
-
-                <Button variant="ghost" asChild>
-                  <Link
-                    href="/validator"
-                    className={`${
-                      pathname == '/validator'
-                        ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
-                        : 'text-foreground hover:bg-accent'
-                    } flex w-full !justify-start gap-2`}
-                  >
-                    <MonitorCheck className="h-4 w-4" />
-                    Card Validator
+                    Image Templates
                   </Link>
                 </Button>
               </div>
@@ -226,12 +249,18 @@ export default function Header({
               <div className="flex w-full flex-col items-start justify-start gap-2">
                 <Button variant="ghost" asChild>
                   <Link
+                    href="/card-validator"
+                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
+                    target="_blank"
+                  >
+                    <MonitorCheck className="h-4 w-4" />
+                    Card Validator
+                  </Link>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <Link
                     href="/blog"
-                    className={`${
-                      pathname == '/blog'
-                        ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
-                        : 'text-foreground hover:bg-accent'
-                    } flex w-full !justify-start gap-2`}
+                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
                     target="_blank"
                   >
                     <BookText className="h-4 w-4" />
@@ -255,55 +284,124 @@ export default function Header({
             </div>
             <div className="flex w-full flex-col gap-4">
               {user && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="flex items-center justify-center gap-2"
+                <div className="grid grid-cols-3 gap-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" className="col-span-1">
+                        <Avatar className="h-7 w-7">
+                          <AvatarImage
+                            src={user.profilePictureUrl ?? ''}
+                            alt=""
+                          />
+                          {user.firstName && user.lastName ? (
+                            <AvatarFallback className="text-xs">
+                              {user.firstName[0] + user.lastName[0]}
+                            </AvatarFallback>
+                          ) : (
+                            <AvatarFallback className="text-xs">
+                              {user.email[0] + user.email[1]}
+                            </AvatarFallback>
+                          )}
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-60 p-2"
+                      align="start"
+                      sideOffset={8}
                     >
-                      <Avatar className="h-7 w-7">
-                        <AvatarImage
-                          src={user.profilePictureUrl ?? ''}
-                          alt=""
-                        />
-                        {user.firstName && user.lastName ? (
-                          <AvatarFallback className="text-xs">
-                            {user.firstName[0] + user.lastName[0]}
-                          </AvatarFallback>
-                        ) : (
-                          <AvatarFallback className="text-xs">
-                            {user.email[0] + user.email[1]}
-                          </AvatarFallback>
-                        )}
-                      </Avatar>
-                      <p className="line-clamp-1">{`${user.firstName}`}</p>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    className="w-60 p-2"
-                    align="start"
-                    sideOffset={8}
+                      <DropdownMenuLabel>
+                        <div className="full flex flex-col items-start justify-center gap-1">
+                          <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
+                          <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
+                            {user.email}
+                          </p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onClick={() => logout()}
+                        >
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>Log out</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <Popover
+                    open={openProjectsCombobox}
+                    onOpenChange={setOpenProjectsCombobox}
                   >
-                    <DropdownMenuLabel>
-                      <div className="full flex flex-col items-start justify-center gap-1">
-                        <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
-                        <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
-                          {user.email}
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => logout()}
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={openProjectsCombobox}
+                        className="col-span-2 justify-between"
                       >
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                        {projectsComboboxValue
+                          ? projectsList.find(
+                              (project) =>
+                                project.value === projectsComboboxValue
+                            )?.label
+                          : 'Select project...'}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-[9.83375rem] p-0"
+                      align="end"
+                      sideOffset={8}
+                    >
+                      <Command>
+                        <CommandInput placeholder="Search project..." />
+                        <CommandEmpty>No project found.</CommandEmpty>
+                        <CommandGroup>
+                          {projectsList.map((project) => (
+                            <CommandItem
+                              key={project.value}
+                              value={project.value}
+                              onSelect={(newValue) => {
+                                setProjectsComboboxValue(
+                                  newValue === projectsComboboxValue
+                                    ? projectsComboboxValue
+                                    : newValue
+                                )
+                                if (newValue !== projectsComboboxValue) {
+                                  // replace pathname.split('/')[1] with new value but keep the rest of the path
+                                  router.push(
+                                    pathname.replace(
+                                      pathname.split('/')[1],
+                                      newValue
+                                    )
+                                  )
+                                }
+                                setOpenProjectsCombobox(false)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  'mr-2 h-4 w-4',
+                                  projectsComboboxValue === project.value
+                                    ? 'opacity-100'
+                                    : 'opacity-0'
+                                )}
+                              />
+                              {project.label}
+                            </CommandItem>
+                          ))}
+                          <CommandSeparator className="my-1" />
+                          <CommandItem className="flex items-center justify-center">
+                            <Plus className="mr-2 h-4 w-4" />
+                            New project
+                          </CommandItem>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               )}
               <Separator />
               <div className="flex gap-2">

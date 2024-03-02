@@ -90,7 +90,7 @@ export default function NewTemplateDialog({
               <PopoverContent className="w-[19.375rem] p-0">
                 <Command>
                   <CommandInput placeholder="Search project..." />
-                  <CommandEmpty>No framework found.</CommandEmpty>
+                  <CommandEmpty>No project found.</CommandEmpty>
                   <CommandGroup>
                     {projectsList.map((project) => (
                       <CommandItem
