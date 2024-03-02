@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     // If the user exists in the DB and the event is an update, update the user in the DB
     if (!!user && eventType === 'user.updated') {
-      const test = await db
+      await db
         .update(users)
         .set({
           email: eventUserData.email,
@@ -61,7 +61,6 @@ export async function POST(req: NextRequest) {
           updatedAt: new Date(eventUserData.updated_at),
         })
         .where(eq(users.id, eventUserData.id))
-      console.log(test)
     }
 
     // If the user exists in the DB and the event is a deletion, delete the user from the DB

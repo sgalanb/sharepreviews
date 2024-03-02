@@ -1,28 +1,27 @@
-'use client'
-
+import { db } from '@/app/db'
+import { projects } from '@/app/db/schema'
+import { getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import { Separator } from '@/app/ui/components/Separator'
-import { AnimatePresence, motion } from 'framer-motion'
-import Link from 'next/link'
-import { v4 as uuid } from 'uuid'
+import NewTemplateDialog from '@/app/ui/dialogs/new-template-dialog'
+import { eq } from 'drizzle-orm'
 
-export default function GeneratorPage() {
+export default async function GeneratorPage() {
+  const { user } = await getUser()
+  const userProjects = await db.query['projects'].findMany({
+    where: eq(projects.userId, user?.id!),
+  })
+
   return (
-    <AnimatePresence>
-      <motion.div
-        className={`flex w-full max-w-7xl flex-col items-center justify-center gap-4 p-4 lg:p-12`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <div className="flex w-full items-center justify-between">
-          <span className="text-2xl">Your templates</span>
-          <Button asChild>
-            <Link href={`/generator/${uuid()}`}>New template</Link>
-          </Button>
-        </div>
-        <Separator />
-      </motion.div>
-    </AnimatePresence>
+    <div className="flex w-full max-w-7xl flex-col items-center justify-center gap-4 p-4 lg:p-12">
+      <div className="flex w-full items-center justify-between">
+        <span className="text-2xl">Your templates</span>
+        <NewTemplateDialog
+          trigger={<Button>New template</Button>}
+          userProjects={userProjects}
+        />
+      </div>
+      <Separator />
+    </div>
   )
 }

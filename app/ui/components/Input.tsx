@@ -4,12 +4,13 @@ import * as React from 'react'
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   leftLabel?: React.ReactNode
+  containerClassName?: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, leftLabel, ...props }, ref) => {
+  ({ className, containerClassName, type, leftLabel, ...props }, ref) => {
     return (
-      <div className="relative flex w-full">
+      <div className={cn('relative flex w-full', containerClassName)}>
         {leftLabel && (
           <span className="pointer-events-none absolute left-0 top-0 flex h-full items-center rounded-l-md border border-input bg-background p-2">
             {leftLabel}
