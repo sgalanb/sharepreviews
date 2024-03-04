@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .title {
+    @apply text-3xl font-semibold tracking-tight;
+  }
+  .subtitle {
+    @apply text-2xl font-medium tracking-tight;
+  }
+  .marketing-title {
+    @apply text-4xl font-extrabold tracking-tight;
+  }
+  .marketing-subtitle {
+    @apply text-3xl font-semibold tracking-tight;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%; /* #ffffff */

@@ -15,7 +15,7 @@ export default function ProjectOverviewHeader({
 
   return (
     <div className="flex w-full items-center justify-between">
-      <span className="text-2xl">{selectedProject?.name}</span>
+      <span className="title">{selectedProject?.name}</span>
     </div>
   )
 }

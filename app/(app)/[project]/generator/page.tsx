@@ -5,6 +5,7 @@ import { Button } from '@/app/ui/components/Button'
 import { Separator } from '@/app/ui/components/Separator'
 import NewTemplateDialog from '@/app/ui/dialogs/new-template-dialog'
 import { eq } from 'drizzle-orm'
+import { Plus } from 'lucide-react'
 
 export default async function GeneratorPage() {
   const { user } = await getUser()
@@ -17,7 +18,12 @@ export default async function GeneratorPage() {
       <div className="flex w-full items-center justify-between">
         <span className="text-2xl">Your templates</span>
         <NewTemplateDialog
-          trigger={<Button>New template</Button>}
+          trigger={
+            <Button className="flex gap-2">
+              <Plus className="h-4 w-4" />
+              New template
+            </Button>
+          }
           userProjects={userProjects}
         />
       </div>

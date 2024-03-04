@@ -29,6 +29,7 @@ import {
 import { cn } from '@/app/utils'
 import { Check, ChevronsUpDown, Plus } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 export default function NewTemplateDialog({
@@ -38,12 +39,16 @@ export default function NewTemplateDialog({
   trigger: React.ReactNode
   userProjects: ProjectType[]
 }) {
+  const pathname = usePathname()
+
   const [openProjectsCombobox, setOpenProjectsCombobox] =
     useState<boolean>(false)
-  const [projectsComboboxValue, setProjectsComboboxValue] = useState<string>('')
+  const [projectsComboboxValue, setProjectsComboboxValue] = useState<string>(
+    pathname.split('/')[1]
+  )
 
   const projectsList = userProjects?.map((project) => ({
-    value: project.name.toLowerCase(),
+    value: project.pathname,
     label: project.name,
   }))
 

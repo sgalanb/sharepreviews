@@ -1,6 +1,6 @@
 'use client'
 
-import { logout } from '@/app/actions'
+import { logout, redirectAction } from '@/app/actions'
 import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Badge } from '@/app/ui/components/Badge'
@@ -19,7 +19,11 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/app/ui/components/DropdownMenu'
 import {
@@ -41,6 +45,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/app/ui/components/Sheet'
+import NewProjectDialog from '@/app/ui/dialogs/new-project-dialog'
 import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { cn } from '@/app/utils'
@@ -49,15 +54,18 @@ import {
   BookText,
   Check,
   ChevronsUpDown,
-  Github,
   LayoutGrid,
   LogOut,
   MenuIcon,
   MonitorCheck,
+  Moon,
   Plus,
-  Twitter,
+  Sun,
+  UserRoundCog,
   Zap,
 } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -75,8 +83,10 @@ export default function Header({
 }) {
   const router = useRouter()
   const pathname = usePathname()
-  const [isScrolled, setIsScrolled] = useState<boolean>(false)
+  const { theme, setTheme } = useTheme()
 
+  // Scroll effect
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -198,23 +208,7 @@ export default function Header({
           {/* Desktop App */}
           <div className="hidden h-full w-full flex-col items-start justify-between lg:flex">
             <div className="flex w-full flex-col items-start justify-start gap-4">
-              <div className="w-full pt-4">
-                <Button variant="ghost" asChild>
-                  <Link
-                    href="/"
-                    className="flex !h-fit w-full items-center gap-2 hover:bg-accent"
-                  >
-                    <PictorialMark className="w-12 fill-primary" />
-                    <span className="text-base font-semibold text-foreground">
-                      sharepreviews
-                    </span>
-                  </Link>
-                </Button>
-              </div>
-
-              <Separator />
-
-              <div className="flex w-full flex-col items-start justify-start gap-2">
+              <div className="mt-6 flex w-full flex-col items-start justify-start gap-2">
                 <Button variant="ghost" asChild>
                   <Link
                     href={`/${pathname.split('/')[1]}`}
@@ -257,16 +251,6 @@ export default function Header({
                     Card Validator
                   </Link>
                 </Button>
-                <Button variant="ghost" asChild>
-                  <Link
-                    href="/blog"
-                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
-                    target="_blank"
-                  >
-                    <BookText className="h-4 w-4" />
-                    Blog
-                  </Link>
-                </Button>
 
                 {/* <Button variant="ghost" asChild>
                   <Link
@@ -283,6 +267,19 @@ export default function Header({
               </div>
             </div>
             <div className="flex w-full flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <Button variant="outline" asChild>
+                  <Link
+                    href="/blog"
+                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
+                    target="_blank"
+                  >
+                    <BookText className="h-4 w-4" />
+                    Blog
+                  </Link>
+                </Button>
+              </div>
+              <Separator />
               {user && (
                 <div className="grid grid-cols-3 gap-2">
                   <DropdownMenu>
@@ -320,6 +317,48 @@ export default function Header({
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
+                        {/* Theme toggle */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger className="flex items-center justify-start gap-2">
+                            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                            <span>
+                              {theme === 'dark'
+                                ? 'Dark'
+                                : theme === 'light'
+                                  ? 'Light'
+                                  : 'System'}
+                            </span>
+                            <span className="sr-only">Toggle theme</span>
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="p-2">
+                              <DropdownMenuItem
+                                onClick={() => setTheme('light')}
+                              >
+                                Light
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => setTheme('dark')}
+                              >
+                                Dark
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => setTheme('system')}
+                              >
+                                System
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onClick={() => redirectAction('/account-settings')}
+                        >
+                          <UserRoundCog className="mr-2 h-4 w-4" />
+                          <span>Account settings</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           className="cursor-pointer"
                           onClick={() => logout()}
@@ -393,9 +432,16 @@ export default function Header({
                             </CommandItem>
                           ))}
                           <CommandSeparator className="my-1" />
-                          <CommandItem className="flex items-center justify-center">
-                            <Plus className="mr-2 h-4 w-4" />
-                            New project
+                          <CommandItem>
+                            <NewProjectDialog
+                              userId={user.id}
+                              trigger={
+                                <div className="flex w-full items-center justify-center gap-2">
+                                  <Plus className="h-4 w-4" />
+                                  New project
+                                </div>
+                              }
+                            />
                           </CommandItem>
                         </CommandGroup>
                       </Command>
@@ -403,7 +449,7 @@ export default function Header({
                   </Popover>
                 </div>
               )}
-              <Separator />
+              {/* <Separator />
               <div className="flex gap-2">
                 <ThemeToggle />
                 <Button variant="outline" asChild>
@@ -424,7 +470,7 @@ export default function Header({
                     <Twitter className="h-4 w-4" />
                   </Link>
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </>
@@ -434,10 +480,12 @@ export default function Header({
           <div className="mx-auto w-full max-w-7xl">
             <div className="hidden w-full items-center justify-between p-4 lg:flex">
               <Link href="/" className="flex items-center justify-center gap-2">
-                <PictorialMark className="w-12 fill-primary" />
-                <span className="text-base font-semibold text-foreground">
-                  sharepreviews
-                </span>
+                <Image
+                  src="/logo.svg"
+                  alt="SharePreviews"
+                  width={40}
+                  height={40}
+                />
               </Link>
 
               <NavigationMenu>
@@ -474,7 +522,7 @@ export default function Header({
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Avatar>
+                    <Avatar className="cursor-pointer">
                       <AvatarImage src={user.profilePictureUrl ?? ''} alt="" />
                       {user.firstName && user.lastName ? (
                         <AvatarFallback>

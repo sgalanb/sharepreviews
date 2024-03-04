@@ -1,8 +1,3 @@
-import {
-  TypographyH1,
-  TypographyH2,
-  TypographyP,
-} from '@/app/ui/components/typography'
 import dayjs from 'dayjs'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -30,7 +25,7 @@ export const metadata: Metadata = {
 export default async function BlogPage() {
   return (
     <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-4 lg:gap-8 lg:pt-8">
-      <TypographyH1 className="pt-4 lg:p-0">Blog</TypographyH1>
+      <h1 className="marketing-title pt-4 lg:p-0">Blog</h1>
       <Link
         href="/blog/everything-you-should-know-about-social-metatags"
         className="flex flex-col gap-4 rounded-lg p-4 hover:bg-accent lg:flex-row"
@@ -38,13 +33,13 @@ export default async function BlogPage() {
         <div className="order-2 w-full lg:order-1 lg:w-1/3">
           <div className="flex h-full flex-col justify-between gap-4">
             <div className="flex flex-col gap-4">
-              <TypographyH2 className="lg:text-balance">
+              <h2 className="marketing-subtitle lg:text-balance">
                 Everything You Should Know About Social Metatags
-              </TypographyH2>
-              <TypographyP className="text-muted-foreground lg:text-balance">
+              </h2>
+              <p className="text-muted-foreground lg:text-balance">
                 Learn how to use Open Graph and Twitter metatags to control how
                 your website is displayed when shared on social media.
-              </TypographyP>
+              </p>
             </div>
             <div className="flex items-center justify-start gap-2">
               <Image

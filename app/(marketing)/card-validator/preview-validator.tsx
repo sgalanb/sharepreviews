@@ -202,7 +202,7 @@ export default function PreviewValidator({ isApp }: { isApp: boolean }) {
           <span className="self-center text-sm">Back</span>
         </Link>
         <div className="mb-4 flex w-full items-center justify-between">
-          <h1 className="line-clamp-4 break-all text-4xl font-extrabold leading-[3rem] tracking-tight">
+          <h1 className="title line-clamp-4 break-all">
             {titleUrl || 'Preview Card Validator'}
           </h1>
           {/* <ProgressCircle

@@ -1,6 +1,5 @@
 'use client'
 
-import { TypographyH1, TypographyP } from '@/app/ui/components/typography'
 import ValidatorInput from '@/app/ui/validator-input'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
@@ -16,13 +15,13 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <TypographyH1 className="text-balance text-center">
+        <h1 className="title text-balance text-center">
           Preview Card Validator
-        </TypographyH1>
-        <TypographyP className="mb-2 text-balance text-center">
+        </h1>
+        <p className="mb-2 text-balance text-center">
           Check how your links look when shared. Validate you have the correct
           metatags in place.
-        </TypographyP>
+        </p>
         <ValidatorInput isApp={isApp} />
         <div className="mt-2 flex gap-4 text-muted-foreground">
           <span>E.g.:</span>

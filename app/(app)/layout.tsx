@@ -34,8 +34,8 @@ export default async function RootLayout({
                 user={user}
                 userProjects={userProjects}
               />
-              <main className="mx-auto w-full rounded-lg lg:pb-2 lg:pr-2 lg:pt-2">
-                <div className="mx-auto w-full rounded-lg lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
+              <main className="mx-auto w-full rounded-md lg:pb-2 lg:pr-2 lg:pt-2">
+                <div className="mx-auto w-full rounded-md lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
                   {children}
                 </div>
               </main>

@@ -19,6 +19,10 @@ export async function addContactToGeneralAudience(formData: FormData) {
   })
 }
 
+export async function redirectAction(href: string) {
+  return redirect(href)
+}
+
 export async function logout() {
   logOutUser()
   redirect('/')
