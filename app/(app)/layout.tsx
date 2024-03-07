@@ -1,4 +1,4 @@
-import { getProjectById } from '@/app/db/operations/projects'
+import { getUserProjects } from '@/app/db/operations/projects'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
 import Header from '@/app/ui/header'
@@ -20,7 +20,7 @@ export default async function RootLayout({
   const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
 
-  const userProjects = await getProjectById(user?.id ?? '')
+  const userProjects = await getUserProjects(user?.id ?? '')
 
   return (
     <html lang="en">

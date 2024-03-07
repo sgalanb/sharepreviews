@@ -1,10 +1,10 @@
 import ProjectOverviewHeader from '@/app/(app)/[project]/header'
-import { getProjectById } from '@/app/db/operations/projects'
+import { getUserProjects } from '@/app/db/operations/projects'
 import { getUser } from '@/app/lib/workos'
 
 export default async function Overview() {
   const { user } = await getUser()
-  const userProjects = await getProjectById(user?.id ?? '')
+  const userProjects = await getUserProjects(user?.id ?? '')
 
   return (
     <div

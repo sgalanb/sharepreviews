@@ -28,7 +28,7 @@ export default function NewProjectDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md">
         <form
           action={(formData: FormData) => {
             if (formData.get('name')) {

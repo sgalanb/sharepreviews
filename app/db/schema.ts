@@ -29,3 +29,15 @@ export const projects = pgTable('projects', {
   updatedAt: timestamp('updatedAt').notNull(),
 })
 export type ProjectType = typeof projects.$inferInsert
+
+// Templates are also stored on upstash for quick retrieval.
+export const templates = pgTable('templates', {
+  id: uuid('uuid').defaultRandom().primaryKey(),
+  name: text('name').notNull(),
+  projectId: uuid('project_id')
+    .references(() => projects.id)
+    .notNull(),
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+  updatedAt: timestamp('updatedAt').notNull(),
+  layersData: text('data').notNull(), // JSON data
+})

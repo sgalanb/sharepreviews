@@ -15,7 +15,7 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <h1 className="title text-balance text-center">
+        <h1 className="marketing-title text-balance text-center">
           Preview Card Validator
         </h1>
         <p className="mb-2 text-balance text-center">
@@ -45,11 +45,11 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
           </Link>
           <Link
             href={
-              isApp ? '/validator?url=dub.sh' : '/card-validator?url=dub.sh'
+              isApp ? '/validator?url=dub.co' : '/card-validator?url=dub.co'
             }
             className="hover:underline"
           >
-            dub.sh
+            dub.co
           </Link>
         </div>
       </motion.div>

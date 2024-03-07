@@ -3,14 +3,20 @@ import { projects } from '@/app/db/schema'
 import { eq } from 'drizzle-orm'
 import { unstable_cache } from 'next/cache'
 
-export const getProjectById = unstable_cache(
-  async (id: string) =>
+export const getUserProjects = unstable_cache(
+  async (userId: string) =>
     await db.query['projects'].findMany({
-      where: eq(projects.userId, id),
+      where: eq(projects.userId, userId),
     }),
   ['projects'],
   { tags: ['projects'] }
 )
+
+export async function getProjectByPathname(pathname: string) {
+  return await db.query['projects'].findFirst({
+    where: eq(projects.pathname, pathname),
+  })
+}
 
 async function generateUniqueProjectPathname(
   projectName: string

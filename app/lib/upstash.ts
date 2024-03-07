@@ -8,11 +8,6 @@ export const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
 })
 
-export const ratelimitRedis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || '',
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
-})
-
 // Create a new ratelimiter, that allows 10 requests per 10 seconds by default
 export const ratelimit = (
   requests: number = 10,
@@ -24,7 +19,7 @@ export const ratelimit = (
     | `${number} d` = '10 s'
 ) => {
   return new Ratelimit({
-    redis: ratelimitRedis,
+    redis,
     limiter: Ratelimit.slidingWindow(requests, seconds),
     analytics: true,
     prefix: 'sharepreviews',
@@ -35,9 +30,23 @@ export const ratelimit = (
 //  If there's an error, it will be logged to a separate redis list for debugging
 export async function recordMetatags(url: string, error: boolean) {
   if (error) {
-    return await ratelimitRedis.zincrby('metatags-error-zset', 1, url)
+    return await redis.zincrby('metatags-error-zset', 1, url)
   }
 
   const domain = getDomainWithoutWWW(url)
-  return await ratelimitRedis.zincrby('metatags-zset', 1, domain)
+  return await redis.zincrby('metatags-zset', 1, domain)
 }
+
+// export async function createTemplate({
+//   templateId,
+//   data,
+// }: {
+//   templateId: string
+//   data: string
+// }) {
+//   return await redis.json.set(`template:${templateId}`, '$', data)
+// }
+
+// export async function getTemplate(templateId: string) {
+//   return await redis.json.get(`template:${templateId}`)
+// }

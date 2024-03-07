@@ -12,19 +12,14 @@ export async function GET(req: NextRequest) {
     return new Response('Invalid URL', { status: 400 })
   }
 
-  // Rate limit if user is not logged in
-  //   const session = await getToken({
-  //     req,
-  //     secret: process.env.NEXTAUTH_SECRET,
-  //   });
-  //if (!session?.email) {
+  // We'll use the user's IP address to rate limit the requests
   const ip = ipAddress(req) ?? ''
   const { success } = await ratelimit().limit(ip)
   if (!success) {
     return new Response("You've hit the rate limit", { status: 429 })
   }
-  //}
 
+  // If the URL is valid and the request gets permission from the ratelimit, we'll fetch the metatags and return them
   const validatedMetatags = await getValidatedMetatags(url)
   return new Response(JSON.stringify(validatedMetatags), {
     status: 200,

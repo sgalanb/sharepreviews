@@ -47,4 +47,4 @@ export async function createProjectAction({
   revalidatePath('/', 'layout')
 }
 
-export async function createTemplate(formData: FormData) {}
+export async function createTemplateAction(formData: FormData) {}

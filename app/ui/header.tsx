@@ -51,7 +51,7 @@ import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { cn } from '@/app/utils'
 import { User } from '@workos-inc/node'
 import {
-  BookText,
+  BookOpenText,
   Check,
   ChevronsUpDown,
   LayoutGrid,
@@ -59,6 +59,7 @@ import {
   MenuIcon,
   MonitorCheck,
   Moon,
+  Newspaper,
   Plus,
   Sun,
   UserRoundCog,
@@ -79,7 +80,7 @@ export default function Header({
   authorizationUrl: string
   isApp: boolean
   user: User | undefined
-  userProjects: ProjectType[]
+  userProjects?: ProjectType[]
 }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -233,7 +234,7 @@ export default function Header({
                     } flex w-full !justify-start gap-2`}
                   >
                     <Zap className="h-4 w-4" />
-                    Image Templates
+                    Templates
                   </Link>
                 </Button>
               </div>
@@ -274,8 +275,18 @@ export default function Header({
                     className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
                     target="_blank"
                   >
-                    <BookText className="h-4 w-4" />
+                    <Newspaper className="h-4 w-4" />
                     Blog
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link
+                    href="/docs"
+                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
+                    target="_blank"
+                  >
+                    <BookOpenText className="h-4 w-4" />
+                    Docs & Guides
                   </Link>
                 </Button>
               </div>
@@ -381,7 +392,7 @@ export default function Header({
                         className="col-span-2 justify-between"
                       >
                         {projectsComboboxValue
-                          ? projectsList.find(
+                          ? projectsList?.find(
                               (project) =>
                                 project.value === projectsComboboxValue
                             )?.label
@@ -398,7 +409,7 @@ export default function Header({
                         <CommandInput placeholder="Search project..." />
                         <CommandEmpty>No project found.</CommandEmpty>
                         <CommandGroup>
-                          {projectsList.map((project) => (
+                          {projectsList?.map((project) => (
                             <CommandItem
                               key={project.value}
                               value={project.value}
@@ -481,7 +492,7 @@ export default function Header({
             <div className="hidden w-full items-center justify-between p-4 lg:flex">
               <Link href="/" className="flex items-center justify-center gap-2">
                 <Image
-                  src="/logo.svg"
+                  src="/icon.svg"
                   alt="SharePreviews"
                   width={40}
                   height={40}
@@ -519,55 +530,58 @@ export default function Header({
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-              {user ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Avatar className="cursor-pointer">
-                      <AvatarImage src={user.profilePictureUrl ?? ''} alt="" />
-                      {user.firstName && user.lastName ? (
-                        <AvatarFallback>
-                          {user.firstName[0] + user.lastName[0]}
-                        </AvatarFallback>
-                      ) : (
-                        <AvatarFallback>
-                          {user.email[0] + user.email[1]}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    className="w-52  p-2"
-                    align="end"
-                    sideOffset={8}
-                  >
-                    <DropdownMenuLabel>
-                      <div className="full flex flex-col items-start justify-center gap-1">
-                        <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
-                        <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
-                          {user.email}
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => logout()}
-                      >
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <div className="flex items-center justify-end gap-4">
-                  <ThemeToggle ghost />
+              <div className="flex items-center justify-end gap-4">
+                <ThemeToggle ghost />
+                {user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Avatar className="cursor-pointer">
+                        <AvatarImage
+                          src={user.profilePictureUrl ?? ''}
+                          alt=""
+                        />
+                        {user.firstName && user.lastName ? (
+                          <AvatarFallback>
+                            {user.firstName[0] + user.lastName[0]}
+                          </AvatarFallback>
+                        ) : (
+                          <AvatarFallback>
+                            {user.email[0] + user.email[1]}
+                          </AvatarFallback>
+                        )}
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-52  p-2"
+                      align="end"
+                      sideOffset={8}
+                    >
+                      <DropdownMenuLabel>
+                        <div className="full flex flex-col items-start justify-center gap-1">
+                          <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
+                          <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
+                            {user.email}
+                          </p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onClick={() => logout()}
+                        >
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>Log out</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
                   <Button asChild>
                     <Link href={authorizationUrl}>Get Started</Link>
                   </Button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </>
