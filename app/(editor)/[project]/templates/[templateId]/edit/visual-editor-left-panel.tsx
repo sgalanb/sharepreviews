@@ -12,6 +12,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
+import DeleteLayerDialog from '@/app/ui/dialogs/delete-layer-dialog'
+import NewLayerDialog from '@/app/ui/dialogs/new-layer-dialog'
 import { DndContext } from '@dnd-kit/core'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
@@ -22,7 +24,15 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { GripHorizontal, Image, Info, Plus, Square, Type } from 'lucide-react'
+import {
+  GripHorizontal,
+  Image,
+  Info,
+  Plus,
+  Square,
+  Trash2,
+  Type,
+} from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react'
 
 export default function VisualEditorLeftPanel({
@@ -66,9 +76,16 @@ export default function VisualEditorLeftPanel({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" className="aspect-square w-10 p-0">
-                  <Plus className="h-5 w-5" />
-                </Button>
+                <NewLayerDialog
+                  layers={layers}
+                  setLayers={setLayers}
+                  setSelectedLayer={setSelectedLayer}
+                  trigger={
+                    <Button variant="ghost" className="aspect-square w-10 p-0">
+                      <Plus className="h-5 w-5" />
+                    </Button>
+                  }
+                />
               </TooltipTrigger>
               <TooltipContent>
                 <span className="font-medium">Add new layer</span>
@@ -89,6 +106,8 @@ export default function VisualEditorLeftPanel({
                 <Layer
                   key={layer.id}
                   layer={layer}
+                  layers={layers}
+                  setLayers={setLayers}
                   selected={layer.id === selectedLayer?.id}
                   setSelectedLayer={setSelectedLayer}
                 />
@@ -195,12 +214,16 @@ export default function VisualEditorLeftPanel({
 
 const Layer = ({
   layer,
+  layers,
+  setLayers,
   selected,
   setSelectedLayer,
 }: {
   layer: LayerType
+  layers: LayerType[]
+  setLayers: Dispatch<SetStateAction<LayerType[]>>
   selected: boolean
-  setSelectedLayer: (layer: LayerType) => void
+  setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
 }) => {
   const {
     attributes,
@@ -231,8 +254,8 @@ const Layer = ({
             ? 'border-background hover:border-background'
             : 'border-background hover:border-ring'
       } ${
-        selected ? 'bg-accent' : 'bg-background'
-      } flex cursor-pointer items-center justify-between gap-2 rounded-sm border-2 p-1.5`}
+        selected ? 'bg-accent' : 'cursor-pointer bg-background'
+      } flex items-center justify-between gap-2 rounded-sm border-2 p-1.5`}
     >
       <div className="flex items-center justify-start gap-2">
         {layer.type === 'text' ? (
@@ -265,16 +288,33 @@ const Layer = ({
         )}
         <span className="text-sm">{layer.name}</span>
       </div>
-      <Button
-        {...attributes}
-        {...listeners}
-        variant="ghost"
-        className={`${
-          isDragging ? 'cursor-grabbing ' : 'cursor-grab'
-        } aspect-square h-8 p-0`}
-      >
-        <GripHorizontal className="h-4 w-4" />
-      </Button>
+      <div className="flex">
+        <DeleteLayerDialog
+          trigger={
+            <Button
+              variant="ghost"
+              className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200`}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          }
+          layers={layers}
+          setLayers={setLayers}
+          selectedLayer={layer}
+          setSelectedLayer={setSelectedLayer}
+        />
+
+        <Button
+          {...attributes}
+          {...listeners}
+          variant="ghost"
+          className={`${selected ? 'hover:bg-neutral-200' : ''} ${
+            isDragging ? 'cursor-grabbing ' : 'cursor-grab'
+          } aspect-square h-8 p-0`}
+        >
+          <GripHorizontal className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   )
 }
