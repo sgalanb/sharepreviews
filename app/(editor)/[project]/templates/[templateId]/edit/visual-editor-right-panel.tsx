@@ -1,6 +1,7 @@
 'use client'
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/types'
+import { createUploadedImageAction } from '@/app/actions'
 import { Button } from '@/app/ui/components/Button'
 import {
   Command,
@@ -17,6 +18,14 @@ import {
   PopoverTrigger,
 } from '@/app/ui/components/Popover'
 import { ScrollArea } from '@/app/ui/components/ScrollArea'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/ui/components/Select'
 import { Separator } from '@/app/ui/components/Separator'
 import {
   Tabs,
@@ -30,6 +39,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
+import { UploadButton } from '@/app/ui/components/UploadThingComponents'
 import { cn } from '@/app/utils'
 import {
   AlignCenter,
@@ -47,11 +57,13 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 export default function VisualEditorRightPanel({
+  userId,
   layers,
   setLayers,
   selectedLayer,
   setSelectedLayer,
 }: {
+  userId: string
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
   selectedLayer?: LayerType
@@ -384,55 +396,347 @@ export default function VisualEditorRightPanel({
                     </TooltipContent>
                   </Tooltip>
                 </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+                {selectedLayer.type !== 'text' && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Input
+                        id="corner-radius"
+                        type="number"
+                        step={1}
+                        min={0}
+                        max={999}
+                        defaultValue={selectedLayer.cornerRadius}
+                        onChange={(e) => {
+                          if (e.target.value === '') return
+                          setSelectedLayer({
+                            ...selectedLayer,
+                            cornerRadius: parseInt(e.target.value),
+                          })
+                          setLayers(
+                            layers.map((layer) =>
+                              layer.id === selectedLayer.id
+                                ? {
+                                    ...layer,
+                                    cornerRadius: parseInt(e.target.value),
+                                  }
+                                : layer
+                            )
+                          )
+                        }}
+                        onBlur={(e) => {
+                          if (e.target.value === '') {
+                            e.target.value =
+                              selectedLayer.cornerRadius.toString()
+                          }
+                        }}
+                        leftLabel={
+                          <Label
+                            htmlFor="corner-radius"
+                            className="w-4 text-center text-muted-foreground"
+                          >
+                            <Spline className="h-4 w-4" />
+                          </Label>
+                        }
+                        className="pl-10"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">
+                      <span className="font-medium">Corner radius</span>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+                {selectedLayer.type === 'image' && (
+                  <Select
+                    defaultValue="cover"
+                    onValueChange={(value) => {
+                      setSelectedLayer({
+                        ...selectedLayer,
+                        objectFit: value as 'fill' | 'contain' | 'cover',
+                      })
+                      setLayers(
+                        layers.map((layer) =>
+                          layer.id === selectedLayer.id
+                            ? {
+                                ...layer,
+                                objectFit: value as
+                                  | 'fill'
+                                  | 'contain'
+                                  | 'cover',
+                              }
+                            : layer
+                        )
+                      )
+                    }}
+                  >
+                    <SelectTrigger className="flex justify-start gap-0 p-0 pr-2">
+                      <Label className="mr-2 flex h-full w-[2.125rem] shrink-0 items-center justify-center border-r text-muted-foreground">
+                        Fit
+                      </Label>
+                      <div className="flex w-20 items-center justify-start">
+                        <SelectValue placeholder="Fit" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="cover">Cover</SelectItem>
+                        <SelectItem value="fill">Fill</SelectItem>
+                        <SelectItem value="contain">Contain</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              </TooltipProvider>
+            </div>
+          </div>
+          {/* VARIABLE VALUE */}
+          {selectedLayer?.type === 'text' && (
+            <>
+              <Separator />
+              <Tabs
+                defaultValue={selectedLayer.conditionalValue ? 'yes' : 'no'}
+                onValueChange={(value) => {
+                  setSelectedLayer({
+                    ...selectedLayer,
+                    conditionalValue: value === 'yes',
+                  })
+                  setLayers(
+                    layers.map((layer) =>
+                      layer.id === selectedLayer.id
+                        ? { ...layer, conditionalValue: value === 'yes' }
+                        : layer
+                    )
+                  )
+                }}
+                className="flex h-fit w-full flex-col items-start justify-start p-4"
+              >
+                <div className="flex w-full items-center justify-between">
+                  <span className="text-lg font-semibold">Variable value</span>
+                  <TabsList className="h-fit w-fit border">
+                    <TabsTrigger value="no" className="h-fit w-full py-0.5">
+                      No
+                    </TabsTrigger>
+                    <TabsTrigger value="yes" className="h-fit w-full py-0.5">
+                      Yes
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="no" className="w-full">
+                  <Input
+                    type="text"
+                    id="value"
+                    defaultValue={selectedLayer.value}
+                    onChange={(e) => {
+                      setSelectedLayer({
+                        ...selectedLayer,
+                        value: e.target.value,
+                      })
+                      setLayers(
+                        layers.map((layer) =>
+                          layer.id === selectedLayer.id
+                            ? { ...layer, value: e.target.value }
+                            : layer
+                        )
+                      )
+                    }}
+                    leftLabel={
+                      <Label
+                        htmlFor="value"
+                        className="w-12 text-center text-muted-foreground"
+                      >
+                        Text
+                      </Label>
+                    }
+                    className="w-full pl-[4.5rem]"
+                    containerClassName="mt-2"
+                  />
+                </TabsContent>
+                <TabsContent value="yes" className="w-full">
+                  <div className="mt-2 flex w-full flex-col gap-2">
                     <Input
-                      id="corner-radius"
-                      type="number"
-                      step={1}
-                      min={0}
-                      max={999}
-                      defaultValue={selectedLayer.cornerRadius}
+                      type="text"
+                      id="exampleValue"
+                      defaultValue={selectedLayer.exampleValue}
                       onChange={(e) => {
-                        if (e.target.value === '') return
                         setSelectedLayer({
                           ...selectedLayer,
-                          cornerRadius: parseInt(e.target.value),
+                          exampleValue: e.target.value,
                         })
                         setLayers(
                           layers.map((layer) =>
                             layer.id === selectedLayer.id
-                              ? {
-                                  ...layer,
-                                  cornerRadius: parseInt(e.target.value),
-                                }
+                              ? { ...layer, exampleValue: e.target.value }
                               : layer
                           )
                         )
                       }}
-                      onBlur={(e) => {
-                        if (e.target.value === '') {
-                          e.target.value = selectedLayer.cornerRadius.toString()
-                        }
+                      leftLabel={
+                        <Label
+                          htmlFor="exampleValue"
+                          className="w-24 text-center text-muted-foreground"
+                        >
+                          Example text
+                        </Label>
+                      }
+                      className="w-full pl-[7.5rem]"
+                    />
+                    <span className="text-sm text-muted-foreground">
+                      This text will be used in previews and when no variable is
+                      provided.
+                    </span>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </>
+          )}
+          {selectedLayer?.type === 'image' && (
+            <>
+              <Separator />
+              <Tabs
+                defaultValue={selectedLayer.conditionalValue ? 'yes' : 'no'}
+                onValueChange={(value) => {
+                  setSelectedLayer({
+                    ...selectedLayer,
+                    conditionalValue: value === 'yes',
+                  })
+                  setLayers(
+                    layers.map((layer) =>
+                      layer.id === selectedLayer.id
+                        ? { ...layer, conditionalValue: value === 'yes' }
+                        : layer
+                    )
+                  )
+                }}
+                className="flex h-fit w-full flex-col items-start justify-start p-4"
+              >
+                <div className="flex w-full items-center justify-between">
+                  <span className="text-lg font-semibold">Variable value</span>
+                  <TabsList className="h-fit w-fit border">
+                    <TabsTrigger value="no" className="h-fit w-full py-0.5">
+                      No
+                    </TabsTrigger>
+                    <TabsTrigger value="yes" className="h-fit w-full py-0.5">
+                      Yes
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="no" className="w-full">
+                  <Input
+                    type="text"
+                    id="src"
+                    defaultValue={selectedLayer.src}
+                    onChange={(e) => {
+                      setSelectedLayer({
+                        ...selectedLayer,
+                        src: e.target.value,
+                      })
+                      setLayers(
+                        layers.map((layer) =>
+                          layer.id === selectedLayer.id
+                            ? { ...layer, src: e.target.value }
+                            : layer
+                        )
+                      )
+                    }}
+                    leftLabel={
+                      <Label
+                        htmlFor="src"
+                        className="w-10 text-center text-muted-foreground"
+                      >
+                        URL
+                      </Label>
+                    }
+                    className="w-full pl-[4rem]"
+                    containerClassName="mt-2"
+                  />
+                </TabsContent>
+                <TabsContent value="yes" className="w-full">
+                  <div className="mt-2 flex w-full flex-col gap-2">
+                    <Input
+                      type="text"
+                      id="exampleSrc"
+                      defaultValue={selectedLayer.exampleSrc}
+                      onChange={(e) => {
+                        setSelectedLayer({
+                          ...selectedLayer,
+                          exampleSrc: e.target.value,
+                        })
+                        setLayers(
+                          layers.map((layer) =>
+                            layer.id === selectedLayer.id
+                              ? { ...layer, exampleSrc: e.target.value }
+                              : layer
+                          )
+                        )
                       }}
                       leftLabel={
                         <Label
-                          htmlFor="corner-radius"
-                          className="w-4 text-center text-muted-foreground"
+                          htmlFor="exampleSrc"
+                          className="w-24 text-center text-muted-foreground"
                         >
-                          <Spline className="h-4 w-4" />
+                          Example URL
                         </Label>
                       }
-                      className="pl-10"
+                      className="w-full pl-[7.5rem]"
                     />
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom">
-                    <span className="font-medium">Corner radius</span>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-          </div>
+                    <span className="text-sm text-muted-foreground">
+                      This URL will be used in previews and when no variable is
+                      provided.
+                    </span>
+                  </div>
+                </TabsContent>
+                <UploadButton
+                  className="mt-2 w-full ut-button:w-full ut-button:border-primary ut-button:bg-primary ut-button:ring-primary"
+                  endpoint="imageUploader"
+                  onBeforeUploadBegin={(files) => {
+                    // Rename the file to include the user id for easier manual manipulation
+                    return files.map(
+                      (f) =>
+                        new File([f], `${userId}-${f.name}`, { type: f.type })
+                    )
+                  }}
+                  onClientUploadComplete={async (res: any) => {
+                    const imageKey = res[0].key
+                    const imageUrl = res[0].url
+
+                    await createUploadedImageAction({
+                      key: imageKey,
+                      url: imageUrl,
+                      userId: userId,
+                    })
+
+                    if (!selectedLayer.conditionalValue) {
+                      setSelectedLayer({
+                        ...selectedLayer,
+                        src: imageUrl,
+                      })
+                      setLayers(
+                        layers.map((layer) =>
+                          layer.id === selectedLayer.id
+                            ? { ...layer, src: imageUrl }
+                            : layer
+                        )
+                      )
+                    } else {
+                      setSelectedLayer({
+                        ...selectedLayer,
+                        exampleSrc: imageUrl,
+                      })
+                      setLayers(
+                        layers.map((layer) =>
+                          layer.id === selectedLayer.id
+                            ? { ...layer, exampleSrc: imageUrl }
+                            : layer
+                        )
+                      )
+                    }
+                  }}
+                  onUploadError={(error: Error) => {
+                    console.log(`ERROR! ${error.message}`)
+                  }}
+                />
+              </Tabs>
+            </>
+          )}
           {/* TEXT PROPERTIES */}
           {selectedLayer?.type === 'text' && (
             <>
@@ -698,249 +1002,11 @@ export default function VisualEditorRightPanel({
                     }
                     className="py-1.5 pl-12"
                   />
-                  <Input
-                    id="bgColor"
-                    type="color"
-                    defaultValue={selectedLayer.bgColor}
-                    onChange={(e) => {
-                      if (e.target.value === '') return
-                      setSelectedLayer({
-                        ...selectedLayer,
-                        bgColor: e.target.value,
-                      })
-                      setLayers(
-                        layers.map((layer) =>
-                          layer.id === selectedLayer.id
-                            ? { ...layer, bgColor: e.target.value }
-                            : layer
-                        )
-                      )
-                    }}
-                    leftLabel={
-                      <Label
-                        htmlFor="bgColor"
-                        className="w-6 text-center text-muted-foreground"
-                      >
-                        Bg
-                      </Label>
-                    }
-                    className="py-1.5 pl-12"
-                  />
                 </div>
               </div>
             </>
           )}
-          {/* {selectedLayer?.type === 'image' && (
-            <UploadButton
-              endpoint="imageUploader"
-              onClientUploadComplete={(res) => {
-                console.log('Files: ', res)
-              }}
-              onUploadError={(error: Error) => {
-                console.log(`ERROR! ${error.message}`)
-              }}
-            />
-          )} */}
-          {/* VARIABLE VALUE */}
-          {selectedLayer?.type === 'text' && (
-            <>
-              <Separator />
-              <Tabs
-                defaultValue={selectedLayer.conditionalValue ? 'yes' : 'no'}
-                onValueChange={(value) => {
-                  setSelectedLayer({
-                    ...selectedLayer,
-                    conditionalValue: value === 'yes',
-                  })
-                  setLayers(
-                    layers.map((layer) =>
-                      layer.id === selectedLayer.id
-                        ? { ...layer, conditionalValue: value === 'yes' }
-                        : layer
-                    )
-                  )
-                }}
-                className="flex h-fit w-full flex-col items-start justify-start p-4"
-              >
-                <div className="flex w-full items-center justify-between">
-                  <span className="text-lg font-semibold">Variable value</span>
-                  <TabsList className="h-fit w-fit border">
-                    <TabsTrigger value="no" className="h-fit w-full py-0.5">
-                      No
-                    </TabsTrigger>
-                    <TabsTrigger value="yes" className="h-fit w-full py-0.5">
-                      Yes
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-                <TabsContent value="no" className="w-full">
-                  <Input
-                    type="text"
-                    id="value"
-                    defaultValue={selectedLayer.value}
-                    onChange={(e) => {
-                      setSelectedLayer({
-                        ...selectedLayer,
-                        value: e.target.value,
-                      })
-                      setLayers(
-                        layers.map((layer) =>
-                          layer.id === selectedLayer.id
-                            ? { ...layer, value: e.target.value }
-                            : layer
-                        )
-                      )
-                    }}
-                    leftLabel={
-                      <Label
-                        htmlFor="value"
-                        className="w-12 text-center text-muted-foreground"
-                      >
-                        Text
-                      </Label>
-                    }
-                    className="w-full pl-[4.5rem]"
-                    containerClassName="mt-2"
-                  />
-                </TabsContent>
-                <TabsContent value="yes" className="w-full">
-                  <div className="mt-2 flex w-full flex-col gap-2">
-                    <Input
-                      type="text"
-                      id="exampleValue"
-                      defaultValue={selectedLayer.exampleValue}
-                      onChange={(e) => {
-                        setSelectedLayer({
-                          ...selectedLayer,
-                          exampleValue: e.target.value,
-                        })
-                        setLayers(
-                          layers.map((layer) =>
-                            layer.id === selectedLayer.id
-                              ? { ...layer, exampleValue: e.target.value }
-                              : layer
-                          )
-                        )
-                      }}
-                      leftLabel={
-                        <Label
-                          htmlFor="exampleValue"
-                          className="w-24 text-center text-muted-foreground"
-                        >
-                          Example text
-                        </Label>
-                      }
-                      className="w-full pl-[7.5rem]"
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      This text will be used in previews and when no variable is
-                      provided.
-                    </span>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </>
-          )}
-          {selectedLayer?.type === 'image' && (
-            <>
-              <Separator />
-              <Tabs
-                defaultValue={selectedLayer.conditionalValue ? 'yes' : 'no'}
-                onValueChange={(value) => {
-                  setSelectedLayer({
-                    ...selectedLayer,
-                    conditionalValue: value === 'yes',
-                  })
-                  setLayers(
-                    layers.map((layer) =>
-                      layer.id === selectedLayer.id
-                        ? { ...layer, conditionalValue: value === 'yes' }
-                        : layer
-                    )
-                  )
-                }}
-                className="flex h-fit w-full flex-col items-start justify-start p-4"
-              >
-                <div className="flex w-full items-center justify-between">
-                  <span className="text-lg font-semibold">Variable value</span>
 
-                  <TabsList className="h-fit w-fit border">
-                    <TabsTrigger value="no" className="h-fit w-full py-0.5">
-                      No
-                    </TabsTrigger>
-                    <TabsTrigger value="yes" className="h-fit w-full py-0.5">
-                      Yes
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-                <TabsContent value="no" className="w-full">
-                  <Input
-                    type="text"
-                    id="src"
-                    defaultValue={selectedLayer.src}
-                    onChange={(e) => {
-                      setSelectedLayer({
-                        ...selectedLayer,
-                        src: e.target.value,
-                      })
-                      setLayers(
-                        layers.map((layer) =>
-                          layer.id === selectedLayer.id
-                            ? { ...layer, src: e.target.value }
-                            : layer
-                        )
-                      )
-                    }}
-                    leftLabel={
-                      <Label
-                        htmlFor="src"
-                        className="w-10 text-center text-muted-foreground"
-                      >
-                        URL
-                      </Label>
-                    }
-                    className="w-full pl-[4rem]"
-                    containerClassName="mt-2"
-                  />
-                </TabsContent>
-                <TabsContent value="yes" className="w-full">
-                  <div className="mt-2 flex w-full flex-col gap-2">
-                    <Input
-                      type="text"
-                      id="exampleSrc"
-                      defaultValue={selectedLayer.exampleSrc}
-                      onChange={(e) => {
-                        setSelectedLayer({
-                          ...selectedLayer,
-                          exampleSrc: e.target.value,
-                        })
-                        setLayers(
-                          layers.map((layer) =>
-                            layer.id === selectedLayer.id
-                              ? { ...layer, exampleSrc: e.target.value }
-                              : layer
-                          )
-                        )
-                      }}
-                      leftLabel={
-                        <Label
-                          htmlFor="exampleSrc"
-                          className="w-24 text-center text-muted-foreground"
-                        >
-                          Example URL
-                        </Label>
-                      }
-                      className="w-full pl-[7.5rem]"
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      This URL will be used in previews and when no variable is
-                      provided.
-                    </span>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </>
-          )}
           {/* CONDITIONAL VISIBILITY */}
           <>
             <Separator />

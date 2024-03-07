@@ -1,6 +1,7 @@
 'use server'
 
 import { createProject } from '@/app/db/operations/projects'
+import { createUploadedImage } from '@/app/db/operations/uploaded_images'
 import { logOutUser } from '@/app/lib/workos'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -48,3 +49,19 @@ export async function createProjectAction({
 }
 
 export async function createTemplateAction(formData: FormData) {}
+
+export async function createUploadedImageAction({
+  key,
+  url,
+  userId,
+}: {
+  key: string
+  url: string
+  userId: string
+}) {
+  await createUploadedImage({
+    key,
+    url,
+    userId,
+  })
+}

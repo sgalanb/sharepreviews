@@ -11,8 +11,10 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function VisualEditor({
+  userId,
   userProjects,
 }: {
+  userId: string
   userProjects: ProjectType[]
 }) {
   const pathname = usePathname()
@@ -48,14 +50,12 @@ export default function VisualEditor({
       height: 100,
       rotation: 0,
       opacity: 1,
-      cornerRadius: 0,
       family: 'Inter Regular',
       size: 16,
       lineHeight: 1.5,
       alignHorizontal: 'flex-start',
       alignVertical: 'flex-start',
       color: '#000000',
-      bgColor: '#ffffff',
       conditionalVisibility: false,
       conditionalValue: false,
       value: 'Hello, world!',
@@ -70,14 +70,12 @@ export default function VisualEditor({
       height: 100,
       rotation: 0,
       opacity: 1,
-      cornerRadius: 0,
       family: 'Inter Regular',
       size: 16,
       lineHeight: 1.5,
       alignHorizontal: 'flex-start',
       alignVertical: 'flex-start',
       color: '#000000',
-      bgColor: '#ffffff',
       conditionalVisibility: false,
       conditionalValue: true,
       exampleValue: 'Hello, world!',
@@ -171,6 +169,7 @@ export default function VisualEditor({
       />
       {/* RIGHT PANEL */}
       <VisualEditorRightPanel
+        userId={userId}
         layers={layers}
         setLayers={setLayers}
         selectedLayer={selectedLayer}

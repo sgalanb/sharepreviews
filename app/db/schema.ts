@@ -41,3 +41,14 @@ export const templates = pgTable('templates', {
   updatedAt: timestamp('updatedAt').notNull(),
   layersData: text('data').notNull(), // JSON data
 })
+
+export const uploadedImages = pgTable('uploaded_images', {
+  id: uuid('uuid').defaultRandom().primaryKey(),
+  key: text('key').notNull(),
+  url: text('url').notNull(),
+  userId: varchar('user_id', { length: 31 })
+    .references(() => users.id)
+    .notNull(),
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+  updatedAt: timestamp('updatedAt').notNull(),
+})

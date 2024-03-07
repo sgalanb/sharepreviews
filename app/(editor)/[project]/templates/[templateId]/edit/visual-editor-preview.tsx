@@ -71,7 +71,6 @@ export default function VisualEditorPreview({
                   height: layer.height,
                   transform: `rotate(${layer.rotation}deg)`,
                   opacity: layer.opacity,
-                  backgroundColor: layer.bgColor,
                 }}
               >
                 <p

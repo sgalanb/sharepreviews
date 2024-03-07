@@ -8,7 +8,7 @@ export default async function EditTemplate() {
 
   return (
     <div className="h-full w-full">
-      <VisualEditor userProjects={userProjects} />
+      <VisualEditor userProjects={userProjects} userId={user?.id!} />
     </div>
   )
 }
