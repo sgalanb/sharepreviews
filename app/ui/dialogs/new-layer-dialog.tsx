@@ -9,6 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/app/ui/components/Dialog'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/app/ui/components/Tooltip'
 import { Image, Square, Type } from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -91,15 +97,25 @@ export default function NewLayerDialog({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="font-medium">Add new layer</span>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <DialogContent className="flex flex-col gap-4 sm:max-w-md">
         <DialogHeader>
           <DialogTitle>New layer</DialogTitle>
         </DialogHeader>
         <div className="flex justify-between gap-4">
           <DialogClose asChild>
-            <div
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent ring-primary transition-all duration-100 hover:ring"
+            <button
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
                 setLayers([newTextLayer, ...layers])
                 setSelectedLayer(newTextLayer)
@@ -107,11 +123,11 @@ export default function NewLayerDialog({
             >
               <Type className="h-7 w-7 stroke-foreground" />
               <span className="select-none">Text</span>
-            </div>
+            </button>
           </DialogClose>
           <DialogClose asChild>
-            <div
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent ring-primary transition-all duration-100 hover:ring"
+            <button
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
                 setLayers([newImageLayer, ...layers])
                 setSelectedLayer(newImageLayer)
@@ -120,11 +136,11 @@ export default function NewLayerDialog({
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <Image className="h-7 w-7 stroke-foreground" />
               <span className="select-none">Image</span>
-            </div>
+            </button>
           </DialogClose>
           <DialogClose asChild>
-            <div
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent ring-primary transition-all duration-100 hover:ring"
+            <button
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
                 setLayers([newRectangleLayer, ...layers])
                 setSelectedLayer(newRectangleLayer)
@@ -132,7 +148,7 @@ export default function NewLayerDialog({
             >
               <Square className="h-7 w-7 stroke-foreground" />
               <span className="select-none">Rectangle</span>
-            </div>
+            </button>
           </DialogClose>
         </div>
       </DialogContent>

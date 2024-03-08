@@ -73,25 +73,16 @@ export default function VisualEditorLeftPanel({
       <div className="flex h-full w-full flex-col items-start justify-start gap-2">
         <div className="flex h-12 w-full items-center justify-between pl-4 pr-2 pt-2">
           <span className="text-lg font-semibold">Layers</span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <NewLayerDialog
-                  layers={layers}
-                  setLayers={setLayers}
-                  setSelectedLayer={setSelectedLayer}
-                  trigger={
-                    <Button variant="ghost" className="aspect-square w-10 p-0">
-                      <Plus className="h-5 w-5" />
-                    </Button>
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <span className="font-medium">Add new layer</span>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <NewLayerDialog
+            layers={layers}
+            setLayers={setLayers}
+            setSelectedLayer={setSelectedLayer}
+            trigger={
+              <Button variant="ghost" className="aspect-square w-10 p-0">
+                <Plus className="h-5 w-5" />
+              </Button>
+            }
+          />
         </div>
         <DndContext
           onDragEnd={handleDragEnd}
@@ -101,18 +92,34 @@ export default function VisualEditorLeftPanel({
             items={layers}
             strategy={verticalListSortingStrategy}
           >
-            <ScrollArea className="flex h-full w-full flex-col gap-0 px-2">
-              {layers.map((layer, index) => (
-                <Layer
-                  key={layer.id}
-                  layer={layer}
+            {layers.length === 0 ? (
+              <div className="flex h-full w-full items-center justify-center">
+                <NewLayerDialog
                   layers={layers}
                   setLayers={setLayers}
-                  selected={layer.id === selectedLayer?.id}
                   setSelectedLayer={setSelectedLayer}
+                  trigger={
+                    <Button variant="outline" className="flex gap-2">
+                      Add first layer
+                      <Plus className="h-5 w-5" />
+                    </Button>
+                  }
                 />
-              ))}
-            </ScrollArea>
+              </div>
+            ) : (
+              <ScrollArea className="flex h-full w-full flex-col gap-0 px-2">
+                {layers.map((layer, index) => (
+                  <Layer
+                    key={layer.id}
+                    layer={layer}
+                    layers={layers}
+                    setLayers={setLayers}
+                    selected={layer.id === selectedLayer?.id}
+                    setSelectedLayer={setSelectedLayer}
+                  />
+                ))}
+              </ScrollArea>
+            )}
           </SortableContext>
         </DndContext>
       </div>
