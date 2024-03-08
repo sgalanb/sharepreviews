@@ -31,12 +31,5 @@ export async function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 export const config = {
   // Match all app paths
-  matcher: [
-    '/',
-    '/overview',
-    '/validator',
-    '/validator/:path*',
-    '/generator',
-    '/generator/:path*',
-  ],
+  matcher: ['/'],
 }

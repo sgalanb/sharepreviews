@@ -33,7 +33,7 @@ export default function NewProjectDialog({
           action={(formData: FormData) => {
             if (formData.get('name')) {
               createProjectAction({
-                formData,
+                name: formData.get('name') as string,
                 userId: userId,
               })
             } else {

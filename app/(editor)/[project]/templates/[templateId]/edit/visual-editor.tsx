@@ -1,11 +1,11 @@
 'use client'
 
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/types'
+import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import VisualEditorHeader from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-header'
 import VisualEditorLeftPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-left-panel'
 import VisualEditorPreview from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-preview'
 import VisualEditorRightPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-right-panel'
-import { ProjectType } from '@/app/db/schema'
+import { ProjectType, TemplateType } from '@/app/db/schema'
 
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -20,7 +20,7 @@ export default function VisualEditor({
   const pathname = usePathname()
   const templateId = pathname.split('/')[3]
 
-  const [template, setTemplate] = useState<any>(undefined)
+  const [template, setTemplate] = useState<TemplateType | undefined>(undefined)
 
   const getTemplate = async () => {
     const res = await fetch(`/api/templates/${templateId}`)
@@ -46,7 +46,11 @@ export default function VisualEditor({
   return (
     <div className="grid h-full w-full grid-cols-[280px,1fr,280px] grid-rows-[53px,1fr]">
       {/* HEADER */}
-      <VisualEditorHeader userProjects={userProjects} />
+      <VisualEditorHeader
+        layers={layers}
+        userProjects={userProjects}
+        template={template}
+      />
       {/* LEFT PANEL */}
       <VisualEditorLeftPanel
         layers={layers}

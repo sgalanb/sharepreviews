@@ -1,6 +1,6 @@
 'use client'
 
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/types'
+import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import satori from 'satori'
 

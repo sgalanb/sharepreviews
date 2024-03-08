@@ -1,6 +1,6 @@
 'use client'
 
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/types'
+import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { Button } from '@/app/ui/components/Button'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'

@@ -8,7 +8,7 @@ import {
 } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
-  id: varchar('id', { length: 31 }).primaryKey(), // ID format of WorkOS
+  id: varchar('id', { length: 31 }).primaryKey().notNull(), // ID format of WorkOS
   email: varchar('email', { length: 255 }).notNull().unique(),
   firstName: text('first_name'),
   lastName: text('last_name'),
@@ -19,7 +19,7 @@ export const users = pgTable('users', {
 export type UserType = typeof users.$inferInsert
 
 export const projects = pgTable('projects', {
-  id: uuid('uuid').defaultRandom().primaryKey(),
+  id: uuid('uuid').defaultRandom().primaryKey().notNull(),
   name: text('name').notNull(),
   pathname: text('pathname').notNull().unique(),
   userId: varchar('user_id', { length: 31 })
@@ -32,7 +32,7 @@ export type ProjectType = typeof projects.$inferInsert
 
 // Templates are also stored on upstash for quick retrieval.
 export const templates = pgTable('templates', {
-  id: uuid('uuid').defaultRandom().primaryKey(),
+  id: uuid('uuid').defaultRandom().primaryKey().notNull(),
   name: text('name').notNull(),
   projectId: uuid('project_id')
     .references(() => projects.id)
@@ -41,6 +41,8 @@ export const templates = pgTable('templates', {
   updatedAt: timestamp('updatedAt').notNull(),
   layersData: text('data').notNull(), // JSON data
 })
+
+export type TemplateType = typeof templates.$inferInsert
 
 export const uploadedImages = pgTable('uploaded_images', {
   id: uuid('uuid').defaultRandom().primaryKey(),

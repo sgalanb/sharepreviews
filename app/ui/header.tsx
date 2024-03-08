@@ -158,18 +158,6 @@ export default function Header({
                 </SheetClose>
 
                 <SheetClose asChild>
-                  {/* <Button variant="ghost" asChild>
-                    <Link
-                      href="/generator"
-                      className={`${
-                        pathname == '/generator'
-                          ? 'bg-accent text-accent-foreground'
-                          : ''
-                      } w-full !justify-start`}
-                    >
-                      Dynamic Image Generator
-                    </Link>
-                  </Button> */}
                   <Button variant="ghost" asChild>
                     <div className="flex w-full justify-between">
                       <span className={`!justify-start text-muted-foreground`}>
@@ -226,9 +214,9 @@ export default function Header({
 
                 <Button variant="ghost" asChild>
                   <Link
-                    href={`/${pathname.split('/')[1]}/generator`}
+                    href={`/${pathname.split('/')[1]}/templates`}
                     className={`${
-                      pathname == `/${pathname.split('/')[1]}/generator`
+                      pathname == `/${pathname.split('/')[1]}/templates`
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}

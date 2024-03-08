@@ -4,7 +4,7 @@ import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default async function RootLayout({
+export default async function EditorLayout({
   children,
 }: {
   children: React.ReactNode

@@ -14,7 +14,6 @@ import {
 } from '@/app/ui/components/Dialog'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 
@@ -30,6 +29,10 @@ export default function NewTemplateDialog({
   const pathname = usePathname()
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const selectedProject = userProjects.find(
+    (project) => project.pathname === pathname.split('/')[1]
+  )
+
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -37,7 +40,12 @@ export default function NewTemplateDialog({
         <form
           action={(formData: FormData) => {
             if (formData.get('name')) {
-              createTemplateAction
+              createTemplateAction({
+                name: formData.get('name') as string,
+                projectId: selectedProject?.id as string,
+                projectPathname: selectedProject?.pathname as string,
+                layersData: '[]',
+              })
             } else {
               inputRef?.current?.focus()
             }
@@ -52,13 +60,16 @@ export default function NewTemplateDialog({
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
-              <Input id="name" type="text" containerClassName="col-span-5" />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                containerClassName="col-span-5"
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button asChild>
-              <Link href={`/generator/${''}}`}>Create</Link>
-            </Button>
+            <Button type="submit">Create</Button>
           </DialogFooter>
         </form>
       </DialogContent>

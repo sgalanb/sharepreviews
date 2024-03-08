@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'sharepreviews',
 }
 
-export default async function RootLayout({
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode

@@ -1,11 +1,13 @@
 'use server'
 
 import { createProject } from '@/app/db/operations/projects'
+import { createTemplate, updateTemplate } from '@/app/db/operations/templates'
 import { createUploadedImage } from '@/app/db/operations/uploaded_images'
 import { logOutUser } from '@/app/lib/workos'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { Resend } from 'resend'
+import { v4 as uuidv4 } from 'uuid'
 
 export async function addContactToGeneralAudience(formData: FormData) {
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -30,25 +32,62 @@ export async function logout() {
 }
 
 export async function createProjectAction({
-  formData,
+  name,
   userId,
 }: {
-  formData: FormData
+  name: string
   userId: string
 }) {
-  const rawFormData = {
-    name: formData.get('name') as string,
-  }
-
   await createProject({
-    name: rawFormData.name,
-    userId: userId,
+    name,
+    userId,
   })
 
   revalidatePath('/', 'layout')
 }
 
-export async function createTemplateAction(formData: FormData) {}
+export async function createTemplateAction({
+  name,
+  projectId,
+  projectPathname,
+  layersData,
+}: {
+  name: string
+  projectId: string
+  projectPathname: string
+  layersData: string
+}) {
+  const newId = uuidv4()
+
+  await createTemplate({
+    id: newId,
+    name,
+    projectId,
+    layersData,
+  }).then(() => {
+    redirect(`/${projectPathname}/templates/${newId}/edit`)
+  })
+}
+
+export async function updateTemplateAction({
+  id,
+  name,
+  projectPathname,
+  layersData,
+}: {
+  id: string
+  name: string
+  projectPathname: string
+  layersData: string
+}) {
+  await updateTemplate({
+    id,
+    name,
+    layersData,
+  }).then(() => {
+    redirect(`/${projectPathname}/templates`)
+  })
+}
 
 export async function createUploadedImageAction({
   key,
