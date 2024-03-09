@@ -54,6 +54,7 @@ import {
   BookOpenText,
   Check,
   ChevronsUpDown,
+  ImageIcon,
   LayoutGrid,
   LogOut,
   MenuIcon,
@@ -63,7 +64,6 @@ import {
   Plus,
   Sun,
   UserRoundCog,
-  Zap,
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
@@ -221,7 +221,7 @@ export default function Header({
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
                   >
-                    <Zap className="h-4 w-4" />
+                    <ImageIcon className="h-4 w-4" />
                     Templates
                   </Link>
                 </Button>
@@ -475,10 +475,13 @@ export default function Header({
         </>
       ) : (
         <>
-          {/* Desktop Landing */}
+          {/* Desktop Marketing*/}
           <div className="mx-auto w-full max-w-7xl">
             <div className="hidden w-full items-center justify-between p-4 lg:flex">
-              <Link href="/" className="flex items-center justify-center gap-2">
+              <Link
+                href="/home"
+                className="flex items-center justify-center gap-2"
+              >
                 <Image
                   src="/icon.svg"
                   alt="SharePreviews"
@@ -554,6 +557,12 @@ export default function Header({
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
+                        <DropdownMenuItem className="cursor-pointer" asChild>
+                          <Link href="/">
+                            <LayoutGrid className="mr-2 h-4 w-4" />
+                            <span>Go to dashboard</span>
+                          </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                           className="cursor-pointer"
                           onClick={() => logout()}
