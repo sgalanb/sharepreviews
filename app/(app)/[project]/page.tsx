@@ -11,8 +11,6 @@ export default async function Overview() {
       className={`flex w-full max-w-7xl flex-col items-center justify-center gap-4 p-4 lg:p-12`}
     >
       <ProjectOverviewHeader userProjects={userProjects} />
-
-      <div>Usage</div>
     </div>
   )
 }
