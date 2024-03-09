@@ -23,6 +23,12 @@ import {
 } from '@/app/ui/components/DropdownMenu'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/app/ui/components/Tooltip'
 import NewTemplateDialog from '@/app/ui/dialogs/new-template-dialog'
 import { fetcher, getUrlWithVariables } from '@/app/utils'
 import { User } from '@workos-inc/node'
@@ -136,10 +142,20 @@ export default function TemplatesDashboard({
                           className="aspect-[1.91/1] w-full rounded-md border"
                         />
                       </div>
-                      <div className="flex h-fit w-full items-end justify-between gap-4">
-                        <span className="font-medium leading-10">
-                          {template.name}
-                        </span>
+                      <div className="flex h-10 w-full items-center justify-between gap-4">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="line-clamp-1 w-full text-ellipsis font-medium">
+                                {template.name}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent className="w-fit" align="start">
+                              <span>{template.name}</span>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
                         <div className="flex h-full w-full items-end justify-end gap-2">
                           <Dialog>
                             <DropdownMenu>
