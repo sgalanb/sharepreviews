@@ -1,4 +1,4 @@
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/types'
+import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { Button } from '@/app/ui/components/Button'
 import {
   Dialog,

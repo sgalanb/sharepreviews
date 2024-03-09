@@ -1,8 +1,10 @@
+import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import {
   SECOND_LEVEL_DOMAINS,
   SPECIAL_APEX_DOMAINS,
   ccTLDs,
 } from '@/app/constants'
+import { TemplateType } from '@/app/db/schema'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -176,4 +178,59 @@ export async function getImageSizeFromUrl(url: string) {
   } catch (e) {
     throw new Error('Error getting image size')
   }
+}
+
+// Templates
+export const getConditionalValueVariableName = (layer: LayerType) => {
+  const formattedLayerName = layer.name
+    .replace(/[^a-zA-Z0-9]/g, '_')
+    .toLowerCase()
+  const postfix = layer.type === 'text' ? 'value' : 'src'
+  return `${formattedLayerName}_${postfix}`
+}
+
+export const getConditionalVisibilityVariableName = (layer: LayerType) => {
+  const formattedLayerName = layer.name
+    .replace(/[^a-zA-Z0-9]/g, '_')
+    .toLowerCase()
+  return `${formattedLayerName}_isVisible`
+}
+
+const getConditionalValueVariables = (layers: LayerType[]) => {
+  return layers
+    .filter(
+      (layer) =>
+        (layer.type === 'text' || layer.type === 'image') &&
+        layer.conditionalValue === true
+    )
+    .map((layer) => layer.conditionalValueVariableName)
+}
+const getConditionalVisibilityVariables = (layers: LayerType[]) => {
+  return layers
+    .filter((layer) => layer.conditionalVisibility === true)
+    .map((layer) => layer.conditionalVisibilityVariableName)
+}
+const getVariablesArray = (layers: LayerType[]) => {
+  return [
+    ...getConditionalVisibilityVariables(layers),
+    ...getConditionalValueVariables(layers),
+  ]
+}
+
+export const getUrlWithVariables = (template: TemplateType) => {
+  return `${
+    window.location.origin
+  }/api/images/${template.id}?${getVariablesArray(
+    JSON.parse(template.layersData)
+  )
+    .map((variable) => `${variable}={VALUE}`)
+    .join('&')}`
+}
+
+// Fonts
+export async function downloadFont(url: string): Promise<ArrayBuffer> {
+  const fontData = await fetch(new URL(url, import.meta.url)).then((res) =>
+    res.arrayBuffer()
+  )
+  return fontData
 }

@@ -13,6 +13,8 @@ interface LayerInterface {
   opacity: number
   type: 'text' | 'image' | 'rectangle'
   conditionalVisibility: boolean
+  conditionalVisibilityVariableName: string
+  conditionalValueVariableName: string
 }
 
 interface TextLayerInterface extends LayerInterface {

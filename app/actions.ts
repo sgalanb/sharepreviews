@@ -1,8 +1,16 @@
 'use server'
 
 import { createProject } from '@/app/db/operations/projects'
-import { createTemplate, updateTemplate } from '@/app/db/operations/templates'
+import {
+  createTemplate,
+  deleteTemplate,
+  updateTemplate,
+} from '@/app/db/operations/templates'
 import { createUploadedImage } from '@/app/db/operations/uploaded_images'
+import {
+  createOrUpdateTemplateRedis,
+  deleteTemplateRedis,
+} from '@/app/lib/upstash'
 import { logOutUser } from '@/app/lib/workos'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -59,12 +67,19 @@ export async function createTemplateAction({
 }) {
   const newId = uuidv4()
 
-  await createTemplate({
+  const createPostgres = await createTemplate({
     id: newId,
     name,
     projectId,
     layersData,
-  }).then(() => {
+  })
+
+  const createRedis = createOrUpdateTemplateRedis({
+    templateId: newId,
+    layersData,
+  })
+
+  await Promise.all([createPostgres, createRedis]).then(() => {
     redirect(`/${projectPathname}/templates/${newId}/edit`)
   })
 }
@@ -80,13 +95,27 @@ export async function updateTemplateAction({
   projectPathname: string
   layersData: string
 }) {
-  await updateTemplate({
+  const updatePostgres = await updateTemplate({
     id,
     name,
     layersData,
-  }).then(() => {
+  })
+
+  const updateRedis = createOrUpdateTemplateRedis({
+    templateId: id,
+    layersData,
+  })
+
+  await Promise.all([updatePostgres, updateRedis]).then(() => {
     redirect(`/${projectPathname}/templates`)
   })
+}
+
+export async function deleteTemplateAction({ id }: { id: string }) {
+  const deletePostgres = await deleteTemplate(id)
+  const deleteRedis = deleteTemplateRedis(id)
+
+  await Promise.all([deletePostgres, deleteRedis])
 }
 
 export async function createUploadedImageAction({

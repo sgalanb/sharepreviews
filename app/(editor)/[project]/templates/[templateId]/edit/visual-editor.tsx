@@ -26,6 +26,8 @@ export default function VisualEditor({
     const res = await fetch(`/api/templates/${templateId}`)
     const data = await res.json()
     setTemplate(data)
+    setLayers(JSON.parse(data.layersData))
+    console.log(data)
   }
 
   useEffect(() => {

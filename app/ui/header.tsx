@@ -431,7 +431,7 @@ export default function Header({
                             </CommandItem>
                           ))}
                           <CommandSeparator className="my-1" />
-                          <CommandItem>
+                          <CommandItem className="cursor-pointer">
                             <NewProjectDialog
                               userId={user.id}
                               trigger={
@@ -540,7 +540,7 @@ export default function Header({
                       </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                      className="w-52  p-2"
+                      className="w-52 p-2"
                       align="end"
                       sideOffset={8}
                     >

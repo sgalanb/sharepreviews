@@ -1,6 +1,6 @@
 'use client'
 
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/types'
+import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import {
   Dialog,
   DialogClose,
@@ -93,6 +93,8 @@ export default function NewLayerDialog({
     color: '#000000',
     conditionalVisibility: false,
     conditionalValue: false,
+    conditionalValueVariableName: '',
+    conditionalVisibilityVariableName: '',
   } as LayerType
 
   return (

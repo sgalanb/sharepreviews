@@ -14,6 +14,10 @@ import {
 } from '@/app/ui/components/Tooltip'
 import DeleteLayerDialog from '@/app/ui/dialogs/delete-layer-dialog'
 import NewLayerDialog from '@/app/ui/dialogs/new-layer-dialog'
+import {
+  getConditionalValueVariableName,
+  getConditionalVisibilityVariableName,
+} from '@/app/utils'
 import { DndContext } from '@dnd-kit/core'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
@@ -335,16 +339,6 @@ const VariablesElement = ({
   setSelectedLayer: (layer: LayerType) => void
   visibilityVariable?: boolean
 }) => {
-  // Remove spaces and special characters from the layer name
-  const formattedLayerName = layer.name
-    .replace(/[^a-zA-Z0-9]/g, '_')
-    .toLowerCase()
-
-  const postfix = visibilityVariable
-    ? 'isVisible'
-    : layer.type === 'text'
-      ? 'value'
-      : 'src'
   return (
     <div
       key={layer.id}
@@ -354,7 +348,11 @@ const VariablesElement = ({
         setSelectedLayer(layer)
       }}
     >
-      <span className="">{`${formattedLayerName}_${postfix}`}</span>
+      <span className="">
+        {visibilityVariable
+          ? getConditionalVisibilityVariableName(layer)
+          : getConditionalValueVariableName(layer)}
+      </span>
     </div>
   )
 }

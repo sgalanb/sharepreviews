@@ -52,3 +52,7 @@ export async function updateTemplate({
     })
     .where(eq(templates.id, id))
 }
+
+export async function deleteTemplate(id: string) {
+  return await db.delete(templates).where(eq(templates.id, id))
+}

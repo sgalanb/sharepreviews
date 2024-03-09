@@ -1,6 +1,7 @@
 'use client'
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
+import { downloadFont } from '@/app/utils'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import satori from 'satori'
 
@@ -217,12 +218,4 @@ export default function VisualEditorPreview({
       />
     </div>
   )
-}
-
-async function downloadFont(url: string): Promise<ArrayBuffer> {
-  // Use fetch to get the font file from the URL
-  const fontData = await fetch(new URL(url, import.meta.url)).then((res) =>
-    res.arrayBuffer()
-  )
-  return fontData
 }

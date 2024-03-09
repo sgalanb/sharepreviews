@@ -40,7 +40,11 @@ import {
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
 import { UploadButton } from '@/app/ui/components/UploadThingComponents'
-import { cn } from '@/app/utils'
+import {
+  cn,
+  getConditionalValueVariableName,
+  getConditionalVisibilityVariableName,
+} from '@/app/utils'
 import {
   AlignCenter,
   AlignLeft,
@@ -132,8 +136,8 @@ export default function VisualEditorRightPanel({
             <div className="grid w-full grid-cols-2 items-center gap-2">
               <TooltipProvider>
                 <Input
-                  type="text"
                   id="name"
+                  type="text"
                   defaultValue={selectedLayer.name}
                   onChange={(e) => {
                     setSelectedLayer({
@@ -498,11 +502,22 @@ export default function VisualEditorRightPanel({
                   setSelectedLayer({
                     ...selectedLayer,
                     conditionalValue: value === 'yes',
+                    conditionalValueVariableName:
+                      value === 'yes'
+                        ? getConditionalValueVariableName(selectedLayer)
+                        : '',
                   })
                   setLayers(
                     layers.map((layer) =>
                       layer.id === selectedLayer.id
-                        ? { ...layer, conditionalValue: value === 'yes' }
+                        ? {
+                            ...layer,
+                            conditionalValue: value === 'yes',
+                            conditionalValueVariableName:
+                              value === 'yes'
+                                ? getConditionalValueVariableName(selectedLayer)
+                                : '',
+                          }
                         : layer
                     )
                   )
@@ -597,11 +612,22 @@ export default function VisualEditorRightPanel({
                   setSelectedLayer({
                     ...selectedLayer,
                     conditionalValue: value === 'yes',
+                    conditionalValueVariableName:
+                      value === 'yes'
+                        ? getConditionalValueVariableName(selectedLayer)
+                        : '',
                   })
                   setLayers(
                     layers.map((layer) =>
                       layer.id === selectedLayer.id
-                        ? { ...layer, conditionalValue: value === 'yes' }
+                        ? {
+                            ...layer,
+                            conditionalValue: value === 'yes',
+                            conditionalValueVariableName:
+                              value === 'yes'
+                                ? getConditionalValueVariableName(selectedLayer)
+                                : '',
+                          }
                         : layer
                     )
                   )
@@ -1016,11 +1042,24 @@ export default function VisualEditorRightPanel({
                 setSelectedLayer({
                   ...selectedLayer,
                   conditionalVisibility: value === 'yes',
+                  conditionalVisibilityVariableName:
+                    value === 'yes'
+                      ? getConditionalVisibilityVariableName(selectedLayer)
+                      : '',
                 })
                 setLayers(
                   layers.map((layer) =>
                     layer.id === selectedLayer.id
-                      ? { ...layer, conditionalVisibility: value === 'yes' }
+                      ? {
+                          ...layer,
+                          conditionalVisibility: value === 'yes',
+                          conditionalVisibilityVariableName:
+                            value === 'yes'
+                              ? getConditionalVisibilityVariableName(
+                                  selectedLayer
+                                )
+                              : '',
+                        }
                       : layer
                   )
                 )
@@ -1030,7 +1069,7 @@ export default function VisualEditorRightPanel({
               <span className="text-lg font-semibold">
                 Conditional visibility
               </span>
-              <TabsList className="mt-4 w-full border">
+              <TabsList className="mt-2 w-full border">
                 <TabsTrigger value="no" className="h-full w-full py-[5px]">
                   No
                 </TabsTrigger>

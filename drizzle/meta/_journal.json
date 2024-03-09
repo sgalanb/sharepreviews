@@ -29,6 +29,13 @@
       "when": 1709823882893,
       "tag": "0003_wealthy_professor_monster",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1709941031111,
+      "tag": "0004_bitter_terrax",
+      "breakpoints": true
     }
   ]
 }

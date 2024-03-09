@@ -37,9 +37,9 @@ export const templates = pgTable('templates', {
   projectId: uuid('project_id')
     .references(() => projects.id)
     .notNull(),
+  layersData: text('layersData').notNull(), // JSON data
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   updatedAt: timestamp('updatedAt').notNull(),
-  layersData: text('data').notNull(), // JSON data
 })
 
 export type TemplateType = typeof templates.$inferInsert

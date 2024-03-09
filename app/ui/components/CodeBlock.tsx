@@ -14,13 +14,13 @@ export default function CodeBlock({
   children: string
   className?: string
 }) {
-  const [isCopied, setIsCopied] = useState(false)
+  const [isCopied, setIsCopied] = useState<boolean>(false)
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
       setIsCopied(true)
-      setTimeout(() => setIsCopied(false), 2000) // Reset after 2 seconds
+      setTimeout(() => setIsCopied(false), 700) // Reset after 0.7 seconds
     } catch (err) {
       console.error('Failed to copy:', err)
     }

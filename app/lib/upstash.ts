@@ -37,16 +37,20 @@ export async function recordMetatags(url: string, error: boolean) {
   return await redis.zincrby('metatags-zset', 1, domain)
 }
 
-// export async function createTemplate({
-//   templateId,
-//   data,
-// }: {
-//   templateId: string
-//   data: string
-// }) {
-//   return await redis.json.set(`template:${templateId}`, '$', data)
-// }
+export async function createOrUpdateTemplateRedis({
+  templateId,
+  layersData,
+}: {
+  templateId: string
+  layersData: string
+}) {
+  return await redis.json.set(`template:${templateId}`, '$', layersData)
+}
 
-// export async function getTemplate(templateId: string) {
-//   return await redis.json.get(`template:${templateId}`)
-// }
+export async function getTemplateRedis(templateId: string) {
+  return await redis.json.get(`template:${templateId}`)
+}
+
+export async function deleteTemplateRedis(templateId: string) {
+  return await redis.del(`template:${templateId}`)
+}

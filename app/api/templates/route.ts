@@ -1,6 +1,8 @@
 import { getProjectsTemplates } from '@/app/db/operations/templates'
 import { NextRequest } from 'next/server'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   const projectId = req.nextUrl.searchParams.get('projectId')
 
@@ -12,9 +14,5 @@ export async function GET(req: NextRequest) {
 
   return new Response(JSON.stringify(templates), {
     status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
   })
 }
