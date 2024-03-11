@@ -25,7 +25,12 @@ export default async function AppLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers attribute="class" defaultTheme="system" enableSystem>
+        <Providers
+          attribute="class"
+          user={user!}
+          defaultTheme="system"
+          enableSystem
+        >
           <div className="flex min-h-dvh flex-col justify-between">
             <div className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:dark:bg-neutral-800">
               <Header

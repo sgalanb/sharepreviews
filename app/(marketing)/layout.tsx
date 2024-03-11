@@ -23,7 +23,12 @@ export default async function MarketingLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers attribute="class" defaultTheme="system" enableSystem>
+        <Providers
+          attribute="class"
+          user={user!}
+          defaultTheme="system"
+          enableSystem
+        >
           <div className="flex min-h-dvh flex-col justify-between">
             <div className="flex flex-col justify-start">
               <Header

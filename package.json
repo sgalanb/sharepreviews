@@ -40,6 +40,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.1",
+    "crisp-sdk-web": "^1.0.22",
     "dayjs": "^1.11.10",
     "drizzle-orm": "^0.29.3",
     "framer-motion": "^10.16.16",

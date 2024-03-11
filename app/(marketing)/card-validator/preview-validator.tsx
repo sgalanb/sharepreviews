@@ -64,11 +64,12 @@ import {
   XCircle,
 } from 'lucide-react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 export default function PreviewValidator({ isApp }: { isApp: boolean }) {
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
   const normalizedUrl = getUrlFromStringWithoutWWW(inputUrl)
@@ -195,7 +196,9 @@ export default function PreviewValidator({ isApp }: { isApp: boolean }) {
         exit={{ opacity: 0 }}
       >
         <Link
-          href={isApp ? '/validator' : '/card-validator'}
+          href={
+            isApp ? `/${pathname.split('/')[1]}/validator` : '/card-validator'
+          }
           className="flex items-center justify-center text-muted-foreground"
         >
           <ChevronLeft className="ml-[-4px]" />

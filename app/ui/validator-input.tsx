@@ -9,7 +9,7 @@ import {
   getUrlFromStringWithoutWWW,
   getUrlFromStringWithoutWWWOrProtocol,
 } from '@/app/utils'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 
 export default function ValidatorInput({
@@ -20,6 +20,7 @@ export default function ValidatorInput({
   isLoading?: boolean
 }) {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
   const normalizedUrl = getUrlFromStringWithoutWWW(inputUrl)
@@ -41,7 +42,7 @@ export default function ValidatorInput({
         `${
           eventUrl
             ? isApp
-              ? `/validator?url=${normalizedUrl}`
+              ? `/${pathname.split('/')[1]}/validator?url=${normalizedUrl}`
               : `/card-validator?url=${normalizedUrl}`
             : ''
         }`

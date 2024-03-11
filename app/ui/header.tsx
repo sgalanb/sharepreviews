@@ -51,7 +51,6 @@ import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { cn } from '@/app/utils'
 import { User } from '@workos-inc/node'
 import {
-  BookOpenText,
   Check,
   ChevronsUpDown,
   ImageIcon,
@@ -173,7 +172,7 @@ export default function Header({
                     <Link
                       href="/blog"
                       className={`${
-                        pathname == '/blog'
+                        pathname.startsWith('/blog')
                           ? 'bg-accent text-accent-foreground'
                           : ''
                       } w-full !justify-start`}
@@ -196,8 +195,20 @@ export default function Header({
         <>
           {/* Desktop App */}
           <div className="hidden h-full w-full flex-col items-start justify-between lg:flex">
-            <div className="flex w-full flex-col items-start justify-start gap-4">
-              <div className="mt-6 flex w-full flex-col items-start justify-start gap-2">
+            <div className="flex w-full flex-col items-start justify-start gap-2">
+              <Button variant="ghost" asChild>
+                <Link href="/" className="mb-2 mt-4 w-full">
+                  <Image
+                    src="/logo.svg"
+                    alt="SharePreviews"
+                    width={110}
+                    height={24}
+                    className="pointer-events-none"
+                  />
+                </Link>
+              </Button>
+
+              <div className="flex w-full flex-col items-start justify-start gap-2">
                 <Button variant="ghost" asChild>
                   <Link
                     href={`/${pathname.split('/')[1]}`}
@@ -226,22 +237,21 @@ export default function Header({
                   </Link>
                 </Button>
               </div>
+              <Button variant="ghost" asChild>
+                <Link
+                  href={`/${pathname.split('/')[1]}/validator`}
+                  className={`${
+                    pathname == `/${pathname.split('/')[1]}/validator`
+                      ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
+                      : 'text-foreground hover:bg-accent'
+                  } flex w-full !justify-start gap-2`}
+                >
+                  <MonitorCheck className="h-4 w-4" />
+                  Card Validator
+                </Link>
+              </Button>
 
-              <Separator />
-
-              <div className="flex w-full flex-col items-start justify-start gap-2">
-                <Button variant="ghost" asChild>
-                  <Link
-                    href="/card-validator"
-                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
-                    target="_blank"
-                  >
-                    <MonitorCheck className="h-4 w-4" />
-                    Card Validator
-                  </Link>
-                </Button>
-
-                {/* <Button variant="ghost" asChild>
+              {/* <Button variant="ghost" asChild>
                   <Link
                     href="/pricing"
                     className={`${
@@ -253,7 +263,6 @@ export default function Header({
                     Pricing
                   </Link>
                 </Button> */}
-              </div>
             </div>
             <div className="flex w-full flex-col gap-4">
               <div className="flex flex-col gap-2">
@@ -267,7 +276,7 @@ export default function Header({
                     Blog
                   </Link>
                 </Button>
-                <Button variant="outline" asChild>
+                {/* <Button variant="outline" asChild>
                   <Link
                     href="/docs"
                     className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
@@ -276,7 +285,7 @@ export default function Header({
                     <BookOpenText className="h-4 w-4" />
                     Docs & Guides
                   </Link>
-                </Button>
+                </Button> */}
               </div>
               <Separator />
               {user && (

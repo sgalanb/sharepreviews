@@ -107,7 +107,7 @@ export default function TemplatesDashboard({
           userProjects={userProjects}
         />
       </div>
-      <div className="grid h-full w-full grid-cols-2 flex-col gap-4 xl:grid-cols-3">
+      <div className="grid h-fit w-full grid-cols-2 flex-col gap-4 xl:grid-cols-3">
         {isLoadingTemplates ? (
           // Skeleton
           <>
@@ -276,7 +276,7 @@ export default function TemplatesDashboard({
                                   </Button>
                                 </motion.div>
                               </div>
-                              <DialogDescription>{`Replace {VALUE} with the value you want to use. Remember that visibility variables only accept true or false as values.`}</DialogDescription>
+                              <DialogDescription>{`Replace {VALUE} with the value you want to use. Remember that visibility variables only accept "true" or "false" as values.`}</DialogDescription>
                               <DialogFooter className="">
                                 <DialogClose asChild>
                                   <Button variant="outline">Close</Button>
