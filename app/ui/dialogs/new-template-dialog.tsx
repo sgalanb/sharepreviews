@@ -14,8 +14,10 @@ import {
 } from '@/app/ui/components/Dialog'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
+import Spinner from '@/app/ui/components/Spinner'
 import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
+import { useFormStatus } from 'react-dom'
 
 export default function NewTemplateDialog({
   trigger,
@@ -69,10 +71,24 @@ export default function NewTemplateDialog({
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Create</Button>
+            <CreateButton />
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
+  )
+}
+
+function CreateButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button type="submit" disabled={pending} className="min-w-20">
+      {pending ? (
+        <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
+      ) : (
+        'Create'
+      )}
+    </Button>
   )
 }

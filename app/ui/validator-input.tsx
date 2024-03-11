@@ -85,7 +85,7 @@ export default function ValidatorInput({
       </div>
       <Button type="submit" className="min-w-24">
         {isLoading ? (
-          <Spinner className="h-7 w-7 fill-primary-foreground text-primary-foreground/25" />
+          <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
         ) : (
           'Validate'
         )}

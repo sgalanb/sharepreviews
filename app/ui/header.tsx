@@ -201,7 +201,7 @@ export default function Header({
                   <Image
                     src="/logo.svg"
                     alt="SharePreviews"
-                    width={110}
+                    width={112}
                     height={24}
                     className="pointer-events-none"
                   />

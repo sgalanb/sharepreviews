@@ -23,6 +23,7 @@ import {
 } from '@/app/ui/components/DropdownMenu'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
+import Spinner from '@/app/ui/components/Spinner'
 import {
   Tooltip,
   TooltipContent,
@@ -30,13 +31,18 @@ import {
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
 import NewTemplateDialog from '@/app/ui/dialogs/new-template-dialog'
-import { fetcher, getUrlWithVariables } from '@/app/utils'
+import {
+  fetcher,
+  getUrlWithConditionalVariablesTrue,
+  getUrlWithVariables,
+} from '@/app/utils'
 import { User } from '@workos-inc/node'
 import { motion } from 'framer-motion'
 import { Check, Copy, Edit, MoreHorizontal, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { useFormStatus } from 'react-dom'
 import useSWR, { mutate } from 'swr'
 
 export default function TemplatesDashboard({
@@ -138,7 +144,7 @@ export default function TemplatesDashboard({
                       <div className="h-fit w-full">
                         {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
                         <img
-                          src={`/api/images/${template.id}`}
+                          src={getUrlWithConditionalVariablesTrue(template)}
                           className="aspect-[1.91/1] w-full rounded-md border"
                         />
                       </div>
@@ -200,33 +206,36 @@ export default function TemplatesDashboard({
                               </DropdownMenuContent>
                             </DropdownMenu>
                             <DialogContent className="sm:max-w-md">
-                              <DialogHeader>
-                                <DialogTitle>Delete template</DialogTitle>
-                                <DialogDescription>
-                                  Are you sure you want to delete this template?
-                                  All URLs associated with this template will
-                                  stop working. <br />
-                                  This action cannot be undone.
-                                </DialogDescription>
-                              </DialogHeader>
-                              <DialogFooter>
-                                <DialogClose>
-                                  <Button variant="outline">Cancel</Button>
-                                </DialogClose>
-                                <DialogClose>
-                                  <Button
-                                    onClick={async () => {
-                                      await deleteTemplateAction({
-                                        id: template?.id!,
-                                      }).then(() => {
-                                        revalidateTemplates()
-                                      })
-                                    }}
-                                  >
-                                    Delete
-                                  </Button>
-                                </DialogClose>
-                              </DialogFooter>
+                              <form
+                                className="flex flex-col gap-4"
+                                action={async () =>
+                                  await deleteTemplateAction({
+                                    id: template?.id!,
+                                  }).then(() => {
+                                    revalidateTemplates()
+                                  })
+                                }
+                              >
+                                <DialogHeader>
+                                  <DialogTitle>Delete template</DialogTitle>
+                                  <DialogDescription>
+                                    Are you sure you want to delete this
+                                    template? All URLs associated with this
+                                    template will stop working. <br />
+                                    This action cannot be undone.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                  <DialogClose asChild>
+                                    {/* Type button to avoid submitting the form */}
+                                    <Button type="button" variant="outline">
+                                      Cancel
+                                    </Button>
+                                  </DialogClose>
+
+                                  <DeleteTemplateButton />
+                                </DialogFooter>
+                              </form>
                             </DialogContent>
                           </Dialog>
                           <Dialog>
@@ -291,7 +300,7 @@ export default function TemplatesDashboard({
                 ))}
               </>
             ) : (
-              <Card className="flex h-full max-h-64 w-full flex-col items-center justify-center gap-4">
+              <Card className="flex h-80 max-h-64 w-full flex-col items-center justify-center gap-4">
                 <span className="text-muted-foreground">
                   No templates found.
                 </span>
@@ -301,5 +310,19 @@ export default function TemplatesDashboard({
         )}
       </div>
     </div>
+  )
+}
+
+function DeleteTemplateButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button type="submit" disabled={pending} className="min-w-20">
+      {pending ? (
+        <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
+      ) : (
+        'Delete'
+      )}
+    </Button>
   )
 }

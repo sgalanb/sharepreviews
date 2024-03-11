@@ -14,7 +14,9 @@ import {
 } from '@/app/ui/components/Dialog'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
+import Spinner from '@/app/ui/components/Spinner'
 import { useRef } from 'react'
+import { useFormStatus } from 'react-dom'
 
 export default function NewProjectDialog({
   trigger,
@@ -62,12 +64,26 @@ export default function NewProjectDialog({
             </div>
           </div>
           <DialogFooter>
-            <DialogClose asChild>
-              <Button type="submit">Create</Button>
+            <DialogClose>
+              <CreateButton />
             </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
+  )
+}
+
+function CreateButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button type="submit" disabled={pending} className="min-w-20">
+      {pending ? (
+        <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
+      ) : (
+        'Create'
+      )}
+    </Button>
   )
 }

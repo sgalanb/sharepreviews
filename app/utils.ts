@@ -217,6 +217,16 @@ const getVariablesArray = (layers: LayerType[]) => {
   ]
 }
 
+export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
+  return `${
+    window.location.origin
+  }/api/images/${template.id}?${getConditionalVisibilityVariables(
+    JSON.parse(template.layersData)
+  )
+    .map((variable) => `${variable}=true`)
+    .join('&')}`
+}
+
 export const getUrlWithVariables = (template: TemplateType) => {
   return `${
     window.location.origin

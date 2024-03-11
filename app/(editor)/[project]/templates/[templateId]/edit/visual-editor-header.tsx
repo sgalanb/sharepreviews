@@ -4,9 +4,11 @@ import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/
 import { updateTemplateAction } from '@/app/actions'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
+import Spinner from '@/app/ui/components/Spinner'
 import { ChevronLeft, Save } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useFormStatus } from 'react-dom'
 
 export default function VisualEditorHeader({
   layers,
@@ -21,8 +23,6 @@ export default function VisualEditorHeader({
   const selectedProject = userProjects.find(
     (project) => project.pathname === pathname.split('/')[1]
   )
-
-  console.log(layers)
 
   return (
     <div className="col-span-3 flex w-full flex-col items-center justify-start gap-2 rounded-t-lg">
@@ -42,13 +42,8 @@ export default function VisualEditorHeader({
             <div className="w-20 animate-pulse rounded-full bg-accent duration-700" />
           )}
         </div>
-        <Button
-          size="sm"
-          className="flex gap-2"
-          disabled={
-            !template?.id || JSON.stringify(layers) === template?.layersData
-          }
-          onClick={() => {
+        <form
+          action={() => {
             if (template?.id && template?.name && selectedProject?.pathname) {
               updateTemplateAction({
                 id: template.id,
@@ -59,10 +54,41 @@ export default function VisualEditorHeader({
             }
           }}
         >
-          <Save className="h-5 w-5" />
-          Save
-        </Button>
+          <SaveButton template={template} layers={layers} />
+        </form>
       </div>
     </div>
+  )
+}
+
+function SaveButton({
+  template,
+  layers,
+}: {
+  template: TemplateType | undefined
+  layers: LayerType[]
+}) {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button
+      type="submit"
+      size="sm"
+      className="flex min-w-[5.25rem] gap-2"
+      disabled={
+        !template?.id ||
+        JSON.stringify(layers) === template?.layersData ||
+        pending
+      }
+    >
+      {pending ? (
+        <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
+      ) : (
+        <>
+          <Save className="h-5 w-5" />
+          Save
+        </>
+      )}
+    </Button>
   )
 }
