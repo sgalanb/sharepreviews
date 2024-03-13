@@ -1,6 +1,18 @@
 import TemplatesDashboard from '@/app/(app)/[project]/templates/dashboard'
 import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
+import { Metadata } from 'next'
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const selectedProject = await getProjectByPathname(params.project)
+
+  return {
+    title: `Templates - ${selectedProject?.name} | sharepreviews`,
+  }
+}
 
 type Props = {
   params: { project: string }

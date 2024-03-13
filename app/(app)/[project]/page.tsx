@@ -1,22 +1,22 @@
 import OverviewDashboard from '@/app/(app)/[project]/dashboard'
 import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 
-type Props = {
-  params: { project: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
-
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const selectedProject = await getProjectByPathname(params.project)
 
   return {
     title: `${selectedProject?.name} | sharepreviews`,
   }
+}
+
+type Props = {
+  params: { project: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export default async function Overview({ params, searchParams }: Props) {

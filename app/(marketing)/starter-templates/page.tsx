@@ -1,4 +1,9 @@
 import { Tabs, TabsList, TabsTrigger } from '@/app/ui/components/Tabs'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Starter Templates | sharepreviews',
+}
 
 export default function StarterTemplatesPage() {
   return (

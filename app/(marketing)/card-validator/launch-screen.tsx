@@ -16,7 +16,7 @@ export default function ValidatorLaunchScreen({
       <motion.div
         className={`${
           isApp ? 'h-full lg:p-12' : 'lg:pt-8'
-        } flex h-full w-full max-w-7xl flex-col items-center justify-center gap-4 p-4`}
+        } flex w-full max-w-7xl flex-col items-center justify-center gap-4 p-4`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -28,7 +28,7 @@ export default function ValidatorLaunchScreen({
           Check how your links look when shared. Validate you have the correct
           metatags in place.
         </p>
-        <ValidatorInput isApp={isApp} />
+        <ValidatorInput isApp={isApp} projectPathname={projectPathname} />
         <div className="mt-2 flex gap-4 text-muted-foreground">
           <span>E.g.:</span>
           <Link

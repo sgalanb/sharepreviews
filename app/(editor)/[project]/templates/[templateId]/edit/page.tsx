@@ -1,7 +1,21 @@
 import VisualEditor from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor'
 import { getProjectByPathname } from '@/app/db/operations/projects'
+import { getTemplateById } from '@/app/db/operations/templates'
 import { ProjectType } from '@/app/db/schema'
 import { getUser } from '@/app/lib/workos'
+import { Metadata } from 'next'
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const selectedProject = await getProjectByPathname(params.project)
+  const selectedTemplate = await getTemplateById(params.templateId)
+
+  return {
+    title: `${selectedTemplate?.name} - ${selectedProject?.name} | sharepreviews`,
+  }
+}
 
 interface LayerInterface {
   id: string

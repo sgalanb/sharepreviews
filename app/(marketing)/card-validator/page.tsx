@@ -12,7 +12,7 @@ export async function generateMetadata({
 
   if (!inputUrl) {
     return {
-      title: 'Preview Card Validator | sharepreviews',
+      title: 'Card Validator | sharepreviews',
       description:
         'Check how your links look when shared on social media with our free validator. Validate you have the correct metatags in place. Free tool for Open Graph and Twitter Cards.',
       alternates: {
