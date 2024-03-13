@@ -1,9 +1,9 @@
 import { Tabs, TabsList, TabsTrigger } from '@/app/ui/components/Tabs'
 
-export default function InspirationPage() {
+export default function StarterTemplatesPage() {
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-4 lg:gap-8 lg:pt-8">
-      <span className="marketing-title">Inspiration</span>
+      <span className="marketing-title">Starter Templates</span>
       <p>
         A curated collection of dynamic card images templates. You can use them
         as starter templates for your own projects.

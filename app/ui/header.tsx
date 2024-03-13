@@ -53,6 +53,7 @@ import {
   ChevronsUpDown,
   ImageIcon,
   LayoutGrid,
+  LayoutTemplate,
   LogOut,
   MenuIcon,
   MonitorCheck,
@@ -220,6 +221,21 @@ export default function Header({
                           } w-full !justify-start`}
                         >
                           Card Validator
+                        </Link>
+                      </Button>
+                    </SheetClose>
+
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href="/starter-templates"
+                          className={`${
+                            pathname.startsWith('/starter-templates')
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Starter Templates
                         </Link>
                       </Button>
                     </SheetClose>
@@ -397,6 +413,16 @@ export default function Header({
             </div>
             <div className="flex w-full flex-col gap-4">
               <div className="flex flex-col gap-2">
+                <Button variant="outline" asChild>
+                  <Link
+                    href="/starter-templates"
+                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
+                    target="_blank"
+                  >
+                    <LayoutTemplate className="h-4 w-4" />
+                    Starter Templates
+                  </Link>
+                </Button>
                 <Button variant="outline" asChild>
                   <Link
                     href="/blog"
@@ -644,6 +670,15 @@ export default function Header({
                         className={navigationMenuTriggerStyle()}
                       >
                         Card Validator
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <Link href="/starter-templates" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        Starter Templates
                       </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
