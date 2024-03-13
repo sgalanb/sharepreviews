@@ -65,12 +65,17 @@ import {
   XCircle,
 } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-export default function PreviewValidator({ isApp }: { isApp: boolean }) {
-  const pathname = usePathname()
+export default function PreviewValidator({
+  isApp,
+  projectPathname,
+}: {
+  isApp: boolean
+  projectPathname: string
+}) {
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
   const normalizedUrl = getUrlFromStringWithoutWWW(inputUrl)
@@ -197,9 +202,7 @@ export default function PreviewValidator({ isApp }: { isApp: boolean }) {
         exit={{ opacity: 0 }}
       >
         <Link
-          href={
-            isApp ? `/${pathname.split('/')[1]}/validator` : '/card-validator'
-          }
+          href={isApp ? `/${projectPathname}/validator` : '/card-validator'}
           className="flex items-center justify-center text-muted-foreground"
         >
           <ChevronLeft className="ml-[-4px]" />
@@ -223,7 +226,11 @@ export default function PreviewValidator({ isApp }: { isApp: boolean }) {
             {/* TODO: Make this div sticky */}
             <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-2">
               <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
-                <ValidatorInput isApp={isApp} isLoading={!!isLoadingData} />
+                <ValidatorInput
+                  isApp={isApp}
+                  isLoading={!!isLoadingData}
+                  projectPathname={projectPathname}
+                />
               </div>
               <div className="flex gap-2">
                 <TabsList className="grid w-full grid-cols-2 border lg:w-60">

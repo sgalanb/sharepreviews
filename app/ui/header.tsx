@@ -82,6 +82,7 @@ export default function Header({
 }) {
   const router = useRouter()
   const pathname = usePathname()
+  const projectPathname = pathname.split('/')[1]
   const { theme, setTheme } = useTheme()
 
   // Scroll effect
@@ -106,9 +107,8 @@ export default function Header({
   // App Project Selector
   const [openProjectsCombobox, setOpenProjectsCombobox] =
     useState<boolean>(false)
-  const [projectsComboboxValue, setProjectsComboboxValue] = useState<string>(
-    pathname.split('/')[1]
-  )
+  const [projectsComboboxValue, setProjectsComboboxValue] =
+    useState<string>(projectPathname)
 
   const projectsList = userProjects?.map((project) => ({
     value: project.pathname,
@@ -116,7 +116,7 @@ export default function Header({
   }))
 
   useEffect(() => {
-    setProjectsComboboxValue(pathname.split('/')[1])
+    setProjectsComboboxValue(projectPathname)
   }, [pathname])
 
   return (
@@ -147,9 +147,9 @@ export default function Header({
                     <SheetClose asChild>
                       <Button variant="ghost" asChild>
                         <Link
-                          href={`/${pathname.split('/')[1]}`}
+                          href={`/${projectPathname}`}
                           className={`${
-                            pathname == `/${pathname.split('/')[1]}`
+                            pathname == `/${projectPathname}`
                               ? 'bg-accent text-accent-foreground'
                               : ''
                           } w-full !justify-start`}
@@ -162,11 +162,9 @@ export default function Header({
                     <SheetClose asChild>
                       <Button variant="ghost" asChild>
                         <Link
-                          href={`/${pathname.split('/')[1]}/templates`}
+                          href={`/${projectPathname}/templates`}
                           className={`${
-                            pathname.startsWith(
-                              `/${pathname.split('/')[1]}/templates`
-                            )
+                            pathname.startsWith(`/${projectPathname}/templates`)
                               ? 'bg-accent text-accent-foreground'
                               : ''
                           } w-full !justify-start`}
@@ -179,11 +177,9 @@ export default function Header({
                     <SheetClose asChild>
                       <Button variant="ghost" asChild>
                         <Link
-                          href={`/${pathname.split('/')[1]}/validator`}
+                          href={`/${projectPathname}/validator`}
                           className={`${
-                            pathname.startsWith(
-                              `/${pathname.split('/')[1]}/validator`
-                            )
+                            pathname.startsWith(`/${projectPathname}/validator`)
                               ? 'bg-accent text-accent-foreground'
                               : ''
                           } w-full !justify-start`}
@@ -358,9 +354,9 @@ export default function Header({
               <div className="flex w-full flex-col items-start justify-start gap-2">
                 <Button variant="ghost" asChild>
                   <Link
-                    href={`/${pathname.split('/')[1]}`}
+                    href={`/${projectPathname}`}
                     className={`${
-                      pathname == `/${pathname.split('/')[1]}`
+                      pathname == `/${projectPathname}`
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
@@ -372,9 +368,9 @@ export default function Header({
 
                 <Button variant="ghost" asChild>
                   <Link
-                    href={`/${pathname.split('/')[1]}/templates`}
+                    href={`/${projectPathname}/templates`}
                     className={`${
-                      pathname == `/${pathname.split('/')[1]}/templates`
+                      pathname == `/${projectPathname}/templates`
                         ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                         : 'text-foreground hover:bg-accent'
                     } flex w-full !justify-start gap-2`}
@@ -386,9 +382,9 @@ export default function Header({
               </div>
               <Button variant="ghost" asChild>
                 <Link
-                  href={`/${pathname.split('/')[1]}/validator`}
+                  href={`/${projectPathname}/validator`}
                   className={`${
-                    pathname == `/${pathname.split('/')[1]}/validator`
+                    pathname == `/${projectPathname}/validator`
                       ? 'bg-foreground text-background hover:bg-foreground/90 hover:text-background dark:bg-background dark:text-foreground dark:hover:bg-background/90 dark:hover:text-foreground'
                       : 'text-foreground hover:bg-accent'
                   } flex w-full !justify-start gap-2`}
@@ -580,12 +576,9 @@ export default function Header({
                                     : newValue
                                 )
                                 if (newValue !== projectsComboboxValue) {
-                                  // replace pathname.split('/')[1] with new value but keep the rest of the path
+                                  // replace projectPathname with new value but keep the rest of the path
                                   router.push(
-                                    pathname.replace(
-                                      pathname.split('/')[1],
-                                      newValue
-                                    )
+                                    pathname.replace(projectPathname, newValue)
                                   )
                                 }
                                 setOpenProjectsCombobox(false)

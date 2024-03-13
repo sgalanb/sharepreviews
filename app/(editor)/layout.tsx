@@ -10,7 +10,7 @@ export default async function EditorLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { isAuthenticated, user } = await getUser()
+  const { user } = await getUser()
   return (
     <html lang="en">
       <body className={inter.className}>

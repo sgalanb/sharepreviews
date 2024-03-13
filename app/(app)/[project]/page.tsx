@@ -1,10 +1,28 @@
 import OverviewDashboard from '@/app/(app)/[project]/dashboard'
-import { getUserProjects } from '@/app/db/operations/projects'
-import { getUser } from '@/app/lib/workos'
+import { getProjectByPathname } from '@/app/db/operations/projects'
+import { ProjectType } from '@/app/db/schema'
+import { Metadata, ResolvingMetadata } from 'next'
 
-export default async function Overview() {
-  const { user } = await getUser()
-  const userProjects = await getUserProjects(user?.id ?? '')
+type Props = {
+  params: { project: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
-  return <OverviewDashboard user={user!} userProjects={userProjects} />
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const selectedProject = await getProjectByPathname(params.project)
+
+  return {
+    title: `${selectedProject?.name} | sharepreviews`,
+  }
+}
+
+export default async function Overview({ params, searchParams }: Props) {
+  const selectedProject = (await getProjectByPathname(
+    params.project
+  )) as ProjectType
+
+  return <OverviewDashboard project={selectedProject} />
 }

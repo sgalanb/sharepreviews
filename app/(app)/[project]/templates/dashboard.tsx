@@ -36,37 +36,28 @@ import {
   getUrlWithConditionalVariablesTrue,
   getUrlWithVariables,
 } from '@/app/utils'
-import { User } from '@workos-inc/node'
 import { motion } from 'framer-motion'
 import { Check, Copy, Edit, MoreHorizontal, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import useSWR, { mutate } from 'swr'
 
 export default function TemplatesDashboard({
-  user,
-  userProjects,
+  project,
 }: {
-  user: User
-  userProjects: ProjectType[]
+  project: ProjectType
 }) {
-  const pathname = usePathname()
-  const selectedProject = userProjects.find(
-    (project) => project.pathname === pathname.split('/')[1]
-  )
-
   const {
     data: projectTemplates,
     isLoading: isLoadingTemplates,
   }: {
     data: TemplateType[]
     isLoading: boolean
-  } = useSWR<any>(`/api/templates?projectId=${selectedProject?.id}`, fetcher)
+  } = useSWR<any>(`/api/templates?projectId=${project?.id}`, fetcher)
 
   const revalidateTemplates = () => {
-    mutate(`/api/templates?projectId=${selectedProject?.id}`)
+    mutate(`/api/templates?projectId=${project?.id}`)
   }
 
   // Get URL dialog
@@ -112,8 +103,7 @@ export default function TemplatesDashboard({
               New template
             </Button>
           }
-          userId={user?.id!}
-          userProjects={userProjects}
+          project={project}
         />
       </div>
       <div className="grid h-fit w-full grid-cols-1 flex-col gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -188,7 +178,7 @@ export default function TemplatesDashboard({
                                   >
                                     <Link
                                       href={`
-                                        /${selectedProject?.pathname}/templates/${template.id}/edit
+                                        /${project?.pathname}/templates/${template.id}/edit
                                         `}
                                       className="flex items-center justify-start gap-2"
                                     >

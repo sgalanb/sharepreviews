@@ -7,19 +7,17 @@ import VisualEditorPreview from '@/app/(editor)/[project]/templates/[templateId]
 import VisualEditorRightPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-right-panel'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 
-import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function VisualEditor({
   userId,
-  userProjects,
+  project,
+  templateId,
 }: {
   userId: string
-  userProjects: ProjectType[]
+  project: ProjectType
+  templateId: string
 }) {
-  const pathname = usePathname()
-  const templateId = pathname.split('/')[3]
-
   const [template, setTemplate] = useState<TemplateType | undefined>(undefined)
 
   const getTemplate = async () => {
@@ -50,7 +48,7 @@ export default function VisualEditor({
       {/* HEADER */}
       <VisualEditorHeader
         layers={layers}
-        userProjects={userProjects}
+        project={project}
         template={template}
       />
       {/* LEFT PANEL */}

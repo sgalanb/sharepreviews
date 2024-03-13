@@ -1,5 +1,6 @@
 import VisualEditor from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor'
-import { getUserProjects } from '@/app/db/operations/projects'
+import { getProjectByPathname } from '@/app/db/operations/projects'
+import { ProjectType } from '@/app/db/schema'
 import { getUser } from '@/app/lib/workos'
 
 interface LayerInterface {
@@ -51,13 +52,24 @@ export type LayerType =
   | ImageLayerInterface
   | RectangleLayerInterface
 
-export default async function EditTemplate() {
+type Props = {
+  params: { project: string; templateId: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default async function EditTemplate({ params, searchParams }: Props) {
   const { user } = await getUser()
-  const userProjects = await getUserProjects(user?.id!)
+  const selectedProject = (await getProjectByPathname(
+    params.project
+  )) as ProjectType
 
   return (
     <div className="h-full w-full">
-      <VisualEditor userProjects={userProjects} userId={user?.id!} />
+      <VisualEditor
+        userId={user?.id!}
+        project={selectedProject}
+        templateId={params.templateId}
+      />
     </div>
   )
 }

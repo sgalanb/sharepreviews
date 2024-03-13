@@ -1,10 +1,16 @@
 import TemplatesDashboard from '@/app/(app)/[project]/templates/dashboard'
-import { getUserProjects } from '@/app/db/operations/projects'
-import { getUser } from '@/app/lib/workos'
+import { getProjectByPathname } from '@/app/db/operations/projects'
+import { ProjectType } from '@/app/db/schema'
 
-export default async function TemplatesPage() {
-  const { user } = await getUser()
-  const userProjects = await getUserProjects(user?.id!)
+type Props = {
+  params: { project: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
-  return <TemplatesDashboard user={user!} userProjects={userProjects} />
+export default async function TemplatesPage({ params, searchParams }: Props) {
+  const selectedProject = (await getProjectByPathname(
+    params.project
+  )) as ProjectType
+
+  return <TemplatesDashboard project={selectedProject} />
 }

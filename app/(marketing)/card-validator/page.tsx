@@ -1,10 +1,8 @@
 import ValidatorLaunchScreen from '@/app/(marketing)/card-validator/launch-screen'
 import PreviewValidator from '@/app/(marketing)/card-validator/preview-validator'
+import { getProjectByPathname } from '@/app/db/operations/projects'
+import { ProjectType } from '@/app/db/schema'
 import { Metadata } from 'next'
-
-type Props = {
-  searchParams: { [key: string]: string | string[] | undefined }
-}
 
 export async function generateMetadata({
   searchParams,
@@ -51,12 +49,30 @@ export async function generateMetadata({
   }
 }
 
-export default async function Validator({ searchParams }: Props) {
+type Props = {
+  params: { project: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default async function Validator({ params, searchParams }: Props) {
   const inputUrl = searchParams?.url as string
+  const selectedProject = (await getProjectByPathname(
+    params.project
+  )) as ProjectType
 
   if (inputUrl) {
-    return <PreviewValidator isApp={false} />
+    return (
+      <PreviewValidator
+        isApp={false}
+        projectPathname={selectedProject?.pathname}
+      />
+    )
   } else {
-    return <ValidatorLaunchScreen isApp={false} />
+    return (
+      <ValidatorLaunchScreen
+        isApp={false}
+        projectPathname={selectedProject?.pathname}
+      />
+    )
   }
 }

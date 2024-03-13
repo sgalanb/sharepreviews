@@ -7,57 +7,26 @@ import { Card, CardContent, CardHeader } from '@/app/ui/components/Card'
 import { Progress } from '@/app/ui/components/Progress'
 import UpgradeToProDialog from '@/app/ui/dialogs/upgrade-to-pro-dialog'
 import { fetcher } from '@/app/utils'
-import { User } from '@workos-inc/node'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 
 export default function OverviewDashboard({
-  user,
-  userProjects,
+  project,
 }: {
-  user: User
-  userProjects: ProjectType[]
+  project: ProjectType
 }) {
-  const pathname = usePathname()
-  const selectedProject = userProjects.find(
-    (project) => project.pathname === pathname.split('/')[1]
-  )
-
   const {
     data: projectTemplates,
     isLoading: isLoadingTemplates,
   }: {
     data: TemplateType[]
     isLoading: boolean
-  } = useSWR<any>(`/api/templates?projectId=${selectedProject?.id}`, fetcher)
-
-  const revalidateTemplates = () => {
-    mutate(`/api/templates?projectId=${selectedProject?.id}`)
-  }
-
-  // Get URL dialog
-  const [isCopied, setIsCopied] = useState<boolean>(false)
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text)
-      setIsCopied(true)
-      setTimeout(() => setIsCopied(false), 700) // Reset after 0.7 seconds
-    } catch (err) {
-      console.error('Failed to copy:', err)
-    }
-  }
-  const buttonVariants = {
-    initial: { scale: 1 },
-    animate: { scale: 1.2, transition: { duration: 0.2 } },
-    exit: { scale: 1, transition: { duration: 0.2 } },
-  }
+  } = useSWR<any>(`/api/templates?projectId=${project?.id}`, fetcher)
 
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-8 p-4 lg:p-12">
       <div className="flex w-full items-start justify-between gap-4 md:h-16">
         <div className="flex h-10 items-center justify-start gap-4">
-          <span className="title">{selectedProject?.name}</span>
+          <span className="title">{project?.name}</span>
           <Badge variant="secondary" className="h-fit">
             Free
           </Badge>
@@ -65,8 +34,7 @@ export default function OverviewDashboard({
 
         <UpgradeToProDialog
           trigger={<Button className="flex gap-2">Upgrade to Pro</Button>}
-          userId={user?.id!}
-          userProjects={userProjects}
+          project={project}
         />
       </div>
       <div className="grid h-fit w-full grid-cols-2 flex-col gap-4 xl:grid-cols-3">

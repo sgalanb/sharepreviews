@@ -13,25 +13,17 @@ import {
   DialogTrigger,
 } from '@/app/ui/components/Dialog'
 import Spinner from '@/app/ui/components/Spinner'
-import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 import { useFormStatus } from 'react-dom'
 
 export default function UpgradeToProDialog({
   trigger,
-  userId,
-  userProjects,
+  project,
 }: {
   trigger: React.ReactNode
-  userId: string
-  userProjects: ProjectType[]
+  project: ProjectType
 }) {
-  const pathname = usePathname()
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const selectedProject = userProjects.find(
-    (project) => project.pathname === pathname.split('/')[1]
-  )
 
   return (
     <Dialog>
@@ -42,8 +34,8 @@ export default function UpgradeToProDialog({
             if (formData.get('name')) {
               createTemplateAction({
                 name: formData.get('name') as string,
-                projectId: selectedProject?.id as string,
-                projectPathname: selectedProject?.pathname as string,
+                projectId: project?.id as string,
+                projectPathname: project?.pathname as string,
                 layersData: '[]',
               })
             } else {

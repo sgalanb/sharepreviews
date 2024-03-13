@@ -3,10 +3,14 @@
 import ValidatorInput from '@/app/ui/validator-input'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
-export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
-  const pathname = usePathname()
+export default function ValidatorLaunchScreen({
+  isApp,
+  projectPathname,
+}: {
+  isApp: boolean
+  projectPathname: string
+}) {
   return (
     <AnimatePresence>
       <motion.div
@@ -30,7 +34,7 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
           <Link
             href={
               isApp
-                ? `/${pathname.split('/')[1]}/validator?url=arc.net`
+                ? `/${projectPathname}/validator?url=arc.net`
                 : '/card-validator?url=arc.net'
             }
             className="hover:underline"
@@ -40,7 +44,7 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
           <Link
             href={
               isApp
-                ? `/${pathname.split('/')[1]}/validator?url=teenage.engineering`
+                ? `/${projectPathname}/validator?url=teenage.engineering`
                 : '/card-validator?url=teenage.engineering'
             }
             className="hover:underline"
@@ -50,7 +54,7 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
           <Link
             href={
               isApp
-                ? `/${pathname.split('/')[1]}/validator?url=dub.co`
+                ? `/${projectPathname}/validator?url=dub.co`
                 : '/card-validator?url=dub.co'
             }
             className="hover:underline"

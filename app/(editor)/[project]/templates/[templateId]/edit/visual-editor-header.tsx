@@ -7,35 +7,29 @@ import { Button } from '@/app/ui/components/Button'
 import Spinner from '@/app/ui/components/Spinner'
 import { ChevronLeft, Save } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useFormStatus } from 'react-dom'
 
 export default function VisualEditorHeader({
   layers,
-  userProjects,
+  project,
   template,
 }: {
   layers: LayerType[]
-  userProjects: ProjectType[]
+  project: ProjectType
   template: TemplateType | undefined
 }) {
-  const pathname = usePathname()
-  const selectedProject = userProjects.find(
-    (project) => project.pathname === pathname.split('/')[1]
-  )
-
   return (
     <div className="col-span-3 flex w-full flex-col items-center justify-start gap-2 rounded-t-lg">
       <div className="flex w-full items-center justify-between border-b px-4 py-2">
         <Link
-          href={`/${pathname.split('/')[1]}/templates`}
+          href={`/${project.pathname}/templates`}
           className="flex items-center justify-center text-muted-foreground"
         >
           <ChevronLeft className="ml-[-4px]" />
           <span className="self-center text-sm font-normal">Exit</span>
         </Link>
         <div className="flex gap-1">
-          <span className="text-muted-foreground">{`${selectedProject?.name} / `}</span>
+          <span className="text-muted-foreground">{`${project?.name} / `}</span>
           {template?.name ? (
             <span className="">{template.name}</span>
           ) : (
@@ -44,11 +38,11 @@ export default function VisualEditorHeader({
         </div>
         <form
           action={() => {
-            if (template?.id && template?.name && selectedProject?.pathname) {
+            if (template?.id && template?.name && project?.pathname) {
               updateTemplateAction({
                 id: template.id,
                 name: template.name,
-                projectPathname: selectedProject.pathname,
+                projectPathname: project.pathname,
                 layersData: JSON.stringify(layers),
               })
             }
