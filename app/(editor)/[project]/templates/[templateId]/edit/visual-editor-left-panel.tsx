@@ -342,7 +342,7 @@ const VariablesElement = ({
   return (
     <div
       key={layer.id}
-      className="rounded-sm bg-accent px-2 py-1"
+      className="rounded-sm bg-accent px-2 py-1.5"
       onClick={(e) => {
         e.stopPropagation()
         setSelectedLayer(layer)

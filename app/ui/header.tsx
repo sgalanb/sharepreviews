@@ -1,9 +1,8 @@
 'use client'
 
-import { logout, redirectAction } from '@/app/actions'
+import { logout } from '@/app/actions'
 import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
-import { Badge } from '@/app/ui/components/Badge'
 import { Button } from '@/app/ui/components/Button'
 import {
   Command,
@@ -46,7 +45,6 @@ import {
   SheetTrigger,
 } from '@/app/ui/components/Sheet'
 import NewProjectDialog from '@/app/ui/dialogs/new-project-dialog'
-import PictorialMark from '@/app/ui/svgs/PictorialMark'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { cn } from '@/app/utils'
 import { User } from '@workos-inc/node'
@@ -61,8 +59,8 @@ import {
   Moon,
   Newspaper,
   Plus,
+  SquareArrowOutUpRight,
   Sun,
-  UserRoundCog,
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
@@ -137,58 +135,191 @@ export default function Header({
         <nav className="flex items-center justify-between py-2">
           <Sheet>
             <SheetTrigger>
-              <MenuIcon className="m-2 h-6 w-6" />
+              <div className={user ? 'w-24' : ''}>
+                <MenuIcon className="m-2 h-6 w-6" />
+              </div>
             </SheetTrigger>
             <SheetContent side="left" className="pt-12">
               <div className="flex flex-col items-start justify-start gap-1">
-                <SheetClose asChild>
-                  <Button variant="ghost" asChild>
-                    <Link
-                      href="/validator"
-                      className={`${
-                        pathname == '/validator'
-                          ? 'bg-accent text-accent-foreground'
-                          : ''
-                      } w-full !justify-start`}
-                    >
-                      Card Validator
-                    </Link>
-                  </Button>
-                </SheetClose>
+                {isApp ? (
+                  <>
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href={`/${pathname.split('/')[1]}`}
+                          className={`${
+                            pathname == `/${pathname.split('/')[1]}`
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Overview
+                        </Link>
+                      </Button>
+                    </SheetClose>
 
-                <SheetClose asChild>
-                  <Button variant="ghost" asChild>
-                    <div className="flex w-full justify-between">
-                      <span className={`!justify-start text-muted-foreground`}>
-                        Dynamic Image Generator
-                      </span>
-                      <Badge variant="secondary">Coming Soon</Badge>
-                    </div>
-                  </Button>
-                </SheetClose>
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href={`/${pathname.split('/')[1]}/templates`}
+                          className={`${
+                            pathname.startsWith(
+                              `/${pathname.split('/')[1]}/templates`
+                            )
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Templates
+                        </Link>
+                      </Button>
+                    </SheetClose>
 
-                <SheetClose asChild>
-                  <Button variant="ghost" asChild>
-                    <Link
-                      href="/blog"
-                      className={`${
-                        pathname.startsWith('/blog')
-                          ? 'bg-accent text-accent-foreground'
-                          : ''
-                      } w-full !justify-start`}
-                    >
-                      Blog
-                    </Link>
-                  </Button>
-                </SheetClose>
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href={`/${pathname.split('/')[1]}/validator`}
+                          className={`${
+                            pathname.startsWith(
+                              `/${pathname.split('/')[1]}/validator`
+                            )
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Card Validator
+                        </Link>
+                      </Button>
+                    </SheetClose>
+                  </>
+                ) : (
+                  <>
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href={user ? '/home' : '/'}
+                          className={`${
+                            pathname == '/' || pathname == '/home'
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Home
+                        </Link>
+                      </Button>
+                    </SheetClose>
+
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href="/card-validator"
+                          className={`${
+                            pathname.startsWith('/card-validator')
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Card Validator
+                        </Link>
+                      </Button>
+                    </SheetClose>
+
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href="/pricing"
+                          className={`${
+                            pathname.startsWith('/pricing')
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Pricing
+                        </Link>
+                      </Button>
+                    </SheetClose>
+
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href="/blog"
+                          className={`${
+                            pathname.startsWith('/blog')
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Blog
+                        </Link>
+                      </Button>
+                    </SheetClose>
+
+                    <SheetClose asChild>
+                      <Button asChild>
+                        <Link href={authorizationUrl} className="mt-4 w-full">
+                          Get Started
+                        </Link>
+                      </Button>
+                    </SheetClose>
+                  </>
+                )}
               </div>
             </SheetContent>
           </Sheet>
           <Link href="/" className="flex items-center justify-center gap-2">
-            <PictorialMark className="w-12 fill-primary" />
-            <span className="font-bold">sharepreviews</span>
+            <Image src="/icon.svg" alt="SharePreviews" width={40} height={40} />
           </Link>
-          <ThemeToggle ghost />
+          <div className="flex gap-2">
+            <ThemeToggle ghost />
+            {user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="mr-2 cursor-pointer">
+                    <AvatarImage src={user.profilePictureUrl ?? ''} alt="" />
+                    {user.firstName && user.lastName ? (
+                      <AvatarFallback>
+                        {user.firstName[0] + user.lastName[0]}
+                      </AvatarFallback>
+                    ) : (
+                      <AvatarFallback>
+                        {user.email[0] + user.email[1]}
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-52 p-2"
+                  align="end"
+                  sideOffset={8}
+                >
+                  <DropdownMenuLabel>
+                    <div className="full flex flex-col items-start justify-center gap-1">
+                      <p className="leading-none">{`${user.firstName} ${user.lastName}`}</p>
+                      <p className="line-clamp-1 max-w-full font-normal text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem className="cursor-pointer" asChild>
+                      <Link href="/">
+                        <LayoutGrid className="mr-2 h-4 w-4" />
+                        <span>Go to dashboard</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => logout()}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         </nav>
       </div>
       {isApp ? (
@@ -197,11 +328,11 @@ export default function Header({
           <div className="hidden h-full w-full flex-col items-start justify-between lg:flex">
             <div className="flex w-full flex-col items-start justify-start gap-2">
               <Button variant="ghost" asChild>
-                <Link href="/" className="mb-2 mt-4 w-full">
+                <Link href="/" className="mb-2 mt-4">
                   <Image
-                    src="/logo.svg"
+                    src="/icon.svg"
                     alt="SharePreviews"
-                    width={112}
+                    width={24}
                     height={24}
                     className="pointer-events-none"
                   />
@@ -359,13 +490,19 @@ export default function Header({
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
-                        <DropdownMenuItem
+                        <DropdownMenuItem className="cursor-pointer" asChild>
+                          <Link href="/home" target="_blank">
+                            <SquareArrowOutUpRight className="mr-2 h-4 w-4" />
+                            <span>Go to homepage</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        {/* <DropdownMenuItem
                           className="cursor-pointer"
                           onClick={() => redirectAction('/account-settings')}
                         >
                           <UserRoundCog className="mr-2 h-4 w-4" />
                           <span>Account settings</span>
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           className="cursor-pointer"

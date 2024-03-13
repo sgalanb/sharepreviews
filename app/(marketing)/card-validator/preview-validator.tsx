@@ -54,6 +54,7 @@ import {
   getImageSizeFromUrl,
   getUrlFromStringWithoutWWW,
 } from '@/app/utils'
+import { Crisp } from 'crisp-sdk-web'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   AlertCircle,
@@ -280,7 +281,10 @@ export default function PreviewValidator({ isApp }: { isApp: boolean }) {
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub> */}
-                      <DropdownMenuItem disabled>
+                      <DropdownMenuItem
+                        onClick={() => Crisp.chat.open()}
+                        className="cursor-pointer"
+                      >
                         <ShieldAlert className="mr-2 h-4 w-4" />
                         Report issue
                       </DropdownMenuItem>

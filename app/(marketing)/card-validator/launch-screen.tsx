@@ -11,8 +11,8 @@ export default function ValidatorLaunchScreen({ isApp }: { isApp: boolean }) {
     <AnimatePresence>
       <motion.div
         className={`${
-          isApp ? 'lg:p-12' : 'lg:pt-8'
-        } flex w-full max-w-7xl flex-col items-center justify-center gap-4 p-4`}
+          isApp ? 'h-full lg:p-12' : 'lg:pt-8'
+        } flex h-full w-full max-w-7xl flex-col items-center justify-center gap-4 p-4`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

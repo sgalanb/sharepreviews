@@ -88,23 +88,26 @@ export default function TemplatesDashboard({
 
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-8 p-4 lg:p-12">
-      <div className="flex w-full items-center justify-between gap-4">
-        <div className="flex flex-col justify-between gap-2">
-          <span className="title">Templates</span>
+      <div className="flex w-full items-start justify-between gap-4 md:h-16">
+        <div className="flex flex-col justify-between gap-1">
+          <span className="title leading-10">Templates</span>
           <p className="text-muted-foreground">
-            Create templates that will generate different images with the inputs
-            you provide. See{' '}
+            Templates can generate different images based the variables you
+            provide. {` `}
             <Button variant="link" asChild>
-              <Link href="/inspiration" target="_blank" className="h-fit !p-0">
-                starter templates
+              <Link
+                href="/inspiration"
+                target="_blank"
+                className="hidden h-fit !p-0 xl:inline"
+              >
+                See starter templates.
               </Link>
             </Button>
-            .
           </p>
         </div>
         <NewTemplateDialog
           trigger={
-            <Button className="flex gap-2">
+            <Button className="hidden gap-2 md:flex">
               <Plus className="h-4 w-4" />
               New template
             </Button>
@@ -113,7 +116,7 @@ export default function TemplatesDashboard({
           userProjects={userProjects}
         />
       </div>
-      <div className="grid h-fit w-full grid-cols-2 flex-col gap-4 xl:grid-cols-3">
+      <div className="grid h-fit w-full grid-cols-1 flex-col gap-4 md:grid-cols-2 xl:grid-cols-3">
         {isLoadingTemplates ? (
           // Skeleton
           <>
@@ -180,7 +183,7 @@ export default function TemplatesDashboard({
                               >
                                 <DropdownMenuGroup>
                                   <DropdownMenuItem
-                                    className="cursor-pointer"
+                                    className="hidden cursor-pointer md:flex"
                                     asChild
                                   >
                                     <Link

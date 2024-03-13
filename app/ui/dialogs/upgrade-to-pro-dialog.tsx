@@ -1,31 +1,37 @@
 'use client'
 
-import { createProjectAction } from '@/app/actions'
+import { createTemplateAction } from '@/app/actions'
+import { ProjectType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
+import { Card } from '@/app/ui/components/Card'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/app/ui/components/Dialog'
-import { Input } from '@/app/ui/components/Input'
-import { Label } from '@/app/ui/components/Label'
 import Spinner from '@/app/ui/components/Spinner'
+import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 import { useFormStatus } from 'react-dom'
 
-export default function NewProjectDialog({
+export default function UpgradeToProDialog({
   trigger,
   userId,
+  userProjects,
 }: {
   trigger: React.ReactNode
   userId: string
+  userProjects: ProjectType[]
 }) {
+  const pathname = usePathname()
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const selectedProject = userProjects.find(
+    (project) => project.pathname === pathname.split('/')[1]
+  )
 
   return (
     <Dialog>
@@ -34,45 +40,28 @@ export default function NewProjectDialog({
         <form
           action={(formData: FormData) => {
             if (formData.get('name')) {
-              createProjectAction({
+              createTemplateAction({
                 name: formData.get('name') as string,
-                userId: userId,
+                projectId: selectedProject?.id as string,
+                projectPathname: selectedProject?.pathname as string,
+                layersData: '[]',
               })
             } else {
               inputRef?.current?.focus()
             }
           }}
+          className="flex flex-col gap-4"
         >
-          <DialogHeader>
-            <DialogTitle>New project</DialogTitle>
-            <DialogDescription>
-              Create a new template to use in your projects.
+          <DialogHeader className="gap-2">
+            <DialogTitle className="w-full text-center">
+              Upgrade to Pro
+            </DialogTitle>
+            <DialogDescription className="w-full text-balance text-center">
+              Consider upgrading to Pro to enjoy higher limits and extra
+              features.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-6 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="name"
-                name="name"
-                ref={inputRef}
-                type="text"
-                containerClassName="col-span-5"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button type="button" variant="outline">
-                Close
-              </Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <CreateButton />
-            </DialogClose>
-          </DialogFooter>
+          <Card className="p-4"></Card>
         </form>
       </DialogContent>
     </Dialog>

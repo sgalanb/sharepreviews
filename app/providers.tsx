@@ -15,7 +15,7 @@ export function Providers({
   [key: string]: any
 }) {
   useEffect(() => {
-    if (user.email) {
+    if (user?.email) {
       Crisp.user.setEmail(user.email)
       Crisp.user.setNickname(`${user.firstName} ${user.lastName}` || user.email)
     }

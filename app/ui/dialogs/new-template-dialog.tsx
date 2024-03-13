@@ -5,6 +5,7 @@ import { ProjectType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -71,6 +72,11 @@ export default function NewTemplateDialog({
             </div>
           </div>
           <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">
+                Close
+              </Button>
+            </DialogClose>
             <CreateButton />
           </DialogFooter>
         </form>
