@@ -133,3 +133,53 @@ export async function createUploadedImageAction({
     userId,
   })
 }
+
+export async function suscribeToProAction({
+  userId,
+  email,
+  name,
+}: {
+  userId: string
+  email: string
+  name: string
+}) {
+  const checkout = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/vnd.api+json',
+      'Content-Type': 'application/vnd.api+json',
+      Authorization: `Bearer ${process.env.LEMON_SQUEEZY_API_KEY}`,
+    },
+    body: JSON.stringify({
+      data: {
+        type: 'checkouts',
+        attributes: {
+          checkout_data: {
+            email: email,
+            name: name,
+            custom: {
+              userId: userId, // WorkOS user id
+            },
+          },
+        },
+        relationships: {
+          store: {
+            data: {
+              type: 'stores',
+              id: process.env.LEMON_SQUEEZY_STORE_ID,
+            },
+          },
+          variant: {
+            data: {
+              type: 'variants',
+              id: process.env.LEMON_SQUEEZY_PRO_VARIANT_ID,
+            },
+          },
+        },
+      },
+    }),
+  }).then((response) => response.json())
+
+  const checkoutUrl = checkout.data.attributes.url
+  redirect(checkoutUrl)
+}

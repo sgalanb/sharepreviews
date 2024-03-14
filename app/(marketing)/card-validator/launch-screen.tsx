@@ -34,12 +34,12 @@ export default function ValidatorLaunchScreen({
           <Link
             href={
               isApp
-                ? `/${projectPathname}/validator?url=arc.net`
-                : '/card-validator?url=arc.net'
+                ? `/${projectPathname}/validator?url=vercel.com`
+                : '/card-validator?url=vercel.com'
             }
             className="hover:underline"
           >
-            arc.net
+            vercel.com
           </Link>
           <Link
             href={

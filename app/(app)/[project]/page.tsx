@@ -1,6 +1,7 @@
 import OverviewDashboard from '@/app/(app)/[project]/dashboard'
 import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
+import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -20,9 +21,11 @@ type Props = {
 }
 
 export default async function Overview({ params, searchParams }: Props) {
+  const { user } = await getUser()
+
   const selectedProject = (await getProjectByPathname(
     params.project
   )) as ProjectType
 
-  return <OverviewDashboard project={selectedProject} />
+  return <OverviewDashboard project={selectedProject} user={user!} />
 }

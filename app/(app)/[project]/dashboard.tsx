@@ -7,11 +7,14 @@ import { Card, CardContent, CardHeader } from '@/app/ui/components/Card'
 import { Progress } from '@/app/ui/components/Progress'
 import UpgradeToProDialog from '@/app/ui/dialogs/upgrade-to-pro-dialog'
 import { fetcher } from '@/app/utils'
+import { User } from '@workos-inc/node'
 import useSWR from 'swr'
 
 export default function OverviewDashboard({
+  user,
   project,
 }: {
+  user: User
   project: ProjectType
 }) {
   const {
@@ -27,7 +30,7 @@ export default function OverviewDashboard({
       <div className="flex w-full items-start justify-between gap-4 md:h-16">
         <div className="flex h-10 items-center justify-start gap-4">
           <span className="title">{project?.name}</span>
-          <Badge variant="secondary" className="h-fit">
+          <Badge variant="secondary" className="h-fit font-normal">
             Free
           </Badge>
         </div>
@@ -35,6 +38,7 @@ export default function OverviewDashboard({
         <UpgradeToProDialog
           trigger={<Button className="flex gap-2">Upgrade to Pro</Button>}
           project={project}
+          user={user}
         />
       </div>
       <div className="grid h-fit w-full grid-cols-2 flex-col gap-4 xl:grid-cols-3">
@@ -80,7 +84,7 @@ export default function OverviewDashboard({
                   /
                 </span>
                 <span className="text-neutral-400 dark:text-neutral-500">
-                  5
+                  2
                 </span>
               </div>
             )}
