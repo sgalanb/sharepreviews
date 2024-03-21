@@ -1,6 +1,6 @@
 'use client'
 
-import { createProjectAction } from '@/app/actions'
+import { createProjectAction } from '@/app/actions/actions'
 import { Button } from '@/app/ui/components/Button'
 import {
   Dialog,
@@ -15,7 +15,7 @@ import {
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
 import Spinner from '@/app/ui/components/Spinner'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 
 export default function NewProjectDialog({
@@ -25,11 +25,19 @@ export default function NewProjectDialog({
   trigger: React.ReactNode
   userId: string
 }) {
+  const [isOpen, setOpen] = useState<boolean>(false)
+
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const closeDialog = () => {
+    setOpen(false)
+  }
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
+      <DialogTrigger asChild onClick={() => setOpen(true)}>
+        {trigger}
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <form
           action={(formData: FormData) => {
@@ -37,6 +45,8 @@ export default function NewProjectDialog({
               createProjectAction({
                 name: formData.get('name') as string,
                 userId: userId,
+              }).then(() => {
+                closeDialog()
               })
             } else {
               inputRef?.current?.focus()
@@ -64,14 +74,12 @@ export default function NewProjectDialog({
             </div>
           </div>
           <DialogFooter>
-            <DialogClose asChild>
+            <DialogClose>
               <Button type="button" variant="outline">
                 Close
               </Button>
             </DialogClose>
-            <DialogClose asChild>
-              <CreateButton />
-            </DialogClose>
+            <CreateButton />
           </DialogFooter>
         </form>
       </DialogContent>

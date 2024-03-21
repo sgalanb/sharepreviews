@@ -1,6 +1,6 @@
 'use client'
 
-import { addContactToGeneralAudience } from '@/app/actions'
+import { addContactToGeneralAudience } from '@/app/actions/actions'
 import { Button } from '@/app/ui/components/Button'
 import { Input } from '@/app/ui/components/Input'
 import {

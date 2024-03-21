@@ -50,6 +50,7 @@ export default function VisualEditor({
         layers={layers}
         project={project}
         template={template}
+        canvasBackgroundColor={canvasBackgroundColor}
       />
       {/* LEFT PANEL */}
       <VisualEditorLeftPanel

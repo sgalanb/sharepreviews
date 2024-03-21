@@ -1,6 +1,6 @@
 import { db } from '@/app/db'
 import { projects } from '@/app/db/schema'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import { unstable_cache } from 'next/cache'
 
 export const getUserProjects = unstable_cache(
@@ -50,10 +50,62 @@ export async function createProject({
   name: string
   userId: string
 }) {
-  return await db.insert(projects).values({
-    name: name,
-    userId: userId,
-    pathname: await generateUniqueProjectPathname(name),
-    updatedAt: new Date(),
-  })
+  return await db
+    .insert(projects)
+    .values({
+      name: name,
+      userId: userId,
+      pathname: await generateUniqueProjectPathname(name),
+      updatedAt: new Date(),
+    })
+    .returning({
+      insertId: projects.id,
+      name: projects.name,
+      userId: projects.userId,
+      pathname: projects.pathname,
+    })
+}
+
+export async function updateProjectSubscription({
+  projectId,
+  plan,
+  productId,
+  variantId,
+  suscriptionId,
+  suscriptionItemId,
+}: {
+  projectId: string
+  plan: string
+  productId: string | null
+  variantId: string | null
+  suscriptionId: string | null
+  suscriptionItemId: string | null
+}) {
+  return await db
+    .update(projects)
+    .set({
+      plan,
+      productId,
+      variantId,
+      suscriptionId,
+      suscriptionItemId,
+      updatedAt: new Date(),
+    })
+    .where(eq(projects.id, projectId))
+}
+
+export async function incrementProjectImagesCreated({
+  projectId,
+  quantity,
+}: {
+  projectId: string
+  quantity: number
+}) {
+  return await db
+    .update(projects)
+    .set({
+      imagesCreated: sql`${projects.imagesCreated} + ${quantity}`,
+      updatedAt: new Date(),
+    })
+    .where(eq(projects.id, projectId))
 }

@@ -36,6 +36,34 @@
       "when": 1709941031111,
       "tag": "0004_bitter_terrax",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1710953691205,
+      "tag": "0005_tiny_moondragon",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1710963948166,
+      "tag": "0006_condemned_kingpin",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1710970434309,
+      "tag": "0007_curved_namora",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1710975340152,
+      "tag": "0008_bizarre_grey_gargoyle",
+      "breakpoints": true
     }
   ]
 }

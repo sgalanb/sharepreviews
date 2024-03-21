@@ -1,6 +1,6 @@
 'use client'
 
-import { createTemplateAction } from '@/app/actions'
+import { createTemplateAction } from '@/app/actions/actions'
 import { ProjectType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
 import {

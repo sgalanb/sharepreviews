@@ -31,7 +31,7 @@ export default function OverviewDashboard({
         <div className="flex h-10 items-center justify-start gap-4">
           <span className="title">{project?.name}</span>
           <Badge variant="secondary" className="h-fit font-normal">
-            Free
+            {`${project?.plan?.charAt(0).toUpperCase()}${project?.plan?.slice(1)}`}
           </Badge>
         </div>
 

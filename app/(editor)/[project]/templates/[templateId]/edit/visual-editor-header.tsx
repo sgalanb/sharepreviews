@@ -1,7 +1,7 @@
 'use client'
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
-import { updateTemplateAction } from '@/app/actions'
+import { updateTemplateAction } from '@/app/actions/actions'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
 import Spinner from '@/app/ui/components/Spinner'
@@ -11,10 +11,12 @@ import { useFormStatus } from 'react-dom'
 
 export default function VisualEditorHeader({
   layers,
+  canvasBackgroundColor,
   project,
   template,
 }: {
   layers: LayerType[]
+  canvasBackgroundColor: string
   project: ProjectType
   template: TemplateType | undefined
 }) {
@@ -38,17 +40,28 @@ export default function VisualEditorHeader({
         </div>
         <form
           action={() => {
-            if (template?.id && template?.name && project?.pathname) {
+            if (
+              template?.id &&
+              template?.name &&
+              project?.id &&
+              project?.pathname
+            ) {
               updateTemplateAction({
                 id: template.id,
                 name: template.name,
+                projectId: project.id,
                 projectPathname: project.pathname,
                 layersData: JSON.stringify(layers),
+                canvasBackgroundColor,
               })
             }
           }}
         >
-          <SaveButton template={template} layers={layers} />
+          <SaveButton
+            template={template}
+            layers={layers}
+            canvasBackgroundColor={canvasBackgroundColor}
+          />
         </form>
       </div>
     </div>
@@ -58,9 +71,11 @@ export default function VisualEditorHeader({
 function SaveButton({
   template,
   layers,
+  canvasBackgroundColor,
 }: {
   template: TemplateType | undefined
   layers: LayerType[]
+  canvasBackgroundColor: string
 }) {
   const { pending } = useFormStatus()
 
@@ -71,7 +86,8 @@ function SaveButton({
       className="flex min-w-[5.25rem] gap-2"
       disabled={
         !template?.id ||
-        JSON.stringify(layers) === template?.layersData ||
+        (JSON.stringify(layers) === template?.layersData &&
+          canvasBackgroundColor === template?.canvasBackgroundColor) ||
         pending
       }
     >

@@ -8,6 +8,7 @@ import {
 } from '@/app/db/operations/templates'
 import { createUploadedImage } from '@/app/db/operations/uploaded_images'
 import {
+  createOrUpdateProjectRedis,
   createOrUpdateTemplateRedis,
   deleteTemplateRedis,
 } from '@/app/lib/upstash'
@@ -46,9 +47,17 @@ export async function createProjectAction({
   name: string
   userId: string
 }) {
-  await createProject({
+  const createdProject = await createProject({
     name,
     userId,
+  })
+
+  await createOrUpdateProjectRedis({
+    id: createdProject[0].insertId,
+    name: name,
+    pathname: createdProject[0].pathname,
+    plan: 'free',
+    ownerUserId: userId,
   })
 
   revalidatePath('/', 'layout')
@@ -77,6 +86,8 @@ export async function createTemplateAction({
   const createRedis = createOrUpdateTemplateRedis({
     templateId: newId,
     layersData,
+    projectId,
+    canvasBackgroundColor: '#ffffff',
   })
 
   await Promise.all([createPostgres, createRedis]).then(() => {
@@ -87,13 +98,17 @@ export async function createTemplateAction({
 export async function updateTemplateAction({
   id,
   name,
+  projectId,
   projectPathname,
   layersData,
+  canvasBackgroundColor,
 }: {
   id: string
   name: string
+  projectId: string
   projectPathname: string
   layersData: string
+  canvasBackgroundColor: string
 }) {
   const updatePostgres = await updateTemplate({
     id,
@@ -104,6 +119,8 @@ export async function updateTemplateAction({
   const updateRedis = createOrUpdateTemplateRedis({
     templateId: id,
     layersData,
+    projectId,
+    canvasBackgroundColor,
   })
 
   await Promise.all([updatePostgres, updateRedis]).then(() => {
@@ -132,54 +149,4 @@ export async function createUploadedImageAction({
     url,
     userId,
   })
-}
-
-export async function suscribeToProAction({
-  userId,
-  email,
-  name,
-}: {
-  userId: string
-  email: string
-  name: string
-}) {
-  const checkout = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${process.env.LEMON_SQUEEZY_API_KEY}`,
-    },
-    body: JSON.stringify({
-      data: {
-        type: 'checkouts',
-        attributes: {
-          checkout_data: {
-            email: email,
-            name: name,
-            custom: {
-              userId: userId, // WorkOS user id
-            },
-          },
-        },
-        relationships: {
-          store: {
-            data: {
-              type: 'stores',
-              id: process.env.LEMON_SQUEEZY_STORE_ID,
-            },
-          },
-          variant: {
-            data: {
-              type: 'variants',
-              id: process.env.LEMON_SQUEEZY_PRO_VARIANT_ID,
-            },
-          },
-        },
-      },
-    }),
-  }).then((response) => response.json())
-
-  const checkoutUrl = checkout.data.attributes.url
-  redirect(checkoutUrl)
 }

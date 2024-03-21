@@ -1,5 +1,6 @@
 import {
   boolean,
+  integer,
   pgTable,
   text,
   timestamp,
@@ -22,7 +23,13 @@ export const projects = pgTable('projects', {
   id: uuid('uuid').defaultRandom().primaryKey().notNull(),
   name: text('name').notNull(),
   pathname: text('pathname').notNull().unique(),
-  userId: varchar('user_id', { length: 31 })
+  plan: text('plan').default('free'), // 'free' or 'pro'
+  productId: text('product_id'), // Lemon Squeezy product ID
+  variantId: text('variant_id'), // Lemon Squeezy variant ID
+  suscriptionId: text('suscription_id'), // Lemon Squeezy subscription ID
+  suscriptionItemId: text('suscription_item_id'), // Lemon Squeezy subscription item ID
+  imagesCreated: integer('images_created').default(0).notNull(), // Number of images created (historical)
+  userId: varchar('user_id', { length: 31 }) // ID of the project owner
     .references(() => users.id)
     .notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
@@ -38,6 +45,9 @@ export const templates = pgTable('templates', {
     .references(() => projects.id)
     .notNull(),
   layersData: text('layersData').notNull(), // JSON data
+  canvasBackgroundColor: text('canvasBackgroundColor')
+    .default('#ffffff')
+    .notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   updatedAt: timestamp('updatedAt').notNull(),
 })

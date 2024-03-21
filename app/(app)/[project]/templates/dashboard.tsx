@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteTemplateAction } from '@/app/actions'
+import { deleteTemplateAction } from '@/app/actions/actions'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
 import { Card } from '@/app/ui/components/Card'
@@ -213,8 +213,12 @@ export default function TemplatesDashboard({
                                   <DialogTitle>Delete template</DialogTitle>
                                   <DialogDescription>
                                     Are you sure you want to delete this
-                                    template? All URLs associated with this
-                                    template will stop working. <br />
+                                    template?{' '}
+                                    <strong>
+                                      All URLs associated with this template
+                                      will stop working.
+                                    </strong>{' '}
+                                    <br />
                                     This action cannot be undone.
                                   </DialogDescription>
                                 </DialogHeader>

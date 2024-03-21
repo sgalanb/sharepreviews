@@ -1,7 +1,7 @@
 'use client'
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
-import { createUploadedImageAction } from '@/app/actions'
+import { createUploadedImageAction } from '@/app/actions/actions'
 import { Button } from '@/app/ui/components/Button'
 import {
   Command,

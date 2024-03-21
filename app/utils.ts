@@ -220,7 +220,7 @@ const getVariablesArray = (layers: LayerType[]) => {
 export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
   return `${
     window.location.origin
-  }/api/images/${template.id}?${getConditionalVisibilityVariables(
+  }/api/images/generate/${template.id}?${getConditionalVisibilityVariables(
     JSON.parse(template.layersData)
   )
     .map((variable) => `${variable}=true`)
@@ -230,7 +230,7 @@ export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
 export const getUrlWithVariables = (template: TemplateType) => {
   return `${
     window.location.origin
-  }/api/images/${template.id}?${getVariablesArray(
+  }/api/images/generate/${template.id}?${getVariablesArray(
     JSON.parse(template.layersData)
   )
     .map((variable) => `${variable}={VALUE}`)

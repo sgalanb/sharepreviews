@@ -1,6 +1,6 @@
 'use client'
 
-import { logout } from '@/app/actions'
+import { logout } from '@/app/actions/actions'
 import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Button } from '@/app/ui/components/Button'
