@@ -87,7 +87,7 @@ export default function TemplatesDashboard({
             provide. {` `}
             <Button variant="link" asChild>
               <Link
-                href="/inspiration"
+                href="/starter-templates"
                 target="_blank"
                 className="hidden h-fit !p-0 xl:inline"
               >
@@ -115,7 +115,7 @@ export default function TemplatesDashboard({
               .map((index) => (
                 <Card
                   key={index}
-                  className="flex h-fit w-full animate-pulse flex-col gap-4 bg-accent p-4 duration-700"
+                  className="flex h-fit w-full animate-pulse flex-col gap-4 bg-accent p-4 duration-1000"
                 >
                   <div className="aspect-[1.91/1] h-fit w-full rounded-md border" />
                   <div className="flex h-10 w-full items-center justify-between gap-4">
@@ -134,7 +134,7 @@ export default function TemplatesDashboard({
                       key={template.id}
                       className="flex h-fit w-full flex-col items-center justify-center gap-4 p-4"
                     >
-                      <div className="h-fit w-full">
+                      <div className="pointer-events-none h-fit w-full select-none">
                         {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
                         <img
                           src={getUrlWithConditionalVariablesTrue(template)}
@@ -237,7 +237,9 @@ export default function TemplatesDashboard({
                           </Dialog>
                           <Dialog>
                             <DialogTrigger asChild>
-                              <Button className="select-none">Get URL</Button>
+                              <Button variant="outline" className="select-none">
+                                Get URL
+                              </Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-xl">
                               <DialogHeader>

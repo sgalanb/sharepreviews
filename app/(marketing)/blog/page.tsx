@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   return (
-    <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-4 lg:gap-8 lg:pt-8">
+    <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-4 pt-8 lg:gap-8">
       <h1 className="marketing-title pt-4 lg:p-0">Blog</h1>
       <Link
         href="/blog/everything-you-should-know-about-social-metatags"
@@ -33,7 +33,7 @@ export default async function BlogPage() {
         <div className="order-2 w-full lg:order-1 lg:w-1/3">
           <div className="flex h-full flex-col justify-between gap-4">
             <div className="flex flex-col gap-4">
-              <h2 className="marketing-subtitle lg:text-balance">
+              <h2 className="marketing-second-title lg:text-balance">
                 Everything You Should Know About Social Metatags
               </h2>
               <p className="text-muted-foreground lg:text-balance">

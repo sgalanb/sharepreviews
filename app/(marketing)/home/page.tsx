@@ -2,7 +2,8 @@ import Home from '@/app/(marketing)/page'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home | sharepreviews',
+  title:
+    'sharepreviews | Boost your links engagement with stunning social cards',
   robots: 'noindex, nofollow',
 }
 

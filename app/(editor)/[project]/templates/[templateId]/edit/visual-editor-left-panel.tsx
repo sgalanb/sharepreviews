@@ -46,6 +46,7 @@ export default function VisualEditorLeftPanel({
   setSelectedLayer,
   canvasBackgroundColor,
   setCanvasBackgroundColor,
+  isLoadingTemplate,
 }: {
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
@@ -53,6 +54,7 @@ export default function VisualEditorLeftPanel({
   setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
   canvasBackgroundColor: string
   setCanvasBackgroundColor: Dispatch<SetStateAction<string>>
+  isLoadingTemplate: boolean
 }) {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
@@ -65,6 +67,8 @@ export default function VisualEditorLeftPanel({
       return arrayMove(layers, oldIndex, newIndex)
     })
   }
+
+  console.log(canvasBackgroundColor)
 
   return (
     <div
@@ -96,33 +100,51 @@ export default function VisualEditorLeftPanel({
             items={layers}
             strategy={verticalListSortingStrategy}
           >
-            {layers.length === 0 ? (
-              <div className="flex h-full w-full items-center justify-center">
-                <NewLayerDialog
-                  layers={layers}
-                  setLayers={setLayers}
-                  setSelectedLayer={setSelectedLayer}
-                  trigger={
-                    <Button variant="outline" className="flex gap-2">
-                      Add first layer
-                      <Plus className="h-5 w-5" />
-                    </Button>
-                  }
-                />
-              </div>
-            ) : (
-              <ScrollArea className="flex h-full w-full flex-col gap-0 px-2">
-                {layers.map((layer, index) => (
-                  <Layer
-                    key={layer.id}
-                    layer={layer}
-                    layers={layers}
-                    setLayers={setLayers}
-                    selected={layer.id === selectedLayer?.id}
-                    setSelectedLayer={setSelectedLayer}
-                  />
-                ))}
+            {isLoadingTemplate ? (
+              <ScrollArea
+                key={'loading'}
+                className="flex h-full w-full flex-col gap-0 px-2"
+              >
+                {Array(4)
+                  .fill(0)
+                  .map((index) => (
+                    <div
+                      key={index}
+                      className={`${index === 0 ? 'mb-2' : 'my-2'} h-10 w-full animate-pulse rounded-sm bg-muted duration-1000`}
+                    />
+                  ))}
               </ScrollArea>
+            ) : (
+              <>
+                {layers.length === 0 ? (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <NewLayerDialog
+                      layers={layers}
+                      setLayers={setLayers}
+                      setSelectedLayer={setSelectedLayer}
+                      trigger={
+                        <Button variant="outline" className="flex gap-2">
+                          Add first layer
+                          <Plus className="h-5 w-5" />
+                        </Button>
+                      }
+                    />
+                  </div>
+                ) : (
+                  <ScrollArea className="flex h-full w-full flex-col gap-0 px-2">
+                    {layers.map((layer, index) => (
+                      <Layer
+                        key={layer.id}
+                        layer={layer}
+                        layers={layers}
+                        setLayers={setLayers}
+                        selected={layer.id === selectedLayer?.id}
+                        setSelectedLayer={setSelectedLayer}
+                      />
+                    ))}
+                  </ScrollArea>
+                )}
+              </>
             )}
           </SortableContext>
         </DndContext>
@@ -204,7 +226,7 @@ export default function VisualEditorLeftPanel({
             <Input
               type="color"
               id="background-color"
-              defaultValue={canvasBackgroundColor}
+              value={canvasBackgroundColor}
               onChange={(e) => setCanvasBackgroundColor(e.target.value)}
               leftLabel={
                 <Label

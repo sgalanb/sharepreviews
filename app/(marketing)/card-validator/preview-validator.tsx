@@ -313,8 +313,8 @@ export default function PreviewValidator({
                     <div
                       className={`${
                         isImageSquare
-                          ? 'lg:grid-cols-[repeat(auto-fill,minmax(420px,1fr))]'
-                          : 'lg:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]'
+                          ? 'grid-cols-[repeat(auto-fill,minmax(420px,1fr))]'
+                          : 'grid-cols-[repeat(auto-fill,minmax(320px,1fr))]'
                       } grid w-full gap-4`}
                     >
                       {previewsData.map((item, index) => (

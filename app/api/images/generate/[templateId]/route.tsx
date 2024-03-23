@@ -16,10 +16,24 @@ export const runtime = 'edge'
 
 const FREE_IMAGES = 500
 
+const adminKey = process.env.ADMIN_VARIABLES_ENCRYPTION_KEY
+
 export async function GET(req: NextRequest) {
-  const localhost = req.nextUrl.hostname === 'localhost'
   const { searchParams } = new URL(req.url)
   const templateId = searchParams.get('templateId')
+  const encryptedVariables = searchParams.get('variables') as string
+  // const decryptedVariables = decrypt(variables, adminKey ?? '')
+  // const { searchParams: decryptedParams } = new URL(
+  //   `${req.nextUrl.origin}${decryptedVariables}`
+  // )
+
+  function getSearchParams(value: string) {
+    if (encryptedVariables) {
+      //return decryptedParams.get(value)
+    } else {
+      return searchParams.get(value)
+    }
+  }
 
   if (!templateId) {
     return new Response('Missing templateId', { status: 400 })
@@ -33,8 +47,12 @@ export async function GET(req: NextRequest) {
       return new Response('Template not found', { status: 404 })
     }
 
+    // Usage tracking
+    const searchParamsString = encryptedVariables
+      ? '' //decryptedParams.toString()
+      : searchParams.toString()
     const generatedUrls = await getTemplateUrlsRedis(templateId)
-    const alreadyGenerated = generatedUrls?.includes(searchParams.toString())
+    const alreadyGenerated = generatedUrls?.includes(searchParamsString)
 
     if (!alreadyGenerated) {
       const projectInfo = await getProjectRedis(templateInfo.projectId)
@@ -45,7 +63,7 @@ export async function GET(req: NextRequest) {
       if (projectInfo.subscriptionData?.plan === 'free') {
         const projectOwnerUsage = await getUserUsage(projectInfo.ownerUserId)
         if (!projectOwnerUsage || projectOwnerUsage < FREE_IMAGES) {
-          await logTemplateUrlToListRedis(templateId, searchParams.toString())
+          await logTemplateUrlToListRedis(templateId, searchParamsString)
           await logUserUsage(projectInfo.ownerUserId)
         } else {
           return new Response(
@@ -56,7 +74,7 @@ export async function GET(req: NextRequest) {
       }
 
       if (projectInfo.subscriptionData?.plan === 'pro') {
-        await logTemplateUrlToListRedis(templateId, searchParams.toString())
+        await logTemplateUrlToListRedis(templateId, searchParamsString)
         await logProjectUsage(templateInfo.projectId)
       }
     }
@@ -105,7 +123,7 @@ export async function GET(req: NextRequest) {
                   key={layer.id}
                   style={{
                     display: layer.conditionalVisibility
-                      ? searchParams.get(
+                      ? getSearchParams(
                           layer.conditionalVisibilityVariableName
                         ) === 'true'
                         ? 'flex'
@@ -131,7 +149,7 @@ export async function GET(req: NextRequest) {
                     }}
                   >
                     {layer.conditionalValue
-                      ? searchParams.get(layer.conditionalValueVariableName) ??
+                      ? getSearchParams(layer.conditionalValueVariableName) ??
                         layer.exampleValue
                       : layer.value}
                   </p>
@@ -150,7 +168,7 @@ export async function GET(req: NextRequest) {
                   alt=""
                   src={
                     layer.conditionalValue
-                      ? searchParams.get(layer.conditionalValueVariableName) ??
+                      ? getSearchParams(layer.conditionalValueVariableName) ??
                         layer.exampleSrc
                       : layer.src
                   }
@@ -159,7 +177,7 @@ export async function GET(req: NextRequest) {
                   tw="items-center justify-center"
                   style={{
                     display: layer.conditionalVisibility
-                      ? searchParams.get(
+                      ? getSearchParams(
                           layer.conditionalVisibilityVariableName
                         ) === 'true'
                         ? 'flex'
@@ -185,7 +203,7 @@ export async function GET(req: NextRequest) {
                   tw="items-center justify-center"
                   style={{
                     display: layer.conditionalVisibility
-                      ? searchParams.get(
+                      ? getSearchParams(
                           layer.conditionalVisibilityVariableName
                         ) === 'true'
                         ? 'flex'

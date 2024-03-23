@@ -4,6 +4,7 @@ import { createProject } from '@/app/db/operations/projects'
 import {
   createTemplate,
   deleteTemplate,
+  getTemplateById,
   updateTemplate,
 } from '@/app/db/operations/templates'
 import { createUploadedImage } from '@/app/db/operations/uploaded_images'
@@ -81,6 +82,7 @@ export async function createTemplateAction({
     name,
     projectId,
     layersData,
+    canvasBackgroundColor: '#ffffff',
   })
 
   const createRedis = createOrUpdateTemplateRedis({
@@ -92,6 +94,43 @@ export async function createTemplateAction({
 
   await Promise.all([createPostgres, createRedis]).then(() => {
     redirect(`/${projectPathname}/templates/${newId}/edit`)
+  })
+}
+
+export async function duplicateTemplateAction({
+  templateToDuplicateId,
+  targetProjectId,
+  targetProjectPathname,
+}: {
+  templateToDuplicateId: string
+  targetProjectId: string
+  targetProjectPathname: string
+}) {
+  const templateToDuplicate = await getTemplateById(templateToDuplicateId)
+
+  const newId = uuidv4()
+
+  if (!templateToDuplicate) {
+    return
+  }
+
+  const createPostgres = await createTemplate({
+    id: newId,
+    name: templateToDuplicate?.name,
+    projectId: targetProjectId,
+    layersData: templateToDuplicate?.layersData,
+    canvasBackgroundColor: templateToDuplicate.canvasBackgroundColor,
+  })
+
+  const createRedis = createOrUpdateTemplateRedis({
+    templateId: newId,
+    layersData: templateToDuplicate?.layersData,
+    projectId: targetProjectId,
+    canvasBackgroundColor: templateToDuplicate.canvasBackgroundColor,
+  })
+
+  await Promise.all([createPostgres, createRedis]).then(() => {
+    redirect(`/${targetProjectPathname}/templates/${newId}/edit`)
   })
 }
 
@@ -114,6 +153,7 @@ export async function updateTemplateAction({
     id,
     name,
     layersData,
+    canvasBackgroundColor,
   })
 
   const updateRedis = createOrUpdateTemplateRedis({

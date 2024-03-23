@@ -48,10 +48,10 @@ export default function OverviewDashboard({
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {isLoadingTemplates ? (
-              <div className="h-14 animate-pulse rounded-md bg-accent duration-700" />
+              <div className="h-14 animate-pulse rounded-md bg-accent duration-1000" />
             ) : (
               <>
-                <div className="subtitle flex items-end justify-between">
+                <div className="second-title flex items-end justify-between">
                   <div className="flex items-center justify-start gap-2">
                     <span>{projectTemplates?.length}</span>
                     <span className="text-neutral-400 dark:text-neutral-500">
@@ -76,9 +76,9 @@ export default function OverviewDashboard({
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {isLoadingTemplates ? (
-              <div className="h-14 animate-pulse rounded-md bg-accent duration-700" />
+              <div className="h-14 animate-pulse rounded-md bg-accent duration-1000" />
             ) : (
-              <div className="marketing-subtitle flex h-14 items-center justify-start gap-2">
+              <div className="marketing-second-title flex h-14 items-center justify-start gap-2">
                 <span>{projectTemplates?.length}</span>
                 <span className="text-neutral-400 dark:text-neutral-500">
                   /
@@ -101,7 +101,7 @@ export default function OverviewDashboard({
                 .map((index) => (
                   <div
                     key={index}
-                    className="h-8 w-full animate-pulse rounded-sm bg-accent duration-700"
+                    className="h-8 w-full animate-pulse rounded-sm bg-accent duration-1000"
                   />
                 ))}
             </CardContent>
@@ -121,7 +121,7 @@ export default function OverviewDashboard({
                         .map((index) => (
                           <div
                             key={index}
-                            className="h-8 w-full animate-pulse rounded-sm bg-accent duration-700"
+                            className="h-8 w-full animate-pulse rounded-sm bg-accent duration-1000"
                           />
                         ))}
                     </>

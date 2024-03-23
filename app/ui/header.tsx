@@ -266,13 +266,15 @@ export default function Header({
                       </Button>
                     </SheetClose>
 
-                    <SheetClose asChild>
-                      <Button asChild>
-                        <Link href={authorizationUrl} className="mt-4 w-full">
-                          Get Started
-                        </Link>
-                      </Button>
-                    </SheetClose>
+                    {!user && (
+                      <SheetClose asChild>
+                        <Button asChild>
+                          <Link href={authorizationUrl} className="mt-4 w-full">
+                            Get Started
+                          </Link>
+                        </Button>
+                      </SheetClose>
+                    )}
                   </>
                 )}
               </div>

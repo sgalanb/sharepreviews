@@ -218,9 +218,7 @@ const getVariablesArray = (layers: LayerType[]) => {
 }
 
 export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
-  return `${
-    window.location.origin
-  }/api/images/generate/${template.id}?${getConditionalVisibilityVariables(
+  return `/api/images/generate/${template.id}?${getConditionalVisibilityVariables(
     JSON.parse(template.layersData)
   )
     .map((variable) => `${variable}=true`)
@@ -244,3 +242,11 @@ export async function downloadFont(url: string): Promise<ArrayBuffer> {
   )
   return fontData
 }
+
+// TODO: Encrypt and decrypt functions that also works in edge functions
+// export function encrypt(text: string, secret: string): string {
+// }
+
+// export function decrypt(encrypted: string, secret: string): string {
+
+// }

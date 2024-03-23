@@ -41,6 +41,7 @@ export type ProjectType = typeof projects.$inferInsert
 export const templates = pgTable('templates', {
   id: uuid('uuid').defaultRandom().primaryKey().notNull(),
   name: text('name').notNull(),
+  description: text('description'),
   projectId: uuid('project_id')
     .references(() => projects.id)
     .notNull(),

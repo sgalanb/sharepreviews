@@ -20,12 +20,16 @@ export default function VisualEditor({
 }) {
   const [template, setTemplate] = useState<TemplateType | undefined>(undefined)
 
+  const [canvasBackgroundColor, setCanvasBackgroundColor] = useState<string>('')
+
+  const [layers, setLayers] = useState<LayerType[]>([])
+
   const getTemplate = async () => {
     const res = await fetch(`/api/templates/${templateId}`)
     const data = await res.json()
     setTemplate(data)
+    setCanvasBackgroundColor(data.canvasBackgroundColor)
     setLayers(JSON.parse(data.layersData))
-    console.log(data)
   }
 
   useEffect(() => {
@@ -35,11 +39,6 @@ export default function VisualEditor({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const [canvasBackgroundColor, setCanvasBackgroundColor] =
-    useState<string>('#ffffff')
-
-  const [layers, setLayers] = useState<LayerType[]>([])
 
   const [selectedLayer, setSelectedLayer] = useState<LayerType | undefined>()
 
@@ -60,6 +59,7 @@ export default function VisualEditor({
         setSelectedLayer={setSelectedLayer}
         canvasBackgroundColor={canvasBackgroundColor}
         setCanvasBackgroundColor={setCanvasBackgroundColor}
+        isLoadingTemplate={!template}
       />
       {/* PREVIEW */}
       <VisualEditorPreview

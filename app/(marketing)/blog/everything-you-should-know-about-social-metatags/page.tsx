@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   return (
-    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4 lg:pt-8">
+    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-8 p-4 pt-8">
       <Link
         href="/blog"
         className="flex items-center justify-center text-muted-foreground"

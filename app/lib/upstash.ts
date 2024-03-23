@@ -39,7 +39,7 @@ export async function recordMetatags(url: string, error: boolean) {
 }
 
 // Projects
-type ProjectType = {
+type RedisProjectType = {
   id: string
   name: string
   pathname: string
@@ -108,7 +108,7 @@ export async function updateProjectSubscriptionRedis({
 
 export async function getProjectRedis(projectId: string) {
   return (await redis.json.get(`project:${projectId}`)) as
-    | ProjectType
+    | RedisProjectType
     | undefined
 }
 

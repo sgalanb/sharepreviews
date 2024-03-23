@@ -35,7 +35,7 @@ export default function VisualEditorHeader({
           {template?.name ? (
             <span className="">{template.name}</span>
           ) : (
-            <div className="w-20 animate-pulse rounded-full bg-accent duration-700" />
+            <div className="w-20 animate-pulse rounded-full bg-accent duration-1000" />
           )}
         </div>
         <form
