@@ -51,7 +51,7 @@ export default function NewLayerDialog({
     y: 265,
     rotation: 0,
     opacity: 1,
-    family: 'Inter Regular',
+    family: 'inter-regular',
     size: 48,
     lineHeight: 1,
     alignHorizontal: 'center',

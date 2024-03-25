@@ -42,6 +42,7 @@ import {
 } from '@/app/ui/components/Tooltip'
 import { UploadButton } from '@/app/ui/components/UploadThingComponents'
 import {
+  availableFonts,
   cn,
   getConditionalValueVariableName,
   getConditionalVisibilityVariableName,
@@ -84,49 +85,10 @@ export default function VisualEditorRightPanel({
   useEffect(() => {
     setFontsComboboxValue(
       selectedLayer?.type === 'text'
-        ? selectedLayer?.family.toLocaleLowerCase() || ''
+        ? selectedLayer?.family.toLowerCase() || ''
         : ''
     )
   }, [selectedLayer])
-
-  const availableFonts = [
-    {
-      value: 'inter thin',
-      label: 'Inter Thin',
-    },
-    {
-      value: 'inter extra light',
-      label: 'Inter Extra Light',
-    },
-    {
-      value: 'inter light',
-      label: 'Inter Light',
-    },
-    {
-      value: 'inter regular',
-      label: 'Inter Regular',
-    },
-    {
-      value: 'inter medium',
-      label: 'Inter Medium',
-    },
-    {
-      value: 'inter semi bold',
-      label: 'Inter Semi Bold',
-    },
-    {
-      value: 'inter bold',
-      label: 'Inter Bold',
-    },
-    {
-      value: 'inter extra bold',
-      label: 'Inter Extra Bold',
-    },
-    {
-      value: 'inter black',
-      label: 'Inter Black',
-    },
-  ]
 
   return (
     <div className="flex h-full w-full flex-col items-start justify-between overflow-hidden border-l">

@@ -218,7 +218,7 @@ const getVariablesArray = (layers: LayerType[]) => {
 }
 
 export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
-  return `/api/images/generate/${template.id}?${getConditionalVisibilityVariables(
+  return `/og/${template.id}?${getConditionalVisibilityVariables(
     JSON.parse(template.layersData)
   )
     .map((variable) => `${variable}=true`)
@@ -226,21 +226,11 @@ export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
 }
 
 export const getUrlWithVariables = (template: TemplateType) => {
-  return `${
-    window.location.origin
-  }/api/images/generate/${template.id}?${getVariablesArray(
+  return `${window.location.origin}/og/${template.id}?${getVariablesArray(
     JSON.parse(template.layersData)
   )
     .map((variable) => `${variable}={VALUE}`)
     .join('&')}`
-}
-
-// Fonts
-export async function downloadFont(url: string): Promise<ArrayBuffer> {
-  const fontData = await fetch(new URL(url, import.meta.url)).then((res) =>
-    res.arrayBuffer()
-  )
-  return fontData
 }
 
 // TODO: Encrypt and decrypt functions that also works in edge functions
@@ -250,3 +240,60 @@ export async function downloadFont(url: string): Promise<ArrayBuffer> {
 // export function decrypt(encrypted: string, secret: string): string {
 
 // }
+
+export const availableFonts = [
+  {
+    value: 'inter-thin',
+    label: 'Inter Thin',
+    weight: 100,
+    style: 'normal',
+  },
+  {
+    value: 'inter-extra-light',
+    label: 'Inter Extra Light',
+    weight: 200,
+    style: 'normal',
+  },
+  {
+    value: 'inter-light',
+    label: 'Inter Light',
+    weight: 300,
+    style: 'normal',
+  },
+  {
+    value: 'inter-regular',
+    label: 'Inter Regular',
+    weight: 400,
+    style: 'normal',
+  },
+  {
+    value: 'inter-medium',
+    label: 'Inter Medium',
+    weight: 500,
+    style: 'normal',
+  },
+  {
+    value: 'inter-semi-bold',
+    label: 'Inter Semi Bold',
+    weight: 600,
+    style: 'normal',
+  },
+  {
+    value: 'inter-bold',
+    label: 'Inter Bold',
+    weight: 700,
+    style: 'normal',
+  },
+  {
+    value: 'inter-extra-bold',
+    label: 'Inter Extra Bold',
+    weight: 800,
+    style: 'normal',
+  },
+  {
+    value: 'inter-black',
+    label: 'Inter Black',
+    weight: 900,
+    style: 'normal',
+  },
+]

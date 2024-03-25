@@ -2,7 +2,6 @@
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { Button } from '@/app/ui/components/Button'
-import { downloadFont } from '@/app/utils'
 import { Minus, Plus } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import satori from 'satori'
@@ -25,34 +24,6 @@ export default function VisualEditorPreview({
   const [preview, setPreview] = useState<string>()
 
   const generatePreview = async () => {
-    const interThin = await downloadFont(
-      'https://utfs.io/f/214b8ddf-2967-43c2-a8e6-a61a4d2c4e45-5nk5re.otf'
-    )
-    const interExtraLight = await downloadFont(
-      'https://utfs.io/f/c3e57e57-9bc3-4aa4-9e8f-be3449318044-rjtumh.otf'
-    )
-    const interLight = await downloadFont(
-      'https://utfs.io/f/903ba127-3d59-4c0d-ad78-2faa3c287517-x3r3c5.otf'
-    )
-    const interRegular = await downloadFont(
-      'https://utfs.io/f/93a8ed78-9aae-43a5-a66f-6f3e95923f56-6h2v6z.otf'
-    )
-    const interMedium = await downloadFont(
-      'https://utfs.io/f/23672c7f-ae6d-4a4e-937e-bc71e4324d72-w7jnpi.otf'
-    )
-    const interSemiBold = await downloadFont(
-      'https://utfs.io/f/e93c4078-56ee-4a0f-a8d3-82880b7391ca-j2ou90.otf'
-    )
-    const interBold = await downloadFont(
-      'https://utfs.io/f/e88c938c-49a8-47f5-92b5-a9d63d621c73-5n8t92.otf'
-    )
-    const interExtraBold = await downloadFont(
-      'https://utfs.io/f/76e9de6f-63a6-43bc-8237-eed53baa9269-v6nn44.otf'
-    )
-    const interBlack = await downloadFont(
-      'https://utfs.io/f/061a6245-d7c7-4bb0-8ccb-10ce431d0769-wyaxse.otf'
-    )
-
     const svg = await satori(
       <div
         tw="flex w-full h-full"
@@ -78,7 +49,8 @@ export default function VisualEditorPreview({
               >
                 <p
                   style={{
-                    fontFamily: layer.family,
+                    fontFamily: layer.family.replace(/-/g, ' '),
+                    fontWeight: 800,
                     fontSize: layer.size,
                     lineHeight: layer.lineHeight,
                     color: layer.color,
@@ -144,55 +116,73 @@ export default function VisualEditorPreview({
         fonts: [
           {
             name: 'Inter Thin',
-            data: interThin,
+            data: await fetch(
+              new URL('/assets/inter-thin.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 100,
             style: 'normal',
           },
           {
             name: 'Inter Extra Light',
-            data: interExtraLight,
+            data: await fetch(
+              new URL('/assets/inter-extra-light.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 200,
             style: 'normal',
           },
           {
             name: 'Inter Light',
-            data: interLight,
+            data: await fetch(
+              new URL('/assets/inter-light.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 300,
             style: 'normal',
           },
           {
             name: 'Inter Regular',
-            data: interRegular,
+            data: await fetch(
+              new URL('/assets/inter-regular.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 400,
             style: 'normal',
           },
           {
             name: 'Inter Medium',
-            data: interMedium,
+            data: await fetch(
+              new URL('/assets/inter-medium.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 500,
             style: 'normal',
           },
           {
             name: 'Inter Semi Bold',
-            data: interSemiBold,
+            data: await fetch(
+              new URL('/assets/inter-semi-bold.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 600,
             style: 'normal',
           },
           {
             name: 'Inter Bold',
-            data: interBold,
+            data: await fetch(
+              new URL('/assets/inter-bold.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 700,
             style: 'normal',
           },
           {
             name: 'Inter Extra Bold',
-            data: interExtraBold,
+            data: await fetch(
+              new URL('/assets/inter-extra-bold.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 800,
             style: 'normal',
           },
           {
             name: 'Inter Black',
-            data: interBlack,
+            data: await fetch(
+              new URL('/assets/inter-black.otf', import.meta.url)
+            ).then((res) => res.arrayBuffer() as any),
             weight: 900,
             style: 'normal',
           },
