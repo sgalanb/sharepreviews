@@ -69,8 +69,6 @@ export default function VisualEditorLeftPanel({
     })
   }
 
-  console.log(canvasBackgroundColor)
-
   return (
     <div
       className="flex h-full w-full flex-col items-start justify-between rounded-l-lg border-r"
@@ -79,7 +77,7 @@ export default function VisualEditorLeftPanel({
       }}
     >
       {/* LAYERS */}
-      <div className="flex h-12 w-full items-center justify-between pl-4 pr-2 pt-2">
+      <div className="flex h-14 w-full items-center justify-between py-2 pl-4 pr-2">
         <span className="text-lg font-semibold">Layers</span>
         <NewLayerDialog
           layers={layers}
@@ -93,145 +91,156 @@ export default function VisualEditorLeftPanel({
         />
       </div>
 
-      <DndContext
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToVerticalAxis]}
-      >
-        <SortableContext items={layers} strategy={verticalListSortingStrategy}>
-          {isLoadingTemplate ? (
-            <ScrollArea
-              key={'loading'}
-              className="flex h-96 w-full flex-col gap-0 px-2"
-            >
-              {Array(4)
-                .fill(0)
-                .map((index) => (
-                  <div
-                    key={index}
-                    className={`${index === 0 ? 'mb-2' : 'my-2'} h-10 w-full animate-pulse rounded-sm bg-muted duration-1000`}
+      <ScrollArea className="flex h-[calc(100dvh-381px)] w-full flex-col items-center justify-start gap-0 px-2">
+        <DndContext
+          onDragEnd={handleDragEnd}
+          modifiers={[restrictToVerticalAxis]}
+        >
+          <SortableContext
+            items={layers}
+            strategy={verticalListSortingStrategy}
+          >
+            {isLoadingTemplate ? (
+              <>
+                {Array(4)
+                  .fill(0)
+                  .map((index) => (
+                    <div
+                      key={index}
+                      className={`${index === 0 ? 'mb-2' : 'my-2'} h-10 w-full animate-pulse rounded-sm bg-muted duration-1000`}
+                    />
+                  ))}
+              </>
+            ) : (
+              <>
+                {layers.length === 0 ? (
+                  <div className="flex h-[calc(100dvh-381px)] items-center justify-center">
+                    <NewLayerDialog
+                      layers={layers}
+                      setLayers={setLayers}
+                      setSelectedLayer={setSelectedLayer}
+                      trigger={
+                        <Button variant="outline" className="flex gap-2">
+                          Add first layer
+                          <Plus className="h-5 w-5" />
+                        </Button>
+                      }
+                    />
+                  </div>
+                ) : (
+                  <>
+                    {layers.map((layer) => (
+                      <Layer
+                        key={layer.id}
+                        layer={layer}
+                        layers={layers}
+                        setLayers={setLayers}
+                        selected={layer.id === selectedLayer?.id}
+                        setSelectedLayer={setSelectedLayer}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </SortableContext>
+        </DndContext>
+      </ScrollArea>
+      <div className="flex h-64 w-full flex-col">
+        {/* VARIABLES */}
+        <div className="h-36 w-full">
+          <Separator />
+          <div className="flex h-full w-full flex-col items-start justify-start gap-2 pb-[1px] pt-4">
+            <div className="flex h-8 w-full items-center justify-start gap-2 px-4">
+              <span className="text-lg font-semibold">Variables</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4" />
+                  </TooltipTrigger>
+                  <TooltipContent
+                    className="w-64"
+                    align="start"
+                    alignOffset={-96}
+                  >
+                    <span className="font-normal">
+                      Variables are used to{' '}
+                      <strong>change the content of the layers</strong> or to{' '}
+                      <strong>show/hide them</strong>. <br /> Variables are
+                      passed to the template via the{' '}
+                      <strong>template URL</strong>. You will get the template
+                      URL after saving.
+                    </span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <ScrollArea className="flex h-full w-full px-4">
+              {layers
+                .filter((layer) => layer.conditionalVisibility)
+                // order by id
+                .sort((a, b) => a.id.localeCompare(b.id))
+                .map((layer) => (
+                  <VariablesElement
+                    key={layer.id}
+                    layer={layer}
+                    setSelectedLayer={setSelectedLayer}
+                    visibilityVariable
+                  />
+                ))}
+              {layers
+                .filter(
+                  (layer) =>
+                    layer.type !== 'rectangle' && layer.conditionalValue
+                )
+                .map((layer) => (
+                  <VariablesElement
+                    key={layer.id}
+                    layer={layer}
+                    setSelectedLayer={setSelectedLayer}
                   />
                 ))}
             </ScrollArea>
-          ) : (
-            <>
-              {layers.length === 0 ? (
-                <div className="flex h-96 w-full items-center justify-center">
-                  <NewLayerDialog
-                    layers={layers}
-                    setLayers={setLayers}
-                    setSelectedLayer={setSelectedLayer}
-                    trigger={
-                      <Button variant="outline" className="flex gap-2">
-                        Add first layer
-                        <Plus className="h-5 w-5" />
-                      </Button>
-                    }
-                  />
-                </div>
-              ) : (
-                <ScrollArea className="flex h-96 w-full flex-col gap-0 px-2">
-                  {layers.map((layer, index) => (
-                    <Layer
-                      key={layer.id}
-                      layer={layer}
-                      layers={layers}
-                      setLayers={setLayers}
-                      selected={layer.id === selectedLayer?.id}
-                      setSelectedLayer={setSelectedLayer}
-                    />
-                  ))}
-                </ScrollArea>
-              )}
-            </>
-          )}
-        </SortableContext>
-      </DndContext>
-      {/* VARIABLES */}
-      <div className="flex h-48 w-full flex-col items-start justify-start gap-2 pb-2">
-        <Separator />
-
-        <div className="flex w-full items-center justify-start gap-2 px-4 pt-3">
-          <span className="text-lg font-semibold">Variables</span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Info className="h-4 w-4" />
-              </TooltipTrigger>
-              <TooltipContent className="w-64" align="start" alignOffset={-96}>
-                <span className="font-normal">
-                  Variables are used to{' '}
-                  <strong>change the content of the layers</strong> or to{' '}
-                  <strong>show/hide them</strong>. <br /> Variables are passed
-                  to the template via the <strong>template URL</strong>. You
-                  will get the template URL after saving.
-                </span>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        <ScrollArea className="flex h-40 w-full px-4">
-          {layers
-            .filter((layer) => layer.conditionalVisibility)
-            // order by id
-            .sort((a, b) => a.id.localeCompare(b.id))
-            .map((layer) => (
-              <VariablesElement
-                key={layer.id}
-                layer={layer}
-                setSelectedLayer={setSelectedLayer}
-                visibilityVariable
-              />
-            ))}
-          {layers
-            .filter(
-              (layer) => layer.type !== 'rectangle' && layer.conditionalValue
-            )
-            .map((layer) => (
-              <VariablesElement
-                key={layer.id}
-                layer={layer}
-                setSelectedLayer={setSelectedLayer}
-              />
-            ))}
-        </ScrollArea>
-      </div>
-      {/* BACKGROUND */}
-      <div className="h-28 w-full">
-        <Separator />
-        <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
-          <div className="flex h-8 w-full items-center justify-start gap-2">
-            <span className="text-lg font-semibold">Background</span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Info className="h-4 w-4" />
-                </TooltipTrigger>
-                <TooltipContent className="w-64">
-                  <span className="font-normal">
-                    For more complex backgrounds you can add a full size{' '}
-                    <strong>image layer</strong> and drag it to the bottom of
-                    the layers list.
-                  </span>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
           </div>
-          <div className="grid w-full grid-cols-2 items-center gap-2">
-            <Input
-              type="color"
-              id="background-color"
-              value={canvasBackgroundColor}
-              onChange={(e) => setCanvasBackgroundColor(e.target.value)}
-              leftLabel={
-                <Label
-                  htmlFor="background-color"
-                  className="w-10 text-center text-muted-foreground"
-                >
-                  Color
-                </Label>
-              }
-              className="py-1.5 pl-16"
-            />
+        </div>
+        {/* BACKGROUND */}
+        <div className="h-28 w-full">
+          <Separator />
+          <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
+            <div className="flex h-8 w-full items-center justify-start gap-2">
+              <span className="text-lg font-semibold">Background</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4" />
+                  </TooltipTrigger>
+                  <TooltipContent className="w-64">
+                    <span className="font-normal">
+                      For more complex backgrounds you can add a full size{' '}
+                      <strong>image layer</strong> and drag it to the bottom of
+                      the layers list.
+                    </span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="grid w-full grid-cols-2 items-center gap-2">
+              <Input
+                type="color"
+                id="background-color"
+                value={canvasBackgroundColor}
+                onChange={(e) => setCanvasBackgroundColor(e.target.value)}
+                leftLabel={
+                  <Label
+                    htmlFor="background-color"
+                    className="w-10 text-center text-muted-foreground"
+                  >
+                    Color
+                  </Label>
+                }
+                className="py-1.5 pl-16"
+              />
+            </div>
           </div>
         </div>
       </div>
