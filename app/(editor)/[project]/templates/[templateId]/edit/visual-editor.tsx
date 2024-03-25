@@ -19,6 +19,9 @@ export default function VisualEditor({
   templateId: string
 }) {
   const [template, setTemplate] = useState<TemplateType | undefined>(undefined)
+  const [originalTemplate, setOriginalTemplate] = useState<
+    TemplateType | undefined
+  >(undefined)
 
   const [canvasBackgroundColor, setCanvasBackgroundColor] = useState<string>('')
 
@@ -28,6 +31,7 @@ export default function VisualEditor({
     const res = await fetch(`/api/templates/${templateId}`)
     const data = await res.json()
     setTemplate(data)
+    setOriginalTemplate(data)
     setCanvasBackgroundColor(data.canvasBackgroundColor)
     setLayers(JSON.parse(data.layersData))
   }
@@ -50,6 +54,7 @@ export default function VisualEditor({
         project={project}
         template={template}
         canvasBackgroundColor={canvasBackgroundColor}
+        originalTemplate={originalTemplate}
       />
       {/* LEFT PANEL */}
       <VisualEditorLeftPanel
@@ -73,6 +78,8 @@ export default function VisualEditor({
       {/* RIGHT PANEL */}
       <VisualEditorRightPanel
         userId={userId}
+        template={template}
+        setTemplate={setTemplate}
         layers={layers}
         setLayers={setLayers}
         selectedLayer={selectedLayer}

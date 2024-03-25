@@ -29,6 +29,7 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import {
+  CopyPlus,
   GripHorizontal,
   Image,
   Info,
@@ -72,110 +73,103 @@ export default function VisualEditorLeftPanel({
 
   return (
     <div
-      className="flex w-full flex-col items-start justify-between rounded-l-lg border-r"
+      className="flex h-full w-full flex-col items-start justify-between rounded-l-lg border-r"
       onClick={() => {
         selectedLayer && setSelectedLayer(undefined)
       }}
     >
       {/* LAYERS */}
-      <div className="flex h-full w-full flex-col items-start justify-start gap-2">
-        <div className="flex h-12 w-full items-center justify-between pl-4 pr-2 pt-2">
-          <span className="text-lg font-semibold">Layers</span>
-          <NewLayerDialog
-            layers={layers}
-            setLayers={setLayers}
-            setSelectedLayer={setSelectedLayer}
-            trigger={
-              <Button variant="ghost" className="aspect-square w-10 p-0">
-                <Plus className="h-5 w-5" />
-              </Button>
-            }
-          />
-        </div>
-        <DndContext
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis]}
-        >
-          <SortableContext
-            items={layers}
-            strategy={verticalListSortingStrategy}
-          >
-            {isLoadingTemplate ? (
-              <ScrollArea
-                key={'loading'}
-                className="flex h-full w-full flex-col gap-0 px-2"
-              >
-                {Array(4)
-                  .fill(0)
-                  .map((index) => (
-                    <div
-                      key={index}
-                      className={`${index === 0 ? 'mb-2' : 'my-2'} h-10 w-full animate-pulse rounded-sm bg-muted duration-1000`}
-                    />
-                  ))}
-              </ScrollArea>
-            ) : (
-              <>
-                {layers.length === 0 ? (
-                  <div className="flex h-full w-full items-center justify-center">
-                    <NewLayerDialog
+      <div className="flex h-12 w-full items-center justify-between pl-4 pr-2 pt-2">
+        <span className="text-lg font-semibold">Layers</span>
+        <NewLayerDialog
+          layers={layers}
+          setLayers={setLayers}
+          setSelectedLayer={setSelectedLayer}
+          trigger={
+            <Button variant="ghost" className="aspect-square w-10 p-0">
+              <Plus className="h-5 w-5" />
+            </Button>
+          }
+        />
+      </div>
+
+      <DndContext
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToVerticalAxis]}
+      >
+        <SortableContext items={layers} strategy={verticalListSortingStrategy}>
+          {isLoadingTemplate ? (
+            <ScrollArea
+              key={'loading'}
+              className="flex h-96 w-full flex-col gap-0 px-2"
+            >
+              {Array(4)
+                .fill(0)
+                .map((index) => (
+                  <div
+                    key={index}
+                    className={`${index === 0 ? 'mb-2' : 'my-2'} h-10 w-full animate-pulse rounded-sm bg-muted duration-1000`}
+                  />
+                ))}
+            </ScrollArea>
+          ) : (
+            <>
+              {layers.length === 0 ? (
+                <div className="flex h-96 w-full items-center justify-center">
+                  <NewLayerDialog
+                    layers={layers}
+                    setLayers={setLayers}
+                    setSelectedLayer={setSelectedLayer}
+                    trigger={
+                      <Button variant="outline" className="flex gap-2">
+                        Add first layer
+                        <Plus className="h-5 w-5" />
+                      </Button>
+                    }
+                  />
+                </div>
+              ) : (
+                <ScrollArea className="flex h-96 w-full flex-col gap-0 px-2">
+                  {layers.map((layer, index) => (
+                    <Layer
+                      key={layer.id}
+                      layer={layer}
                       layers={layers}
                       setLayers={setLayers}
+                      selected={layer.id === selectedLayer?.id}
                       setSelectedLayer={setSelectedLayer}
-                      trigger={
-                        <Button variant="outline" className="flex gap-2">
-                          Add first layer
-                          <Plus className="h-5 w-5" />
-                        </Button>
-                      }
                     />
-                  </div>
-                ) : (
-                  <ScrollArea className="flex h-full w-full flex-col gap-0 px-2">
-                    {layers.map((layer, index) => (
-                      <Layer
-                        key={layer.id}
-                        layer={layer}
-                        layers={layers}
-                        setLayers={setLayers}
-                        selected={layer.id === selectedLayer?.id}
-                        setSelectedLayer={setSelectedLayer}
-                      />
-                    ))}
-                  </ScrollArea>
-                )}
-              </>
-            )}
-          </SortableContext>
-        </DndContext>
-      </div>
+                  ))}
+                </ScrollArea>
+              )}
+            </>
+          )}
+        </SortableContext>
+      </DndContext>
       {/* VARIABLES */}
-      <div className="w-full">
+      <div className="flex h-48 w-full flex-col items-start justify-start gap-2 pb-2">
         <Separator />
-        <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
-          <div className="flex h-8 w-full items-center justify-start gap-2">
-            <span className="text-lg font-semibold">Variables</span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Info className="h-4 w-4" />
-                </TooltipTrigger>
-                <TooltipContent
-                  className="w-64"
-                  align="start"
-                  alignOffset={-96}
-                >
-                  <span className="font-normal">
-                    Variables are used to{' '}
-                    <strong>change the content of the layers</strong> or to{' '}
-                    <strong>show/hide them</strong>. <br /> Variables are passed
-                    to the template via the <strong>template URL</strong>. You
-                    will get the template URL after saving.
-                  </span>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+
+        <div className="flex w-full items-center justify-start gap-2 px-4 pt-3">
+          <span className="text-lg font-semibold">Variables</span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-4 w-4" />
+              </TooltipTrigger>
+              <TooltipContent className="w-64" align="start" alignOffset={-96}>
+                <span className="font-normal">
+                  Variables are used to{' '}
+                  <strong>change the content of the layers</strong> or to{' '}
+                  <strong>show/hide them</strong>. <br /> Variables are passed
+                  to the template via the <strong>template URL</strong>. You
+                  will get the template URL after saving.
+                </span>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <ScrollArea className="flex h-40 w-full px-4">
           {layers
             .filter((layer) => layer.conditionalVisibility)
             // order by id
@@ -199,10 +193,10 @@ export default function VisualEditorLeftPanel({
                 setSelectedLayer={setSelectedLayer}
               />
             ))}
-        </div>
+        </ScrollArea>
       </div>
       {/* BACKGROUND */}
-      <div className="w-full">
+      <div className="h-28 w-full">
         <Separator />
         <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
           <div className="flex h-8 w-full items-center justify-start gap-2">
@@ -297,7 +291,7 @@ const Layer = ({
               selected
                 ? 'stroke-foreground'
                 : 'stroke-neutral-300 dark:stroke-secondary'
-            } h-5 w-5`}
+            } h-5 w-5 shrink-0`}
           />
         ) : layer.type === 'image' ? (
           // eslint-disable-next-line jsx-a11y/alt-text
@@ -306,7 +300,7 @@ const Layer = ({
               selected
                 ? 'stroke-foreground'
                 : 'stroke-neutral-300 dark:stroke-secondary'
-            } h-5 w-5`}
+            } h-5 w-5 shrink-0`}
           />
         ) : (
           layer.type === 'rectangle' && (
@@ -315,39 +309,71 @@ const Layer = ({
                 selected
                   ? 'stroke-foreground'
                   : 'stroke-neutral-300 dark:stroke-secondary'
-              } h-5 w-5`}
+              } h-5 w-5 shrink-0`}
             />
           )
         )}
-        <span className="text-sm">{layer.name}</span>
+        <span className="line-clamp-1 text-sm">{layer.name}</span>
       </div>
-      <div className="flex">
-        <DeleteLayerDialog
-          trigger={
-            <Button
-              variant="ghost"
-              className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200`}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          }
-          layers={layers}
-          setLayers={setLayers}
-          selectedLayer={layer}
-          setSelectedLayer={setSelectedLayer}
-        />
+      <TooltipProvider>
+        <div className="flex">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200 dark:hover:bg-neutral-600`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // duplicate layer
+                  setLayers([
+                    ...layers,
+                    {
+                      ...layer,
+                      id: `${layer.id}-copy`,
+                      name: `${layer.name} copy`,
+                    },
+                  ])
+                  setSelectedLayer({
+                    ...layer,
+                    id: `${layer.id}-copy`,
+                    name: `${layer.name} copy`,
+                  })
+                }}
+              >
+                <CopyPlus className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="font-normal">Duplicate layer</span>
+            </TooltipContent>
+          </Tooltip>
+          <DeleteLayerDialog
+            trigger={
+              <Button
+                variant="ghost"
+                className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200 dark:hover:bg-neutral-600`}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            }
+            layers={layers}
+            setLayers={setLayers}
+            selectedLayer={layer}
+            setSelectedLayer={setSelectedLayer}
+          />
 
-        <Button
-          {...attributes}
-          {...listeners}
-          variant="ghost"
-          className={`${selected ? 'hover:bg-neutral-200' : ''} ${
-            isDragging ? 'cursor-grabbing ' : 'cursor-grab'
-          } aspect-square h-8 p-0`}
-        >
-          <GripHorizontal className="h-4 w-4" />
-        </Button>
-      </div>
+          <Button
+            {...attributes}
+            {...listeners}
+            variant="ghost"
+            className={`${selected ? 'hover:bg-neutral-200 dark:hover:bg-neutral-600' : ''} ${
+              isDragging ? 'cursor-grabbing ' : 'cursor-grab'
+            } aspect-square h-8 p-0`}
+          >
+            <GripHorizontal className="h-4 w-4" />
+          </Button>
+        </div>
+      </TooltipProvider>
     </div>
   )
 }
@@ -364,7 +390,7 @@ const VariablesElement = ({
   return (
     <div
       key={layer.id}
-      className="rounded-sm bg-accent px-2 py-1.5"
+      className="mb-2 rounded-sm bg-accent px-2 py-1.5"
       onClick={(e) => {
         e.stopPropagation()
         setSelectedLayer(layer)

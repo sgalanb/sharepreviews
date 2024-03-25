@@ -60,6 +60,7 @@ export async function updateTemplate({
       name: name,
       layersData: layersData,
       updatedAt: new Date(),
+      canvasBackgroundColor: canvasBackgroundColor,
     })
     .where(eq(templates.id, id))
 }

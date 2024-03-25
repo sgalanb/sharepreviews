@@ -14,11 +14,13 @@ export default function VisualEditorHeader({
   canvasBackgroundColor,
   project,
   template,
+  originalTemplate,
 }: {
   layers: LayerType[]
   canvasBackgroundColor: string
   project: ProjectType
   template: TemplateType | undefined
+  originalTemplate: TemplateType | undefined
 }) {
   return (
     <div className="col-span-3 flex w-full flex-col items-center justify-start gap-2 rounded-t-lg">
@@ -59,6 +61,7 @@ export default function VisualEditorHeader({
         >
           <SaveButton
             template={template}
+            originalTemplate={originalTemplate}
             layers={layers}
             canvasBackgroundColor={canvasBackgroundColor}
           />
@@ -70,10 +73,12 @@ export default function VisualEditorHeader({
 
 function SaveButton({
   template,
+  originalTemplate,
   layers,
   canvasBackgroundColor,
 }: {
   template: TemplateType | undefined
+  originalTemplate: TemplateType | undefined
   layers: LayerType[]
   canvasBackgroundColor: string
 }) {
@@ -87,7 +92,8 @@ function SaveButton({
       disabled={
         !template?.id ||
         (JSON.stringify(layers) === template?.layersData &&
-          canvasBackgroundColor === template?.canvasBackgroundColor) ||
+          canvasBackgroundColor === template?.canvasBackgroundColor &&
+          originalTemplate?.name === template?.name) ||
         pending
       }
     >

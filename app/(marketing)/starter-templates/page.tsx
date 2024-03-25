@@ -56,8 +56,9 @@ export default async function StarterTemplatesPage() {
       <div className="flex w-full flex-col items-center justify-start gap-4">
         <h1 className="marketing-title">Starter Templates</h1>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
-          A curated collection of dynamic card images templates. Use them as
-          starter templates for your own projects.
+          A curated collection of dynamic card images made with{' '}
+          <span className="text-primary">sharepreviews</span>. You can use them
+          as starter templates for your own projects.
         </p>
       </div>
       <Tabs

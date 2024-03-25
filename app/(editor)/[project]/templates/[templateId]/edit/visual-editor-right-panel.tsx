@@ -2,6 +2,7 @@
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { createUploadedImageAction } from '@/app/actions/actions'
+import { TemplateType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
 import {
   Command,
@@ -62,12 +63,16 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 export default function VisualEditorRightPanel({
   userId,
+  template,
+  setTemplate,
   layers,
   setLayers,
   selectedLayer,
   setSelectedLayer,
 }: {
   userId: string
+  template: TemplateType | undefined
+  setTemplate: Dispatch<SetStateAction<TemplateType | undefined>>
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
   selectedLayer?: LayerType
@@ -125,7 +130,7 @@ export default function VisualEditorRightPanel({
 
   return (
     <div className="flex h-full w-full flex-col items-start justify-between overflow-hidden border-l">
-      {selectedLayer && (
+      {selectedLayer ? (
         <ScrollArea
           key={selectedLayer.id} // Force the component to re-render when the selected layer changes
           className="flex h-full w-full flex-col items-start justify-start"
@@ -488,6 +493,36 @@ export default function VisualEditorRightPanel({
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                )}
+                {selectedLayer.type === 'rectangle' && (
+                  <Input
+                    id="color"
+                    type="color"
+                    defaultValue={selectedLayer.color}
+                    onChange={(e) => {
+                      if (e.target.value === '') return
+                      setSelectedLayer({
+                        ...selectedLayer,
+                        color: e.target.value,
+                      })
+                      setLayers(
+                        layers.map((layer) =>
+                          layer.id === selectedLayer.id
+                            ? { ...layer, color: e.target.value }
+                            : layer
+                        )
+                      )
+                    }}
+                    leftLabel={
+                      <Label
+                        htmlFor="fill-color"
+                        className="w-6 text-center text-muted-foreground"
+                      >
+                        Fill
+                      </Label>
+                    }
+                    className="py-1.5 pl-12"
+                  />
                 )}
               </TooltipProvider>
             </div>
@@ -1020,7 +1055,7 @@ export default function VisualEditorRightPanel({
                     }}
                     leftLabel={
                       <Label
-                        htmlFor="background-color"
+                        htmlFor="fill-color"
                         className="w-6 text-center text-muted-foreground"
                       >
                         Fill
@@ -1032,7 +1067,6 @@ export default function VisualEditorRightPanel({
               </div>
             </>
           )}
-
           {/* CONDITIONAL VISIBILITY */}
           <>
             <Separator />
@@ -1091,6 +1125,72 @@ export default function VisualEditorRightPanel({
               </TabsContent>
             </Tabs>
           </>
+        </ScrollArea>
+      ) : (
+        <ScrollArea className="flex h-full w-full flex-col items-start justify-start">
+          {/* PROPERTIES */}
+          <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
+            <span className="h-8 text-lg font-semibold">Template</span>
+            <div className="grid w-full grid-cols-2 items-center gap-2">
+              {template && (
+                <>
+                  <Input
+                    id="name"
+                    type="text"
+                    defaultValue={template?.name}
+                    onChange={(e) => {
+                      setTemplate({
+                        ...template,
+                        name: e.target.value,
+                      })
+                    }}
+                    leftLabel={
+                      <Label
+                        htmlFor="name"
+                        className="w-[2.75rem] text-center text-muted-foreground"
+                      >
+                        Name
+                      </Label>
+                    }
+                    className="py-1.5 pl-[4.25rem]"
+                    containerClassName="col-span-2"
+                  />
+                  <Input
+                    id="width"
+                    type="text"
+                    value="1200px"
+                    disabled
+                    leftLabel={
+                      <Label
+                        htmlFor="width"
+                        className="w-[2.75rem] text-center text-muted-foreground"
+                      >
+                        Width
+                      </Label>
+                    }
+                    className="py-1.5 pl-[4.25rem]"
+                    containerClassName="col-span-2"
+                  />
+                  <Input
+                    id="height"
+                    type="text"
+                    value="630px"
+                    disabled
+                    leftLabel={
+                      <Label
+                        htmlFor="height"
+                        className="w-[2.75rem] text-center text-muted-foreground"
+                      >
+                        Height
+                      </Label>
+                    }
+                    className="py-1.5 pl-[4.25rem]"
+                    containerClassName="col-span-2"
+                  />
+                </>
+              )}
+            </div>
+          </div>
         </ScrollArea>
       )}
     </div>

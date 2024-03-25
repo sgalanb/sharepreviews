@@ -209,14 +209,14 @@ export default function Header({
                     <SheetClose asChild>
                       <Button variant="ghost" asChild>
                         <Link
-                          href="/card-validator"
+                          href="/about"
                           className={`${
-                            pathname.startsWith('/card-validator')
+                            pathname.startsWith('/about')
                               ? 'bg-accent text-accent-foreground'
                               : ''
                           } w-full !justify-start`}
                         >
-                          Card Validator
+                          About
                         </Link>
                       </Button>
                     </SheetClose>
@@ -232,6 +232,21 @@ export default function Header({
                           } w-full !justify-start`}
                         >
                           Starter Templates
+                        </Link>
+                      </Button>
+                    </SheetClose>
+
+                    <SheetClose asChild>
+                      <Button variant="ghost" asChild>
+                        <Link
+                          href="/card-validator"
+                          className={`${
+                            pathname.startsWith('/card-validator')
+                              ? 'bg-accent text-accent-foreground'
+                              : ''
+                          } w-full !justify-start`}
+                        >
+                          Card Validator
                         </Link>
                       </Button>
                     </SheetClose>
@@ -647,7 +662,7 @@ export default function Header({
             <div className="hidden w-full items-center justify-between p-4 lg:flex">
               <Link
                 href="/home"
-                className="flex items-center justify-center gap-2"
+                className={`${user ? 'w-24' : 'w-[165.75px]'} flex items-center justify-start gap-2`}
               >
                 <Image
                   src="/icon.svg"
@@ -660,11 +675,11 @@ export default function Header({
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <Link href="/card-validator" legacyBehavior passHref>
+                    <Link href="/about" legacyBehavior passHref>
                       <NavigationMenuLink
                         className={navigationMenuTriggerStyle()}
                       >
-                        Card Validator
+                        About
                       </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
@@ -674,6 +689,15 @@ export default function Header({
                         className={navigationMenuTriggerStyle()}
                       >
                         Starter Templates
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <Link href="/card-validator" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        Card Validator
                       </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
