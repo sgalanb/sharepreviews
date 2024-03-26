@@ -1,8 +1,10 @@
 import AddTemplateToProjectButton from '@/app/(marketing)/starter-templates/[templateId]/AddTemplateToProjectButton'
+import GetTestUrlButton from '@/app/(marketing)/starter-templates/[templateId]/GetTestUrlButton'
 import { getUserProjects } from '@/app/db/operations/projects'
 import { getTemplateById } from '@/app/db/operations/templates'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
+
 import { getUrlWithConditionalVariablesTrue } from '@/app/utils'
 import { ChevronLeft } from 'lucide-react'
 import Image from 'next/image'
@@ -19,6 +21,7 @@ export default async function StarterTemplatePage({
   const userProjects = await getUserProjects(user?.id ?? '')
 
   const selectedTemplate = await getTemplateById(params.templateId)
+
   return (
     <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-8 p-4 pt-8">
       <Link
@@ -51,18 +54,23 @@ export default async function StarterTemplatePage({
                 </span>
               </div>
             </div>
-            {user ? (
-              <AddTemplateToProjectButton
-                userProjects={userProjects}
-                templateId={selectedTemplate?.id as string}
-              />
-            ) : (
-              <Button asChild>
-                <Link href={authorizationUrl} className="mt-4 w-full">
-                  Get Started
-                </Link>
-              </Button>
-            )}
+            <div className="flex w-full flex-col gap-2">
+              {user ? (
+                <AddTemplateToProjectButton
+                  userProjects={userProjects}
+                  templateId={selectedTemplate?.id as string}
+                />
+              ) : (
+                <Button asChild>
+                  <Link href={authorizationUrl} className="mt-4 w-full">
+                    Use template
+                  </Link>
+                </Button>
+              )}
+              {selectedTemplate && (
+                <GetTestUrlButton template={selectedTemplate} />
+              )}
+            </div>
           </div>
         </div>
         {selectedTemplate && (
