@@ -323,7 +323,8 @@ export default function VisualEditorPreview({
         <Button
           variant="secondary"
           className="px-3 hover:bg-neutral-300"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             handleManualZoom(scale - 0.25)
           }}
         >
@@ -333,7 +334,8 @@ export default function VisualEditorPreview({
         <Button
           variant="secondary"
           className="px-3 hover:bg-neutral-300"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             handleManualZoom(scale + 0.25)
           }}
         >
