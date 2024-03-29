@@ -1,3 +1,4 @@
+import Footer from '@/app/(marketing)/footer'
 import SelectedTemplates from '@/app/(marketing)/starter-templates/selected-templates'
 import { getTemplateByArrayOfIds } from '@/app/db/operations/templates'
 import {
@@ -52,7 +53,7 @@ export default async function StarterTemplatesPage() {
   })
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-4 p-4 pt-8 lg:gap-8">
+    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-4 px-4 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
         <h1 className="marketing-title">Starter Templates</h1>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
@@ -127,6 +128,7 @@ export default async function StarterTemplatesPage() {
           </TabsContent>
         </div>
       </Tabs>
+      <Footer />
     </div>
   )
 }

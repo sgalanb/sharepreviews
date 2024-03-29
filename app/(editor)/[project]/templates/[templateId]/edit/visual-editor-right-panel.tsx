@@ -584,16 +584,16 @@ export default function VisualEditorRightPanel({
                       leftLabel={
                         <Label
                           htmlFor="exampleValue"
-                          className="w-24 text-center text-muted-foreground"
+                          className="w-20 text-center text-muted-foreground"
                         >
-                          Example text
+                          Placeholder
                         </Label>
                       }
-                      className="w-full pl-[7.5rem]"
+                      className="w-full pl-[6.5rem]"
                     />
                     <span className="text-sm text-muted-foreground">
-                      This text will be used in previews and when no variable is
-                      provided.
+                      This text will be used in previews and as a default when
+                      no variable is provided.
                     </span>
                   </div>
                 </TabsContent>

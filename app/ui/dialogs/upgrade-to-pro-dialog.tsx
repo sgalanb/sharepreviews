@@ -81,9 +81,8 @@ export default function UpgradeToProDialog({
                         <Info className="h-4 w-4 stroke-muted-foreground" />
                       </TooltipTrigger>
                       <TooltipContent className="w-64 text-center">
-                        Already generated images are not counted. Once this
-                        limit has been reached, you will be charged $24 per
-                        additional 5,000 images.
+                        Once the limit has been reached, you will be charged $24
+                        per additional 5,000 images.
                       </TooltipContent>
                     </Tooltip>
                   </div>
@@ -105,14 +104,14 @@ export default function UpgradeToProDialog({
               </TooltipProvider>
             </div>
             <UpgradeButton />
-            <Link
-              href="/contact"
-              target="_blank"
-              className="w-full text-center text-muted-foreground underline-offset-2 hover:underline"
-            >
-              Need custom solutions? Contact us.
-            </Link>
           </Card>
+          <Link
+            href="/contact"
+            target="_blank"
+            className="w-full text-center text-muted-foreground underline-offset-2 hover:underline"
+          >
+            Need custom solutions? Contact us.
+          </Link>
         </form>
       </DialogContent>
     </Dialog>

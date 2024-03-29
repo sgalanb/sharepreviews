@@ -194,20 +194,31 @@ export default function PreviewValidator({
       <motion.div
         className={`${
           isApp
-            ? 'min-h-[calc(100dvh-18px)] lg:p-12'
+            ? 'min-h-[calc(100dvh-18px)] p-4 lg:p-12'
             : 'min-h-[calc(100dvh-72px)]'
-        } flex w-full max-w-7xl flex-col items-start justify-start gap-4 p-4`}
+        } flex w-full max-w-7xl flex-col items-start justify-start gap-4`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <Link
-          href={isApp ? `/${projectPathname}/validator` : '/card-validator'}
-          className="flex items-center justify-center text-muted-foreground"
-        >
-          <ChevronLeft className="ml-[-4px]" />
-          <span className="self-center text-sm">Back</span>
-        </Link>
+        {isApp && (
+          <Link
+            href={isApp ? `/${projectPathname}/validator` : '/card-validator'}
+            className="flex items-center justify-center text-muted-foreground"
+          >
+            <ChevronLeft className="ml-[-4px]" />
+            <span className="self-center text-sm">Back</span>
+          </Link>
+        )}
+        <div className="flex w-full flex-col items-center justify-start gap-4 py-8">
+          <h1 className="marketing-title text-balance text-center">
+            Preview Card Validator
+          </h1>
+          <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
+            Check how your links look when shared. Validate that you have the
+            right metatags configured so your images are displayed correctly.
+          </p>
+        </div>
         <div className="mb-4 flex w-full items-center justify-between">
           <h1 className="title line-clamp-4 break-all">
             {titleUrl || 'Preview Card Validator'}
@@ -412,126 +423,100 @@ export default function PreviewValidator({
                             </TableRow>
                           </TableHeader>
                           <TableBody>
-                            {Object.entries(metatags).map(
-                              ([key, item]: [string, ValidatedMetatagType]) => (
-                                <>
-                                  <TableRow
-                                    key={key}
-                                    className={`${
-                                      item.errors.length > 0 ||
-                                      item.warnings.length > 0
-                                        ? 'border-b-0'
-                                        : ''
-                                    }`}
-                                  >
-                                    <TableCell className="p-0 py-4 pl-4">
-                                      <TooltipProvider>
-                                        <Tooltip>
-                                          <TooltipTrigger asChild>
-                                            {item.errors.length === 0 &&
-                                            item.warnings.length === 0 ? (
-                                              <Check className="h-5 w-5 stroke-green-500" />
-                                            ) : item.warnings.length === 0 ? (
-                                              <XCircle className="h-5 w-5 stroke-destructive" />
-                                            ) : (
-                                              <AlertCircle className="h-5 w-5 stroke-yellow-500" />
-                                            )}
-                                          </TooltipTrigger>
-                                          <TooltipContent>
-                                            <span>
-                                              {item.errors.length === 0 &&
-                                              item.warnings.length === 0
-                                                ? 'Valid'
-                                                : item.warnings.length === 0
-                                                  ? 'Invalid'
-                                                  : 'Warning'}
-                                            </span>
-                                          </TooltipContent>
-                                        </Tooltip>
-                                      </TooltipProvider>
-                                    </TableCell>
-                                    <TableCell className="font-medium">
-                                      {key}
-                                    </TableCell>
-                                    <TableCell className="break-all">
-                                      {key === 'og:image' ||
-                                      key === 'twitter:image' ? (
+                            {metatags &&
+                              Object.entries(metatags).map(
+                                ([key, item]: [
+                                  string,
+                                  ValidatedMetatagType,
+                                ]) => (
+                                  <>
+                                    <TableRow
+                                      key={key}
+                                      className={`${
+                                        item.errors.length > 0 ||
+                                        item.warnings.length > 0
+                                          ? 'border-b-0'
+                                          : ''
+                                      }`}
+                                    >
+                                      <TableCell className="p-0 py-4 pl-4">
                                         <TooltipProvider>
                                           <Tooltip>
                                             <TooltipTrigger asChild>
-                                              <Link
-                                                href={item.value}
-                                                className="text-blue-500 hover:underline"
-                                                target="_blank"
-                                              >
-                                                {item.value}
-                                              </Link>
+                                              {item.errors.length === 0 &&
+                                              item.warnings.length === 0 ? (
+                                                <Check className="h-5 w-5 stroke-green-500" />
+                                              ) : item.warnings.length === 0 ? (
+                                                <XCircle className="h-5 w-5 stroke-destructive" />
+                                              ) : (
+                                                <AlertCircle className="h-5 w-5 stroke-yellow-500" />
+                                              )}
                                             </TooltipTrigger>
-                                            <TooltipContent className="py-3">
-                                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                                              <img
-                                                src={item.value}
-                                                alt=""
-                                                className="w-64"
-                                                onError={(e) => {
-                                                  e.currentTarget.src = ''
-                                                  e.currentTarget.alt =
-                                                    'Couldn’t load image'
-                                                }}
-                                              />
+                                            <TooltipContent>
+                                              <span>
+                                                {item.errors.length === 0 &&
+                                                item.warnings.length === 0
+                                                  ? 'Valid'
+                                                  : item.warnings.length === 0
+                                                    ? 'Invalid'
+                                                    : 'Warning'}
+                                              </span>
                                             </TooltipContent>
                                           </Tooltip>
                                         </TooltipProvider>
-                                      ) : key === 'og:url' ? (
-                                        <Link
-                                          href={item.value}
-                                          className="text-blue-500 hover:underline"
-                                          target="_blank"
-                                        >
-                                          {item.value}
-                                        </Link>
-                                      ) : (
-                                        <span className="text-muted-foreground">
-                                          {item.value}
-                                        </span>
-                                      )}
-                                    </TableCell>
-                                  </TableRow>
-                                  {item.errors.map((error: string, index) => (
-                                    <TableRow
-                                      className={`${
-                                        item.warnings.length === 0 &&
-                                        index === item.errors.length - 1
-                                          ? 'border-0 border-b'
-                                          : 'border-0'
-                                      } w-full`}
-                                      key={index}
-                                    >
-                                      <TableCell
-                                        colSpan={3}
-                                        className="p-0 px-4 pb-4"
-                                      >
-                                        <div className="flex flex-col justify-start gap-2 rounded-sm border-2 border-destructive bg-destructive/20 px-4 py-3 md:flex-row">
-                                          {error}
-                                          {item.info_url && (
-                                            <Link
-                                              href={item.info_url}
-                                              className=""
-                                            >
-                                              <span className="underline underline-offset-2 hover:opacity-80">
-                                                Learn more
-                                              </span>
-                                            </Link>
-                                          )}
-                                        </div>
+                                      </TableCell>
+                                      <TableCell className="font-medium">
+                                        {key}
+                                      </TableCell>
+                                      <TableCell className="break-all">
+                                        {key === 'og:image' ||
+                                        key === 'twitter:image' ? (
+                                          <TooltipProvider>
+                                            <Tooltip>
+                                              <TooltipTrigger asChild>
+                                                <Link
+                                                  href={item.value}
+                                                  className="text-blue-500 hover:underline"
+                                                  target="_blank"
+                                                >
+                                                  {item.value}
+                                                </Link>
+                                              </TooltipTrigger>
+                                              <TooltipContent className="py-3">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                  src={item.value}
+                                                  alt=""
+                                                  className="w-64"
+                                                  onError={(e) => {
+                                                    e.currentTarget.src = ''
+                                                    e.currentTarget.alt =
+                                                      'Couldn’t load image'
+                                                  }}
+                                                />
+                                              </TooltipContent>
+                                            </Tooltip>
+                                          </TooltipProvider>
+                                        ) : key === 'og:url' ? (
+                                          <Link
+                                            href={item.value}
+                                            className="text-blue-500 hover:underline"
+                                            target="_blank"
+                                          >
+                                            {item.value}
+                                          </Link>
+                                        ) : (
+                                          <span className="text-muted-foreground">
+                                            {item.value}
+                                          </span>
+                                        )}
                                       </TableCell>
                                     </TableRow>
-                                  ))}
-                                  {item.warnings.map(
-                                    (warning: string, index) => (
+                                    {item.errors.map((error: string, index) => (
                                       <TableRow
                                         className={`${
-                                          index === item.warnings.length - 1
+                                          item.warnings.length === 0 &&
+                                          index === item.errors.length - 1
                                             ? 'border-0 border-b'
                                             : 'border-0'
                                         } w-full`}
@@ -541,8 +526,8 @@ export default function PreviewValidator({
                                           colSpan={3}
                                           className="p-0 px-4 pb-4"
                                         >
-                                          <div className="flex flex-col justify-start gap-2 rounded-sm border-2 border-yellow-500 bg-yellow-500/20 px-4 py-3 md:flex-row">
-                                            {warning}
+                                          <div className="flex flex-col justify-start gap-2 rounded-sm border-2 border-destructive bg-destructive/20 px-4 py-3 md:flex-row">
+                                            {error}
                                             {item.info_url && (
                                               <Link
                                                 href={item.info_url}
@@ -556,11 +541,41 @@ export default function PreviewValidator({
                                           </div>
                                         </TableCell>
                                       </TableRow>
-                                    )
-                                  )}
-                                </>
-                              )
-                            )}
+                                    ))}
+                                    {item.warnings.map(
+                                      (warning: string, index) => (
+                                        <TableRow
+                                          className={`${
+                                            index === item.warnings.length - 1
+                                              ? 'border-0 border-b'
+                                              : 'border-0'
+                                          } w-full`}
+                                          key={index}
+                                        >
+                                          <TableCell
+                                            colSpan={3}
+                                            className="p-0 px-4 pb-4"
+                                          >
+                                            <div className="flex flex-col justify-start gap-2 rounded-sm border-2 border-yellow-500 bg-yellow-500/20 px-4 py-3 md:flex-row">
+                                              {warning}
+                                              {item.info_url && (
+                                                <Link
+                                                  href={item.info_url}
+                                                  className=""
+                                                >
+                                                  <span className="underline underline-offset-2 hover:opacity-80">
+                                                    Learn more
+                                                  </span>
+                                                </Link>
+                                              )}
+                                            </div>
+                                          </TableCell>
+                                        </TableRow>
+                                      )
+                                    )}
+                                  </>
+                                )
+                              )}
                           </TableBody>
                         </Table>
                       </CardContent>

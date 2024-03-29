@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     'Learn how to use Open Graph and Twitter metatags to control how your website is displayed when shared on social media.',
   alternates: {
     canonical:
-      'https://sharepreviews.com/blog/everything-you-should-know-about-social-metatags',
+      'https://sharepreviews.com/blog/everything-you-should-know-about-social-card-metatags',
   },
   openGraph: {
-    url: 'https://sharepreviews.com/blog/everything-you-should-know-about-social-metatags',
+    url: 'https://sharepreviews.com/blog/everything-you-should-know-about-social-card-metatags',
     type: 'article',
     siteName: 'sharepreviews',
   },
@@ -42,9 +42,9 @@ export default async function BlogPage() {
           {dayjs('02/15/2024').format('MMM D, YYYY')}
         </span>
         <h1 className="marketing-title text-balance text-center">
-          Everything You Should Know About Social Metatags
+          Everything you should know about social card metatags
         </h1>
-        <p className="text-balance text-center">
+        <p className="marketing-subtitle text-balance text-center text-muted-foreground">
           Learn how to use Open Graph and Twitter metatags to control how your
           website is displayed when shared on social media.
         </p>
@@ -64,15 +64,15 @@ export default async function BlogPage() {
         <Card className="my-4 w-full">
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col pt-6">
-              <span className="marketing-subtitle">F.A.Q.</span>
+              <span className="marketing-second-title">F.A.Q.</span>
             </div>
             <ul className="flex list-inside list-disc flex-col justify-start gap-2">
               <li className="underline-offset-2 hover:text-foreground hover:underline">
-                <Link href="#faq1">What are social metatags?</Link>
+                <Link href="#faq1">What are social card metatags?</Link>
               </li>
 
               <li className="underline-offset-2 hover:text-foreground hover:underline">
-                <Link href="#faq2">Does social metatags improve SEO?</Link>
+                <Link href="#faq2">Does social cards improve SEO?</Link>
               </li>
               <li className="underline-offset-2 hover:text-foreground hover:underline">
                 <Link href="#faq3">
@@ -87,7 +87,7 @@ export default async function BlogPage() {
             </ul>
 
             <div className="flex flex-col pt-6">
-              <span className="marketing-subtitle">Main Metatags</span>
+              <span className="marketing-second-title">Main Metatags</span>
             </div>
             <div className="lg:columns-2">
               <ul className="flex list-inside list-disc flex-col gap-2">
@@ -152,23 +152,30 @@ export default async function BlogPage() {
           </CardContent>
         </Card>
         {/* Content */}
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="faq1">
-          What are social metatags?
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq1">
+          What are social card metatags?
         </h2>
         <p className="dark:text-muted-foreground">
-          Social metatags are <strong>snippets of code</strong> that control how
-          URLs are displayed when shared on social media.
+          Social card metatags are <strong>snippets of code</strong> that
+          control the content of a{' '}
+          <strong>
+            <Link
+              href="/about"
+              target="_blank"
+              className="underline underline-offset-2 hover:text-foreground/70"
+            >
+              social card
+            </Link>
+          </strong>
+          .
         </p>
         <p className="dark:text-muted-foreground">
           For example when you share a link on Facebook, Twitter or LinkedIn,
-          these platforms will use the metatags to display a title, description
-          and image.
+          these platforms display a card with a title, description and image
+          defined in metatags. If no metatags are defined, the platform will
+          only show the URL.
         </p>
-        <p className="dark:text-muted-foreground">
-          They are essential for controlling your <strong>branding</strong>{' '}
-          outside of your website and improving click-through rates.
-        </p>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="faq2">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq2">
           Does social metatags improve SEO?
         </h2>
         <p className="dark:text-muted-foreground">
@@ -199,7 +206,7 @@ export default async function BlogPage() {
           height={420}
           className="self-center rounded-md object-cover"
         />
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="faq3">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq3">
           What is the difference between og:X and twitter:X metatags?
         </h2>
         <p className="dark:text-muted-foreground">
@@ -216,7 +223,7 @@ export default async function BlogPage() {
           are some exceptions, so it&apos;s a{' '}
           <strong>good idea to include both</strong> in your website.
         </p>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="faq4">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq4">
           Why some metatags are defined by property and others by name?
         </h2>
         <p className="dark:text-muted-foreground">
@@ -224,7 +231,7 @@ export default async function BlogPage() {
           defined by property and the rest by name.
         </p>
         <Separator className="mt-14 lg:mt-8" />
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="title">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="title">
           title
         </h2>
         <p className="dark:text-muted-foreground">
@@ -236,7 +243,7 @@ export default async function BlogPage() {
           page&apos;s content, incorporating relevant keywords.
         </p>
         <CodeBlock>{`<title>Your title</title>`}</CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="description">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="description">
           description
         </h2>
         <p className="dark:text-muted-foreground">
@@ -250,7 +257,7 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta name="description" content="Your description" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:title">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:title">
           og:title
         </h2>
         <p className="dark:text-muted-foreground">
@@ -262,7 +269,7 @@ export default async function BlogPage() {
           <strong>concise</strong> and <strong>relevant</strong>.
         </p>
         <CodeBlock>{`<meta property="og:title" content="Your title" />`}</CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:description">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:description">
           og:description
         </h2>
         <p className="dark:text-muted-foreground">
@@ -273,7 +280,7 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta property="og:description" content="Your description" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:image">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:image">
           og:image
         </h2>
         <p className="dark:text-muted-foreground">
@@ -291,7 +298,7 @@ export default async function BlogPage() {
           {`<meta property="og:image" content="Your image URL" />`}
         </CodeBlock>
         <h2
-          className="marketing-subtitle pt-14 lg:pt-8"
+          className="marketing-third-title pt-14 lg:pt-8"
           id="og:image:dimensions"
         >
           og:image:width & og:image:height
@@ -307,7 +314,7 @@ export default async function BlogPage() {
           {`<meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:image:type">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:image:type">
           og:image:type
         </h2>
         <p className="dark:text-muted-foreground">
@@ -319,14 +326,14 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta property="og:image:type" content="Your image type" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:url">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:url">
           og:url
         </h2>
         <p className="dark:text-muted-foreground">
           This tag identifies the <strong>canonical URL</strong> of the content.
         </p>
         <CodeBlock>{`<meta property="og:url" content="Your URL" />`}</CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:site_name">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:site_name">
           og:site_name
         </h2>
         <p className="dark:text-muted-foreground">
@@ -338,7 +345,7 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta property="og:site_name" content="Your site name" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="og:type">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:type">
           og:type
         </h2>
         <p className="dark:text-muted-foreground">
@@ -355,7 +362,7 @@ export default async function BlogPage() {
           </Link>
         </p>
         <CodeBlock>{`<meta property="og:type" content="Your content type" />`}</CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="twitter:title">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:title">
           twitter:title
         </h2>
         <p className="dark:text-muted-foreground">
@@ -363,7 +370,7 @@ export default async function BlogPage() {
         </p>
         <CodeBlock>{`<meta name="twitter:title" content="Your title" />`}</CodeBlock>
         <h2
-          className="marketing-subtitle pt-14 lg:pt-8"
+          className="marketing-third-title pt-14 lg:pt-8"
           id="twitter:description"
         >
           twitter:description
@@ -379,7 +386,7 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta name="twitter:description" content="Your description" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="twitter:card">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:card">
           twitter:card
         </h2>
         <p className="dark:text-muted-foreground">
@@ -390,7 +397,7 @@ export default async function BlogPage() {
           landscape.
         </p>
         <CodeBlock>{`<meta name="twitter:card" content="Your card type" />`}</CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="twitter:image">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:image">
           twitter:image
         </h2>
         <p className="dark:text-muted-foreground">
@@ -406,7 +413,7 @@ export default async function BlogPage() {
           {`<meta name="twitter:image" content="Your image URL" />`}
         </CodeBlock>
         <h2
-          className="marketing-subtitle pt-14 lg:pt-8"
+          className="marketing-third-title pt-14 lg:pt-8"
           id="twitter:image:dimensions"
         >
           twitter:image:width & twitter:image:height
@@ -423,7 +430,7 @@ export default async function BlogPage() {
 <meta name="twitter:image:height" content="Your image height" />`}
         </CodeBlock>
         <h2
-          className="marketing-subtitle pt-14 lg:pt-8"
+          className="marketing-third-title pt-14 lg:pt-8"
           id="twitter:image:type"
         >
           twitter:image:type
@@ -437,7 +444,7 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta name="twitter:image:type" content="Your image type" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="twitter:site">
+        <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:site">
           twitter:site
         </h2>
         <p className="dark:text-muted-foreground">
@@ -448,7 +455,10 @@ export default async function BlogPage() {
         <CodeBlock>
           {`<meta name="twitter:site" content="Your Twitter handle" />`}
         </CodeBlock>
-        <h2 className="marketing-subtitle pt-14 lg:pt-8" id="twitter:creator">
+        <h2
+          className="marketing-third-title pt-14 lg:pt-8"
+          id="twitter:creator"
+        >
           twitter:creator
         </h2>
         <p className="dark:text-muted-foreground">

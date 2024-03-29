@@ -1,5 +1,6 @@
 import ValidatorLaunchScreen from '@/app/(marketing)/card-validator/launch-screen'
 import PreviewValidator from '@/app/(marketing)/card-validator/preview-validator'
+import Footer from '@/app/(marketing)/footer'
 import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
 import { Metadata } from 'next'
@@ -60,19 +61,22 @@ export default async function Validator({ params, searchParams }: Props) {
     params.project
   )) as ProjectType
 
-  if (inputUrl) {
-    return (
-      <PreviewValidator
-        isApp={false}
-        projectPathname={selectedProject?.pathname}
-      />
-    )
-  } else {
-    return (
-      <ValidatorLaunchScreen
-        isApp={false}
-        projectPathname={selectedProject?.pathname}
-      />
-    )
-  }
+  return (
+    <div
+      className={`${inputUrl ? 'gap-20 p-4' : 'px-4'} flex flex-col justify-between lg:min-h-[calc(100dvh-72px)]`}
+    >
+      {inputUrl ? (
+        <PreviewValidator
+          isApp={false}
+          projectPathname={selectedProject?.pathname}
+        />
+      ) : (
+        <ValidatorLaunchScreen
+          isApp={false}
+          projectPathname={selectedProject?.pathname}
+        />
+      )}
+      <Footer />
+    </div>
+  )
 }

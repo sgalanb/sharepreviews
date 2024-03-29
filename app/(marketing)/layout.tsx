@@ -17,7 +17,7 @@ export default async function MarketingLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { isAuthenticated, user } = await getUser()
+  const { user } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
 
   return (
@@ -29,17 +29,13 @@ export default async function MarketingLayout({
           defaultTheme="system"
           enableSystem
         >
-          <div className="flex min-h-dvh flex-col justify-between">
-            <div className="flex flex-col justify-start">
-              <Header
-                authorizationUrl={authorizationUrl}
-                isApp={false}
-                user={user}
-              />
-              <main className="mx-auto h-[calc(100vh-72px)] w-full max-w-7xl">
-                {children}
-              </main>
-            </div>
+          <div className="flex h-fit min-h-dvh flex-col justify-start">
+            <Header
+              authorizationUrl={authorizationUrl}
+              isApp={false}
+              user={user}
+            />
+            <main className="mx-auto h-full w-full max-w-7xl">{children}</main>
           </div>
         </Providers>
         <Analytics />

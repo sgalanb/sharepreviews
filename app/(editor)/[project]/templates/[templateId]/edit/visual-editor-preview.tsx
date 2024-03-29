@@ -301,7 +301,7 @@ export default function VisualEditorPreview({
   return (
     <div
       ref={parentDivRef}
-      className="relative flex w-full flex-col items-center justify-center gap-2 overflow-hidden "
+      className="relative my-[1px] flex w-full flex-col items-center justify-center gap-2 overflow-hidden border-y"
       onClick={() => {
         selectedLayer && setSelectedLayer(undefined)
       }}
