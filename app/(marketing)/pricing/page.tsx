@@ -53,7 +53,7 @@ export default async function AboutPage() {
                   <CircleCheck className="h-5 w-5 fill-foreground stroke-background" />
                   <div className="flex items-center justify-start gap-1">
                     <span className="text-muted-foreground">
-                      1000 new images
+                      500 new images
                     </span>
                   </div>
                 </div>
