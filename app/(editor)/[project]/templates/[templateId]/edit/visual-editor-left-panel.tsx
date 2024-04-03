@@ -39,23 +39,30 @@ import {
   Type,
 } from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function VisualEditorLeftPanel({
   layers,
   setLayers,
   selectedLayer,
   setSelectedLayer,
+  multiSelectedLayers,
+  setMultiSelectedLayers,
   canvasBackgroundColor,
   setCanvasBackgroundColor,
   isLoadingTemplate,
+  handleOnLayerClick,
 }: {
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
   selectedLayer?: LayerType
   setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
+  multiSelectedLayers: LayerType[]
+  setMultiSelectedLayers: Dispatch<SetStateAction<LayerType[]>>
   canvasBackgroundColor: string
   setCanvasBackgroundColor: Dispatch<SetStateAction<string>>
   isLoadingTemplate: boolean
+  handleOnLayerClick: (layer: LayerType) => void
 }) {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
@@ -74,6 +81,7 @@ export default function VisualEditorLeftPanel({
       className="flex h-full w-full flex-col items-start justify-between rounded-l-lg border-r"
       onClick={() => {
         selectedLayer && setSelectedLayer(undefined)
+        multiSelectedLayers.length > 0 && setMultiSelectedLayers([])
       }}
     >
       {/* LAYERS */}
@@ -135,8 +143,14 @@ export default function VisualEditorLeftPanel({
                         layer={layer}
                         layers={layers}
                         setLayers={setLayers}
-                        selected={layer.id === selectedLayer?.id}
+                        selected={
+                          layer.id === selectedLayer?.id ||
+                          multiSelectedLayers.some((l) => l.id === layer.id)
+                        }
                         setSelectedLayer={setSelectedLayer}
+                        multiSelectedLayers={multiSelectedLayers}
+                        setMultiSelectedLayers={setMultiSelectedLayers}
+                        handleOnLayerClick={handleOnLayerClick}
                       />
                     ))}
                   </>
@@ -168,7 +182,7 @@ export default function VisualEditorLeftPanel({
                       <strong>change the content of the layers</strong> or to{' '}
                       <strong>show/hide them</strong>. <br /> Variables are
                       passed to the template via the{' '}
-                      <strong>template URL</strong>. You will get the template
+                      <strong>template URL</strong>. You can get the template
                       URL after saving.
                     </span>
                   </TooltipContent>
@@ -254,12 +268,18 @@ const Layer = ({
   setLayers,
   selected,
   setSelectedLayer,
+  multiSelectedLayers,
+  setMultiSelectedLayers,
+  handleOnLayerClick,
 }: {
   layer: LayerType
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
   selected: boolean
   setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
+  multiSelectedLayers: LayerType[]
+  setMultiSelectedLayers: Dispatch<SetStateAction<LayerType[]>>
+  handleOnLayerClick: (layer: LayerType) => void
 }) => {
   const {
     attributes,
@@ -275,13 +295,15 @@ const Layer = ({
     transition,
   }
 
+  console.log(layers)
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       onClick={(event) => {
         event.stopPropagation()
-        setSelectedLayer(layer)
+        handleOnLayerClick(layer)
       }}
       className={`${
         isDragging
@@ -290,8 +312,8 @@ const Layer = ({
             ? 'border-background hover:border-background'
             : 'border-background hover:border-ring'
       } ${
-        selected ? 'bg-accent' : 'cursor-pointer bg-background'
-      } flex items-center justify-between gap-2 rounded-sm border-2 p-1.5`}
+        selected ? 'bg-accent' : 'bg-background'
+      } flex cursor-pointer select-none items-center justify-between gap-2 rounded-sm border-2 p-1.5`}
     >
       <div className="flex items-center justify-start gap-2">
         {layer.type === 'text' ? (
@@ -333,43 +355,100 @@ const Layer = ({
                 className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200 dark:hover:bg-neutral-600`}
                 onClick={(e) => {
                   e.stopPropagation()
-                  // duplicate layer
-                  setLayers([
-                    ...layers,
-                    {
+                  // Duplicate layer/s
+                  if (multiSelectedLayers.length > 1) {
+                    const newLayers = layers
+                      .filter((layer) => multiSelectedLayers.includes(layer))
+                      .map((oldLayer) => ({
+                        ...oldLayer,
+                        id: uuidv4(),
+                        name: `${oldLayer.name} copy`,
+                      }))
+                      .map((newLayer) => ({
+                        ...newLayer,
+                        conditionalValueVariableName:
+                          newLayer.type !== 'rectangle'
+                            ? newLayer.conditionalValue
+                              ? getConditionalValueVariableName(newLayer)
+                              : ''
+                            : '',
+                        conditionalVisibilityVariableName:
+                          newLayer.conditionalVisibility
+                            ? getConditionalVisibilityVariableName(newLayer)
+                            : '',
+                      }))
+                    setSelectedLayer(undefined)
+
+                    setMultiSelectedLayers(newLayers)
+
+                    setLayers([...layers, ...newLayers])
+                  } else {
+                    const newLayerName = {
                       ...layer,
-                      id: `${layer.id}-copy`,
+                      id: uuidv4(),
                       name: `${layer.name} copy`,
-                    },
-                  ])
-                  setSelectedLayer({
-                    ...layer,
-                    id: `${layer.id}-copy`,
-                    name: `${layer.name} copy`,
-                  })
+                    }
+                    const newLayer = {
+                      ...newLayerName,
+                      conditionalValueVariableName:
+                        newLayerName.type !== 'rectangle'
+                          ? newLayerName.conditionalValue
+                            ? getConditionalValueVariableName(newLayerName)
+                            : ''
+                          : '',
+                      conditionalVisibilityVariableName:
+                        newLayerName.conditionalVisibility
+                          ? getConditionalVisibilityVariableName(newLayerName)
+                          : '',
+                    }
+                    setLayers([...layers, newLayer])
+                    setSelectedLayer(newLayer)
+                  }
                 }}
               >
                 <CopyPlus className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <span className="font-normal">Duplicate layer</span>
+              <span className="font-normal">
+                Duplicate{' '}
+                {multiSelectedLayers.length > 1
+                  ? `${multiSelectedLayers.length} layers`
+                  : 'layer'}
+              </span>
             </TooltipContent>
           </Tooltip>
-          <DeleteLayerDialog
-            trigger={
-              <Button
-                variant="ghost"
-                className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200 dark:hover:bg-neutral-600`}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            }
-            layers={layers}
-            setLayers={setLayers}
-            selectedLayer={layer}
-            setSelectedLayer={setSelectedLayer}
-          />
+          <Tooltip>
+            <DeleteLayerDialog
+              trigger={
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className={`${selected ? '' : 'hidden'} aspect-square h-8 p-0 hover:bg-neutral-200 dark:hover:bg-neutral-600`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+              }
+              layers={layers}
+              setLayers={setLayers}
+              selectedLayer={layer}
+              setSelectedLayer={setSelectedLayer}
+              multiSelectedLayers={multiSelectedLayers}
+              setMultiSelectedLayers={setMultiSelectedLayers}
+            />
+            <TooltipContent>
+              <span className="font-normal">
+                Delete{' '}
+                {multiSelectedLayers.length > 1
+                  ? `${multiSelectedLayers.length} layers`
+                  : 'layer'}
+              </span>
+            </TooltipContent>
+          </Tooltip>
 
           <Button
             {...attributes}

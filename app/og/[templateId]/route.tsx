@@ -8,6 +8,7 @@ import {
   logTemplateUrlToListRedis,
   logUserUsage,
 } from '@/app/lib/upstash'
+import { convertOpacityToHex } from '@/app/utils'
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
@@ -85,6 +86,7 @@ export async function GET(req: NextRequest) {
             backgroundColor: templateInfo?.canvasBackgroundColor ?? '#ffffff',
           }}
         >
+          {/* This is replicated with html on template editor*/}
           {templateLayers?.toReversed()?.map((layer) => {
             if (layer.type === 'text') {
               return (
@@ -98,30 +100,45 @@ export async function GET(req: NextRequest) {
                         ? 'flex'
                         : 'none'
                       : 'flex',
+                    position: 'absolute',
                     justifyContent: layer.alignHorizontal,
                     alignItems: layer.alignVertical,
-                    position: 'absolute',
                     left: layer.x,
                     top: layer.y,
-                    width: layer.width,
-                    height: layer.height,
+                    ...(layer.widthType === 'fixed'
+                      ? { width: layer.width }
+                      : {}),
+                    ...(layer.heightType === 'fixed'
+                      ? { height: layer.height }
+                      : {}),
+                    wordBreak: 'break-all',
+                    overflow: 'hidden',
                     transform: `rotate(${layer.rotation}deg)`,
-                    opacity: layer.opacity,
+                    // Background styles
+                    backgroundColor: layer.background
+                      ? `${layer.bgColor}${convertOpacityToHex(layer.bgOpacity)}`
+                      : 'transparent',
+                    paddingLeft: layer.bgPaddingX ? layer.bgPaddingX : 0,
+                    paddingRight: layer.bgPaddingX ? layer.bgPaddingX : 0,
+                    paddingTop: layer.bgPaddingY ? layer.bgPaddingY : 0,
+                    paddingBottom: layer.bgPaddingY ? layer.bgPaddingY : 0,
+                    borderRadius: layer.bgCornerRadius ?? 0,
                   }}
                 >
-                  <p
+                  <div
                     style={{
                       fontFamily: layer.family.replace(/-/g, ' '),
                       fontSize: layer.size,
                       lineHeight: layer.lineHeight,
                       color: layer.color,
+                      opacity: layer.opacity,
                     }}
                   >
                     {layer.conditionalValue
                       ? getSearchParams(layer.conditionalValueVariableName) ??
                         layer.exampleValue
                       : layer.value}
-                  </p>
+                  </div>
                 </div>
               )
             }
@@ -181,14 +198,14 @@ export async function GET(req: NextRequest) {
                     position: 'absolute',
                     left: layer.x,
                     top: layer.y,
+                    transform: `rotate(${layer.rotation}deg)`,
                     width: layer.width,
                     height: layer.height,
-                    transform: `rotate(${layer.rotation}deg)`,
+                    borderRadius: layer.cornerRadius,
                     opacity: layer.opacity,
                     backgroundColor: layer.color,
-                    borderRadius: layer.cornerRadius,
                   }}
-                ></div>
+                />
               )
             }
           })}

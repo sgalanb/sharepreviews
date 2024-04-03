@@ -34,6 +34,8 @@ interface LayerInterface {
 
 interface TextLayerInterface extends LayerInterface {
   type: 'text'
+  widthType: 'fixed' | 'fit'
+  heightType: 'fixed' | 'fit'
   family: string
   size: number
   lineHeight: number
@@ -41,6 +43,12 @@ interface TextLayerInterface extends LayerInterface {
   alignVertical: 'flex-start' | 'center' | 'flex-end'
   //balance: boolean // text wrap balance, wait for satori to support
   color: string
+  background: boolean
+  bgColor: string
+  bgOpacity: number
+  bgPaddingX: number
+  bgPaddingY: number
+  bgCornerRadius: number
   conditionalValue: boolean
   exampleValue?: string
   value?: string

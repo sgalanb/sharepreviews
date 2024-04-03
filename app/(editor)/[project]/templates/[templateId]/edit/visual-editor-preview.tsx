@@ -2,213 +2,63 @@
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { Button } from '@/app/ui/components/Button'
+import { convertOpacityToHex } from '@/app/utils'
 import { Minus, Plus } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import satori from 'satori'
 
 export default function VisualEditorPreview({
   layers,
   setLayers,
   selectedLayer,
   setSelectedLayer,
+  multiSelectedLayers,
+  setMultiSelectedLayers,
   canvasBackgroundColor,
   setCanvasBackgroundColor,
+  spacePressed,
+  shiftPressed,
+  handleOnLayerClick,
 }: {
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
   selectedLayer?: LayerType
   setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
+  multiSelectedLayers: LayerType[]
+  setMultiSelectedLayers: Dispatch<SetStateAction<LayerType[]>>
   canvasBackgroundColor: string
   setCanvasBackgroundColor: Dispatch<SetStateAction<string>>
+  spacePressed: boolean
+  shiftPressed: boolean
+  handleOnLayerClick: (layer: LayerType) => void
 }) {
-  const [preview, setPreview] = useState<string>()
-
-  const generatePreview = async () => {
-    const svg = await satori(
-      <div
-        tw="flex w-full h-full"
-        style={{ backgroundColor: canvasBackgroundColor }}
-      >
-        {layers.toReversed().map((layer) => {
-          if (layer.type === 'text') {
-            return (
-              <div
-                key={layer.id}
-                tw="flex"
-                style={{
-                  justifyContent: layer.alignHorizontal,
-                  alignItems: layer.alignVertical,
-                  position: 'absolute',
-                  left: layer.x,
-                  top: layer.y,
-                  width: layer.width,
-                  height: layer.height,
-                  transform: `rotate(${layer.rotation}deg)`,
-                  opacity: layer.opacity,
-                }}
-              >
-                <p
-                  style={{
-                    fontFamily: layer.family.replace(/-/g, ' '),
-                    fontWeight: 800,
-                    fontSize: layer.size,
-                    lineHeight: layer.lineHeight,
-                    color: layer.color,
-                  }}
-                >
-                  {layer.conditionalValue ? layer.exampleValue : layer.value}
-                </p>
-              </div>
-            )
-          }
-          if (
-            layer.type === 'image' &&
-            ((layer.conditionalValue && layer.exampleSrc) ||
-              (!layer.conditionalValue && layer.src))
-          ) {
-            return (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={layer.id}
-                alt=""
-                src={layer.conditionalValue ? layer.exampleSrc : layer.src}
-                width={layer.width}
-                height={layer.height}
-                tw="flex items-center justify-center"
-                style={{
-                  position: 'absolute',
-                  left: layer.x,
-                  top: layer.y,
-                  width: layer.width,
-                  height: layer.height,
-                  transform: `rotate(${layer.rotation}deg)`,
-                  opacity: layer.opacity,
-                  borderRadius: layer.cornerRadius,
-                  objectFit: layer.objectFit,
-                }}
-              />
-            )
-          }
-          if (layer.type === 'rectangle') {
-            return (
-              <div
-                key={layer.id}
-                tw="flex items-center justify-center"
-                style={{
-                  position: 'absolute',
-                  left: layer.x,
-                  top: layer.y,
-                  width: layer.width,
-                  height: layer.height,
-                  transform: `rotate(${layer.rotation}deg)`,
-                  opacity: layer.opacity,
-                  backgroundColor: layer.color,
-                  borderRadius: layer.cornerRadius,
-                }}
-              ></div>
-            )
-          }
-        })}
-      </div>,
-      {
-        width: 1200,
-        height: 630,
-        fonts: [
-          {
-            name: 'Inter Thin',
-            data: await fetch(
-              new URL('/assets/inter-thin.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 100,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Extra Light',
-            data: await fetch(
-              new URL('/assets/inter-extra-light.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 200,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Light',
-            data: await fetch(
-              new URL('/assets/inter-light.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 300,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Regular',
-            data: await fetch(
-              new URL('/assets/inter-regular.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 400,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Medium',
-            data: await fetch(
-              new URL('/assets/inter-medium.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 500,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Semi Bold',
-            data: await fetch(
-              new URL('/assets/inter-semi-bold.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 600,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Bold',
-            data: await fetch(
-              new URL('/assets/inter-bold.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 700,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Extra Bold',
-            data: await fetch(
-              new URL('/assets/inter-extra-bold.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 800,
-            style: 'normal',
-          },
-          {
-            name: 'Inter Black',
-            data: await fetch(
-              new URL('/assets/inter-black.otf', import.meta.url)
-            ).then((res) => res.arrayBuffer() as any),
-            weight: 900,
-            style: 'normal',
-          },
-        ],
-        debug: false,
-      }
-    )
-    setPreview(svg)
-  }
-  useEffect(() => {
-    generatePreview()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layers, canvasBackgroundColor])
-
-  // Canvas zoom and pan
-  const [scale, setScale] = useState(1) // For zoom levels
+  // Canvas settings
   const minScale = 1
   const maxScale = 5
+  const [scale, setScale] = useState(1) // For zoom levels
   const [origin, setOrigin] = useState({ x: 0, y: 0 }) // For pan origin
+  const [isGrabbing, setIsGrabbing] = useState<boolean>(false)
+
   const parentDivRef = useRef<any>(null)
 
-  const [isGrabbing, setIsGrabbing] = useState(false)
-
+  // Clamp function to limit the scale within the min and max values
   const clamp = (value: any, min: any, max: any) => {
     return Math.min(Math.max(value, min), max)
   }
+
+  // Prevent default zoom behavior
+  useEffect(() => {
+    const handleWheel = (event: any) => {
+      if (event.ctrlKey || event.metaKey) {
+        event.preventDefault()
+      }
+    }
+
+    document.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel)
+    }
+  }, [])
 
   const adjustOriginForScale = (newScale: number) => {
     const parentWidth = parentDivRef.current.offsetWidth
@@ -256,6 +106,12 @@ export default function VisualEditorPreview({
   }
 
   const handleMouseDown = (e: any) => {
+    // Check if the middle mouse button is pressed or the space key is pressed
+    if (e.button !== 1 && !spacePressed) {
+      // If not, do nothing
+      return
+    }
+
     e.preventDefault()
     e.stopPropagation()
     setIsGrabbing(true)
@@ -301,41 +157,219 @@ export default function VisualEditorPreview({
   return (
     <div
       ref={parentDivRef}
-      className="relative my-[1px] flex w-full flex-col items-center justify-center gap-2 overflow-hidden border-y"
+      className="relative flex w-full flex-col items-center justify-center gap-2 overflow-hidden"
       onClick={() => {
         selectedLayer && setSelectedLayer(undefined)
+        multiSelectedLayers.length > 0 && setMultiSelectedLayers([])
       }}
     >
       <div
-        className={`${scale == 1 ? '' : isGrabbing ? 'cursor-grabbing' : 'cursor-grab'} relative order-none flex h-full w-full items-center justify-center overflow-hidden bg-neutral-100`}
+        className={`${isGrabbing ? 'cursor-grabbing' : spacePressed ? 'cursor-grab' : 'cursor-default'} relative order-none flex h-full w-full items-center justify-center overflow-hidden bg-neutral-100`}
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         style={{
           transform: `scale(${scale}) translate(${origin.x}px, ${origin.y}px)`,
         }}
       >
-        <div
-          dangerouslySetInnerHTML={{ __html: preview || '' }}
-          className="absolute flex h-full max-h-[315px] w-full max-w-[600px] items-center justify-center"
-        />
+        <div className="absolute h-[630px] w-[1200px] scale-50">
+          <div
+            className="flex h-full w-full"
+            style={{ backgroundColor: canvasBackgroundColor }}
+          >
+            {/* This is replicated with satori on og generation*/}
+            {layers.toReversed().map((layer) => {
+              if (layer.type === 'text') {
+                return (
+                  <div
+                    key={layer.id}
+                    className={`${
+                      layer.id === selectedLayer?.id ||
+                      multiSelectedLayers.find((l) => l.id === layer.id)
+                        ? 'ring-[3px] ring-sky-600'
+                        : 'hover:ring-4 hover:ring-sky-600'
+                    } flex select-none`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleOnLayerClick(layer)
+                    }}
+                    style={{
+                      position: 'absolute',
+                      justifyContent: layer.alignHorizontal,
+                      alignItems: layer.alignVertical,
+                      left: layer.x,
+                      top: layer.y,
+                      width:
+                        layer.widthType === 'fixed'
+                          ? layer.width
+                          : 'fit-content',
+                      height:
+                        layer.heightType === 'fixed'
+                          ? layer.height
+                          : 'fit-content',
+                      wordBreak: 'break-all',
+                      overflow: 'hidden',
+                      transform: `rotate(${layer.rotation}deg)`,
+                      // Background styles
+                      backgroundColor: layer.background
+                        ? `${layer.bgColor}${convertOpacityToHex(layer.bgOpacity)}`
+                        : 'transparent',
+                      paddingLeft: layer.bgPaddingX ? layer.bgPaddingX : 0,
+                      paddingRight: layer.bgPaddingX ? layer.bgPaddingX : 0,
+                      paddingTop: layer.bgPaddingY ? layer.bgPaddingY : 0,
+                      paddingBottom: layer.bgPaddingY ? layer.bgPaddingY : 0,
+                      borderRadius: layer.bgCornerRadius,
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: '__Inter_aaf875',
+                        fontWeight: layer.family.endsWith('thin')
+                          ? 100
+                          : layer.family.endsWith('extra-light')
+                            ? 200
+                            : layer.family.endsWith('light')
+                              ? 300
+                              : layer.family.endsWith('regular')
+                                ? 400
+                                : layer.family.endsWith('medium')
+                                  ? 500
+                                  : layer.family.endsWith('semi-bold')
+                                    ? 600
+                                    : layer.family.endsWith('extra-bold')
+                                      ? 800
+                                      : layer.family.endsWith('bold')
+                                        ? 700
+                                        : 900,
+                        fontSize: layer.size,
+                        lineHeight: layer.lineHeight,
+                        color: layer.color,
+                        opacity: layer.opacity,
+                      }}
+                    >
+                      {layer.conditionalValue
+                        ? layer.exampleValue
+                        : layer.value}
+                    </div>
+                  </div>
+                )
+              }
+              if (layer.type === 'image') {
+                return (
+                  <div
+                    key={layer.id}
+                    className={`${
+                      layer.id === selectedLayer?.id ||
+                      multiSelectedLayers.find((l) => l.id === layer.id)
+                        ? 'ring-[3px] ring-sky-600'
+                        : 'hover:ring-4 hover:ring-sky-600'
+                    } select-none`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleOnLayerClick(layer)
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: layer.x,
+                      top: layer.y,
+                      transform: `rotate(${layer.rotation}deg)`,
+                      // Shared styles between parent and child
+                      width: layer.width,
+                      height: layer.height,
+                      borderRadius: layer.cornerRadius,
+                    }}
+                  >
+                    {((layer.conditionalValue && layer.exampleSrc) ||
+                      (!layer.conditionalValue && layer.src)) && (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          alt=""
+                          src={
+                            layer.conditionalValue
+                              ? layer.exampleSrc
+                              : layer.src
+                          }
+                          width={layer.width}
+                          height={layer.height}
+                          className="flex items-center justify-center"
+                          style={{
+                            // Shared styles between parent and child
+                            width: layer.width,
+                            height: layer.height,
+                            borderRadius: layer.cornerRadius,
+                            // Independent (from the parent div) styles
+                            opacity: layer.opacity,
+                            objectFit: layer.objectFit,
+                          }}
+                        />
+                      </>
+                    )}
+                  </div>
+                )
+              }
+              if (layer.type === 'rectangle') {
+                return (
+                  <div
+                    key={layer.id}
+                    className={`${
+                      layer.id === selectedLayer?.id ||
+                      multiSelectedLayers.find((l) => l.id === layer.id)
+                        ? 'ring-[3px] ring-sky-600'
+                        : 'hover:ring-4 hover:ring-sky-600'
+                    } select-none`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleOnLayerClick(layer)
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: layer.x,
+                      top: layer.y,
+                      transform: `rotate(${layer.rotation}deg)`,
+                      // Shared styles between parent and child
+                      width: layer.width,
+                      height: layer.height,
+                      borderRadius: layer.cornerRadius,
+                    }}
+                  >
+                    <div
+                      className="flex items-center justify-center"
+                      style={{
+                        // Shared styles between parent and child
+                        width: layer.width,
+                        height: layer.height,
+                        borderRadius: layer.cornerRadius,
+                        // Independent (from the parent div) styles
+                        opacity: layer.opacity,
+                        backgroundColor: layer.color,
+                      }}
+                    />
+                  </div>
+                )
+              }
+            })}
+          </div>
+        </div>
       </div>
-      <div className="absolute bottom-4 right-4 z-50 flex items-center justify-center gap-2 rounded-md bg-secondary text-secondary-foreground">
+      <div className="absolute bottom-4 right-4 z-50 flex items-center justify-center gap-2 rounded-lg border bg-white dark:bg-neutral-900  ">
         <Button
-          variant="secondary"
-          className="px-3 hover:bg-neutral-300"
+          variant="outline"
+          className="border-none px-3"
           onClick={(e) => {
             e.stopPropagation()
+            e.currentTarget.blur()
             handleManualZoom(scale - 0.25)
           }}
         >
           <Minus className="h-6 w-6" />
         </Button>
-        <span>{scale.toFixed(2)}x</span>
+        <span className="select-none">{scale.toFixed(2)}x</span>
         <Button
-          variant="secondary"
-          className="px-3 hover:bg-neutral-300"
+          variant="outline"
+          className="border-none px-3"
           onClick={(e) => {
             e.stopPropagation()
+            e.currentTarget.blur()
             handleManualZoom(scale + 0.25)
           }}
         >

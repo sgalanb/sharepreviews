@@ -3,6 +3,7 @@ import Footer from '@/app/(marketing)/footer'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import GitHub from '@/app/ui/svgs/social-icons/GitHub'
+import ValidatorInput from '@/app/ui/validator-input'
 import { ArrowDown } from 'lucide-react'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -43,7 +44,7 @@ export default async function Home() {
               Auto Generate Social Card Images
             </h1>
             <p className="marketing-subtitle text-muted-foreground">
-              Improve your links engagement and click through rate.
+              Improve your website links engagement and click through rate.
             </p>
             <Button className="my-1.5" asChild>
               <Link href={user ? '/' : authorizationUrl}>Start for Free</Link>
@@ -213,6 +214,21 @@ export default async function Home() {
         </p>
         <UrlExample />
         {/* TODO: Add example of meta tag implementation with Next.js, Astro, etc. */}
+      </div>
+      {/* Custom Separator */}
+      <div className="mb-20 mt-24 h-4 w-full shrink-0 rounded-t-md border-t" />
+      {/* Validator */}
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <h2 className="marketing-second-title text-balance">
+          Social Card Validator
+        </h2>
+        <p className="marketing-subtitle text-balance px-40 text-center text-muted-foreground">
+          Check how your links look when shared. Validate that you have the
+          right metatags in place so your cards are displayed correctly.
+        </p>
+        <div className="mt-8 flex w-full items-center justify-center">
+          <ValidatorInput isApp={false} />
+        </div>
       </div>
       {/* Custom Separator */}
       <div className="mb-20 mt-24 h-4 w-full shrink-0 rounded-t-md border-t" />

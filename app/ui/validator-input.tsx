@@ -19,7 +19,7 @@ export default function ValidatorInput({
 }: {
   isApp: boolean
   isLoading?: boolean
-  projectPathname: string
+  projectPathname?: string
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()

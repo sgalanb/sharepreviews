@@ -7,7 +7,7 @@ import VisualEditorPreview from '@/app/(editor)/[project]/templates/[templateId]
 import VisualEditorRightPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-right-panel'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function VisualEditor({
   userId,
@@ -45,9 +45,127 @@ export default function VisualEditor({
   }, [])
 
   const [selectedLayer, setSelectedLayer] = useState<LayerType | undefined>()
+  const [multiSelectedLayers, setMultiSelectedLayers] = useState<LayerType[]>(
+    []
+  )
+
+  // Handle Keyboard
+  const [spacePressed, setSpacePressed] = useState<boolean>(false)
+  const [shiftPressed, setShiftPressed] = useState<boolean>(false)
+
+  useEffect(() => {
+    const handleKeyDown = (e: any) => {
+      if (e.code === 'Space') {
+        setSpacePressed(true)
+      } else if (e.code === 'Escape') {
+        setSelectedLayer(undefined)
+        setMultiSelectedLayers([])
+      } else if (e.code === 'ShiftLeft') {
+        setShiftPressed(true)
+      }
+    }
+    const handleKeyUp = (e: any) => {
+      if (e.code === 'Space') {
+        setSpacePressed(false)
+      } else if (e.code === 'Escape') {
+        setSelectedLayer(undefined)
+        setMultiSelectedLayers([])
+      } else if (e.code === 'ShiftLeft') {
+        setShiftPressed(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keyup', handleKeyUp)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleOnLayerClick = (layer: LayerType) => {
+    if (shiftPressed) {
+      if (
+        multiSelectedLayers.includes(layer) &&
+        multiSelectedLayers.length > 2
+      ) {
+        setMultiSelectedLayers(
+          multiSelectedLayers.filter((l) => l.id !== layer.id)
+        )
+        if (selectedLayer?.id === layer.id) {
+          setSelectedLayer(undefined)
+        }
+      } else if (
+        multiSelectedLayers.includes(layer) &&
+        multiSelectedLayers.length === 2
+      ) {
+        setMultiSelectedLayers(
+          multiSelectedLayers.filter((l) => l.id !== layer.id)
+        )
+        setSelectedLayer(multiSelectedLayers.find((l) => l.id !== layer.id))
+      } else if (multiSelectedLayers.length > 0) {
+        setMultiSelectedLayers([...multiSelectedLayers, layer])
+      } else if (selectedLayer) {
+        setMultiSelectedLayers([selectedLayer, layer])
+      } else {
+        setMultiSelectedLayers([layer])
+        setSelectedLayer(layer)
+      }
+    } else {
+      setSelectedLayer(layer)
+      setMultiSelectedLayers([])
+    }
+  }
+
+  // Check if there are unsaved changes
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false)
+  useEffect(() => {
+    if (
+      !template?.id ||
+      (JSON.stringify(layers) === template?.layersData &&
+        canvasBackgroundColor === template?.canvasBackgroundColor &&
+        originalTemplate?.name === template?.name)
+    ) {
+      setHasUnsavedChanges(false)
+    } else {
+      setHasUnsavedChanges(true)
+    }
+  }, [
+    canvasBackgroundColor,
+    layers,
+    originalTemplate,
+    template?.canvasBackgroundColor,
+    template?.id,
+    template?.layersData,
+    template?.name,
+  ])
+
+  // Prevent leaving the page if there are unsaved changes
+  useEffect(() => {
+    if (!hasUnsavedChanges) return
+    function handleOnBeforeUnload(e: BeforeUnloadEvent) {
+      e.preventDefault()
+      return (e.returnValue = '')
+    }
+    window.addEventListener('beforeunload', handleOnBeforeUnload, {
+      capture: true,
+    })
+    return () =>
+      window.removeEventListener('beforeunload', handleOnBeforeUnload, {
+        capture: true,
+      })
+  }, [hasUnsavedChanges])
+
+  const promptUnsavedChanges = useCallback(() => {
+    return window.confirm(
+      'You have unsaved changes. Are you sure you want to leave?'
+    )
+  }, [])
 
   return (
-    <div className="grid h-full w-full grid-cols-[280px,1fr,280px] grid-rows-[53px,1fr]">
+    <div className="grid h-full w-full grid-cols-[280px,1fr,280px] overflow-hidden">
       {/* HEADER */}
       <VisualEditorHeader
         layers={layers}
@@ -55,6 +173,8 @@ export default function VisualEditor({
         template={template}
         canvasBackgroundColor={canvasBackgroundColor}
         originalTemplate={originalTemplate}
+        hasUnsavedChanges={hasUnsavedChanges}
+        promptUnsavedChanges={promptUnsavedChanges}
       />
       {/* LEFT PANEL */}
       <VisualEditorLeftPanel
@@ -62,9 +182,12 @@ export default function VisualEditor({
         setLayers={setLayers}
         selectedLayer={selectedLayer}
         setSelectedLayer={setSelectedLayer}
+        multiSelectedLayers={multiSelectedLayers}
+        setMultiSelectedLayers={setMultiSelectedLayers}
         canvasBackgroundColor={canvasBackgroundColor}
         setCanvasBackgroundColor={setCanvasBackgroundColor}
         isLoadingTemplate={!template}
+        handleOnLayerClick={handleOnLayerClick}
       />
       {/* PREVIEW */}
       <VisualEditorPreview
@@ -72,8 +195,13 @@ export default function VisualEditor({
         setLayers={setLayers}
         selectedLayer={selectedLayer}
         setSelectedLayer={setSelectedLayer}
+        multiSelectedLayers={multiSelectedLayers}
+        setMultiSelectedLayers={setMultiSelectedLayers}
         canvasBackgroundColor={canvasBackgroundColor}
         setCanvasBackgroundColor={setCanvasBackgroundColor}
+        spacePressed={spacePressed}
+        shiftPressed={shiftPressed}
+        handleOnLayerClick={handleOnLayerClick}
       />
       {/* RIGHT PANEL */}
       <VisualEditorRightPanel
@@ -84,6 +212,8 @@ export default function VisualEditor({
         setLayers={setLayers}
         selectedLayer={selectedLayer}
         setSelectedLayer={setSelectedLayer}
+        multiSelectedLayers={multiSelectedLayers}
+        setMultiSelectedLayers={setMultiSelectedLayers}
       />
     </div>
   )

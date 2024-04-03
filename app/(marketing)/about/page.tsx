@@ -1,5 +1,4 @@
 import Footer from '@/app/(marketing)/footer'
-import dayjs from 'dayjs'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,20 +11,15 @@ export default async function AboutPage() {
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-20 px-4 pt-20">
       <div className="flex w-full max-w-3xl flex-col items-start justify-start gap-4 self-center lg:px-4">
-        <span className="self-center text-muted-foreground">
+        {/* <span className="self-center text-muted-foreground">
           {dayjs('03/29/2024').format('MMM D, YYYY')}
-        </span>
+        </span> */}
         <h1 className="marketing-title text-balance text-center">
           A platform to generate and manage social cards
         </h1>
         <p className="marketing-subtitle w-full text-balance text-center text-muted-foreground">
-          Hi, I&apos;m Santiago and I think that{' '}
-          <strong className="font-medium text-foreground">
-            social cards are one of the most undervalued aspects of digital
-            marketing
-          </strong>
-          . That&apos;s why I created{' '}
-          <span className="font-medium text-primary">sharepreviews</span>.
+          Hi, I&apos;m Santiago and I think that social cards are one of the
+          most undervalued aspects of digital marketing.
         </p>
       </div>
 
@@ -33,7 +27,7 @@ export default async function AboutPage() {
         <div className="flex flex-col items-start justify-start gap-2">
           <h2 className="marketing-third-title">What are social cards?</h2>
           <p className="marketing-subtitle w-full text-muted-foreground">
-            Also know as OG cards or OpenGraph cards, they are the{' '}
+            Also know as OpenGraph cards, they are the{' '}
             <strong className="font-medium text-foreground">
               previews diplayed when a URL is shared on a social media
             </strong>{' '}
