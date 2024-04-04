@@ -10,6 +10,14 @@ import { NextRequest } from 'next/server'
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
+  // Only allow Vercel to access this endpoint
+  const authHeader = req.headers.get('authorization')
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response(`Not authorized.`, {
+      status: 500,
+    })
+  }
+
   try {
     const projectsUsage = await getAllProjectsUsage()
     const formattedProjectsUsage = formatProjectUsage(projectsUsage ?? [])
