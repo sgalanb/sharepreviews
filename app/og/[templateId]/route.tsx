@@ -1,4 +1,5 @@
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
+import { FREE_IMAGES } from '@/app/constants'
 import {
   getProjectRedis,
   getTemplateInfoRedis,
@@ -15,8 +16,6 @@ import { NextRequest } from 'next/server'
 
 export const runtime = 'edge'
 export const revalidate = 60
-
-const FREE_IMAGES = 500
 
 const adminKey = process.env.ADMIN_VARIABLES_ENCRYPTION_KEY
 
@@ -277,6 +276,18 @@ export async function GET(req: NextRequest) {
                       lineHeight: layer.lineHeight,
                       color: layer.color,
                       opacity: layer.opacity,
+                      textAlign:
+                        layer.alignHorizontal === 'center'
+                          ? 'center'
+                          : layer.alignHorizontal === 'flex-end'
+                            ? 'right'
+                            : 'left',
+                      verticalAlign:
+                        layer.alignVertical === 'center'
+                          ? 'middle'
+                          : layer.alignVertical === 'flex-end'
+                            ? 'bottom'
+                            : 'top',
                     }}
                   >
                     {layer.conditionalValue

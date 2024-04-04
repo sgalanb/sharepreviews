@@ -201,7 +201,7 @@ export default function PreviewValidator({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {isApp && (
+        {isApp ? (
           <Link
             href={isApp ? `/${projectPathname}/validator` : '/card-validator'}
             className="flex items-center justify-center text-muted-foreground"
@@ -209,16 +209,17 @@ export default function PreviewValidator({
             <ChevronLeft className="ml-[-4px]" />
             <span className="self-center text-sm">Back</span>
           </Link>
+        ) : (
+          <div className="flex w-full flex-col items-center justify-start gap-4 py-8">
+            <h1 className="marketing-title text-balance text-center">
+              Preview Card Validator
+            </h1>
+            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
+              Check how your links look when shared. Validate that you have the
+              right metatags configured so your images are displayed correctly.
+            </p>
+          </div>
         )}
-        <div className="flex w-full flex-col items-center justify-start gap-4 py-8">
-          <h1 className="marketing-title text-balance text-center">
-            Preview Card Validator
-          </h1>
-          <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
-            Check how your links look when shared. Validate that you have the
-            right metatags configured so your images are displayed correctly.
-          </p>
-        </div>
         <div className="mb-4 flex w-full items-center justify-between">
           <h1 className="title line-clamp-4 break-all">
             {titleUrl || 'Preview Card Validator'}

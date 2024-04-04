@@ -22,13 +22,13 @@ export default function ValidatorLaunchScreen({
         <div
           className={`${
             isApp ? 'h-full p-4 lg:gap-12 lg:p-12' : 'min-h-[calc(100dvh-72px)]'
-          } flex w-full max-w-7xl flex-col items-center justify-center gap-4`}
+          } flex w-full flex-col items-center justify-center gap-4`}
         >
-          <div className="flex w-full flex-col items-center justify-start gap-4 py-8">
+          <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-4 py-8">
             <h1 className="marketing-title text-balance text-center">
               Social Card Validator
             </h1>
-            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
+            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-40">
               Check how your links look when shared. Validate that you have the
               right metatags in place so your cards are displayed correctly.
             </p>

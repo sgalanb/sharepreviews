@@ -43,7 +43,7 @@ export default function AddTemplateToProjectButton({
           {isLoading ? (
             <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
           ) : (
-            'Use template'
+            'Add to...'
           )}
         </Button>
       </PopoverTrigger>

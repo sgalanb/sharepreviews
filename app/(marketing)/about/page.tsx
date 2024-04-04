@@ -23,7 +23,7 @@ export default async function AboutPage() {
         </p>
       </div>
 
-      <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-8">
+      <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-10">
         <div className="flex flex-col items-start justify-start gap-2">
           <h2 className="marketing-third-title">What are social cards?</h2>
           <p className="marketing-subtitle w-full text-muted-foreground">

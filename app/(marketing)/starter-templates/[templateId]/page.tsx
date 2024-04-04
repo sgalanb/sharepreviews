@@ -63,7 +63,7 @@ export default async function StarterTemplatePage({
               ) : (
                 <Button asChild>
                   <Link href={authorizationUrl} className="mt-4 w-full">
-                    Use template
+                    Log in to customize
                   </Link>
                 </Button>
               )}

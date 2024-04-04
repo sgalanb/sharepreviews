@@ -64,7 +64,7 @@ export default async function StarterTemplatesPage() {
       </div>
       <Tabs
         defaultValue="all"
-        className="flex w-full flex-col items-center justify-center gap-4"
+        className="flex w-full flex-col items-center justify-center gap-10"
       >
         <TabsList className="flex w-full items-center justify-start overflow-x-auto border lg:w-fit">
           <TabsTrigger value="all" className="h-full py-[5px]">

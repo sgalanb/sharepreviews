@@ -4,13 +4,16 @@
 
 @layer components {
   .title {
-    @apply text-3xl font-semibold tracking-tight;
-  }
-  .subtitle {
-    @apply text-xl font-light tracking-tight;
+    @apply text-3xl font-bold tracking-tight;
   }
   .second-title {
-    @apply text-2xl font-semibold tracking-tight;
+    @apply text-2xl font-medium tracking-tight;
+  }
+  .third-title {
+    @apply text-xl font-medium tracking-tight;
+  }
+  .subtitle {
+    @apply text-lg font-normal leading-6 tracking-tight;
   }
   .marketing-title {
     @apply text-4xl font-extrabold tracking-tight;

@@ -244,6 +244,18 @@ export default function VisualEditorPreview({
                         lineHeight: layer.lineHeight,
                         color: layer.color,
                         opacity: layer.opacity,
+                        textAlign:
+                          layer.alignHorizontal === 'center'
+                            ? 'center'
+                            : layer.alignHorizontal === 'flex-end'
+                              ? 'right'
+                              : 'left',
+                        verticalAlign:
+                          layer.alignVertical === 'center'
+                            ? 'middle'
+                            : layer.alignVertical === 'flex-end'
+                              ? 'bottom'
+                              : 'top',
                       }}
                     >
                       {layer.conditionalValue
