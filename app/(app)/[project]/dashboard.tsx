@@ -267,7 +267,7 @@ export default function OverviewDashboard({
                           key={template.id}
                           className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
                         >
-                          <span className="text-neutral-600">
+                          <span className="text-neutral-600 dark:text-neutral-300">
                             {template.name}
                           </span>
                           <span className="font-medium">
@@ -456,7 +456,7 @@ export default function OverviewDashboard({
                             key={template.id}
                             className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
                           >
-                            <span className="text-neutral-600">
+                            <span className="text-neutral-600 dark:text-neutral-300">
                               {template.name}
                             </span>
                             <span className="font-medium">
