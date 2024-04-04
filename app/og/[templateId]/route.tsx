@@ -14,6 +14,7 @@ import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
 export const runtime = 'edge'
+export const revalidate = 60
 
 const FREE_IMAGES = 500
 
@@ -83,8 +84,6 @@ export async function GET(req: NextRequest) {
     const usedFonts = templateLayers
       .filter((layer) => layer.type === 'text')
       .map((layer: LayerType) => (layer.type === 'text' ? layer.family : ''))
-
-    console.log(usedFonts)
 
     const interThin = usedFonts.includes('inter-thin')
       ? ({
