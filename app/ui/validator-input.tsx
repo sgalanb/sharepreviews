@@ -14,10 +14,12 @@ import { useRef, useState } from 'react'
 
 export default function ValidatorInput({
   isApp,
+  isHome,
   isLoading,
   projectPathname,
 }: {
   isApp: boolean
+  isHome?: boolean
   isLoading?: boolean
   projectPathname?: string
 }) {
@@ -66,7 +68,7 @@ export default function ValidatorInput({
           name="url"
           id="url"
           type="text"
-          autoFocus
+          autoFocus={!isHome}
           defaultValue={urlWithoutWWWOrProtocol || ''}
           placeholder="Enter a URL"
           aria-invalid="true"
