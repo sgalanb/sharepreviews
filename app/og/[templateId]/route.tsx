@@ -364,7 +364,7 @@ export async function GET(req: NextRequest) {
           {
             name: 'Inter Regular',
             data: await fetch(
-              new URL('../../../../assets/inter-regular.otf', import.meta.url)
+              new URL('../../../assets/inter-regular.otf', import.meta.url)
             ).then((res) => res.arrayBuffer() as any),
             weight: 400,
             style: 'normal',
