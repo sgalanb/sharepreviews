@@ -60,6 +60,7 @@ export default function NewTemplateDialog({
                 name="name"
                 type="text"
                 containerClassName="col-span-5"
+                data-1p-ignore
               />
             </div>
           </div>

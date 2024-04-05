@@ -4,7 +4,6 @@ import { createProjectAction } from '@/app/actions/actions'
 import { Button } from '@/app/ui/components/Button'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -15,10 +14,11 @@ import {
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
 import Spinner from '@/app/ui/components/Spinner'
-import { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 
-export default function NewProjectDialog({
+export default function CreateFirstProjectDialog({
   trigger,
   userId,
   reservedNames,
@@ -27,18 +27,19 @@ export default function NewProjectDialog({
   userId: string
   reservedNames: string[]
 }) {
+  const router = useRouter()
   const [isOpen, setOpen] = useState<boolean>(false)
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    setOpen(true)
+  }, [])
 
-  const closeDialog = () => {
-    setOpen(false)
-  }
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const [error, setError] = useState<boolean>(false)
 
   return (
-    <Dialog open={isOpen} onOpenChange={setOpen}>
+    <Dialog open={isOpen}>
       <DialogTrigger asChild onClick={() => setOpen(true)}>
         {trigger}
       </DialogTrigger>
@@ -53,21 +54,21 @@ export default function NewProjectDialog({
                 inputRef?.current?.focus()
                 return
               }
-
               createProjectAction({
                 name,
                 userId,
               }).then(() => {
-                closeDialog()
+                router.push('/')
               })
             } else {
               inputRef?.current?.focus()
             }
           }}
+          autoComplete="off"
         >
           <DialogHeader>
             <DialogTitle>New project</DialogTitle>
-            <DialogDescription>Create a new project.</DialogDescription>
+            <DialogDescription>Create your first project.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-6 items-center gap-4">
@@ -81,6 +82,7 @@ export default function NewProjectDialog({
                 type="text"
                 containerClassName="col-span-5"
                 data-1p-ignore
+                onChange={() => setError(false)}
               />
             </div>
           </div>
@@ -90,11 +92,6 @@ export default function NewProjectDialog({
                 This project name is reserved. Please choose another name.
               </span>
             )}
-            <DialogClose>
-              <Button type="button" variant="outline">
-                Close
-              </Button>
-            </DialogClose>
             <CreateButton />
           </DialogFooter>
         </form>

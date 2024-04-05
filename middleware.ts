@@ -20,7 +20,12 @@ export async function middleware(request: NextRequest) {
     const userProjects = await db.query['projects'].findMany({
       where: eq(projects.userId, user?.id!),
     })
+    const haveProjects = userProjects.length > 0
     const firstProject = userProjects[0]
+
+    if (!haveProjects) {
+      return NextResponse.redirect(new URL('/create-project', request.url))
+    }
 
     return NextResponse.redirect(
       new URL(`/${firstProject.pathname}`, request.url)

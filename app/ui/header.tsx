@@ -74,11 +74,13 @@ export default function Header({
   isApp,
   user,
   userProjects,
+  reservedNames,
 }: {
   authorizationUrl: string
   isApp: boolean
   user: User | undefined
   userProjects?: ProjectType[]
+  reservedNames?: string[]
 }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -634,6 +636,7 @@ export default function Header({
                                   New project
                                 </div>
                               }
+                              reservedNames={reservedNames ?? []}
                             />
                           </CommandItem>
                         </CommandGroup>

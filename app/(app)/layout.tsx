@@ -2,6 +2,7 @@ import { getUserProjects } from '@/app/db/operations/projects'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
 import Header from '@/app/ui/header'
+import { get } from '@vercel/edge-config'
 import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
@@ -19,6 +20,7 @@ export default async function AppLayout({
 }) {
   const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
+  const reservedNames = (await get('reserved-project-names')) as string[]
 
   const userProjects = await getUserProjects(user?.id ?? '')
 
@@ -38,6 +40,7 @@ export default async function AppLayout({
                 isApp
                 user={user}
                 userProjects={userProjects}
+                reservedNames={reservedNames}
               />
               <main className="mx-auto w-full rounded-md lg:pb-2 lg:pr-2 lg:pt-2">
                 <div className="mx-auto w-full rounded-md lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
