@@ -206,7 +206,7 @@ export default function VisualEditorPreview({
                         layer.heightType === 'fixed'
                           ? layer.height
                           : 'fit-content',
-                      wordBreak: 'break-all',
+                      wordBreak: 'break-word',
                       overflow: 'hidden',
                       transform: `rotate(${layer.rotation}deg)`,
                       // Background styles

@@ -43,6 +43,7 @@ interface TextLayerInterface extends LayerInterface {
   alignHorizontal: 'flex-start' | 'center' | 'flex-end'
   alignVertical: 'flex-start' | 'center' | 'flex-end'
   //balance: boolean // text wrap balance, wait for satori to support
+  // TODO?: wordBreak: 'normal' | 'break-all' | 'break-word'
   color: string
   background: boolean
   bgColor: string

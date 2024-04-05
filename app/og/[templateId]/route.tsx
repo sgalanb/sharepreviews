@@ -255,7 +255,7 @@ export async function GET(req: NextRequest) {
                     ...(layer.heightType === 'fixed'
                       ? { height: layer.height }
                       : {}),
-                    wordBreak: 'break-all',
+                    wordBreak: 'break-word',
                     overflow: 'hidden',
                     transform: `rotate(${layer.rotation}deg)`,
                     // Background styles
