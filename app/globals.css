@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .title {
+    @apply text-3xl font-bold tracking-tight;
+  }
+  .second-title {
+    @apply text-2xl font-medium tracking-tight;
+  }
+  .third-title {
+    @apply text-xl font-medium tracking-tight;
+  }
+  .subtitle {
+    @apply text-lg font-normal leading-6 tracking-tight;
+  }
+  .marketing-title {
+    @apply text-4xl font-extrabold tracking-tight;
+  }
+  .marketing-second-title {
+    @apply text-3xl font-semibold tracking-tight;
+  }
+  .marketing-third-title {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  .marketing-subtitle {
+    @apply text-lg font-normal leading-6 tracking-tight;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%; /* #ffffff */
@@ -38,7 +65,7 @@
     --secondary: 0 0% 25%; /* #404040 neutral-700 */
     --secondary-foreground: 0 0% 100%; /* ffffff */
     --muted: 0 0% 25%; /* #404040 neutral-700 */
-    --muted-foreground: 24 5.4% 63.9%;
+    --muted-foreground: 0 0% 64%; /* #a3a3a3 neutral-400 */
     --accent: 0 0% 25%; /* #404040 neutral-700 */
     --accent-foreground: 0 0% 100%; /* ffffff */
     --destructive: 0 72.2% 50.6%; /* #dc2626 */
@@ -51,9 +78,9 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border ring-ring;
   }
   body {
-    @apply scroll-smooth bg-background text-foreground selection:bg-primary/50;
+    @apply scroll-smooth bg-background text-sm text-foreground selection:bg-primary/50;
   }
 }

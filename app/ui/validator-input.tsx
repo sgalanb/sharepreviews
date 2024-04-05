@@ -10,9 +10,19 @@ import {
   getUrlFromStringWithoutWWWOrProtocol,
 } from '@/app/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
-export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
+export default function ValidatorInput({
+  isApp,
+  isHome,
+  isLoading,
+  projectPathname,
+}: {
+  isApp: boolean
+  isHome?: boolean
+  isLoading?: boolean
+  projectPathname?: string
+}) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
@@ -31,29 +41,34 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
     )
 
     if (!!normalizedUrl) {
-      router.push(`${eventUrl ? `/validator?url=${normalizedUrl}` : ''}`)
+      router.push(
+        `${
+          eventUrl
+            ? isApp
+              ? `/${projectPathname}/validator?url=${normalizedUrl}`
+              : `/card-validator?url=${normalizedUrl}`
+            : ''
+        }`
+      )
     } else {
       setInputError(true)
     }
   }
 
   const inputRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    inputRef?.current?.select()
-  }, [])
 
   return (
     <form
       onSubmit={onSubmitSite}
-      className="flex w-full flex-col gap-1 lg:max-w-xl"
+      className="flex w-full flex-col gap-2 lg:max-w-xl lg:flex-row"
     >
-      <div className="flex w-full gap-2">
+      <div className="flex w-full flex-col gap-1">
         <Input
           ref={inputRef}
           name="url"
           id="url"
           type="text"
-          autoFocus
+          autoFocus={!isHome}
           defaultValue={urlWithoutWWWOrProtocol || ''}
           placeholder="Enter a URL"
           aria-invalid="true"
@@ -65,19 +80,19 @@ export default function ValidatorInput({ isLoading }: { isLoading?: boolean }) {
               https://
             </Label>
           }
-          className="bg-card"
+          className="bg-card pl-[4.75rem]"
         />
-        <Button type="submit" className="min-w-24">
-          {isLoading ? (
-            <Spinner className="h-7 w-7 fill-primary-foreground text-primary-foreground/25" />
-          ) : (
-            'Validate'
-          )}
-        </Button>
+        {inputError && (
+          <div className="text-sm text-red-500">Please enter a valid URL.</div>
+        )}
       </div>
-      {inputError && (
-        <div className="text-sm text-red-500">Please enter a valid URL.</div>
-      )}
+      <Button type="submit" className="min-w-24">
+        {isLoading ? (
+          <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
+        ) : (
+          'Validate'
+        )}
+      </Button>
     </form>
   )
 }

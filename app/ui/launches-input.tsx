@@ -1,6 +1,6 @@
 'use client'
 
-import { addContactToGeneralAudience } from '@/app/actions'
+import { addContactToGeneralAudience } from '@/app/actions/actions'
 import { Button } from '@/app/ui/components/Button'
 import { Input } from '@/app/ui/components/Input'
 import {
@@ -85,7 +85,7 @@ export default function LaunchesInput() {
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <span>Use another email</span>
+                <span className="font-medium">Use another email</span>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

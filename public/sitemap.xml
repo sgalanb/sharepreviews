@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-     <url>
+      <url>
        <loc>https://sharepreviews.com</loc>
-     </url>
-        <url>
-        <loc>https://sharepreviews.com/validator</loc>
-        </url>
-        <url>
+      </url>
+
+      <url>
+        <loc>https://sharepreviews.com/about</loc>
+        <lastmod>2024-03-29</lastmod>
+      </url>
+
+      <url>
+        <loc>https://sharepreviews.com/starter-templates</loc>
+      </url>
+
+      <url>
+        <loc>https://sharepreviews.com/card-validator</loc>
+      </url>
+
+      <url>
+        <loc>https://sharepreviews.com/pricing</loc>
+      </url>
+
+      <url>
         <loc>https://sharepreviews.com/blog</loc>
-        </url>
-        <url>
-        <loc>https://sharepreviews.com/blog/everything-you-should-know-about-social-meta-tags</loc>
+      </url>
+
+      <url>
+        <loc>https://sharepreviews.com/blog/everything-you-should-know-about-social-card-metatags</loc>
         <lastmod>2024-02-15</lastmod>
-        </url>
+      </url>
    </urlset>
