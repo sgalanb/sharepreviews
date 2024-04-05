@@ -245,8 +245,9 @@ export default function VisualEditorRightPanel({
                   }
                   className="pl-10"
                 />
-                {selectedLayer.type === 'text' &&
-                selectedLayer.widthType === 'fixed' ? (
+                {selectedLayer.type !== 'text' ||
+                (selectedLayer.type === 'text' &&
+                  selectedLayer.widthType === 'fixed') ? (
                   <Input
                     id="widthFixed"
                     type="number"
@@ -300,8 +301,9 @@ export default function VisualEditorRightPanel({
                     className="pl-10"
                   />
                 )}
-                {selectedLayer.type === 'text' &&
-                selectedLayer.heightType === 'fixed' ? (
+                {selectedLayer.type !== 'text' ||
+                (selectedLayer.type === 'text' &&
+                  selectedLayer.heightType === 'fixed') ? (
                   <Input
                     id="heightFixed"
                     type="number"
