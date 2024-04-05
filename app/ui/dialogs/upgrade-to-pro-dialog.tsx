@@ -67,7 +67,12 @@ export default function UpgradeToProDialog({
           </DialogHeader>
           <Card className="flex flex-col items-start justify-start gap-4 p-4">
             <span className="text-muted-foreground">sharepreviews Pro</span>
-            <span className="title">$24 / mo</span>
+            <div className="flex items-end justify-start gap-1">
+              <span className="title leading-none">$24</span>
+              <span className="pb-[7.5px] leading-3 text-muted-foreground">
+                / mo
+              </span>
+            </div>
             <div className="flex w-full flex-col items-start justify-start gap-2">
               <TooltipProvider>
                 <div className="flex items-center justify-start gap-1">
@@ -106,7 +111,7 @@ export default function UpgradeToProDialog({
             <UpgradeButton />
           </Card>
           <Link
-            href="/contact"
+            href="mailto:santiago@sharepreviews.com"
             target="_blank"
             className="w-full text-center text-muted-foreground underline-offset-2 hover:underline"
           >

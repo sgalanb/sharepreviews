@@ -1,10 +1,17 @@
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
+import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { redirect } from 'next/navigation'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+  },
+}
 
 export default async function EditorLayout({
   children,

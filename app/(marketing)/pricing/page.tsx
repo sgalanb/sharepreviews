@@ -137,7 +137,7 @@ export default async function AboutPage() {
         </div>
 
         <Link
-          href="/contact"
+          href="mailto:santiago@sharepreviews.com"
           target="_blank"
           className="w-full text-center text-muted-foreground underline-offset-2 hover:underline"
         >

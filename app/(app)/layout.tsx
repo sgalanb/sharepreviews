@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'sharepreviews',
+  robots: {
+    index: false,
+  },
 }
 
 export default async function AppLayout({
