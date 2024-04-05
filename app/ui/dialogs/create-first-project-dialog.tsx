@@ -67,8 +67,11 @@ export default function CreateFirstProjectDialog({
           autoComplete="off"
         >
           <DialogHeader>
-            <DialogTitle>New project</DialogTitle>
-            <DialogDescription>Create your first project.</DialogDescription>
+            <DialogTitle>Create a new project</DialogTitle>
+            <DialogDescription>
+              Create a project to store image templates for your website, app,
+              or business.
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-6 items-center gap-4">

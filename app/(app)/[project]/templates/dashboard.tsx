@@ -83,8 +83,8 @@ export default function TemplatesDashboard({
         <div className="flex flex-col justify-between gap-1">
           <span className="title leading-10">Templates</span>
           <p className="text-muted-foreground">
-            Templates can generate different images based the variables you
-            provide. {` `}
+            Templates can generate different social card images based the
+            variables you provide. {` `}
             <Button variant="link" asChild>
               <Link
                 href="/starter-templates"
