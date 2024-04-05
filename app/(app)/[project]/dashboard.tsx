@@ -179,62 +179,83 @@ export default function OverviewDashboard({
             </Card>
             {/* Latest Images*/}
             <Card className="col-span-2 h-[23.5rem]">
-              <CardHeader className="h-[4.5rem] border-b pb-4">
+              <CardHeader className="h-[4.5rem] justify-center border-b pb-4">
                 <div className="flex items-center justify-between">
                   <span className="subtitle font-medium">Latest Images</span>
 
-                  <Select
-                    value={lastestImagesSelectedTemplate}
-                    onValueChange={(value) =>
-                      setLastestImagesSelectedTemplate(value)
-                    }
-                  >
-                    <SelectTrigger className="w-fit gap-2">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent align="end">
-                      <SelectGroup>
-                        {projectTemplates?.map((template) => (
-                          <>
-                            {template.id && (
-                              <SelectItem value={template.id} key={template.id}>
-                                {template.name}
-                              </SelectItem>
-                            )}
-                          </>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  {projectTemplates?.length > 0 && (
+                    <Select
+                      value={lastestImagesSelectedTemplate}
+                      onValueChange={(value) =>
+                        setLastestImagesSelectedTemplate(value)
+                      }
+                    >
+                      <SelectTrigger className="w-fit gap-2">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent align="end">
+                        <SelectGroup>
+                          {projectTemplates?.map((template) => (
+                            <>
+                              {template.id && (
+                                <SelectItem
+                                  value={template.id}
+                                  key={template.id}
+                                >
+                                  {template.name}
+                                </SelectItem>
+                              )}
+                            </>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
                 </div>
               </CardHeader>
               <CardContent className="flex h-[19rem] flex-col gap-2 pr-0 pt-4">
                 {isLoadingTemplates ? (
                   <div className="h-full animate-pulse rounded-md bg-accent pr-4 duration-1000" />
                 ) : (
-                  <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {projectTemplates
-                      ?.find(
-                        (template) =>
-                          template.id === lastestImagesSelectedTemplate
-                      )
-                      ?.urls.slice(0, 12)
-                      .map((url, index) => (
-                        <Link
-                          href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
-                          target="_blank"
-                          key={url + index}
-                          className="rounded-md border"
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
-                            className="aspect-[1.91/1] w-full rounded-sm object-cover"
-                            alt=""
-                          />
-                        </Link>
-                      ))}
-                  </div>
+                  <>
+                    {projectTemplates?.length > 0 ? (
+                      <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {projectTemplates
+                          ?.find(
+                            (template) =>
+                              template.id === lastestImagesSelectedTemplate
+                          )
+                          ?.urls.slice(0, 12)
+                          .map((url, index) => (
+                            <Link
+                              href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
+                              target="_blank"
+                              key={url + index}
+                              className="rounded-md border"
+                            >
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
+                                className="aspect-[1.91/1] w-full rounded-sm object-cover"
+                                alt=""
+                              />
+                            </Link>
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <span className="text-neutral-400 dark:text-neutral-500">
+                          No images generated.{' '}
+                          <Link
+                            href={`/${project.pathname}/templates`}
+                            className="text-primary hover:underline hover:underline-offset-4"
+                          >
+                            Create a template.
+                          </Link>
+                        </span>
+                      </div>
+                    )}
+                  </>
                 )}
               </CardContent>
             </Card>
@@ -256,26 +277,42 @@ export default function OverviewDashboard({
                       ))}
                   </div>
                 ) : (
-                  <div
-                    className="flex h-full flex-col gap-2 overflow-auto pr-4"
-                    key="loaded"
-                  >
-                    {projectTemplates
-                      .sort((a, b) => b.urls.length - a.urls.length)
-                      .map((template) => (
-                        <div
-                          key={template.id}
-                          className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
-                        >
-                          <span className="text-neutral-600 dark:text-neutral-300">
-                            {template.name}
-                          </span>
-                          <span className="font-medium">
-                            {template.urls.length}
-                          </span>
-                        </div>
-                      ))}
-                  </div>
+                  <>
+                    {projectTemplates?.length > 0 ? (
+                      <div
+                        className="flex h-full flex-col gap-2 overflow-auto pr-4"
+                        key="loaded"
+                      >
+                        {projectTemplates
+                          .sort((a, b) => b.urls.length - a.urls.length)
+                          .map((template) => (
+                            <div
+                              key={template.id}
+                              className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
+                            >
+                              <span className="text-neutral-600 dark:text-neutral-300">
+                                {template.name}
+                              </span>
+                              <span className="font-medium">
+                                {template.urls.length}
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <span className="text-neutral-400 dark:text-neutral-500">
+                          No templates created.{' '}
+                          <Link
+                            href={`/${project.pathname}/templates`}
+                            className="text-primary hover:underline hover:underline-offset-4"
+                          >
+                            Create a template.
+                          </Link>
+                        </span>
+                      </div>
+                    )}
+                  </>
                 )}
               </CardContent>
             </Card>
@@ -367,61 +404,79 @@ export default function OverviewDashboard({
                   <div className="flex items-center justify-between">
                     <span className="subtitle font-medium">Latest Images</span>
 
-                    <Select
-                      value={lastestImagesSelectedTemplate}
-                      onValueChange={(value) =>
-                        setLastestImagesSelectedTemplate(value)
-                      }
-                    >
-                      <SelectTrigger className="w-fit gap-2">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent align="end">
-                        <SelectGroup>
-                          {projectTemplates?.map((template) => (
-                            <>
-                              {template.id && (
-                                <SelectItem
-                                  value={template.id}
-                                  key={template.id}
-                                >
-                                  {template.name}
-                                </SelectItem>
-                              )}
-                            </>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                    {projectTemplates?.length > 0 && (
+                      <Select
+                        value={lastestImagesSelectedTemplate}
+                        onValueChange={(value) =>
+                          setLastestImagesSelectedTemplate(value)
+                        }
+                      >
+                        <SelectTrigger className="w-fit gap-2">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent align="end">
+                          <SelectGroup>
+                            {projectTemplates?.map((template) => (
+                              <>
+                                {template.id && (
+                                  <SelectItem
+                                    value={template.id}
+                                    key={template.id}
+                                  >
+                                    {template.name}
+                                  </SelectItem>
+                                )}
+                              </>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="flex h-[19rem] flex-col gap-2 pr-0 pt-4">
                   {isLoadingTemplates ? (
                     <div className="h-full animate-pulse rounded-md bg-accent pr-4 duration-1000" />
                   ) : (
-                    <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {projectTemplates
-                        ?.find(
-                          (template) =>
-                            template.id === lastestImagesSelectedTemplate
-                        )
-                        ?.urls.slice(0, 12)
-                        .map((url, index) => (
-                          <Link
-                            href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
-                            target="_blank"
-                            key={url + index}
-                            className="rounded-md border"
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
-                              className="aspect-[1.91/1] w-full rounded-sm object-cover"
-                              alt=""
-                            />
-                          </Link>
-                        ))}
-                    </div>
+                    <>
+                      {projectTemplates?.length > 0 ? (
+                        <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
+                          {projectTemplates
+                            ?.find(
+                              (template) =>
+                                template.id === lastestImagesSelectedTemplate
+                            )
+                            ?.urls.slice(0, 12)
+                            .map((url, index) => (
+                              <Link
+                                href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
+                                target="_blank"
+                                key={url + index}
+                                className="rounded-md border"
+                              >
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
+                                  className="aspect-[1.91/1] w-full rounded-sm object-cover"
+                                  alt=""
+                                />
+                              </Link>
+                            ))}
+                        </div>
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <span className="text-neutral-400 dark:text-neutral-500">
+                            No images generated.{' '}
+                            <Link
+                              href={`/${project.pathname}/templates`}
+                              className="text-primary hover:underline hover:underline-offset-4"
+                            >
+                              Create a template.
+                            </Link>
+                          </span>
+                        </div>
+                      )}
+                    </>
                   )}
                 </CardContent>
               </Card>
@@ -445,26 +500,42 @@ export default function OverviewDashboard({
                         ))}
                     </div>
                   ) : (
-                    <div
-                      className="flex h-full flex-col gap-2 overflow-auto pr-4"
-                      key="loaded"
-                    >
-                      {projectTemplates
-                        .sort((a, b) => b.urls.length - a.urls.length)
-                        .map((template) => (
-                          <div
-                            key={template.id}
-                            className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
-                          >
-                            <span className="text-neutral-600 dark:text-neutral-300">
-                              {template.name}
-                            </span>
-                            <span className="font-medium">
-                              {template.urls.length}
-                            </span>
-                          </div>
-                        ))}
-                    </div>
+                    <>
+                      {projectTemplates?.length > 0 ? (
+                        <div
+                          className="flex h-full flex-col gap-2 overflow-auto pr-4"
+                          key="loaded"
+                        >
+                          {projectTemplates
+                            .sort((a, b) => b.urls.length - a.urls.length)
+                            .map((template) => (
+                              <div
+                                key={template.id}
+                                className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
+                              >
+                                <span className="text-neutral-600 dark:text-neutral-300">
+                                  {template.name}
+                                </span>
+                                <span className="font-medium">
+                                  {template.urls.length}
+                                </span>
+                              </div>
+                            ))}
+                        </div>
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <span className="text-neutral-400 dark:text-neutral-500">
+                            No templates created.{' '}
+                            <Link
+                              href={`/${project.pathname}/templates`}
+                              className="text-primary hover:underline hover:underline-offset-4"
+                            >
+                              Create a template.
+                            </Link>
+                          </span>
+                        </div>
+                      )}
+                    </>
                   )}
                 </CardContent>
               </Card>

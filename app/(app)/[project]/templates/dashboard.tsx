@@ -300,8 +300,8 @@ export default function TemplatesDashboard({
               </>
             ) : (
               <Card className="flex h-80 max-h-64 w-full flex-col items-center justify-center gap-4">
-                <span className="text-muted-foreground">
-                  No templates found.
+                <span className="text-balance text-center text-muted-foreground">
+                  No templates created.
                 </span>
               </Card>
             )}
