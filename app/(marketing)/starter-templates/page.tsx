@@ -1,6 +1,7 @@
 import Footer from '@/app/(marketing)/footer'
 import SelectedTemplates from '@/app/(marketing)/starter-templates/selected-templates'
 import { getTemplateByArrayOfIds } from '@/app/db/operations/templates'
+import { getUser } from '@/app/lib/workos'
 import {
   Tabs,
   TabsContent,
@@ -37,6 +38,8 @@ const starterTemplatesIds = [
 ]
 
 export default async function StarterTemplatesPage() {
+  const { isAuthenticated } = await getUser()
+
   const starterTemplates = await getTemplateByArrayOfIds(
     starterTemplatesIds.map((template) => template.id)
   )
@@ -64,7 +67,7 @@ export default async function StarterTemplatesPage() {
       </div>
       <Tabs
         defaultValue="all"
-        className="flex w-full flex-col items-center justify-center gap-10"
+        className="mb-16 flex w-full flex-col items-center justify-center gap-10 lg:mb-0"
       >
         <TabsList className="flex w-full items-center justify-start overflow-x-auto border lg:w-fit">
           <TabsTrigger value="all" className="h-full py-[5px]">
@@ -128,7 +131,7 @@ export default async function StarterTemplatesPage() {
           </TabsContent>
         </div>
       </Tabs>
-      <Footer />
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }

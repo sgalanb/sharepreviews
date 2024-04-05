@@ -6,13 +6,20 @@ import X from '@/app/ui/svgs/social-icons/X'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Footer() {
+export default function Footer({
+  isAuthenticated,
+}: {
+  isAuthenticated: boolean
+}) {
   return (
-    <footer className="flex h-80 w-full items-center justify-between rounded-t-md border-x border-t">
-      <div className="flex aspect-square h-full flex-col items-start justify-between p-8">
+    <footer className="flex w-full flex-col items-center justify-between border-t lg:h-80 lg:flex-row lg:rounded-t-md lg:border-x">
+      <div className="flex h-full w-full flex-col items-center justify-between gap-8 p-4 py-8 lg:aspect-square lg:w-auto lg:items-start lg:gap-0 lg:p-8">
         {/* Logo */}
-        <div className=" flex flex-col items-start justify-start gap-4">
-          <Link href="/" className="flex items-center justify-center gap-2">
+        <div className=" flex flex-col items-center justify-start gap-4 lg:items-start">
+          <Link
+            href={isAuthenticated ? '/home' : '/'}
+            className="flex items-center justify-center gap-2"
+          >
             <Image src="/icon.svg" alt="SharePreviews" width={48} height={48} />
           </Link>
           <p className="text-muted-foreground">Built in Buenos Aires 🇦🇷</p>
@@ -50,8 +57,8 @@ export default function Footer() {
           </Button> */}
         </div>
       </div>
-      <Separator orientation="vertical" className="h-full" />
-      <div className="flex h-full w-full items-start justify-between p-8">
+      <Separator orientation="vertical" className="hidden h-full lg:block" />
+      <div className="grid h-full w-full grid-cols-2 items-start justify-between gap-8 px-4 py-8 lg:flex lg:gap-0 lg:p-8">
         {/* Product */}
         <div className="flex flex-col items-start justify-start gap-3">
           <h4 className="font-semibold">Product</h4>

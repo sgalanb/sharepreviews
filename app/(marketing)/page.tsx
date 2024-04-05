@@ -30,28 +30,30 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const { user } = await getUser()
+  const { isAuthenticated } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
 
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start px-4">
       {/* Main */}
       <div className="flex min-h-[calc(100dvh-72px)] flex-col items-center justify-between">
-        <div className="mt-20 flex h-fit min-w-full items-center justify-between">
+        <div className="mt-10 flex h-fit min-w-full flex-col items-center justify-between gap-4 lg:mt-20 lg:flex-row lg:gap-0">
           {/* Text */}
-          <div className="flex w-full flex-col items-start justify-center gap-4 p-20">
-            <h1 className="marketing-title text-balance">
+          <div className="flex w-full flex-col items-center justify-center gap-4 lg:order-1 lg:items-start lg:p-20">
+            <h1 className="marketing-title text-balance text-center lg:text-left">
               Auto Generate Social Card Images
             </h1>
-            <p className="marketing-subtitle text-muted-foreground">
+            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:text-left">
               Improve your website links engagement and click through rate.
             </p>
             <Button className="my-1.5" asChild>
-              <Link href={user ? '/' : authorizationUrl}>Start for Free</Link>
+              <Link href={isAuthenticated ? '/' : authorizationUrl}>
+                Start for Free
+              </Link>
             </Button>
           </div>
           {/* Images */}
-          <div className="flex w-full flex-col items-center justify-center gap-5 px-20">
+          <div className="flex w-full flex-col items-center justify-center gap-5 lg:order-2 lg:px-20">
             <Image
               src="/marketing/hero-1.png"
               alt=""
@@ -79,7 +81,7 @@ export default async function Home() {
       </div>
       {/* Design template*/}
       <div className="mt-12 flex w-full flex-col items-center justify-center gap-2">
-        <h2 className="marketing-second-title text-balance">
+        <h2 className="marketing-second-title text-balance text-center">
           Design your custom template
         </h2>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground">
@@ -102,7 +104,7 @@ export default async function Home() {
       </div>
       {/* Choose a template */}
       <div className="mt-20 flex w-full flex-col items-center justify-center gap-2">
-        <h2 className="marketing-second-title text-balance">
+        <h2 className="marketing-second-title text-balance text-center">
           Or choose a template that fits your use case
         </h2>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground">
@@ -199,10 +201,10 @@ export default async function Home() {
         </Button>
       </div>
       {/* Custom Separator */}
-      <div className="mb-20 mt-24 h-4 w-full shrink-0 rounded-t-md border-t" />
+      <div className="mb-20 mt-24 h-4 w-full shrink-0 border-t" />
       {/* Implement in minutes */}
       <div className="flex w-full flex-col items-center justify-center gap-2">
-        <h2 className="marketing-second-title text-balance">
+        <h2 className="marketing-second-title text-balance text-center">
           Generate new images with just a URL
         </h2>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground">
@@ -216,13 +218,13 @@ export default async function Home() {
         {/* TODO: Add example of meta tag implementation with Next.js, Astro, etc. */}
       </div>
       {/* Custom Separator */}
-      <div className="mb-20 mt-24 h-4 w-full shrink-0 rounded-t-md border-t" />
+      <div className="mb-20 mt-24 h-4 w-full shrink-0 border-t" />
       {/* Validator */}
       <div className="flex w-full flex-col items-center justify-center gap-2">
-        <h2 className="marketing-second-title text-balance">
+        <h2 className="marketing-second-title text-balance text-center">
           Social Card Validator
         </h2>
-        <p className="marketing-subtitle text-balance px-40 text-center text-muted-foreground">
+        <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-40">
           Check how your links look when shared. Validate that you have the
           right metatags in place so your cards are displayed correctly.
         </p>
@@ -231,10 +233,10 @@ export default async function Home() {
         </div>
       </div>
       {/* Custom Separator */}
-      <div className="mb-20 mt-24 h-4 w-full shrink-0 rounded-t-md border-t" />
+      <div className="mb-20 mt-24 h-4 w-full shrink-0 border-t" />
       {/* Open Source */}
       <div className="mb-20 flex w-full flex-col items-center justify-center gap-2">
-        <h2 className="marketing-second-title text-balance">
+        <h2 className="marketing-second-title text-balance text-center">
           Proudly open-source
         </h2>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground">
@@ -253,7 +255,7 @@ export default async function Home() {
           Star on GitHub
         </Link>
       </div>
-      <Footer />
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }

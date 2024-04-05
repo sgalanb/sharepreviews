@@ -147,7 +147,7 @@ export default function Header({
                     <SheetClose asChild>
                       <Button variant="ghost" asChild>
                         <Link
-                          href={`/${projectPathname}`}
+                          href="/"
                           className={`${
                             pathname == `/${projectPathname}`
                               ? 'bg-accent text-accent-foreground'
@@ -194,7 +194,7 @@ export default function Header({
                     <SheetClose asChild>
                       <Button variant="ghost" asChild>
                         <Link
-                          href={user ? '/home' : '/'}
+                          href="/home"
                           className={`${
                             pathname == '/' || pathname == '/home'
                               ? 'bg-accent text-accent-foreground'
@@ -295,7 +295,10 @@ export default function Header({
               </div>
             </SheetContent>
           </Sheet>
-          <Link href="/" className="flex items-center justify-center gap-2">
+          <Link
+            href={isApp ? '/' : '/home'}
+            className="flex items-center justify-center gap-2"
+          >
             <Image src="/icon.svg" alt="SharePreviews" width={40} height={40} />
           </Link>
           <div className="flex gap-2">
@@ -331,12 +334,21 @@ export default function Header({
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/">
-                        <LayoutGrid className="mr-2 h-4 w-4" />
-                        <span>Go to dashboard</span>
-                      </Link>
-                    </DropdownMenuItem>
+                    {isApp ? (
+                      <DropdownMenuItem className="cursor-pointer" asChild>
+                        <Link href="/home" target="_blank">
+                          <SquareArrowOutUpRight className="mr-2 h-4 w-4" />
+                          <span>Go to homepage</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem className="cursor-pointer" asChild>
+                        <Link href="/">
+                          <LayoutGrid className="mr-2 h-4 w-4" />
+                          <span>Go to dashboard</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem
                       className="cursor-pointer"
                       onClick={() => logout()}

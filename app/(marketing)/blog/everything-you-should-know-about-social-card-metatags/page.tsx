@@ -1,3 +1,5 @@
+import Footer from '@/app/(marketing)/footer'
+import { getUser } from '@/app/lib/workos'
 import { Card, CardContent } from '@/app/ui/components/Card'
 import CodeBlock from '@/app/ui/components/CodeBlock'
 import { Separator } from '@/app/ui/components/Separator'
@@ -28,6 +30,8 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
+  const { isAuthenticated } = await getUser()
+
   return (
     <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-8 p-4 pt-8">
       <Link
@@ -470,6 +474,26 @@ export default async function BlogPage() {
           {`<meta name="twitter:creator" content="Your Twitter handle" />`}
         </CodeBlock>
       </div>
+      <Link
+        href="https://x.com/sgalanb"
+        target="_blank"
+        className="my-12 flex flex-col gap-4 self-center rounded-lg border bg-card p-4 text-muted-foreground shadow-sm hover:bg-foreground/5"
+      >
+        <span>Got questions or ideas? Feel free to DM me on X!</span>
+        <div className="flex items-center justify-center gap-2 self-center">
+          <Image
+            src="/pfp.jpeg"
+            alt="author profile picture"
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-full object-cover"
+          />
+          <span className="text-balance font-medium leading-5">
+            Santiago Galán
+          </span>
+        </div>
+      </Link>
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }

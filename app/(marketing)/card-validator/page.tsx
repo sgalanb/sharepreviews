@@ -3,6 +3,7 @@ import PreviewValidator from '@/app/(marketing)/card-validator/preview-validator
 import Footer from '@/app/(marketing)/footer'
 import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
+import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -56,6 +57,8 @@ type Props = {
 }
 
 export default async function Validator({ params, searchParams }: Props) {
+  const { isAuthenticated } = await getUser()
+
   const inputUrl = searchParams?.url as string
   const selectedProject = (await getProjectByPathname(
     params.project
@@ -76,7 +79,7 @@ export default async function Validator({ params, searchParams }: Props) {
           projectPathname={selectedProject?.pathname}
         />
       )}
-      <Footer />
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }

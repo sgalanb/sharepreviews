@@ -222,7 +222,7 @@ export default function TemplatesDashboard({
                                     This action cannot be undone.
                                   </DialogDescription>
                                 </DialogHeader>
-                                <DialogFooter>
+                                <DialogFooter className="gap-2">
                                   <DialogClose asChild>
                                     {/* Type button to avoid submitting the form */}
                                     <Button type="button" variant="outline">

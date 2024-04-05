@@ -212,7 +212,7 @@ export default function OverviewDashboard({
                 {isLoadingTemplates ? (
                   <div className="h-full animate-pulse rounded-md bg-accent pr-4 duration-1000" />
                 ) : (
-                  <div className="grid h-fit grid-cols-3 gap-4 overflow-auto pr-4">
+                  <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
                     {projectTemplates
                       ?.find(
                         (template) =>
@@ -399,7 +399,7 @@ export default function OverviewDashboard({
                   {isLoadingTemplates ? (
                     <div className="h-full animate-pulse rounded-md bg-accent pr-4 duration-1000" />
                   ) : (
-                    <div className="grid h-fit grid-cols-3 gap-4 overflow-auto pr-4">
+                    <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
                       {projectTemplates
                         ?.find(
                           (template) =>

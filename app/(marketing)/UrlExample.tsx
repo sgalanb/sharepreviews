@@ -25,8 +25,8 @@ export default function UrlExample() {
     exit: { scale: 1, transition: { duration: 0.2 } },
   }
   return (
-    <pre className="mt-6 flex w-fit items-center justify-between gap-8 overflow-hidden rounded-lg border py-4 pl-6 pr-4 text-card-foreground shadow-sm">
-      <code className="overflow-hidden text-ellipsis break-all font-mono">
+    <pre className="mt-6 flex w-full items-center justify-between gap-8 overflow-hidden break-all rounded-lg border py-4 pl-6 pr-4 text-card-foreground shadow-sm">
+      <code className="w-full overflow-hidden text-ellipsis break-all font-mono">
         https://sharepreviews.com/og/
         {
           <span className="text-blue-600">
@@ -40,6 +40,7 @@ export default function UrlExample() {
         initial="initial"
         animate={isCopied ? 'animate' : 'exit'}
         variants={buttonVariants}
+        className="w-fit"
       >
         <Button
           variant="outline"

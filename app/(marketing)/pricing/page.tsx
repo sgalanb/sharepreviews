@@ -1,4 +1,5 @@
 import Footer from '@/app/(marketing)/footer'
+import { getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import { Card } from '@/app/ui/components/Card'
 import { Separator } from '@/app/ui/components/Separator'
@@ -17,8 +18,10 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
+  const { isAuthenticated } = await getUser()
+
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-4 px-4 pt-20 lg:gap-20">
+    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
         <h1 className="marketing-title">Straightforward pricing</h1>
 
@@ -27,7 +30,8 @@ export default async function AboutPage() {
         </p>
       </div>
       <div className="flex w-full flex-col gap-4 lg:gap-8">
-        <div className="flex w-full items-center justify-center gap-4">
+        <div className="flex w-full flex-col items-center justify-center gap-4 lg:flex-row">
+          {/* Free */}
           <Card className="flex w-full max-w-64 flex-col items-start justify-start gap-6 p-4">
             <div className="flex flex-col gap-2">
               <span className="second-title leading-none">Free</span>
@@ -75,6 +79,7 @@ export default async function AboutPage() {
             </div>
           </Card>
 
+          {/* Pro */}
           <Card className="flex w-full max-w-64 flex-col items-start justify-start gap-6 border-primary p-4">
             <div className="flex flex-col gap-2">
               <span className="second-title leading-none text-primary">
@@ -146,7 +151,7 @@ export default async function AboutPage() {
           Frequently Asked Questions
         </h2>
       </div> */}
-      <Footer />
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }

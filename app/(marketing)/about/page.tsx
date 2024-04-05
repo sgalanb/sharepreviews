@@ -1,4 +1,5 @@
 import Footer from '@/app/(marketing)/footer'
+import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +9,8 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
+  const { isAuthenticated } = await getUser()
+
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-20 px-4 pt-20">
       <div className="flex w-full max-w-3xl flex-col items-start justify-start gap-4 self-center lg:px-4">
@@ -118,7 +121,7 @@ export default async function AboutPage() {
           </span>
         </div>
       </Link>
-      <Footer />
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }
