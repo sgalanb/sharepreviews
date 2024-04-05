@@ -4,6 +4,7 @@ import { getTemplateById } from '@/app/db/operations/templates'
 import { ProjectType } from '@/app/db/schema'
 import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 export async function generateMetadata({
   params,
@@ -81,9 +82,13 @@ type Props = {
 
 export default async function EditTemplate({ params, searchParams }: Props) {
   const { user } = await getUser()
-  const selectedProject = (await getProjectByPathname(
-    params.project
-  )) as ProjectType
+  const selectedProject = (await getProjectByPathname(params.project)) as
+    | ProjectType
+    | undefined
+
+  if (!selectedProject || selectedProject.userId !== user?.id) {
+    redirect('/')
+  }
 
   return (
     <div className="h-full w-full">

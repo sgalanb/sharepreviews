@@ -5,6 +5,7 @@ import Header from '@/app/ui/header'
 import { get } from '@vercel/edge-config'
 import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { redirect } from 'next/navigation'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,6 +21,11 @@ export default async function AppLayout({
 }) {
   const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
+
+  if (!isAuthenticated) {
+    redirect(authorizationUrl)
+  }
+
   const reservedNames = (await get('reserved-project-names')) as string[]
 
   const userProjects = await getUserProjects(user?.id ?? '')

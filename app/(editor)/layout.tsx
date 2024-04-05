@@ -1,6 +1,7 @@
-import { getUser } from '@/app/lib/workos'
+import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
 import { Inter } from 'next/font/google'
+import { redirect } from 'next/navigation'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -10,7 +11,13 @@ export default async function EditorLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user } = await getUser()
+  const { isAuthenticated, user } = await getUser()
+  const authorizationUrl = getAuthorizationUrl()
+
+  if (!isAuthenticated) {
+    redirect(authorizationUrl)
+  }
+
   return (
     <html lang="en">
       <body className={inter.className}>
