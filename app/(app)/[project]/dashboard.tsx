@@ -219,7 +219,7 @@ export default function OverviewDashboard({
                 ) : (
                   <>
                     {projectTemplates?.length > 0 ? (
-                      <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid h-fit grid-cols-1 gap-4 overflow-auto p-0.5 pr-[1.125rem] sm:grid-cols-2 lg:grid-cols-3">
                         {projectTemplates
                           ?.find(
                             (template) =>
@@ -231,7 +231,7 @@ export default function OverviewDashboard({
                               href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
                               target="_blank"
                               key={url + index}
-                              className="rounded-md border"
+                              className="rounded-md border ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                             >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
@@ -280,23 +280,22 @@ export default function OverviewDashboard({
                   <>
                     {projectTemplates?.length > 0 ? (
                       <div
-                        className="flex h-full flex-col gap-2 overflow-auto pr-4"
+                        className="flex h-full flex-col gap-2 overflow-auto p-0.5 pr-[1.125rem]"
                         key="loaded"
                       >
                         {projectTemplates
                           .sort((a, b) => b.urls.length - a.urls.length)
                           .map((template) => (
-                            <div
+                            <Link
+                              href={`/${project.pathname}/templates`}
                               key={template.id}
-                              className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
+                              className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                             >
-                              <span className="text-neutral-600 dark:text-neutral-300">
-                                {template.name}
-                              </span>
-                              <span className="font-medium">
+                              <span className="">{template.name}</span>
+                              <span className="font-medium text-foreground">
                                 {template.urls.length}
                               </span>
-                            </div>
+                            </Link>
                           ))}
                       </div>
                     ) : (
@@ -440,7 +439,7 @@ export default function OverviewDashboard({
                   ) : (
                     <>
                       {projectTemplates?.length > 0 ? (
-                        <div className="grid h-fit grid-cols-1 gap-4 overflow-auto pr-4 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid h-fit grid-cols-1 gap-4 overflow-auto p-0.5 pr-[1.125rem] sm:grid-cols-2 lg:grid-cols-3">
                           {projectTemplates
                             ?.find(
                               (template) =>
@@ -452,7 +451,7 @@ export default function OverviewDashboard({
                                 href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
                                 target="_blank"
                                 key={url + index}
-                                className="rounded-md border"
+                                className="rounded-md border ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                               >
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
@@ -503,23 +502,22 @@ export default function OverviewDashboard({
                     <>
                       {projectTemplates?.length > 0 ? (
                         <div
-                          className="flex h-full flex-col gap-2 overflow-auto pr-4"
+                          className="flex h-full flex-col gap-2 overflow-auto p-0.5 pr-[1.125rem]"
                           key="loaded"
                         >
                           {projectTemplates
                             .sort((a, b) => b.urls.length - a.urls.length)
                             .map((template) => (
-                              <div
+                              <Link
+                                href={`/${project.pathname}/templates`}
                                 key={template.id}
-                                className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5"
+                                className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                               >
-                                <span className="text-neutral-600 dark:text-neutral-300">
-                                  {template.name}
-                                </span>
-                                <span className="font-medium">
+                                <span className="">{template.name}</span>
+                                <span className="font-medium text-foreground">
                                   {template.urls.length}
                                 </span>
-                              </div>
+                              </Link>
                             ))}
                         </div>
                       ) : (

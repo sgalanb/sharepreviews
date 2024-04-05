@@ -81,7 +81,7 @@ export default function NewLayerDialog({
     rotation: 0,
     opacity: 1,
     cornerRadius: 0,
-    objectFit: 'contain',
+    objectFit: 'cover',
     conditionalVisibility: false,
     conditionalValue: false,
     src: '',

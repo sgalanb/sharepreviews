@@ -84,7 +84,7 @@ export default function TemplatesDashboard({
           <span className="title leading-10">Templates</span>
           <p className="text-muted-foreground">
             Templates can generate different social card images based the
-            variables you provide. {` `}
+            dynamic data you provide. {` `}
             <Button variant="link" asChild>
               <Link
                 href="/starter-templates"
