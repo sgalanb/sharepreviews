@@ -6,6 +6,8 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About | sharepreviews',
+  description:
+    'Why social cards are one of the most undervalued aspects of digital marketing and how sharepreviews want to change that.',
 }
 
 export default async function AboutPage() {

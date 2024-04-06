@@ -129,7 +129,7 @@ export default function PreviewValidator({
   const previewsData = [
     {
       title: 'Twitter/X',
-      icon: <X className="h-4 w-4 shrink-0 dark:invert" />,
+      icon: <X className="h-4 w-4 shrink-0 invert dark:invert-0" />,
     },
     {
       title: 'Facebook',

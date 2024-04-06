@@ -109,7 +109,7 @@ export default function WhatsAppMockup({
               {(metatags['og:description'].value ||
                 metatags['twitter:description'].value ||
                 metatags.description.value) && (
-                <span className="whitespace-pre-line text-xs font-normal leading-[19px] text-black dark:text-[#e9edefe0]">
+                <span className="line-clamp-2 whitespace-pre-line text-xs font-normal leading-[19px] text-black dark:text-[#e9edefe0]">
                   {metatags['og:description'].value ||
                     metatags['twitter:description'].value ||
                     metatags.description.value}

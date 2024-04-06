@@ -9,7 +9,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Blog | sharepreviews',
   description:
-    'Learn all about og metatags and how to boost your links engagement with stunning previews. Stay up to date with the latest updates to social media platform previews.',
+    'Learn how to generate and manage social card images with sharepreviews. Stay up to date on how social platforms handle Open Graph metatags.',
   alternates: {
     canonical: 'https://sharepreviews.com/blog',
   },
@@ -43,7 +43,7 @@ export default async function BlogPage() {
                   <h2 className="marketing-second-title lg:text-balance">
                     A platform to generate and manage social cards
                   </h2>
-                  <p className="text-muted-foreground lg:text-balance">
+                  <p className="marketing-subtitle text-muted-foreground lg:text-balance">
                     Why social cards are one of the most undervalued aspects of
                     digital marketing and how sharepreviews want to change that.
                   </p>
@@ -86,7 +86,7 @@ export default async function BlogPage() {
                   <h2 className="marketing-second-title lg:text-balance">
                     Everything you should know about social card metatags
                   </h2>
-                  <p className="text-muted-foreground lg:text-balance">
+                  <p className="marketing-subtitle text-muted-foreground lg:text-balance">
                     Learn how to use Open Graph and Twitter metatags to control
                     how your website is displayed when shared on social media.
                   </p>
