@@ -1,6 +1,7 @@
 'use client'
 
 import { deleteTemplateAction } from '@/app/actions/actions'
+import { FREE_TEMPLATES } from '@/app/constants'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
 import { Card } from '@/app/ui/components/Card'
@@ -31,11 +32,13 @@ import {
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
 import NewTemplateDialog from '@/app/ui/dialogs/new-template-dialog'
+import UpgradeToProDialog from '@/app/ui/dialogs/upgrade-to-pro-dialog'
 import {
   fetcher,
   getUrlWithConditionalVariablesTrue,
   getUrlWithVariables,
 } from '@/app/utils'
+import { User } from '@workos-inc/node'
 import { motion } from 'framer-motion'
 import { Check, Copy, Edit, MoreHorizontal, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
@@ -44,8 +47,10 @@ import { useFormStatus } from 'react-dom'
 import useSWR, { mutate } from 'swr'
 
 export default function TemplatesDashboard({
+  user,
   project,
 }: {
+  user: User
   project: ProjectType
 }) {
   const {
@@ -96,15 +101,29 @@ export default function TemplatesDashboard({
             </Button>
           </p>
         </div>
-        <NewTemplateDialog
-          trigger={
-            <Button className="hidden gap-2 md:flex">
-              <Plus className="h-4 w-4" />
-              New template
-            </Button>
-          }
-          project={project}
-        />
+        {project?.plan === 'free' &&
+        projectTemplates?.length < FREE_TEMPLATES ? (
+          <NewTemplateDialog
+            trigger={
+              <Button className="hidden gap-2 md:flex">
+                <Plus className="h-4 w-4" />
+                New template
+              </Button>
+            }
+            project={project}
+          />
+        ) : (
+          <UpgradeToProDialog
+            trigger={
+              <Button className="hidden gap-2 md:flex">
+                <Plus className="h-4 w-4" />
+                New template
+              </Button>
+            }
+            project={project}
+            user={user}
+          />
+        )}
       </div>
       <div className="grid h-fit w-full grid-cols-1 flex-col gap-4 md:grid-cols-2 xl:grid-cols-3">
         {isLoadingTemplates ? (
