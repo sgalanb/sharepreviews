@@ -239,7 +239,7 @@ export default function OverviewDashboard({
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
                                 src={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
-                                className="aspect-[1.91/1] w-full rounded-sm object-cover"
+                                className="aspect-[1.91/1] w-full rounded-md object-cover"
                                 alt=""
                               />
                             </Link>
@@ -295,7 +295,7 @@ export default function OverviewDashboard({
                       .map((index) => (
                         <div
                           key={index}
-                          className="h-8 w-full animate-pulse rounded-sm bg-accent duration-1000"
+                          className="h-8 w-full animate-pulse rounded-md bg-accent duration-1000"
                         />
                       ))}
                   </div>
@@ -312,7 +312,7 @@ export default function OverviewDashboard({
                             <Link
                               href={`/${project.pathname}/templates`}
                               key={template.id}
-                              className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
+                              className="flex w-full items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                             >
                               <span className="">{template.name}</span>
                               <span className="font-medium text-foreground">
@@ -481,7 +481,7 @@ export default function OverviewDashboard({
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                   src={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
-                                  className="aspect-[1.91/1] w-full rounded-sm object-cover"
+                                  className="aspect-[1.91/1] w-full rounded-md object-cover"
                                   alt=""
                                 />
                               </Link>
@@ -537,7 +537,7 @@ export default function OverviewDashboard({
                         .map((index) => (
                           <div
                             key={index}
-                            className="h-8 w-full animate-pulse rounded-sm bg-accent duration-1000"
+                            className="h-8 w-full animate-pulse rounded-md bg-accent duration-1000"
                           />
                         ))}
                     </div>
@@ -554,7 +554,7 @@ export default function OverviewDashboard({
                               <Link
                                 href={`/${project.pathname}/templates`}
                                 key={template.id}
-                                className="flex w-full items-center justify-between gap-2 rounded-sm bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
+                                className="flex w-full items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                               >
                                 <span className="">{template.name}</span>
                                 <span className="font-medium text-foreground">
