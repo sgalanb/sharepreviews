@@ -29,14 +29,14 @@ export default async function AboutPage() {
       <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-10">
         <div className="flex flex-col items-start justify-start gap-2">
           <h2 className="marketing-third-title">What are social cards?</h2>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             Also know as OpenGraph cards, they are the{' '}
             <strong className="font-medium text-foreground">
               previews diplayed when a URL is shared on a social media
             </strong>{' '}
             post or message.
           </p>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             In most platforms,{' '}
             <strong className="font-medium text-foreground">
               they consists of an image, a title and a description
@@ -49,7 +49,7 @@ export default async function AboutPage() {
           <h2 className="marketing-third-title">
             Why are social cards important?
           </h2>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             Despite their simplicity,{' '}
             <strong className="font-medium text-foreground">
               they are the first impression of a website
@@ -57,7 +57,7 @@ export default async function AboutPage() {
             when a link is shared on social media. If done right, they make the
             difference between a user clicking on the link or scrolling past it.
           </p>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             They also are an{' '}
             <strong className="font-medium text-foreground">
               extension of the website&apos;s branding
@@ -69,7 +69,7 @@ export default async function AboutPage() {
           <h2 className="marketing-third-title">
             What does <span className="text-primary">sharepreviews</span> do?
           </h2>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             It provides an easy-to-use interface to create templates that can{' '}
             <strong className="font-medium text-foreground">
               automatically generate social card images for each page of a
@@ -80,7 +80,7 @@ export default async function AboutPage() {
         </div>
         <div className="flex flex-col items-start justify-start gap-2">
           <h2 className="marketing-third-title">Who is it for?</h2>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             Some{' '}
             <strong className="font-medium text-foreground">
               proven use cases
@@ -92,7 +92,7 @@ export default async function AboutPage() {
             </strong>
             .
           </p>
-          <p className="marketing-subtitle w-full text-muted-foreground">
+          <p className="w-full text-base text-muted-foreground">
             It&apos;s also a no-code solution that don&apos;t require any
             technical knowledge to use, so it&apos; perfect for modern{' '}
             <strong className="font-medium text-foreground">

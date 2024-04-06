@@ -86,8 +86,8 @@ export default function UpgradeToProDialog({
                         <Info className="h-4 w-4 stroke-muted-foreground" />
                       </TooltipTrigger>
                       <TooltipContent className="w-64 text-center">
-                        Once the limit has been reached, you will be charged $24
-                        per additional 5,000 images.
+                        Once this limit is reached, you will be charged $24 per
+                        additional 5,000 images.
                       </TooltipContent>
                     </Tooltip>
                   </div>

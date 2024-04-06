@@ -71,19 +71,19 @@ export default async function BlogPage() {
               <span className="marketing-second-title">F.A.Q.</span>
             </div>
             <ul className="flex list-inside list-disc flex-col justify-start gap-2">
-              <li className="underline-offset-2 hover:text-foreground hover:underline">
+              <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                 <Link href="#faq1">What are social card metatags?</Link>
               </li>
 
-              <li className="underline-offset-2 hover:text-foreground hover:underline">
+              <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                 <Link href="#faq2">Does social cards improve SEO?</Link>
               </li>
-              <li className="underline-offset-2 hover:text-foreground hover:underline">
+              <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                 <Link href="#faq3">
                   What is the difference between og:X and twitter:X metatags?
                 </Link>
               </li>
-              <li className="underline-offset-2 hover:text-foreground hover:underline">
+              <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                 <Link href="#faq4">
                   Why some metatags are defined by property and others by name?
                 </Link>
@@ -95,60 +95,60 @@ export default async function BlogPage() {
             </div>
             <div className="lg:columns-2">
               <ul className="flex list-inside list-disc flex-col gap-2">
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#title">title</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#description">description</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:title">og:title</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:description">og:description</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:image">og:image</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:image:dimensions">og:image:widht/height</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:image:type">og:image:type</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:url">og:url</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:site_name">og:site_name</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#og:type">og:type</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:title">twitter:title</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:description">twitter:description</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:card">twitter:card</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:image">twitter:image</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:image:dimensions">
                     twitter:image:width/height
                   </Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:image:type">twitter:image:type</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:site">twitter:site</Link>
                 </li>
-                <li className="underline-offset-2 hover:text-foreground hover:underline">
+                <li className="text-base underline-offset-2 hover:text-foreground hover:underline">
                   <Link href="#twitter:creator">twitter:creator</Link>
                 </li>
               </ul>
@@ -159,7 +159,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq1">
           What are social card metatags?
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           Social card metatags are <strong>snippets of code</strong> that
           control the content of a{' '}
           <strong>
@@ -173,7 +173,7 @@ export default async function BlogPage() {
           </strong>
           .
         </p>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           For example when you share a link on Facebook, Twitter or LinkedIn,
           these platforms display a card with a title, description and image
           defined in metatags. If no metatags are defined, the platform will
@@ -182,7 +182,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq2">
           Does social metatags improve SEO?
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           Social metatags don&apos;t directly influence search engine rankings,
           but they can indirectly enhance SEO by boosting{' '}
           <strong>click-through rates</strong> and social media{' '}
@@ -190,7 +190,7 @@ export default async function BlogPage() {
           <strong>attention</strong> and take up more{' '}
           <strong>screen real estate</strong>.
         </p>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           For example, here is a link shared on Twitter/X without metatags:
         </p>
         <Image
@@ -200,7 +200,7 @@ export default async function BlogPage() {
           height={420}
           className="self-center rounded-md object-cover"
         />
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           And here is a link with all the metatags properly set:
         </p>
         <Image
@@ -213,16 +213,16 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq3">
           What is the difference between og:X and twitter:X metatags?
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           <strong>Open Graph</strong> (og) tags are a set of standardized
           metatags created by <strong>Facebook</strong>.
         </p>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           <strong>Twitter</strong> tags (also known as Twitter Cards) are pretty
           similar to Open Graph tags but they were created by{' '}
           <strong>Twitter/X</strong>.
         </p>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           Most platforms support both Open Graph and Twitter Cards, but there
           are some exceptions, so it&apos;s a{' '}
           <strong>good idea to include both</strong> in your website.
@@ -230,7 +230,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="faq4">
           Why some metatags are defined by property and others by name?
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           They serve the same purpose, but generally Open Graph metatags are
           defined by property and the rest by name.
         </p>
@@ -238,7 +238,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="title">
           title
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The title tag is the headline of your web page in{' '}
           <strong>search engine results</strong> and{' '}
           <strong>browser tabs</strong>. It&apos; also used in social previews
@@ -250,7 +250,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="description">
           description
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag offers a <strong>brief summary</strong> of your page&apos;s
           content and can appear under the title in search results if the search
           engine finds it relevant. Though not a direct ranking factor, a
@@ -264,7 +264,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:title">
           og:title
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The OG title tag dictates{' '}
           <strong>how titles appear on social media</strong>, encouraging
           engagement when content is shared. Can be the same as the title tag,
@@ -276,7 +276,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:description">
           og:description
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           Similar to the <strong>description</strong> metatag but{' '}
           <strong>for social media</strong>. In fact, it can be the same text,
           or a different one tailored for social media.
@@ -287,13 +287,13 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:image">
           og:image
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag specifies the image used in social previews, crucial for
           capturing attention on social platforms. Choose an image that is
           visually <strong>appealing</strong> and{' '}
           <strong>representative</strong> of the content.
         </p>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           Must be a <strong>URL to an image file</strong> that is less than 5 MB
           in size. JPG, PNG, WEBP and GIF formats are supported. SVG is not
           supported.
@@ -307,7 +307,7 @@ export default async function BlogPage() {
         >
           og:image:width & og:image:height
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The <strong>dimensions</strong> of your OG image. This tag ensures the
           images are rendered immediately without the platforms having to
           asynchronously download and process it. The{' '}
@@ -321,7 +321,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:image:type">
           og:image:type
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The MIME type of the <strong>og:image</strong>. Accepted values are{' '}
           <strong>&quot;image/jpeg&quot;</strong>,{' '}
           <strong>&quot;image/png&quot;</strong> and{' '}
@@ -333,14 +333,14 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:url">
           og:url
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag identifies the <strong>canonical URL</strong> of the content.
         </p>
         <CodeBlock>{`<meta property="og:url" content="Your URL" />`}</CodeBlock>
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:site_name">
           og:site_name
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag indicates the{' '}
           <strong>name of the website, app or organization</strong> that ows the
           content. Some platforms such as Slack, Discord or Telegram shows this
@@ -352,7 +352,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="og:type">
           og:type
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag indicates the type of content. Most common values are{' '}
           <strong>&quot;website&quot;</strong> and{' '}
           <strong>&quot;article&quot;</strong>, but there are other types for
@@ -369,7 +369,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:title">
           twitter:title
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The <strong>same as og:title</strong> but for Twitter/X.
         </p>
         <CodeBlock>{`<meta name="twitter:title" content="Your title" />`}</CodeBlock>
@@ -379,7 +379,7 @@ export default async function BlogPage() {
         >
           twitter:description
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The <strong>same as og:description</strong> but for Twitter/X.
         </p>
         <p className="italic dark:text-muted-foreground">
@@ -393,7 +393,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:card">
           twitter:card
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The twitter card tag is <strong>required</strong> for Twitter/X to
           show any type of preview. Use <strong>&quot;summary&quot;</strong> if
           your image is square and{' '}
@@ -404,11 +404,11 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:image">
           twitter:image
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag define the image displayed in tweets when a{' '}
           <strong>twitter:card</strong> metatag is also present.
         </p>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           Must be a <strong>URL to an image file</strong> that is less than 5 MB
           in size. JPG,PNG, WEBP and GIF formats are supported. Only the first
           frame of an animated GIF will be used. SVG is not supported.
@@ -422,7 +422,7 @@ export default async function BlogPage() {
         >
           twitter:image:width & twitter:image:height
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The <strong>dimensions</strong> of your <strong>twitter:image</strong>
           . The recommended size is 1200x630 pixels, but Twitter/X also support
           square images. Keep in mind that if you want to use a square image,{' '}
@@ -439,7 +439,7 @@ export default async function BlogPage() {
         >
           twitter:image:type
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           The MIME type of the <strong>twitter:image</strong>. Accepted values
           are <strong>&quot;image/jpeg&quot;</strong>,{' '}
           <strong>&quot;image/png&quot;</strong> and{' '}
@@ -451,7 +451,7 @@ export default async function BlogPage() {
         <h2 className="marketing-third-title pt-14 lg:pt-8" id="twitter:site">
           twitter:site
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag defines the <strong>@username</strong> of the{' '}
           <strong>website</strong>, <strong>app</strong> or{' '}
           <strong>organization</strong>.
@@ -465,7 +465,7 @@ export default async function BlogPage() {
         >
           twitter:creator
         </h2>
-        <p className="dark:text-muted-foreground">
+        <p className="text-base dark:text-muted-foreground">
           This tag defines the <strong>@username</strong> of the{' '}
           <strong>individual creator</strong> of the content. Usually the same
           as twitter:site.

@@ -66,7 +66,7 @@ export default async function Validator({ params, searchParams }: Props) {
 
   return (
     <div
-      className={`${inputUrl ? 'gap-20 p-4' : 'px-4'} flex flex-col justify-between lg:min-h-[calc(100dvh-72px)]`}
+      className={`${inputUrl ? 'gap-20 px-4' : 'px-4'} flex flex-col justify-between lg:min-h-[calc(100dvh-72px)]`}
     >
       {inputUrl ? (
         <PreviewValidator
