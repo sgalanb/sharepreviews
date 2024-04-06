@@ -1,7 +1,8 @@
 import OverviewDashboard from '@/app/(app)/[project]/dashboard'
+import { getCurrentLemonUsageAction } from '@/app/actions/lemonActions'
 import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
-import { getProjectUsage, getUserUsage } from '@/app/lib/upstash'
+import { getProjectUsageQueue, getUserUsage } from '@/app/lib/upstash'
 import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -34,10 +35,19 @@ export default async function Overview({ params, searchParams }: Props) {
   }
 
   const userUsage = await getUserUsage(user?.id ?? '')
+
+  const projectUsageLemonData = await getCurrentLemonUsageAction(
+    selectedProject.suscriptionItemId ?? ''
+  )
+
+  const projectUsageQueue = await getProjectUsageQueue(selectedProject.id ?? '')
+
   const projectUsage =
     selectedProject?.plan === 'pro'
-      ? await getProjectUsage(selectedProject.id ?? '')
+      ? projectUsageLemonData?.meta?.quantity + projectUsageQueue
       : 0
+  const projectUsagePeriodStart = projectUsageLemonData?.meta?.period_start
+  const projectUsagePeriodEnd = projectUsageLemonData?.meta?.period_end
 
   return (
     <OverviewDashboard
@@ -45,6 +55,8 @@ export default async function Overview({ params, searchParams }: Props) {
       user={user!}
       userUsage={userUsage ?? 0}
       projectUsage={projectUsage ?? 0}
+      projectUsagePeriodStart={projectUsagePeriodStart}
+      projectUsagePeriodEnd={projectUsagePeriodEnd}
     />
   )
 }

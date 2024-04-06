@@ -185,7 +185,8 @@ export async function logProjectUsage(projectId: string) {
   return await redis.zincrby('projects-images-usage', 1, projectId) // This zset resets every hour
 }
 
-export async function getProjectUsage(projectId: string) {
+export async function getProjectUsageQueue(projectId: string) {
+  // This queue resets every hour with the cron function /update-usage that moves the usage to Lemon Squeezy
   return await redis.zscore('projects-images-usage', projectId)
 }
 

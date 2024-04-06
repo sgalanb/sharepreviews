@@ -10,7 +10,8 @@ export async function POST(req: NextRequest) {
     const projectId = body.meta?.custom_data?.projectId
     const productId = body.data.attributes.product_id
     const variantId = body.data.attributes.variant_id
-    const suscriptionId = body.data.id
+    const suscriptionId =
+      body.data.attributes.first_subscription_item.subscription_id
     const suscriptionItemId = body.data.attributes.first_subscription_item.id
 
     await updateProjectSubscription({

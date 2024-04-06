@@ -27,6 +27,7 @@ import {
 import UpgradeToProDialog from '@/app/ui/dialogs/upgrade-to-pro-dialog'
 import { fetcher } from '@/app/utils'
 import { User } from '@workos-inc/node'
+import dayjs from 'dayjs'
 import { Info } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -39,11 +40,15 @@ export default function OverviewDashboard({
   project,
   userUsage,
   projectUsage,
+  projectUsagePeriodStart,
+  projectUsagePeriodEnd,
 }: {
   user: User
   userUsage: number
   project: ProjectType
   projectUsage: number
+  projectUsagePeriodStart: string
+  projectUsagePeriodEnd: string
 }) {
   const {
     data: projectTemplates,
@@ -52,8 +57,6 @@ export default function OverviewDashboard({
     data: TemplateTypePlusURLs[]
     isLoading: boolean
   } = useSWR<any>(`/api/templates?projectId=${project?.id}`, fetcher)
-
-  console.log(projectTemplates)
 
   const [lastestImagesSelectedTemplate, setLastestImagesSelectedTemplate] =
     useState<string>('')
@@ -262,7 +265,27 @@ export default function OverviewDashboard({
             {/* Images by Template */}
             <Card className="col-span-2 h-[23.5rem] lg:col-span-1">
               <CardHeader className="h-[4.5rem] items-start justify-center border-b pb-4">
-                <span className="subtitle font-medium">Images by Template</span>
+                <div className="flex items-center justify-start gap-2">
+                  <span className="subtitle font-medium">
+                    Images by Template
+                  </span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-4 w-4" />
+                    </TooltipTrigger>
+                    <TooltipContent
+                      className="w-64"
+                      align="start"
+                      alignOffset={-96}
+                    >
+                      <span className="font-normal">
+                        The row total may be less than the total number of
+                        generated images if you have more than 1 free project or
+                        any templates were deleted.
+                      </span>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               </CardHeader>
               <CardContent className="h-[19rem] pr-0 pt-4">
                 {isLoadingTemplates ? (
@@ -323,10 +346,30 @@ export default function OverviewDashboard({
               {/* Generated Images */}
               <Card className="col-span-2 h-fit">
                 <CardHeader className="border-b pb-4">
-                  <div className="flex items-center justify-start gap-2">
+                  <div className="flex items-center justify-between">
                     <span className="subtitle font-medium">
                       Generated Images
                     </span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Badge
+                          variant="outline"
+                          className="cursor-default text-sm font-normal text-muted-foreground"
+                        >
+                          {dayjs(projectUsagePeriodStart).format('MMM D')} -{' '}
+                          {dayjs(projectUsagePeriodEnd).format('MMM D')}
+                        </Badge>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        className="w-fit"
+                        align="center"
+                        alignOffset={-96}
+                      >
+                        <span className="font-normal">
+                          Current billing period.
+                        </span>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 pt-4">
@@ -359,27 +402,9 @@ export default function OverviewDashboard({
               {/* Created Templates */}
               <Card className="col-span-2 h-fit lg:col-span-1">
                 <CardHeader className="border-b pb-4">
-                  <div className="flex items-center justify-start gap-2">
-                    <span className="subtitle font-medium">
-                      Created Templates
-                    </span>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Info className="h-4 w-4" />
-                      </TooltipTrigger>
-                      <TooltipContent
-                        className="w-64"
-                        align="start"
-                        alignOffset={-96}
-                      >
-                        <span className="font-normal">
-                          Since this project doesn&apos;t have a subscription,
-                          created templates will count towards the user level
-                          limit of {FREE_TEMPLATES} templates.
-                        </span>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
+                  <span className="subtitle font-medium">
+                    Created Templates
+                  </span>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 pt-4">
                   {isLoadingTemplates ? (
@@ -482,9 +507,27 @@ export default function OverviewDashboard({
               {/* Images by Template */}
               <Card className="col-span-2 h-[23.5rem] lg:col-span-1">
                 <CardHeader className="h-[4.5rem] items-start justify-center border-b pb-4">
-                  <span className="subtitle font-medium">
-                    Images by Template
-                  </span>
+                  <div className="flex items-center justify-start gap-2">
+                    <span className="subtitle font-medium">
+                      Images by Template
+                    </span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-4 w-4" />
+                      </TooltipTrigger>
+                      <TooltipContent
+                        className="w-64"
+                        align="start"
+                        alignOffset={-96}
+                      >
+                        <span className="font-normal">
+                          The row total may be less than the total number of
+                          generated images if any templates were deleted during
+                          the last billing period.
+                        </span>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                 </CardHeader>
                 <CardContent className="h-[19rem] pr-0 pt-4">
                   {isLoadingTemplates ? (

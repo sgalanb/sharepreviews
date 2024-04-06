@@ -78,28 +78,44 @@ export async function logUsageRecordIncrementAction({
       data: {
         type: 'usage-records',
         attributes: {
-          quantity: String(quantity),
+          quantity: quantity,
           action: 'increment',
         },
         relationships: {
           'subscription-item': {
             data: {
               type: 'subscription-items',
-              id: subscriptionItemId,
+              id: String(subscriptionItemId),
             },
           },
         },
       },
     }),
-  })
+  }).then((response) => response.json())
 }
 
-export async function getAllUsageRecordsAction() {
-  return await fetch('https://api.lemonsqueezy.com/v1/subscriptions', {
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${process.env.LEMON_SQUEEZY_API_KEY}`,
-    },
-  }).then((response) => response.json())
+export async function getLemonSubscriptionAction(subscriptionId: string) {
+  return await fetch(
+    `https://api.lemonsqueezy.com/v1/subscriptions/${subscriptionId}`,
+    {
+      headers: {
+        Accept: 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
+        Authorization: `Bearer ${process.env.LEMON_SQUEEZY_API_KEY}`,
+      },
+    }
+  ).then((response) => response.json())
+}
+
+export async function getCurrentLemonUsageAction(subscriptionItemId: string) {
+  return await fetch(
+    `https://api.lemonsqueezy.com/v1/subscription-items/${subscriptionItemId}/current-usage`,
+    {
+      headers: {
+        Accept: 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
+        Authorization: `Bearer ${process.env.LEMON_SQUEEZY_API_KEY}`,
+      },
+    }
+  ).then((response) => response.json())
 }

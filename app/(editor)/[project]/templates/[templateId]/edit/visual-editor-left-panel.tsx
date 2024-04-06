@@ -295,8 +295,6 @@ const Layer = ({
     transition,
   }
 
-  console.log(layers)
-
   return (
     <div
       ref={setNodeRef}
