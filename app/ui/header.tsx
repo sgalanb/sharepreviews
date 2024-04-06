@@ -1,6 +1,7 @@
 'use client'
 
 import { logout } from '@/app/actions/actions'
+import { goToLemonSubscriptionPortalAction } from '@/app/actions/lemonActions'
 import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Button } from '@/app/ui/components/Button'
@@ -44,6 +45,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/app/ui/components/Sheet'
+import Spinner from '@/app/ui/components/Spinner'
 import NewProjectDialog from '@/app/ui/dialogs/new-project-dialog'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { cn } from '@/app/utils'
@@ -51,6 +53,7 @@ import { User } from '@workos-inc/node'
 import {
   Check,
   ChevronsUpDown,
+  CreditCard,
   ImageIcon,
   LayoutGrid,
   LayoutTemplate,
@@ -112,14 +115,28 @@ export default function Header({
   const [projectsComboboxValue, setProjectsComboboxValue] =
     useState<string>(projectPathname)
 
-  const projectsList = userProjects?.map((project) => ({
-    value: project.pathname,
-    label: project.name,
-  }))
+  const projectsList = userProjects
+    ?.sort((a, b) => a.name.localeCompare(b.name))
+    ?.map((project) => ({
+      value: project.pathname,
+      label: project.name,
+    }))
 
   useEffect(() => {
     setProjectsComboboxValue(projectPathname)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
+
+  const hasProjectWithSubscription =
+    // check if at least one project has a subscription
+    userProjects?.some((project) => project.plan !== 'free') ?? false
+
+  const selectedProjectSubscriptionId =
+    userProjects?.find((project) => project.pathname === projectsComboboxValue)
+      ?.suscriptionId ?? undefined
+
+  const [isLoadingBillingRedirect, setIsLoadingBillingRedirect] =
+    useState<boolean>(false)
 
   return (
     <header
@@ -325,6 +342,18 @@ export default function Header({
                   className="w-52 p-2"
                   align="end"
                   sideOffset={8}
+                  onEscapeKeyDown={(e) => {
+                    isLoadingBillingRedirect && e.preventDefault()
+                  }}
+                  onPointerDownOutside={(e) => {
+                    isLoadingBillingRedirect && e.preventDefault()
+                  }}
+                  onFocusOutside={(e) => {
+                    isLoadingBillingRedirect && e.preventDefault()
+                  }}
+                  onInteractOutside={(e) => {
+                    isLoadingBillingRedirect && e.preventDefault()
+                  }}
                 >
                   <DropdownMenuLabel>
                     <div className="full flex flex-col items-start justify-center gap-1">
@@ -337,22 +366,59 @@ export default function Header({
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     {isApp ? (
-                      <DropdownMenuItem className="cursor-pointer" asChild>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        disabled={isLoadingBillingRedirect}
+                        asChild
+                      >
                         <Link href="/home" target="_blank">
                           <SquareArrowOutUpRight className="mr-2 h-4 w-4" />
                           <span>Go to homepage</span>
                         </Link>
                       </DropdownMenuItem>
                     ) : (
-                      <DropdownMenuItem className="cursor-pointer" asChild>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        disabled={isLoadingBillingRedirect}
+                        asChild
+                      >
                         <Link href="/">
                           <LayoutGrid className="mr-2 h-4 w-4" />
                           <span>Go to dashboard</span>
                         </Link>
                       </DropdownMenuItem>
                     )}
+                    {hasProjectWithSubscription &&
+                      selectedProjectSubscriptionId && (
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onSelect={(event) => event.preventDefault()}
+                          asChild
+                        >
+                          <button
+                            className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full cursor-pointer items-center justify-between`}
+                            onClick={async () => {
+                              if (!isLoadingBillingRedirect) {
+                                setIsLoadingBillingRedirect(true)
+                                await goToLemonSubscriptionPortalAction(
+                                  selectedProjectSubscriptionId
+                                )
+                              }
+                            }}
+                          >
+                            <div className="flex items-center justify-center">
+                              <CreditCard className="mr-2 h-4 w-4" />
+                              <span>Billing</span>
+                            </div>
+                            {isLoadingBillingRedirect && (
+                              <Spinner className="h-4 w-4 fill-foreground text-foreground/25" />
+                            )}
+                          </button>
+                        </DropdownMenuItem>
+                      )}
                     <DropdownMenuItem
                       className="cursor-pointer"
+                      disabled={isLoadingBillingRedirect}
                       onClick={() => logout()}
                     >
                       <LogOut className="mr-2 h-4 w-4" />
@@ -424,19 +490,6 @@ export default function Header({
                   Card Validator
                 </Link>
               </Button>
-
-              {/* <Button variant="ghost" asChild>
-                  <Link
-                    href="/pricing"
-                    className={`${
-                      pathname == '/pricing'
-                        ? 'bg-neutral-200 text-accent-foreground dark:bg-accent'
-                        : ''
-                    } w-full !justify-start hover:bg-neutral-200 dark:hover:bg-accent`}
-                  >
-                    Pricing
-                  </Link>
-                </Button> */}
             </div>
             <div className="flex w-full flex-col gap-4">
               <div className="flex flex-col gap-2">
@@ -460,16 +513,6 @@ export default function Header({
                     Blog
                   </Link>
                 </Button>
-                {/* <Button variant="outline" asChild>
-                  <Link
-                    href="/docs"
-                    className="flex w-full !justify-start gap-2 text-foreground hover:bg-accent"
-                    target="_blank"
-                  >
-                    <BookOpenText className="h-4 w-4" />
-                    Docs & Guides
-                  </Link>
-                </Button> */}
               </div>
               <Separator />
               {user && (
@@ -498,6 +541,18 @@ export default function Header({
                       className="w-60 p-2"
                       align="start"
                       sideOffset={8}
+                      onEscapeKeyDown={(e) => {
+                        isLoadingBillingRedirect && e.preventDefault()
+                      }}
+                      onPointerDownOutside={(e) => {
+                        isLoadingBillingRedirect && e.preventDefault()
+                      }}
+                      onFocusOutside={(e) => {
+                        isLoadingBillingRedirect && e.preventDefault()
+                      }}
+                      onInteractOutside={(e) => {
+                        isLoadingBillingRedirect && e.preventDefault()
+                      }}
                     >
                       <DropdownMenuLabel>
                         <div className="full flex flex-col items-start justify-center gap-1">
@@ -511,10 +566,23 @@ export default function Header({
                       <DropdownMenuGroup>
                         {/* Theme toggle */}
                         <DropdownMenuSub>
-                          <DropdownMenuSubTrigger className="flex items-center justify-start gap-2">
-                            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                            <span>
+                          <DropdownMenuSubTrigger
+                            className="flex items-center justify-start gap-2"
+                            disabled={isLoadingBillingRedirect}
+                          >
+                            <Sun
+                              className={`${isLoadingBillingRedirect ? 'stroke-muted-foreground' : ''} h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0`}
+                            />
+                            <Moon
+                              className={`${isLoadingBillingRedirect ? 'stroke-muted-foreground' : ''} absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100`}
+                            />
+                            <span
+                              className={
+                                isLoadingBillingRedirect
+                                  ? 'text-muted-foreground'
+                                  : ''
+                              }
+                            >
                               {theme === 'dark'
                                 ? 'Dark'
                                 : theme === 'light'
@@ -543,7 +611,11 @@ export default function Header({
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
-                        <DropdownMenuItem className="cursor-pointer" asChild>
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          disabled={isLoadingBillingRedirect}
+                          asChild
+                        >
                           <Link href="/home" target="_blank">
                             <SquareArrowOutUpRight className="mr-2 h-4 w-4" />
                             <span>Go to homepage</span>
@@ -556,9 +628,38 @@ export default function Header({
                           <UserRoundCog className="mr-2 h-4 w-4" />
                           <span>Account settings</span>
                         </DropdownMenuItem> */}
+                        {hasProjectWithSubscription &&
+                          selectedProjectSubscriptionId && (
+                            <DropdownMenuItem
+                              className="cursor-pointer"
+                              onSelect={(event) => event.preventDefault()}
+                              asChild
+                            >
+                              <button
+                                className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full cursor-pointer items-center justify-between`}
+                                onClick={async () => {
+                                  if (!isLoadingBillingRedirect) {
+                                    setIsLoadingBillingRedirect(true)
+                                    await goToLemonSubscriptionPortalAction(
+                                      selectedProjectSubscriptionId
+                                    )
+                                  }
+                                }}
+                              >
+                                <div className="flex items-center justify-center">
+                                  <CreditCard className="mr-2 h-4 w-4" />
+                                  <span>Billing</span>
+                                </div>
+                                {isLoadingBillingRedirect && (
+                                  <Spinner className="h-4 w-4 fill-foreground text-foreground/25" />
+                                )}
+                              </button>
+                            </DropdownMenuItem>
+                          )}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           className="cursor-pointer"
+                          disabled={isLoadingBillingRedirect}
                           onClick={() => logout()}
                         >
                           <LogOut className="mr-2 h-4 w-4" />
@@ -567,6 +668,7 @@ export default function Header({
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
+                  {/* Project selector */}
                   <Popover
                     open={openProjectsCombobox}
                     onOpenChange={setOpenProjectsCombobox}
@@ -645,28 +747,6 @@ export default function Header({
                   </Popover>
                 </div>
               )}
-              {/* <Separator />
-              <div className="flex gap-2">
-                <ThemeToggle />
-                <Button variant="outline" asChild>
-                  <Link
-                    href="https://github.com/sgalanb/sharepreviews"
-                    target="_blank"
-                    className="w-full"
-                  >
-                    <Github className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link
-                    href="https://x.com/sgalanb"
-                    target="_blank"
-                    className="w-full"
-                  >
-                    <Twitter className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div> */}
             </div>
           </div>
         </>

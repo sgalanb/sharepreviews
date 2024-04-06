@@ -107,6 +107,14 @@ export async function getLemonSubscriptionAction(subscriptionId: string) {
   ).then((response) => response.json())
 }
 
+export async function goToLemonSubscriptionPortalAction(
+  subscriptionId: string
+) {
+  const portal = await getLemonSubscriptionAction(subscriptionId)
+
+  redirect(portal.data.attributes.urls.customer_portal)
+}
+
 export async function getCurrentLemonUsageAction(subscriptionItemId: string) {
   return await fetch(
     `https://api.lemonsqueezy.com/v1/subscription-items/${subscriptionItemId}/current-usage`,
