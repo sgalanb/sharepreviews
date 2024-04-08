@@ -37,7 +37,10 @@ interface TextLayerInterface extends LayerInterface {
   type: 'text'
   widthType: 'fixed' | 'fit'
   heightType: 'fixed' | 'fit'
-  family: string
+  fontName: string
+  fontFamily: string
+  fontWeight: number
+  fontUrl: string
   size: number
   lineHeight: number
   alignHorizontal: 'flex-start' | 'center' | 'flex-end'

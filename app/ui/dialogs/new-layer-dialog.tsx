@@ -53,7 +53,10 @@ export default function NewLayerDialog({
     opacity: 1,
     widthType: 'fit',
     heightType: 'fit',
-    family: 'inter-regular',
+    fontFamily: 'Roboto',
+    fontWeight: 400,
+    fontUrl:
+      'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf',
     size: 48,
     lineHeight: 1,
     alignHorizontal: 'flex-start',

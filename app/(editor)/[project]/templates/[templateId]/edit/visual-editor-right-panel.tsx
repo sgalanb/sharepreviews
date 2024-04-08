@@ -10,6 +10,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from '@/app/ui/components/Command'
 import { Input } from '@/app/ui/components/Input'
 import { Label } from '@/app/ui/components/Label'
@@ -43,7 +44,6 @@ import {
 import { UploadButton } from '@/app/ui/components/UploadThingComponents'
 import FixedSizeIcon from '@/app/ui/svgs/FixedSizeIcon'
 import {
-  availableFonts,
   cn,
   getConditionalValueVariableName,
   getConditionalVisibilityVariableName,
@@ -77,6 +77,7 @@ export default function VisualEditorRightPanel({
   setSelectedLayer,
   multiSelectedLayers,
   setMultiSelectedLayers,
+  availableFonts,
 }: {
   userId: string
   template: TemplateType | undefined
@@ -87,15 +88,14 @@ export default function VisualEditorRightPanel({
   setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
   multiSelectedLayers: LayerType[]
   setMultiSelectedLayers: Dispatch<SetStateAction<LayerType[]>>
+  availableFonts: any[]
 }) {
   const [openFontsCombobox, setOpenFontsCombobox] = useState<boolean>(false)
   const [fontsComboboxValue, setFontsComboboxValue] = useState<string>()
 
   useEffect(() => {
     setFontsComboboxValue(
-      selectedLayer?.type === 'text'
-        ? selectedLayer?.family.toLowerCase() || ''
-        : ''
+      selectedLayer?.type === 'text' ? selectedLayer?.fontFamily || '' : ''
     )
   }, [selectedLayer])
 
@@ -995,56 +995,169 @@ export default function VisualEditorRightPanel({
                         >
                           {
                             availableFonts?.find(
-                              (font) => font.value === fontsComboboxValue
-                            )?.label
+                              (font) => font.family === fontsComboboxValue
+                            )?.family
                           }
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="w-[247px] p-0"
+                        className="h-80 w-[247px] p-0"
                         align="end"
                         sideOffset={8}
                       >
                         <Command>
                           <CommandInput placeholder="Search fonts..." />
                           <CommandEmpty>No font found.</CommandEmpty>
-                          <CommandGroup>
-                            {availableFonts?.map((font, index) => (
-                              <CommandItem
-                                key={index}
-                                value={font.value}
-                                onSelect={(newValue) => {
-                                  setFontsComboboxValue(newValue)
-                                  setSelectedLayer({
-                                    ...selectedLayer,
-                                    family: newValue,
-                                  })
-                                  setLayers(
-                                    layers.map((layer) =>
-                                      layer.id === selectedLayer.id
-                                        ? { ...layer, family: newValue }
-                                        : layer
+                          <CommandList>
+                            <CommandGroup>
+                              {availableFonts?.map((font, index) => (
+                                <CommandItem
+                                  key={index}
+                                  value={font.family}
+                                  onSelect={() => {
+                                    setFontsComboboxValue(font.family)
+                                    setSelectedLayer({
+                                      ...selectedLayer,
+                                      fontFamily: font.family,
+                                      fontWeight: 400,
+                                      fontUrl:
+                                        font.files.regular ?? font.files['400'],
+                                    })
+                                    setLayers(
+                                      layers.map((layer) =>
+                                        layer.id === selectedLayer.id
+                                          ? {
+                                              ...layer,
+                                              fontFamily: font.family,
+                                              fontWeight: 400,
+                                              fontUrl:
+                                                font.files.regular ??
+                                                font.files['400'],
+                                            }
+                                          : layer
+                                      )
                                     )
-                                  )
-                                  setOpenFontsCombobox(false)
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    'mr-2 h-4 w-4',
-                                    fontsComboboxValue === font.value
-                                      ? 'opacity-100'
-                                      : 'opacity-0'
-                                  )}
-                                />
-                                {font.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
+                                    setOpenFontsCombobox(false)
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      'mr-2 h-4 w-4',
+                                      fontsComboboxValue === font.family
+                                        ? 'opacity-100'
+                                        : 'opacity-0'
+                                    )}
+                                  />
+                                  {font.family}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
                         </Command>
                       </PopoverContent>
                     </Popover>
+                    <Select
+                      value={selectedLayer.fontWeight.toString()}
+                      onValueChange={(variant: string) => {
+                        console.log(variant)
+                        setSelectedLayer({
+                          ...selectedLayer,
+                          fontWeight:
+                            variant === 'regular' ? 400 : Number(variant),
+                          fontUrl: availableFonts?.find(
+                            (font) => font.family === fontsComboboxValue
+                          )?.files[variant],
+                          fontName: `${fontsComboboxValue}_${
+                            variant === 'regular' ? 400 : Number(variant)
+                          }`,
+                        })
+                        setLayers(
+                          layers.map((layer) =>
+                            layer.id === selectedLayer.id
+                              ? {
+                                  ...layer,
+                                  fontWeight:
+                                    variant === 'regular'
+                                      ? 400
+                                      : Number(variant),
+                                  fontUrl: availableFonts?.find(
+                                    (font) => font.family === fontsComboboxValue
+                                  )?.files[variant],
+                                  fontName: `${fontsComboboxValue}_${
+                                    variant === 'regular'
+                                      ? 400
+                                      : Number(variant)
+                                  }`,
+                                }
+                              : layer
+                          )
+                        )
+                      }}
+                    >
+                      <SelectTrigger className="font-medium">
+                        <SelectValue placeholder="Weight" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {availableFonts
+                            ?.find((font) => font.family === fontsComboboxValue)
+                            ?.variants // filter all the variants that contain the word 'italic'
+                            .filter(
+                              (variant: string) => !variant.includes('italic')
+                            )
+                            .map((variant: string, index: number) => (
+                              <SelectItem
+                                key={index}
+                                value={variant === 'regular' ? '400' : variant}
+                                className={
+                                  variant === '100'
+                                    ? 'font-thin'
+                                    : variant === '200'
+                                      ? 'font-extralight'
+                                      : variant === '300'
+                                        ? 'font-light'
+                                        : variant === 'regular' ||
+                                            variant === '400'
+                                          ? 'font-normal'
+                                          : variant === '500'
+                                            ? 'font-medium'
+                                            : variant === '600'
+                                              ? 'font-semibold'
+                                              : variant === '700'
+                                                ? 'font-bold'
+                                                : variant === '800'
+                                                  ? 'font-extrabold'
+                                                  : variant === '900'
+                                                    ? 'font-black'
+                                                    : ''
+                                }
+                              >
+                                {variant === '100'
+                                  ? 'Thin'
+                                  : variant === '200'
+                                    ? 'Extra Light'
+                                    : variant === '300'
+                                      ? 'Light'
+                                      : variant === 'regular' ||
+                                          variant === '400'
+                                        ? 'Regular'
+                                        : variant === '500'
+                                          ? 'Medium'
+                                          : variant === '600'
+                                            ? 'Semi Bold'
+                                            : variant === '700'
+                                              ? 'Bold'
+                                              : variant === '800'
+                                                ? 'Extra Bold'
+                                                : variant === '900'
+                                                  ? 'Black'
+                                                  : ''}
+                              </SelectItem>
+                            ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                     {/* Size */}
                     <Input
                       id="size"

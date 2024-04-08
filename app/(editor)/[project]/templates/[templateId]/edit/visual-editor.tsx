@@ -164,6 +164,22 @@ export default function VisualEditor({
     )
   }, [])
 
+  // Load available Google fonts
+  const [availableFonts, setAvailableFonts] = useState<string[]>([])
+
+  useEffect(() => {
+    const getAvailableFonts = async () => {
+      const res = await fetch(
+        `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY}&subset=latin&sort=popularity`
+      )
+      const data = await res.json()
+      setAvailableFonts(data.items)
+    }
+    getAvailableFonts()
+  }, [])
+
+  console.log(availableFonts)
+
   return (
     <div className="grid h-full w-full grid-cols-[280px,1fr,280px] overflow-hidden">
       {/* HEADER */}
@@ -214,6 +230,7 @@ export default function VisualEditor({
         setSelectedLayer={setSelectedLayer}
         multiSelectedLayers={multiSelectedLayers}
         setMultiSelectedLayers={setMultiSelectedLayers}
+        availableFonts={availableFonts}
       />
     </div>
   )

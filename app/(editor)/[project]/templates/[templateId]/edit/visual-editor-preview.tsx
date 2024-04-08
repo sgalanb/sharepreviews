@@ -154,6 +154,38 @@ export default function VisualEditorPreview({
     document.addEventListener('mouseup', onMouseUp)
   }
 
+  useEffect(() => {
+    const style = document.createElement('style')
+
+    const usedFonts = layers
+      .filter((layer) => layer.type === 'text')
+      .map((layer) => {
+        if (layer.type === 'text') {
+          return { fontName: layer.fontName, fontUrl: layer.fontUrl }
+        }
+      })
+    // Remove duplicates
+    const uniqueFonts = [...new Set(usedFonts)]
+
+    style.innerHTML = `
+      ${uniqueFonts
+        .map(
+          (font) => `
+        @font-face {
+          font-family: '${font?.fontName}';
+          src: url('${font?.fontUrl}') format('truetype');
+        }
+      `
+        )
+        .join('')}
+    `
+    document.head.appendChild(style)
+
+    return () => {
+      document.head.removeChild(style)
+    }
+  }, [layers])
+
   return (
     <div
       ref={parentDivRef}
@@ -222,24 +254,8 @@ export default function VisualEditorPreview({
                   >
                     <div
                       style={{
-                        fontFamily: '__Inter_aaf875',
-                        fontWeight: layer.family.endsWith('thin')
-                          ? 100
-                          : layer.family.endsWith('extra-light')
-                            ? 200
-                            : layer.family.endsWith('light')
-                              ? 300
-                              : layer.family.endsWith('regular')
-                                ? 400
-                                : layer.family.endsWith('medium')
-                                  ? 500
-                                  : layer.family.endsWith('semi-bold')
-                                    ? 600
-                                    : layer.family.endsWith('extra-bold')
-                                      ? 800
-                                      : layer.family.endsWith('bold')
-                                        ? 700
-                                        : 900,
+                        fontFamily: layer.fontName,
+                        fontWeight: layer.fontWeight,
                         fontSize: layer.size,
                         lineHeight: layer.lineHeight,
                         color: layer.color,
