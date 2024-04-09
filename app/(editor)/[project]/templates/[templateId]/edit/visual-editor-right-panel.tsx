@@ -1095,7 +1095,7 @@ export default function VisualEditorRightPanel({
                         )
                       }}
                     >
-                      <SelectTrigger className="font-medium">
+                      <SelectTrigger className="col-span-2 font-medium">
                         <SelectValue placeholder="Weight" />
                       </SelectTrigger>
                       <SelectContent>
