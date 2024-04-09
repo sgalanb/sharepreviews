@@ -30,7 +30,6 @@ interface LayerInterface {
   type: 'text' | 'image' | 'rectangle'
   conditionalVisibility: boolean
   conditionalVisibilityVariableName: string
-  conditionalValueVariableName: string
 }
 
 interface TextLayerInterface extends LayerInterface {
@@ -55,6 +54,7 @@ interface TextLayerInterface extends LayerInterface {
   bgPaddingY: number
   bgCornerRadius: number
   conditionalValue: boolean
+  conditionalValueVariableName: string
   exampleValue?: string
   value?: string
 }
@@ -64,6 +64,7 @@ interface ImageLayerInterface extends LayerInterface {
   cornerRadius: number
   objectFit: 'fill' | 'contain' | 'cover'
   conditionalValue: boolean
+  conditionalValueVariableName: string
   exampleSrc?: string
   src?: string
 }

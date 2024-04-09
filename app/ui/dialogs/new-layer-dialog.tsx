@@ -41,7 +41,7 @@ export default function NewLayerDialog({
     (layer) => layer.name.startsWith('Rectangle') && layer.type === 'rectangle'
   ).length
 
-  const newTextLayer = {
+  const newTextLayer: LayerType = {
     id: uuidv4(),
     type: 'text',
     name: `Text${textNameLayers + 1 !== 1 ? ` ${textNameLayers + 1}` : ''}`,
@@ -71,10 +71,12 @@ export default function NewLayerDialog({
     bgCornerRadius: 0,
     conditionalVisibility: false,
     conditionalValue: false,
+    conditionalValueVariableName: '',
+    conditionalVisibilityVariableName: '',
     value: 'Text',
-  } as LayerType
+  }
 
-  const newImageLayer = {
+  const newImageLayer: LayerType = {
     id: uuidv4(),
     type: 'image',
     name: `Image${imageLayers + 1 !== 1 ? ` ${imageLayers + 1}` : ''}`,
@@ -88,10 +90,11 @@ export default function NewLayerDialog({
     objectFit: 'cover',
     conditionalVisibility: false,
     conditionalValue: false,
+    conditionalValueVariableName: '',
+    conditionalVisibilityVariableName: '',
     src: '',
-  } as LayerType
-
-  const newRectangleLayer = {
+  }
+  const newRectangleLayer: LayerType = {
     id: uuidv4(),
     type: 'rectangle',
     name: `Rectangle${rectangleLayers + 1 !== 1 ? ` ${rectangleLayers + 1}` : ''}`,
@@ -104,10 +107,8 @@ export default function NewLayerDialog({
     cornerRadius: 0,
     color: '#000000',
     conditionalVisibility: false,
-    conditionalValue: false,
-    conditionalValueVariableName: '',
     conditionalVisibilityVariableName: '',
-  } as LayerType
+  }
 
   return (
     <Dialog>
