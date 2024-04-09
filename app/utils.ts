@@ -204,7 +204,11 @@ const getConditionalValueVariables = (layers: LayerType[]) => {
         (layer.type === 'text' || layer.type === 'image') &&
         layer.conditionalValue === true
     )
-    .map((layer) => layer.conditionalValueVariableName)
+    .map(
+      (layer) =>
+        (layer.type === 'text' || layer.type === 'image') &&
+        layer?.conditionalValueVariableName
+    )
 }
 const getConditionalVisibilityVariables = (layers: LayerType[]) => {
   return layers
