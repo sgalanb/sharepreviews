@@ -252,7 +252,7 @@ export default function VisualEditorRightPanel({
                     id="widthFixed"
                     type="number"
                     step={10}
-                    min={0}
+                    min={1}
                     max={1200}
                     value={selectedLayer.width}
                     onChange={(e) => {
@@ -308,7 +308,7 @@ export default function VisualEditorRightPanel({
                     id="heightFixed"
                     type="number"
                     step={10}
-                    min={0}
+                    min={1}
                     max={630}
                     value={selectedLayer.height}
                     onChange={(e) => {
@@ -1083,7 +1083,9 @@ export default function VisualEditorRightPanel({
                                       : Number(variant),
                                   fontUrl: availableFonts?.find(
                                     (font) => font.family === fontsComboboxValue
-                                  )?.files[variant],
+                                  )?.files[
+                                    variant === '400' ? 'regular' : variant
+                                  ],
                                   fontName: `${fontsComboboxValue}_${
                                     variant === 'regular'
                                       ? 400
