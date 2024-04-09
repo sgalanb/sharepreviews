@@ -32,4 +32,4 @@
 
 ## License
 
-Inspired by [Dub](https://dub.co/), Dub is open-source under the GNU Affero General Public License Version 3 (AGPLv3) or any later version. You can [find it here](https://github.com/dubinc/dub/blob/main/LICENSE.md).
+Inspired by [Dub](https://dub.co/), sharepreviews is open-source under the GNU Affero General Public License Version 3 (AGPLv3) or any later version. You can [find it here](https://github.com/sgalanb/sharepreviews?tab=AGPL-3.0-1-ov-file#readme).
