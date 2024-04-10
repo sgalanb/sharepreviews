@@ -319,7 +319,7 @@ export default function VisualEditorPreview({
                           }
                           width={layer.width}
                           height={layer.height}
-                          className="flex items-center justify-center"
+                          className="pointer-events-none flex items-center justify-center"
                           style={{
                             // Shared styles between parent and child
                             width: layer.width,

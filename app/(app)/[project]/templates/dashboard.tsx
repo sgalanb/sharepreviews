@@ -157,8 +157,10 @@ export default function TemplatesDashboard({
                       <div className="pointer-events-none h-fit w-full select-none">
                         {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
                         <img
-                          src={getUrlWithConditionalVariablesTrue(template)}
-                          key={Number(template?.updatedAt)}
+                          src={
+                            getUrlWithConditionalVariablesTrue(template) +
+                            template?.updatedAt
+                          }
                           className="aspect-[1.91/1] w-full rounded-md border"
                         />
                       </div>
