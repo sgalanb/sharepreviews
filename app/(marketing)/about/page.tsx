@@ -33,14 +33,14 @@ export default async function AboutPage() {
           <h2 className="marketing-third-title">What are social cards?</h2>
           <p className="w-full text-base text-muted-foreground">
             Also know as OpenGraph cards, they are the{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               previews diplayed when a URL is shared on a social media
             </strong>{' '}
             post or message.
           </p>
           <p className="w-full text-base text-muted-foreground">
             In most platforms,{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               they consists of an image, a title and a description
             </strong>
             . What is shown when a page is shared can be customized by website
@@ -53,7 +53,7 @@ export default async function AboutPage() {
           </h2>
           <p className="w-full text-base text-muted-foreground">
             Despite their simplicity,{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               they are the first impression of a website
             </strong>{' '}
             when a link is shared on social media. If done right, they make the
@@ -61,7 +61,7 @@ export default async function AboutPage() {
           </p>
           <p className="w-full text-base text-muted-foreground">
             They also are an{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               extension of the website&apos;s branding
             </strong>{' '}
             and help to create a consistent experience across platforms.
@@ -73,7 +73,7 @@ export default async function AboutPage() {
           </h2>
           <p className="w-full text-base text-muted-foreground">
             It provides an easy-to-use interface to create templates that can{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               automatically generate social card images for each page of a
               website based on its content
             </strong>
@@ -84,11 +84,11 @@ export default async function AboutPage() {
           <h2 className="marketing-third-title">Who is it for?</h2>
           <p className="w-full text-base text-muted-foreground">
             Some{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               proven use cases
             </strong>{' '}
             for dynamic social card images are{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               blog posts, eCommerce product pages, social media profiles, and
               more
             </strong>
@@ -97,7 +97,7 @@ export default async function AboutPage() {
           <p className="w-full text-base text-muted-foreground">
             It&apos;s also a no-code solution that don&apos;t require any
             technical knowledge to use, so it&apos; perfect for modern{' '}
-            <strong className="font-medium text-foreground">
+            <strong className="font-normal text-foreground/80">
               marketing and product teams
             </strong>
             .

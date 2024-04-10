@@ -23,7 +23,7 @@ export default function SelectedTemplates({
             alt=""
             width={438}
             height={227}
-            className="rounded-t-md"
+            className="pointer-events-none select-none rounded-t-md"
           />
           <div className="flex flex-col items-start justify-center gap-2 border-t p-4">
             <h3 className="marketing-third-title text-balance text-left">

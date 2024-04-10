@@ -16,23 +16,19 @@ export const metadata: Metadata = {
 
 const starterTemplatesIds = [
   {
-    id: 'f59f8239-d5f7-459c-9b3a-1bb8b7591a5b',
+    id: 'f20c60c8-0e4e-43cb-85d7-1ec2357530ae',
     type: 'ecommerce',
   },
   {
-    id: '7552d66d-f660-4ce6-ab05-1ef6f3a7abc7',
+    id: '6446c4ba-ebbc-4688-be9d-9d0aa268627a',
     type: 'blog',
   },
   {
-    id: '1a6f0d56-3a8c-462d-bfdc-899972aef704',
+    id: '27c80424-6b31-455e-88e1-6b36f0e75cf9',
     type: 'social',
   },
   {
-    id: 'ab7b7eee-511c-4b30-bb18-f7eab564d7c7',
-    type: 'events',
-  },
-  {
-    id: 'd173754a-60f2-467d-9066-e9c3620300b1',
+    id: '08f36805-dea2-4575-b047-a96c9466d1f4',
     type: 'other',
   },
 ]
@@ -56,9 +52,9 @@ export default async function StarterTemplatesPage() {
   })
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-4 px-4 pt-20 lg:gap-20">
+    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
-        <h1 className="marketing-title">Starter Templates</h1>
+        <h1 className="marketing-title text-center">Starter Templates</h1>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
           A curated collection of dynamic card images made with{' '}
           <span className="text-primary">sharepreviews</span>. You can use them
@@ -69,7 +65,7 @@ export default async function StarterTemplatesPage() {
         defaultValue="all"
         className="mb-16 flex w-full flex-col items-center justify-center gap-10 lg:mb-0"
       >
-        <TabsList className="flex w-full items-center justify-start overflow-x-auto border lg:w-fit">
+        <TabsList className="flex w-fit items-center justify-start overflow-x-auto border">
           <TabsTrigger value="all" className="h-full py-[5px]">
             All
           </TabsTrigger>
@@ -82,9 +78,9 @@ export default async function StarterTemplatesPage() {
           <TabsTrigger value="social" className="h-full py-[5px]">
             Social
           </TabsTrigger>
-          <TabsTrigger value="events" className="h-full py-[5px]">
+          {/* <TabsTrigger value="events" className="h-full py-[5px]">
             Events
-          </TabsTrigger>
+          </TabsTrigger> */}
           <TabsTrigger value="other" className="h-full py-[5px]">
             Other
           </TabsTrigger>

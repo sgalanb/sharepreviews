@@ -40,7 +40,15 @@ import {
 } from '@/app/utils'
 import { User } from '@workos-inc/node'
 import { motion } from 'framer-motion'
-import { Check, Copy, Edit, MoreHorizontal, Plus, Trash2 } from 'lucide-react'
+import {
+  Check,
+  Copy,
+  Edit,
+  Link2,
+  MoreHorizontal,
+  Plus,
+  Trash2,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
@@ -65,7 +73,7 @@ export default function TemplatesDashboard({
     mutate(`/api/templates?projectId=${project?.id}`)
   }
 
-  // Get URL dialog
+  // URL dialog
   const [isCopied, setIsCopied] = useState<boolean>(false)
   const copyToClipboard = async (text: string) => {
     try {
@@ -159,7 +167,7 @@ export default function TemplatesDashboard({
                         <img
                           src={
                             getUrlWithConditionalVariablesTrue(template) +
-                            template?.updatedAt
+                            `updatedAt=${template?.updatedAt}`
                           }
                           className="aspect-[1.91/1] w-full rounded-md border"
                         />
@@ -260,8 +268,12 @@ export default function TemplatesDashboard({
                           </Dialog>
                           <Dialog>
                             <DialogTrigger asChild>
-                              <Button variant="outline" className="select-none">
-                                Get URL
+                              <Button
+                                variant="outline"
+                                className="select-none px-3"
+                              >
+                                <Link2 className="mr-1.5 h-4 w-4 stroke-foreground" />
+                                URL
                               </Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-xl">

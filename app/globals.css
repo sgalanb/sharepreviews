@@ -22,10 +22,10 @@
     @apply text-3xl font-semibold tracking-tight;
   }
   .marketing-third-title {
-    @apply text-2xl font-semibold tracking-tight;
+    @apply text-xl font-medium tracking-tight;
   }
   .marketing-subtitle {
-    @apply text-lg font-normal leading-6 tracking-tight;
+    @apply text-lg font-normal tracking-tight;
   }
 }
 
