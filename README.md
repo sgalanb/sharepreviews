@@ -1,5 +1,5 @@
 <a href="https://sharepreviews.com">
-  <img alt="sharepreviews – An open-source preview (Open Graph/Twitter Cards) validator, generator and manager." src="https://utfs.io/f/2f29afb3-51b2-4fc3-9e81-6673d9c79603-vc99r1.png">
+  <img alt="sharepreviews – An open-source preview (Open Graph/Twitter Cards) validator, generator and manager." src="https://utfs.io/f/822d79af-20d3-4332-bf8f-c1222349a647-1wrmn.png">
   <h1 align="center">sharepreviews</h1>
 </a>
 
