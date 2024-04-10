@@ -17,11 +17,17 @@ export const metadata: Metadata = {
     url: 'https://sharepreviews.com/blog',
     type: 'website',
     siteName: 'sharepreviews',
+    images: [
+      'https://utfs.io/f/67b159ed-5372-4f02-9e1c-5b56fc58ee5e-1svj6.png',
+    ],
   },
   twitter: {
     site: '@sgalanb',
     creator: '@sgalanb',
     card: 'summary_large_image',
+    images: [
+      'https://utfs.io/f/67b159ed-5372-4f02-9e1c-5b56fc58ee5e-1svj6.png',
+    ],
   },
 }
 

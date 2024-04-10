@@ -18,10 +18,10 @@ export async function generateMetadata({
       description:
         'Check how your links look when shared. Validate that you have the right metatags in place so your cards are displayed correctly. Free tool for Open Graph and Twitter Cards.',
       alternates: {
-        canonical: 'https://sharepreviews.com/validator',
+        canonical: 'https://sharepreviews.com/card-validator',
       },
       openGraph: {
-        url: 'https://sharepreviews.com/validator',
+        url: 'https://sharepreviews.com/card-validator',
         type: 'website',
         siteName: 'sharepreviews',
         images: [
@@ -47,10 +47,10 @@ export async function generateMetadata({
       description:
         'Check how your links look when shared. Validate that you have the right metatags in place so your cards are displayed correctly. Free tool for Open Graph and Twitter Cards.',
       alternates: {
-        canonical: 'https://sharepreviews.com/validator',
+        canonical: 'https://sharepreviews.com/card-validator',
       },
       openGraph: {
-        url: 'https://sharepreviews.com/validator',
+        url: 'https://sharepreviews.com/card-validator',
         type: 'website',
         siteName: 'sharepreviews',
         images: [

@@ -10,7 +10,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Everything You Should Know About Social Metatags | sharepreviews',
+  title:
+    'Everything You Should Know About Social Card Metatags | sharepreviews',
   description:
     'Learn how to use Open Graph and Twitter metatags to control how your website is displayed when shared on social media.',
   alternates: {
@@ -21,11 +22,17 @@ export const metadata: Metadata = {
     url: 'https://sharepreviews.com/blog/everything-you-should-know-about-social-card-metatags',
     type: 'article',
     siteName: 'sharepreviews',
+    images: [
+      'https://sharepreviews.com/og/6446c4ba-ebbc-4688-be9d-9d0aa268627a?title_value=Everything You Should Know About Social Card Metatags&description_value= &featured_image_src=https://utfs.io/f/cddf4821-1c11-4596-823e-d2e38bac2a38-yy0bye.jpeg',
+    ],
   },
   twitter: {
     site: '@sgalanb',
     creator: '@sgalanb',
     card: 'summary_large_image',
+    images: [
+      'https://sharepreviews.com/og/6446c4ba-ebbc-4688-be9d-9d0aa268627a?title_value=Everything You Should Know About Social Card Metatags&description_value= &featured_image_src=https://utfs.io/f/cddf4821-1c11-4596-823e-d2e38bac2a38-yy0bye.jpeg',
+    ],
   },
 }
 

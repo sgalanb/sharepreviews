@@ -8,6 +8,22 @@ export const metadata: Metadata = {
   title: 'About | sharepreviews',
   description:
     'Why social cards are one of the most undervalued aspects of digital marketing and how sharepreviews want to change that.',
+  openGraph: {
+    url: 'https://sharepreviews.com/about',
+    type: 'website',
+    siteName: 'sharepreviews',
+    images: [
+      "https://sharepreviews.com/og/6446c4ba-ebbc-4688-be9d-9d0aa268627a?title_value=A platform to generate social cards&description_value=Hi, I'm Santiago and I think that social cards are one of the most undervalued aspects of digital marketing.&featured_image_src=https://utfs.io/f/cddf4821-1c11-4596-823e-d2e38bac2a38-yy0bye.jpeg",
+    ],
+  },
+  twitter: {
+    site: '@sgalanb',
+    creator: '@sgalanb',
+    card: 'summary_large_image',
+    images: [
+      "https://sharepreviews.com/og/6446c4ba-ebbc-4688-be9d-9d0aa268627a?title_value=A platform to generate social cards&description_value=Hi, I'm Santiago and I think that social cards are one of the most undervalued aspects of digital marketing.&featured_image_src=https://utfs.io/f/cddf4821-1c11-4596-823e-d2e38bac2a38-yy0bye.jpeg",
+    ],
+  },
 }
 
 export default async function AboutPage() {
