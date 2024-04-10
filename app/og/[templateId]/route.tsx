@@ -14,7 +14,6 @@ import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
 export const runtime = 'edge'
-export const contentType = 'image/png'
 export const revalidate = 60
 
 const adminKey = process.env.ADMIN_VARIABLES_ENCRYPTION_KEY
