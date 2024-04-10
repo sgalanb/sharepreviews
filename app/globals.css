@@ -16,7 +16,7 @@
     @apply text-lg font-normal leading-6 tracking-tight;
   }
   .marketing-title {
-    @apply text-4xl font-extrabold tracking-tight;
+    @apply text-5xl font-extrabold tracking-tight;
   }
   .marketing-second-title {
     @apply text-3xl font-semibold tracking-tight;

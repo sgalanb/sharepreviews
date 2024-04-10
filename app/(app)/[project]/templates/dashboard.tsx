@@ -101,8 +101,9 @@ export default function TemplatesDashboard({
             </Button>
           </p>
         </div>
-        {project?.plan === 'free' &&
-        projectTemplates?.length < FREE_TEMPLATES ? (
+        {(project?.plan === 'free' &&
+          projectTemplates?.length < FREE_TEMPLATES) ||
+        project?.plan !== 'free' ? (
           <NewTemplateDialog
             trigger={
               <Button className="hidden gap-2 md:flex">
@@ -157,6 +158,7 @@ export default function TemplatesDashboard({
                         {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
                         <img
                           src={getUrlWithConditionalVariablesTrue(template)}
+                          key={Number(template?.updatedAt)}
                           className="aspect-[1.91/1] w-full rounded-md border"
                         />
                       </div>

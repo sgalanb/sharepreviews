@@ -4,7 +4,6 @@ import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import GitHub from '@/app/ui/svgs/social-icons/GitHub'
 import ValidatorInput from '@/app/ui/validator-input'
-import { ArrowDown } from 'lucide-react'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,11 +20,17 @@ export const metadata: Metadata = {
     url: 'https://sharepreviews.com',
     type: 'website',
     siteName: 'sharepreviews',
+    images: [
+      'https://utfs.io/f/2f29afb3-51b2-4fc3-9e81-6673d9c79603-vc99r1.png',
+    ],
   },
   twitter: {
     site: '@sgalanb',
     creator: '@sgalanb',
     card: 'summary_large_image',
+    images: [
+      'https://utfs.io/f/2f29afb3-51b2-4fc3-9e81-6673d9c79603-vc99r1.png',
+    ],
   },
 }
 
@@ -34,50 +39,24 @@ export default async function Home() {
   const authorizationUrl = getAuthorizationUrl()
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start px-4">
+    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-40 px-4">
       {/* Main */}
-      <div className="flex min-h-[calc(100dvh-72px)] flex-col items-center justify-between">
-        <div className="mt-10 flex h-fit min-w-full flex-col items-center justify-between gap-4 lg:mt-20 lg:flex-row lg:gap-0">
-          {/* Text */}
-          <div className="flex w-full flex-col items-center justify-center gap-4 lg:order-1 lg:items-start lg:p-20">
-            <h1 className="marketing-title text-balance text-center lg:text-left">
-              Auto Generate Social Card Images
-            </h1>
-            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:text-left">
-              Improve your website links engagement and click through rate.
-            </p>
-            <Button className="my-1.5" asChild>
-              <Link href={isAuthenticated ? '/' : authorizationUrl}>
-                Start for Free
-              </Link>
-            </Button>
-          </div>
-          {/* Images */}
-          <div className="flex w-full flex-col items-center justify-center gap-5 lg:order-2 lg:px-20">
-            <Image
-              src="/marketing/hero-1.png"
-              alt=""
-              width={484}
-              height={340.74}
-              className="pointer-events-none mt-12 select-none rounded-md"
-            />
-            <Image
-              src="/marketing/arrow.svg"
-              alt=""
-              width={24}
-              height={60}
-              className="pointer-events-none select-none"
-            />
-            <Image
-              src="/marketing/hero-2.png"
-              alt=""
-              width={484}
-              height={340.74}
-              className="pointer-events-none select-none rounded-md"
-            />
-          </div>
+      <div className="center mt-10 flex min-w-full flex-col items-center gap-4 lg:mt-20 lg:flex-row lg:gap-0">
+        {/* Text */}
+        <div className="flex w-full flex-col items-center justify-center gap-4 lg:order-1 lg:p-20">
+          <h1 className="marketing-title text-balance text-center">
+            Dynamic Social Card Images Generator
+          </h1>
+          <p className="marketing-subtitle text-balance text-center text-muted-foreground xl:px-64">
+            Boost your links engagement with sharepreviews, the no-code Open
+            Graph (OG) & Twitter Cards dynamic image generator.
+          </p>
+          <Button className="my-1.5" asChild>
+            <Link href={isAuthenticated ? '/' : authorizationUrl}>
+              Start for Free
+            </Link>
+          </Button>
         </div>
-        <ArrowDown className="my-8 h-8 w-8 stroke-muted-foreground" />
       </div>
       {/* Design template*/}
       <div className="mt-12 flex w-full flex-col items-center justify-center gap-2">
@@ -200,8 +179,6 @@ export default async function Home() {
           <Link href="/starter-templates">View all templates</Link>
         </Button>
       </div>
-      {/* Custom Separator */}
-      <div className="mb-20 mt-24 h-4 w-full shrink-0 border-t" />
       {/* Implement in minutes */}
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <h2 className="marketing-second-title text-balance text-center">
@@ -217,8 +194,6 @@ export default async function Home() {
         <UrlExample />
         {/* TODO: Add example of meta tag implementation with Next.js, Astro, etc. */}
       </div>
-      {/* Custom Separator */}
-      <div className="mb-20 mt-24 h-4 w-full shrink-0 border-t" />
       {/* Validator */}
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <h2 className="marketing-second-title text-balance text-center">
@@ -232,8 +207,6 @@ export default async function Home() {
           <ValidatorInput isApp={false} isHome />
         </div>
       </div>
-      {/* Custom Separator */}
-      <div className="mb-20 mt-24 h-4 w-full shrink-0 border-t" />
       {/* Open Source */}
       <div className="mb-20 flex w-full flex-col items-center justify-center gap-2">
         <h2 className="marketing-second-title text-balance text-center">

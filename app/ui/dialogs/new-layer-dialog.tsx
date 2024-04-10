@@ -59,7 +59,7 @@ export default function NewLayerDialog({
     fontUrl:
       'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf',
     size: 48,
-    lineHeight: 1,
+    lineHeight: 1.2,
     alignHorizontal: 'flex-start',
     alignVertical: 'flex-start',
     background: false,

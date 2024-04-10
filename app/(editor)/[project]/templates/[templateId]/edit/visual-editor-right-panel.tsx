@@ -176,7 +176,7 @@ export default function VisualEditorRightPanel({
                     1200 - (selectedLayer.x + selectedLayer.width) < 10 ? 1 : 10
                   }
                   min={0}
-                  max={1200 - selectedLayer.width}
+                  max={1200}
                   defaultValue={selectedLayer.x}
                   onChange={(e) => {
                     if (e.target.value === '') return
@@ -214,7 +214,7 @@ export default function VisualEditorRightPanel({
                     630 - (selectedLayer.y + selectedLayer.height) < 10 ? 1 : 10
                   }
                   min={0}
-                  max={630 - selectedLayer.height}
+                  max={630}
                   defaultValue={selectedLayer.y}
                   onChange={(e) => {
                     if (e.target.value === '') return
@@ -401,7 +401,7 @@ export default function VisualEditorRightPanel({
                       <SelectTrigger className="flex justify-start gap-0 p-0 pr-2">
                         <Label className="mr-2 flex h-full w-[2.0625rem] shrink-0 items-center justify-center border-r text-muted-foreground">
                           {selectedLayer.widthType === 'fixed' ? (
-                            <FixedSizeIcon className="h-4 w-4" />
+                            <FixedSizeIcon className="h-4 w-4 rotate-90" />
                           ) : (
                             <ChevronsRightLeft className="h-4 w-4" />
                           )}
@@ -459,7 +459,7 @@ export default function VisualEditorRightPanel({
                       <SelectTrigger className="flex justify-start gap-0 p-0 pr-2">
                         <Label className="mr-2 flex h-full w-[2.125rem] shrink-0 items-center justify-center border-r text-muted-foreground">
                           {selectedLayer.heightType === 'fixed' ? (
-                            <FixedSizeIcon className="h-4 w-4 rotate-90" />
+                            <FixedSizeIcon className="h-4 w-4" />
                           ) : (
                             <ChevronsDownUp className="h-4 w-4" />
                           )}
@@ -1021,6 +1021,7 @@ export default function VisualEditorRightPanel({
                                       ...selectedLayer,
                                       fontFamily: font.family,
                                       fontWeight: 400,
+                                      fontName: `${font.family}_400`,
                                       fontUrl:
                                         font.files.regular ?? font.files['400'],
                                     })
@@ -1031,6 +1032,7 @@ export default function VisualEditorRightPanel({
                                               ...layer,
                                               fontFamily: font.family,
                                               fontWeight: 400,
+                                              fontName: `${font.family}_400`,
                                               fontUrl:
                                                 font.files.regular ??
                                                 font.files['400'],
