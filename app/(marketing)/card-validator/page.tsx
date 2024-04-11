@@ -38,7 +38,7 @@ export async function generateMetadata({
       },
     }
   } else {
-    const metatags = await fetch(`/api/metatags/validate?url=${cleanUrl}`)
+    //const metatags = await fetch(`/api/metatags/validate?url=${cleanUrl}`)
 
     // TODO
 
