@@ -52,18 +52,37 @@ export default async function Home() {
             Boost your links engagement with sharepreviews, the no-code Open
             Graph (OG) & Twitter Cards dynamic image generator.
           </p>
-          <Button className="my-1.5" asChild>
-            <Link href={isAuthenticated ? '/' : authorizationUrl}>
-              Start for Free
-            </Link>
-          </Button>
+          <div className="flex gap-4">
+            <Button size="lg" className="my-1 text-base font-semibold" asChild>
+              <Link href={isAuthenticated ? '/' : authorizationUrl}>
+                Start for Free
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="my-1 flex items-center justify-center gap-2 bg-white px-3 text-base font-semibold text-[#0E1117] dark:bg-[#0E1117] dark:text-white dark:hover:opacity-90"
+              asChild
+            >
+              <Link
+                href="https://github.com/sgalanb/sharepreviews"
+                target="_blank"
+              >
+                <GitHub
+                  className="h-4 w-4"
+                  fillClassName="dark:fill-white fill-[#0E1117]"
+                />
+                Star
+              </Link>
+            </Button>
+          </div>
         </div>
         <Image
           src="/marketing/hardcoded-header-image.png"
-          alt=""
+          alt="Picture of 4 different social card examples"
           width={800}
           height={400}
-          className=""
+          priority
         />
       </div>
 
@@ -81,7 +100,7 @@ export default async function Home() {
           <div className="rotate-y-10 relative flex w-[88%] flex-col items-center rounded-sm rounded-b-sm border !border-opacity-5 bg-black !bg-opacity-5 p-1 dark:border-white dark:bg-white dark:shadow-2xl lg:rounded-xl lg:rounded-b-xl lg:border-2 lg:p-3">
             <Image
               src="/marketing/editor-screenshot.png"
-              alt=""
+              alt="picture of the tempalte editor"
               width={851}
               height={483}
               className="w-full rounded-[4px]"

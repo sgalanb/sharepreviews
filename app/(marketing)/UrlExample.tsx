@@ -45,6 +45,7 @@ export default function UrlExample() {
         <Button
           variant="outline"
           className="aspect-square w-10 p-0"
+          aria-label="Copy to clipboard"
           onClick={() =>
             copyToClipboard(
               'https://sharepreviews.com/og/08f36805-dea2-4575-b047-a96c9466d1f4?title_value={VALUE}&description_value={VALUE}'

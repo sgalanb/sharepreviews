@@ -27,24 +27,35 @@ export default function Footer({
         {/* Social Profiles */}
         <div className="flex gap-2">
           <Button variant="outline" className="aspect-square w-10 p-0 " asChild>
-            <Link href="https://twitter.com/sharepreviews" target="_blank">
+            <Link
+              href="https://twitter.com/sharepreviews"
+              target="_blank"
+              aria-label="Go to the project Twitter profile"
+            >
               <X className="h-4 w-4" fillClassName="fill-foreground" />
+              <span className="sr-only">Go to the project Twitter profile</span>
             </Link>
           </Button>
           <Button variant="outline" className="aspect-square w-10 p-0 " asChild>
             <Link
               href="https://github.com/sgalanb/sharepreviews"
               target="_blank"
+              aria-label="Go to the project GitHub repository"
             >
               <GitHub className="h-4 w-4" fillClassName="fill-foreground" />
+              <span className="sr-only">
+                Go to the project GitHub repository
+              </span>
             </Link>
           </Button>
           <Button variant="outline" className="aspect-square w-10 p-0" asChild>
             <Link
               href="https://www.linkedin.com/company/sharepreviews"
               target="_blank"
+              aria-label="Go to the project LinkedIn page"
             >
               <LinkedIn className="h-4 w-4" fillClassName="fill-foreground" />
+              <span className="sr-only">Go to the project LinkedIn page</span>
             </Link>
           </Button>
           {/* <Button variant="outline" className="aspect-square w-10 p-0" asChild>
@@ -61,7 +72,7 @@ export default function Footer({
       <div className="grid h-full w-full grid-cols-2 items-start justify-between gap-8 px-4 py-8 lg:flex lg:gap-0 lg:p-8">
         {/* Product */}
         <div className="flex flex-col items-start justify-start gap-3">
-          <h4 className="font-semibold">Product</h4>
+          <h3 className="font-semibold">Product</h3>
           <Link
             href="/about"
             className="text-muted-foreground hover:text-foreground"
@@ -89,7 +100,7 @@ export default function Footer({
         </div>
         {/* Use cases */}
         <div className="flex flex-col items-start justify-start gap-3">
-          <h4 className="font-semibold">Use cases</h4>
+          <h3 className="font-semibold">Use cases</h3>
           <Link
             href="/starter-templates"
             className="text-muted-foreground hover:text-foreground"
@@ -135,7 +146,7 @@ export default function Footer({
         </div>
         {/* Free Tools */}
         <div className="flex flex-col items-start justify-start gap-3">
-          <h4 className="font-semibold">Free tools</h4>
+          <h3 className="font-semibold">Free tools</h3>
           <Link
             href="/card-validator"
             className="text-muted-foreground hover:text-foreground"
@@ -145,7 +156,7 @@ export default function Footer({
         </div>
         {/* Legal */}
         <div className="flex flex-col items-start justify-start gap-3">
-          <h4 className="font-semibold">Legal</h4>
+          <h3 className="font-semibold">Legal</h3>
           <Link
             href="/privacy"
             className="text-muted-foreground hover:text-foreground"

@@ -154,7 +154,7 @@ export default function Header({
       <div className="mx-auto w-full max-w-screen-2xl px-4 lg:hidden">
         <nav className="flex items-center justify-between py-2">
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger aria-label="Open navigation">
               <div className={user ? 'w-24' : ''}>
                 <MenuIcon className="m-2 h-6 w-6" />
               </div>
