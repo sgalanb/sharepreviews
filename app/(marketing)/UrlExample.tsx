@@ -30,11 +30,11 @@ export default function UrlExample() {
         https://sharepreviews.com/og/
         {
           <span className="text-blue-600">
-            6a9a84f6-4236-46a6-8dce-519826d2b131
+            08f36805-dea2-4575-b047-a96c9466d1f4
           </span>
         }
-        ?text_value={<span className="text-green-600">{`{VALUE}`}</span>}
-        &text_value={<span className="text-green-600">{`{VALUE}`}</span>}
+        ?title_value={<span className="text-green-600">{`{VALUE}`}</span>}
+        &description_value={<span className="text-green-600">{`{VALUE}`}</span>}
       </code>
       <motion.div
         initial="initial"
@@ -47,7 +47,7 @@ export default function UrlExample() {
           className="aspect-square w-10 p-0"
           onClick={() =>
             copyToClipboard(
-              'https://sharepreviews.com/og/6a9a84f6-4236-46a6-8dce-519826d2b131?text_value={VALUE}&text_value={VALUE}'
+              'https://sharepreviews.com/og/08f36805-dea2-4575-b047-a96c9466d1f4?title_value={VALUE}&description_value={VALUE}'
             )
           }
         >
