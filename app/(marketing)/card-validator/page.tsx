@@ -25,7 +25,7 @@ export async function generateMetadata({
         type: 'website',
         siteName: 'sharepreviews',
         images: [
-          'https://utfs.io/f/5d8571c9-012b-4069-8c80-ce3ca11926a2-nrodn.png',
+          'https://utfs.io/f/5d0c1c4a-2d8c-433b-b140-aabcfc3f97ba-67kr6v.png',
         ],
       },
       twitter: {
@@ -33,7 +33,7 @@ export async function generateMetadata({
         creator: '@sgalanb',
         card: 'summary_large_image',
         images: [
-          'https://utfs.io/f/5d8571c9-012b-4069-8c80-ce3ca11926a2-nrodn.png',
+          'https://utfs.io/f/5d0c1c4a-2d8c-433b-b140-aabcfc3f97ba-67kr6v.png',
         ],
       },
     }
@@ -54,7 +54,7 @@ export async function generateMetadata({
         type: 'website',
         siteName: 'sharepreviews',
         images: [
-          'https://utfs.io/f/5d8571c9-012b-4069-8c80-ce3ca11926a2-nrodn.png',
+          'https://utfs.io/f/5d0c1c4a-2d8c-433b-b140-aabcfc3f97ba-67kr6v.png',
         ],
       },
       twitter: {
@@ -62,7 +62,7 @@ export async function generateMetadata({
         creator: '@sgalanb',
         card: 'summary_large_image',
         images: [
-          'https://utfs.io/f/5d8571c9-012b-4069-8c80-ce3ca11926a2-nrodn.png',
+          'https://utfs.io/f/5d0c1c4a-2d8c-433b-b140-aabcfc3f97ba-67kr6v.png',
         ],
       },
     }
