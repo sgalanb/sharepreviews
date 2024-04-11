@@ -9,6 +9,7 @@ import { getUrlWithConditionalVariablesTrue } from '@/app/utils'
 import { ChevronLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 export default async function StarterTemplatePage({
   params,
@@ -21,6 +22,10 @@ export default async function StarterTemplatePage({
   const userProjects = await getUserProjects(user?.id ?? '')
 
   const selectedTemplate = await getTemplateById(params.templateId)
+
+  if (selectedTemplate?.projectId !== '8528aee3-1808-4942-ad2e-bd6ad266643d') {
+    redirect('/starter-templates')
+  }
 
   return (
     <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-8 p-4 pt-20">
