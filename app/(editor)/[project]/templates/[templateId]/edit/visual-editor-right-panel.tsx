@@ -1374,11 +1374,24 @@ export default function VisualEditorRightPanel({
                       setSelectedLayer({
                         ...selectedLayer,
                         background: value === 'yes',
+                        bgPaddingX: 0,
+                        bgPaddingY: 0,
+                        bgCornerRadius: 0,
+                        bgOpacity: 1,
+                        bgColor: '#ff6d2a',
                       })
                       setLayers(
                         layers.map((layer) =>
                           layer.id === selectedLayer.id
-                            ? { ...layer, background: value === 'yes' }
+                            ? {
+                                ...layer,
+                                background: value === 'yes',
+                                bgPaddingX: 0,
+                                bgPaddingY: 0,
+                                bgCornerRadius: 0,
+                                bgOpacity: 1,
+                                bgColor: '#ff6d2a',
+                              }
                             : layer
                         )
                       )
