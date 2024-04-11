@@ -49,6 +49,7 @@ import Spinner from '@/app/ui/components/Spinner'
 import NewProjectDialog from '@/app/ui/dialogs/new-project-dialog'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { cn } from '@/app/utils'
+import { track } from '@vercel/analytics/react'
 import { User } from '@workos-inc/node'
 import {
   Check,
@@ -303,8 +304,12 @@ export default function Header({
                     {!user && (
                       <SheetClose asChild>
                         <Button asChild>
-                          <Link href={authorizationUrl} className="mt-4 w-full">
-                            Get Started
+                          <Link
+                            href={authorizationUrl}
+                            className="mt-4 w-full"
+                            onClick={() => track('start_for_free_header')}
+                          >
+                            Start for Free
                           </Link>
                         </Button>
                       </SheetClose>
@@ -870,7 +875,12 @@ export default function Header({
                   </DropdownMenu>
                 ) : (
                   <Button asChild>
-                    <Link href={authorizationUrl}>Get Started</Link>
+                    <Link
+                      href={authorizationUrl}
+                      onClick={() => track('start_for_free_header')}
+                    >
+                      Start for Free
+                    </Link>
                   </Button>
                 )}
               </div>

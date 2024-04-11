@@ -1,9 +1,10 @@
+import StarOnGithubButton from '@/app/(marketing)/StarOnGithubButton'
+import StartForFreeButtonHome from '@/app/(marketing)/StartForFreeButtonHome'
 import UrlExample from '@/app/(marketing)/UrlExample'
 import Footer from '@/app/(marketing)/footer'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import { Separator } from '@/app/ui/components/Separator'
-import GitHub from '@/app/ui/svgs/social-icons/GitHub'
 import ValidatorInput from '@/app/ui/validator-input'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -53,28 +54,11 @@ export default async function Home() {
             Graph (OG) & Twitter Cards dynamic image generator.
           </p>
           <div className="flex gap-4">
-            <Button size="lg" className="my-1 text-base font-semibold" asChild>
-              <Link href={isAuthenticated ? '/' : authorizationUrl}>
-                Start for Free
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="my-1 flex items-center justify-center gap-2 bg-white px-3 text-base font-semibold text-[#0E1117] dark:bg-[#0E1117] dark:text-white dark:hover:opacity-90"
-              asChild
-            >
-              <Link
-                href="https://github.com/sgalanb/sharepreviews"
-                target="_blank"
-              >
-                <GitHub
-                  className="h-4 w-4"
-                  fillClassName="dark:fill-white fill-[#0E1117]"
-                />
-                Star
-              </Link>
-            </Button>
+            <StartForFreeButtonHome
+              isAuthenticated={isAuthenticated}
+              authorizationUrl={authorizationUrl}
+            />
+            <StarOnGithubButton variant="short" />
           </div>
         </div>
         <Image
@@ -244,17 +228,7 @@ export default async function Home() {
             Our source code is available on GitHub. <br />
             Feel free to read, review, or contribute to it however you want!
           </p>
-          <Link
-            href="https://github.com/sgalanb/sharepreviews"
-            target="_blank"
-            className="mt-8 flex items-center justify-center gap-2 rounded-md bg-[#0E1117] px-4 py-2 text-sm font-medium text-white dark:bg-white dark:text-[#0E1117]"
-          >
-            <GitHub
-              className="h-4 w-4"
-              fillClassName="fill-white dark:fill-[#0E1117]"
-            />
-            Star on GitHub
-          </Link>
+          <StarOnGithubButton variant="long" />
         </div>
 
         <Footer isAuthenticated={isAuthenticated} />

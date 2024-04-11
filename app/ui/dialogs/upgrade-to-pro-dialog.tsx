@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
+import { track } from '@vercel/analytics/server'
 import { User } from '@workos-inc/node'
 import { CircleCheck, Info } from 'lucide-react'
 import Link from 'next/link'
@@ -38,7 +39,11 @@ export default function UpgradeToProDialog({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <form
-          action={() => {
+          action={async () => {
+            await track('upgrade_to_pro', {
+              project: project?.name,
+              user: user?.email,
+            })
             if (
               project?.id &&
               user?.id &&

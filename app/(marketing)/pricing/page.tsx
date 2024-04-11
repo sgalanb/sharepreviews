@@ -1,6 +1,7 @@
 import Footer from '@/app/(marketing)/footer'
-import { getUser } from '@/app/lib/workos'
-import { Button } from '@/app/ui/components/Button'
+import StartForFreeButton from '@/app/(marketing)/pricing/StartForFreeButton'
+import StartWithProButton from '@/app/(marketing)/pricing/StartWithProButton'
+import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Card } from '@/app/ui/components/Card'
 import { Separator } from '@/app/ui/components/Separator'
 import {
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const { isAuthenticated } = await getUser()
-
+  const authorizationUrl = getAuthorizationUrl()
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
@@ -46,9 +47,9 @@ export default async function AboutPage() {
                 / mo
               </span>
             </div>
-            <Button variant="outline" className="w-full">
-              Start for free
-            </Button>
+
+            <StartForFreeButton authorizationUrl={authorizationUrl} />
+
             <Separator />
 
             <div className="flex w-full flex-col items-start justify-start gap-2">
@@ -95,7 +96,9 @@ export default async function AboutPage() {
                 / mo
               </span>
             </div>
-            <Button className="w-full">Get started with Pro</Button>
+
+            <StartWithProButton authorizationUrl={authorizationUrl} />
+
             <Separator />
 
             <div className="flex w-full flex-col items-start justify-start gap-2">
