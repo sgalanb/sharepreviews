@@ -69,7 +69,7 @@ export default function Footer({
         </div>
       </div>
       <Separator orientation="vertical" className="hidden h-full lg:block" />
-      <div className="grid h-full w-full grid-cols-2 items-start justify-between gap-8 px-4 py-8 lg:flex lg:gap-0 lg:p-8">
+      <div className="grid h-full w-full grid-cols-2 gap-4 px-4 py-8 lg:flex lg:items-start lg:justify-between lg:gap-0 lg:p-8">
         {/* Product */}
         <div className="flex flex-col items-start justify-start gap-3">
           <h3 className="font-semibold">Product</h3>
