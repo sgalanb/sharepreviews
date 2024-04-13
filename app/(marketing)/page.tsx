@@ -43,7 +43,7 @@ export default async function Home() {
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4">
       {/* Main */}
-      <div className="center mb-12 flex min-w-full flex-col items-center gap-20 lg:gap-0">
+      <div className="center mb-12 mt-12 flex min-w-full flex-col items-center gap-20 lg:mt-0 lg:gap-0">
         {/* Text */}
         <div className="flex w-full flex-col items-center justify-center gap-8 lg:p-16">
           <h1 className="marketing-title text-balance text-center">
