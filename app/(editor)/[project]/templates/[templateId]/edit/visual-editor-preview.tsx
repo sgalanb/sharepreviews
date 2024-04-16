@@ -230,6 +230,9 @@ export default function VisualEditorPreview({
                       alignItems: layer.alignVertical,
                       left: layer.x,
                       top: layer.y,
+                      ...(layer.widthType === 'fixed'
+                        ? { width: layer.width }
+                        : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
                       height: layer.height,
                       transform: `rotate(${layer.rotation}deg)`,
                       // Background styles
@@ -253,9 +256,6 @@ export default function VisualEditorPreview({
                         lineHeight: layer.lineHeight,
                         color: layer.color,
                         opacity: layer.opacity,
-                        ...(layer.widthType === 'fixed'
-                          ? { width: layer.width }
-                          : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
                         WebkitLineClamp: layer.lineClamp,
                         textAlign:
                           layer.alignHorizontal === 'center'

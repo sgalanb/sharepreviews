@@ -144,6 +144,9 @@ export async function GET(req: NextRequest) {
                     alignItems: layer.alignVertical,
                     left: layer.x,
                     top: layer.y,
+                    ...(layer.widthType === 'fixed'
+                      ? { width: layer.width }
+                      : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
                     height: layer.height,
                     transform: `rotate(${layer.rotation}deg)`,
                     // Background styles
@@ -166,9 +169,6 @@ export async function GET(req: NextRequest) {
                       lineHeight: layer.lineHeight,
                       color: layer.color,
                       opacity: layer.opacity,
-                      ...(layer.widthType === 'fixed'
-                        ? { width: layer.width }
-                        : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
                       lineClamp: layer.lineClamp ?? 9999,
                       textAlign:
                         layer.alignHorizontal === 'center'
