@@ -323,9 +323,7 @@ export default function VisualEditorRightPanel({
                     className="pl-10"
                   />
                 )}
-                {selectedLayer.type !== 'text' ||
-                (selectedLayer.type === 'text' &&
-                  selectedLayer.heightType === 'fixed') ? (
+                {selectedLayer.type !== 'text' ? (
                   <Input
                     id="heightFixed"
                     type="number"
