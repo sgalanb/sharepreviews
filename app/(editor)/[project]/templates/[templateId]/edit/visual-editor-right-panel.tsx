@@ -55,10 +55,10 @@ import {
   AlignRight,
   AlignVerticalSpaceAround,
   ArrowDownToLine,
+  ArrowDownWideNarrow,
   ArrowUpToLine,
   BlendIcon,
   Check,
-  ChevronsDownUp,
   ChevronsRightLeft,
   ChevronsUpDown,
   FoldVertical,
@@ -112,6 +112,38 @@ export default function VisualEditorRightPanel({
       setSelectionY(Math.min(...yValues))
     }
   }, [multiSelectedLayers])
+
+  // Update selected text layer height when font size, line height or line-clamp changes
+  const isTextLayer = selectedLayer?.type === 'text'
+  const size = isTextLayer ? selectedLayer?.size : null
+  const lineHeight = isTextLayer ? selectedLayer?.lineHeight : null
+  const lineClamp = isTextLayer ? selectedLayer?.lineClamp : null
+
+  useEffect(() => {
+    if (selectedLayer?.type === 'text') {
+      setSelectedLayer({
+        ...selectedLayer,
+        height:
+          selectedLayer.size *
+          selectedLayer.lineHeight *
+          selectedLayer.lineClamp,
+      })
+      setLayers(
+        layers.map((layer) =>
+          layer.id === selectedLayer.id
+            ? {
+                ...layer,
+                height:
+                  selectedLayer.size *
+                  selectedLayer.lineHeight *
+                  selectedLayer.lineClamp,
+              }
+            : layer
+        )
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size, lineHeight, lineClamp])
 
   return (
     <div className="flex h-full w-full flex-col items-start justify-between overflow-hidden border-l">
@@ -172,11 +204,7 @@ export default function VisualEditorRightPanel({
                 <Input
                   id="x"
                   type="number"
-                  step={
-                    1200 - (selectedLayer.x + selectedLayer.width) < 10 ? 1 : 10
-                  }
-                  min={0}
-                  max={1200}
+                  step={10}
                   defaultValue={selectedLayer.x}
                   onChange={(e) => {
                     if (e.target.value === '') return
@@ -210,11 +238,7 @@ export default function VisualEditorRightPanel({
                 <Input
                   id="y"
                   type="number"
-                  step={
-                    630 - (selectedLayer.y + selectedLayer.height) < 10 ? 1 : 10
-                  }
-                  min={0}
-                  max={630}
+                  step={10}
                   defaultValue={selectedLayer.y}
                   onChange={(e) => {
                     if (e.target.value === '') return
@@ -252,8 +276,6 @@ export default function VisualEditorRightPanel({
                     id="widthFixed"
                     type="number"
                     step={10}
-                    min={1}
-                    max={1200}
                     value={selectedLayer.width}
                     onChange={(e) => {
                       if (e.target.value === '') return
@@ -308,8 +330,6 @@ export default function VisualEditorRightPanel({
                     id="heightFixed"
                     type="number"
                     step={10}
-                    min={1}
-                    max={630}
                     value={selectedLayer.height}
                     onChange={(e) => {
                       if (e.target.value === '') return
@@ -367,7 +387,8 @@ export default function VisualEditorRightPanel({
                           setSelectedLayer({
                             ...selectedLayer,
                             widthType: value as 'fixed' | 'fit',
-                            width: 100,
+                            width: 400,
+                            lineClamp: 1,
                           })
                           setLayers(
                             layers.map((layer) =>
@@ -375,7 +396,8 @@ export default function VisualEditorRightPanel({
                                 ? {
                                     ...layer,
                                     widthType: value as 'fixed' | 'fit',
-                                    width: 100,
+                                    width: 400,
+                                    lineClamp: 1,
                                   }
                                 : layer
                             )
@@ -418,63 +440,52 @@ export default function VisualEditorRightPanel({
                       </SelectContent>
                     </Select>
 
-                    <Select
-                      defaultValue={selectedLayer.heightType}
-                      onValueChange={(value) => {
-                        if (value === 'fit') {
-                          setSelectedLayer({
-                            ...selectedLayer,
-                            heightType: value as 'fixed' | 'fit',
-                            height: 100,
-                          })
-                          setLayers(
-                            layers.map((layer) =>
-                              layer.id === selectedLayer.id
-                                ? {
-                                    ...layer,
-                                    heightType: value as 'fixed' | 'fit',
-                                    height: 100,
-                                  }
-                                : layer
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Select
+                          value={selectedLayer?.lineClamp?.toString() ?? 1}
+                          onValueChange={(value) => {
+                            setSelectedLayer({
+                              ...selectedLayer,
+                              lineClamp: parseInt(value),
+                            })
+                            setLayers(
+                              layers.map((layer) =>
+                                layer.id === selectedLayer.id
+                                  ? {
+                                      ...layer,
+                                      lineClamp: parseInt(value),
+                                    }
+                                  : layer
+                              )
                             )
-                          )
-                        } else {
-                          setSelectedLayer({
-                            ...selectedLayer,
-                            heightType: value as 'fixed' | 'fit',
-                          })
-                          setLayers(
-                            layers.map((layer) =>
-                              layer.id === selectedLayer.id
-                                ? {
-                                    ...layer,
-                                    heightType: value as 'fixed' | 'fit',
-                                  }
-                                : layer
-                            )
-                          )
-                        }
-                      }}
-                    >
-                      <SelectTrigger className="flex justify-start gap-0 p-0 pr-2">
-                        <Label className="mr-2 flex h-full w-[2.125rem] shrink-0 items-center justify-center border-r text-muted-foreground">
-                          {selectedLayer.heightType === 'fixed' ? (
-                            <FixedSizeIcon className="h-4 w-4" />
-                          ) : (
-                            <ChevronsDownUp className="h-4 w-4" />
-                          )}
-                        </Label>
-                        <div className="flex w-20 items-center justify-start">
-                          <SelectValue placeholder="Height" />
-                        </div>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="fixed">Fixed</SelectItem>
-                          <SelectItem value="fit">Hug</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                          }}
+                          disabled={selectedLayer.widthType !== 'fixed'}
+                        >
+                          <SelectTrigger className="flex justify-start gap-0 p-0 pr-2">
+                            <Label className="mr-2 flex h-full w-[2.125rem] shrink-0 items-center justify-center border-r text-muted-foreground">
+                              <ArrowDownWideNarrow className="h-4 w-4" />
+                            </Label>
+                            <div className="flex w-20 items-center justify-start">
+                              <SelectValue placeholder="Max lines" />
+                            </div>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectItem value="1">1</SelectItem>
+                              <SelectItem value="2">2</SelectItem>
+                              <SelectItem value="3">3</SelectItem>
+                              <SelectItem value="4">4</SelectItem>
+                              <SelectItem value="5">5</SelectItem>
+                              <SelectItem value="6">6</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                        <span className="font-medium">Max lines</span>
+                      </TooltipContent>
+                    </Tooltip>
                   </>
                 )}
                 {/* Rotation */}

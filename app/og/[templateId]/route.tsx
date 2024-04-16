@@ -144,14 +144,6 @@ export async function GET(req: NextRequest) {
                     alignItems: layer.alignVertical,
                     left: layer.x,
                     top: layer.y,
-                    ...(layer.widthType === 'fixed'
-                      ? { width: layer.width }
-                      : {}),
-                    ...(layer.heightType === 'fixed'
-                      ? { height: layer.height }
-                      : {}),
-                    wordBreak: 'break-word',
-                    overflow: 'hidden',
                     transform: `rotate(${layer.rotation}deg)`,
                     // Background styles
                     backgroundColor: layer.background
@@ -166,11 +158,18 @@ export async function GET(req: NextRequest) {
                 >
                   <div
                     style={{
+                      display: 'block',
+                      wordBreak: 'break-word',
                       fontFamily: layer.fontName,
                       fontSize: layer.size,
                       lineHeight: layer.lineHeight,
                       color: layer.color,
                       opacity: layer.opacity,
+                      ...(layer.widthType === 'fixed'
+                        ? { width: layer.width }
+                        : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
+                      height: layer.height,
+                      lineClamp: layer.lineClamp ?? 9999,
                       textAlign:
                         layer.alignHorizontal === 'center'
                           ? 'center'

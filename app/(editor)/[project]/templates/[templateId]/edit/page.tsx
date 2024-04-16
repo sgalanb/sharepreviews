@@ -36,6 +36,7 @@ interface TextLayerInterface extends LayerInterface {
   type: 'text'
   widthType: 'fixed' | 'fit'
   heightType: 'fixed' | 'fit'
+  lineClamp: number
   fontName: string
   fontFamily: string
   fontWeight: number

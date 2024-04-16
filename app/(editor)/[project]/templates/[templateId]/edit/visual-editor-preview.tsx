@@ -230,16 +230,6 @@ export default function VisualEditorPreview({
                       alignItems: layer.alignVertical,
                       left: layer.x,
                       top: layer.y,
-                      width:
-                        layer.widthType === 'fixed'
-                          ? layer.width
-                          : 'fit-content',
-                      height:
-                        layer.heightType === 'fixed'
-                          ? layer.height
-                          : 'fit-content',
-                      wordBreak: 'break-word',
-                      overflow: 'hidden',
                       transform: `rotate(${layer.rotation}deg)`,
                       // Background styles
                       backgroundColor: layer.background
@@ -253,13 +243,20 @@ export default function VisualEditorPreview({
                     }}
                   >
                     <div
+                      className="line-clamp-1"
                       style={{
+                        wordBreak: 'break-word',
                         fontFamily: layer.fontName,
                         fontWeight: layer.fontWeight,
                         fontSize: layer.size,
                         lineHeight: layer.lineHeight,
                         color: layer.color,
                         opacity: layer.opacity,
+                        ...(layer.widthType === 'fixed'
+                          ? { width: layer.width }
+                          : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
+                        height: layer.height,
+                        WebkitLineClamp: layer.lineClamp,
                         textAlign:
                           layer.alignHorizontal === 'center'
                             ? 'center'
