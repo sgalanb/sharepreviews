@@ -125,8 +125,9 @@ export default function VisualEditorRightPanel({
         ...selectedLayer,
         height:
           selectedLayer.size *
-          selectedLayer.lineHeight *
-          selectedLayer.lineClamp,
+            selectedLayer.lineHeight *
+            selectedLayer.lineClamp +
+          selectedLayer.bgPaddingY * 2,
       })
       setLayers(
         layers.map((layer) =>
