@@ -118,6 +118,7 @@ export default function VisualEditorRightPanel({
   const size = isTextLayer ? selectedLayer?.size : null
   const lineHeight = isTextLayer ? selectedLayer?.lineHeight : null
   const lineClamp = isTextLayer ? selectedLayer?.lineClamp : null
+  const bgPaddingY = isTextLayer ? selectedLayer?.bgPaddingY : null
 
   useEffect(() => {
     if (selectedLayer?.type === 'text') {
@@ -145,7 +146,7 @@ export default function VisualEditorRightPanel({
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size, lineHeight, lineClamp])
+  }, [size, lineHeight, lineClamp, bgPaddingY])
 
   return (
     <div className="flex h-full w-full flex-col items-start justify-between overflow-hidden border-l">
