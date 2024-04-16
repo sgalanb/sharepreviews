@@ -230,6 +230,7 @@ export default function VisualEditorPreview({
                       alignItems: layer.alignVertical,
                       left: layer.x,
                       top: layer.y,
+                      height: layer.height,
                       transform: `rotate(${layer.rotation}deg)`,
                       // Background styles
                       backgroundColor: layer.background
@@ -255,7 +256,6 @@ export default function VisualEditorPreview({
                         ...(layer.widthType === 'fixed'
                           ? { width: layer.width }
                           : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
-                        height: layer.height,
                         WebkitLineClamp: layer.lineClamp,
                         textAlign:
                           layer.alignHorizontal === 'center'

@@ -144,6 +144,7 @@ export async function GET(req: NextRequest) {
                     alignItems: layer.alignVertical,
                     left: layer.x,
                     top: layer.y,
+                    height: layer.height,
                     transform: `rotate(${layer.rotation}deg)`,
                     // Background styles
                     backgroundColor: layer.background
@@ -168,7 +169,6 @@ export async function GET(req: NextRequest) {
                       ...(layer.widthType === 'fixed'
                         ? { width: layer.width }
                         : { textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
-                      height: layer.height,
                       lineClamp: layer.lineClamp ?? 9999,
                       textAlign:
                         layer.alignHorizontal === 'center'
