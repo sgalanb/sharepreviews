@@ -136,8 +136,9 @@ export default function VisualEditorRightPanel({
                 ...layer,
                 height:
                   selectedLayer.size *
-                  selectedLayer.lineHeight *
-                  selectedLayer.lineClamp,
+                    selectedLayer.lineHeight *
+                    selectedLayer.lineClamp +
+                  selectedLayer.bgPaddingY * 2,
               }
             : layer
         )
