@@ -83,11 +83,15 @@ export default function PreviewValidator({
 
   const {
     data: metatags,
+    mutate,
     isLoading,
+    isValidating,
     error,
   }: {
     data: ValidatedMetatagsType
+    mutate: () => void
     isLoading: boolean
+    isValidating: boolean
     error: any
   } = useSWR<any>(
     normalizedUrl && `/api/metatags/validate?url=${normalizedUrl}`,
@@ -224,24 +228,18 @@ export default function PreviewValidator({
           <h1 className="title line-clamp-4 break-all">
             {titleUrl || 'Preview Card Validator'}
           </h1>
-          {/* <ProgressCircle
-          value={72}
-          radius={28}
-          strokeWidth={8}
-          color="green"
-          showAnimation
-        /> */}
         </div>
 
         <div className="flex h-full w-full flex-col items-start justify-start gap-8">
           <Tabs defaultValue="previews" className="w-full">
-            {/* TODO: Make this div sticky */}
             <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-2">
               <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
                 <ValidatorInput
                   isApp={isApp}
                   isLoading={!!isLoadingData}
                   projectPathname={projectPathname}
+                  revalidateMetatags={mutate}
+                  isValidating={isValidating}
                 />
               </div>
               <div className="flex gap-2">

@@ -17,11 +17,15 @@ export default function ValidatorInput({
   isHome,
   isLoading,
   projectPathname,
+  revalidateMetatags,
+  isValidating,
 }: {
   isApp: boolean
   isHome?: boolean
   isLoading?: boolean
   projectPathname?: string
+  revalidateMetatags?: () => void
+  isValidating?: boolean
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -50,6 +54,7 @@ export default function ValidatorInput({
             : ''
         }`
       )
+      revalidateMetatags && revalidateMetatags()
     } else {
       setInputError(true)
     }
@@ -87,7 +92,7 @@ export default function ValidatorInput({
         )}
       </div>
       <Button type="submit" className="min-w-24">
-        {isLoading ? (
+        {isLoading || isValidating ? (
           <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
         ) : (
           'Validate'
