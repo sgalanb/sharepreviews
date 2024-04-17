@@ -29,7 +29,7 @@ export default async function MarketingLayout({
           defaultTheme="system"
           enableSystem
         >
-          <div className="flex h-fit min-h-dvh flex-col justify-start">
+          <div className="flex h-fit min-h-dvh flex-col items-center justify-start">
             <Header
               authorizationUrl={authorizationUrl}
               isApp={false}

@@ -142,17 +142,15 @@ export default function Header({
   return (
     <header
       className={`${
-        isScrolled
-          ? 'border-gray-500/10 dark:border-zinc-800'
-          : 'border-transparent'
+        isScrolled ? 'border-border dark:border-border' : 'border-transparent'
       } ${
         isApp
-          ? 'col-span-1 lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800'
-          : 'lg:h-[4.5rem]'
-      } sticky top-0 z-50 w-full border-b bg-background transition-colors duration-200`}
+          ? 'col-span-1 w-full lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800'
+          : 'max-w-7xl lg:h-[4.5rem] lg:w-[calc(100%-32px)] lg:rounded-b-md lg:border-x'
+      } sticky top-0 z-50 border-b bg-background transition-colors duration-200`}
     >
       {/* Mobile */}
-      <div className="mx-auto w-full max-w-screen-2xl px-4 lg:hidden">
+      <div className="mx-auto w-full max-w-screen-2xl px-2 lg:hidden">
         <nav className="flex items-center justify-between py-2">
           <Sheet>
             <SheetTrigger aria-label="Open navigation">
