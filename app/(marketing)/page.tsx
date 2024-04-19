@@ -50,8 +50,8 @@ export default async function Home() {
             Dynamic Social Card Images Generator
           </h1>
           <p className="marketing-subtitle text-balance text-center text-muted-foreground xl:px-64">
-            Boost your links engagement with sharepreviews, the no-code Open
-            Graph (OG) & Twitter Cards dynamic image generator.
+            Boost your links engagement with sharepreviews, the no-code dynamic
+            Open Graph (OG) images generator.
           </p>
           <div className="flex items-center justify-center gap-4">
             <StartForFreeButtonHome
