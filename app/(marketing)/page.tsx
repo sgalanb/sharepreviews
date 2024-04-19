@@ -237,7 +237,7 @@ export default async function Home() {
             Proudly open-source
           </h2>
           <p className="marketing-subtitle text-balance text-center text-muted-foreground">
-            Our source code is available on GitHub. <br />
+            Source code is available on GitHub. <br />
             Feel free to read, review, or contribute to it however you want!
           </p>
           <StarOnGithubButton variant="long" />
