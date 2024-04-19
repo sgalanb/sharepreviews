@@ -49,7 +49,7 @@ export default async function Home() {
           <h1 className="marketing-title text-balance text-center">
             Dynamic Social Card Images Generator
           </h1>
-          <p className="marketing-subtitle text-balance text-center text-muted-foreground xl:px-64">
+          <p className="marketing-subtitle text-balance text-center text-muted-foreground xl:px-72">
             Boost your links engagement with sharepreviews, the no-code dynamic
             Open Graph (OG) images generator.
           </p>
