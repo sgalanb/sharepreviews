@@ -1,10 +1,10 @@
 <a href="https://sharepreviews.com">
-  <img alt="sharepreviews – An open-source preview (Open Graph/Twitter Cards) validator, generator and manager." src="https://utfs.io/f/c39adc3f-4f28-41c1-b521-f66db048dc84-5su0ix.png">
+  <img alt="sharepreviews – An open-source preview (Open Graph/Twitter Cards) validator, generator and manager." src="https://utfs.io/f/23b3b4dd-700f-45de-bb17-81ad985db1ed-k3d9cr.png">
   <h1 align="center">sharepreviews</h1>
 </a>
 
 <p align="center">
-  No-code Open Graph & Twitter Cards dynamic image generator. Open-source.
+  No-code dynamic Open Graph & Twitter Card images generator. Open-source.
 </p>
 
 <div align="center">
