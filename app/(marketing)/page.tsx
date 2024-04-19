@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'sharepreviews',
     images: [
-      'https://utfs.io/f/f9e89185-6550-4c44-8ac9-2583626115e6-i2j6fx.png',
+      'https://utfs.io/f/23b3b4dd-700f-45de-bb17-81ad985db1ed-k3d9cr.png',
     ],
   },
   twitter: {
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     creator: '@sgalanb',
     card: 'summary_large_image',
     images: [
-      'https://utfs.io/f/f9e89185-6550-4c44-8ac9-2583626115e6-i2j6fx.png',
+      'https://utfs.io/f/23b3b4dd-700f-45de-bb17-81ad985db1ed-k3d9cr.png',
     ],
   },
 }
