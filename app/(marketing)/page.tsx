@@ -53,12 +53,24 @@ export default async function Home() {
             Boost your links engagement with sharepreviews, the no-code Open
             Graph (OG) & Twitter Cards dynamic image generator.
           </p>
-          <div className="flex gap-4">
+          <div className="flex items-center justify-center gap-4">
             <StartForFreeButtonHome
               isAuthenticated={isAuthenticated}
               authorizationUrl={authorizationUrl}
             />
-            <StarOnGithubButton variant="short" />
+            <Link
+              href="https://www.producthunt.com/posts/sharepreviews?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sharepreviews"
+              target="_blank"
+              className="h-fit w-fit"
+            >
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=452625&theme=dark"
+                alt="sharepreviews on ProductHunt"
+                className="h-11 rounded-md"
+                loading="lazy"
+              />
+            </Link>
+            {/* <StarOnGithubButton variant="short" /> */}
           </div>
         </div>
         <Image

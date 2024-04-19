@@ -146,7 +146,7 @@ export default function Header({
       } ${
         isApp
           ? 'col-span-1 w-full lg:flex lg:h-screen lg:w-64 lg:border-none lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800'
-          : 'max-w-7xl lg:h-[4.5rem] lg:w-[calc(100%-32px)] lg:rounded-b-md lg:border-x'
+          : 'w-full max-w-7xl lg:h-[4.5rem] lg:w-[calc(100%-32px)] lg:rounded-b-md lg:border-x'
       } sticky top-0 z-50 border-b bg-background transition-colors duration-200`}
     >
       {/* Mobile */}
