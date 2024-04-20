@@ -21,8 +21,8 @@ export default function SelectedTemplates({
           <Image
             src={getUrlWithConditionalVariablesTrue(template)}
             alt=""
-            width={438}
-            height={227}
+            width={475}
+            height={248.32}
             className="pointer-events-none select-none rounded-t-md"
           />
           <div className="flex flex-col items-start justify-center gap-2 border-t p-4">

@@ -40,15 +40,15 @@ export default async function BlogPage() {
   const { isAuthenticated } = await getUser()
 
   return (
-    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-8 p-4 pt-8">
+    <div className="flex w-full flex-col items-start justify-start gap-8 pb-4 pt-8">
       <Link
         href="/blog"
-        className="flex items-center justify-center text-muted-foreground"
+        className="flex items-center justify-center px-4 text-muted-foreground"
       >
         <ChevronLeft className="ml-[-4px]" />
         <span className="self-center text-sm">Blog</span>
       </Link>
-      <div className="flex w-full max-w-3xl flex-col items-start justify-start gap-4 self-center lg:px-4">
+      <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-4 self-center lg:px-4">
         <span className="self-center text-muted-foreground">
           {dayjs('02/15/2024').format('MMM D, YYYY')}
         </span>

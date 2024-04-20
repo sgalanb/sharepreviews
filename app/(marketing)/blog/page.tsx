@@ -35,9 +35,9 @@ export default async function BlogPage() {
   const { isAuthenticated } = await getUser()
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4 pt-20 lg:gap-20">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-8 pt-16">
       <h1 className="marketing-title pt-4 lg:p-0">Blog</h1>
-      <div className="mb-10 flex flex-col items-center justify-center gap-10 lg:mb-0 lg:flex-row">
+      <div className="mb-10 flex flex-col items-center justify-center gap-10 p-4 lg:mb-0 lg:flex-row">
         <Card className="max-w-[30rem]">
           <Link
             href="/about"

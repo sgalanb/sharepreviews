@@ -41,11 +41,11 @@ export default async function Home() {
   const authorizationUrl = getAuthorizationUrl()
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-10">
       {/* Main */}
-      <div className="center mb-12 mt-12 flex min-w-full flex-col items-center gap-20 lg:mt-0 lg:gap-0">
+      <div className="mt-10 flex min-w-full flex-col items-center gap-20 p-4 lg:mt-0 lg:gap-16 lg:p-16">
         {/* Text */}
-        <div className="flex w-full flex-col items-center justify-center gap-8 lg:p-16">
+        <div className="flex w-full flex-col items-center justify-center gap-8">
           <h1 className="marketing-title text-balance text-center">
             Dynamic Social Card Images Generator
           </h1>
@@ -53,7 +53,7 @@ export default async function Home() {
             Boost your links engagement with sharepreviews, the no-code dynamic
             Open Graph (OG) images generator.
           </p>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-2">
             <StartForFreeButtonHome
               isAuthenticated={isAuthenticated}
               authorizationUrl={authorizationUrl}
@@ -63,10 +63,18 @@ export default async function Home() {
               target="_blank"
               className="h-fit w-fit"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=452625&theme=dark"
                 alt="sharepreviews on ProductHunt"
-                className="h-11 rounded-md"
+                className="h-11 rounded-md dark:hidden"
+                loading="lazy"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=452625&theme=neutral"
+                alt="sharepreviews on ProductHunt"
+                className="hidden h-11 rounded-md dark:block"
                 loading="lazy"
               />
             </Link>
@@ -85,14 +93,14 @@ export default async function Home() {
       <Separator />
 
       {/* Design template*/}
-      <div className="mt-12 flex w-full flex-col items-center justify-center gap-2">
+      <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
         <h2 className="marketing-second-title text-balance text-center">
           Design your custom template
         </h2>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground">
           Easily craft beautiful templates with a no-code Figma-like editor.
         </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-1.5 lg:w-[80%] lg:gap-2">
+        <div className="mt-8 flex flex-col items-center justify-center gap-1.5 lg:w-[90%] lg:gap-2">
           <div className="rotate-y-10 relative flex w-[88%] flex-col items-center rounded-sm rounded-b-sm border !border-opacity-5 bg-black !bg-opacity-5 p-1 dark:border-white dark:bg-white dark:shadow-2xl lg:rounded-xl lg:rounded-b-xl lg:border-2 lg:p-3">
             <Image
               src="/marketing/editor-screenshot.png"
@@ -109,7 +117,7 @@ export default async function Home() {
       </div>
       <div className="flex w-full flex-col gap-20">
         {/* Choose a template */}
-        <div className="mt-20 flex w-full flex-col items-center justify-center gap-2">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
           <h2 className="marketing-second-title text-balance text-center">
             Or choose a template that fits your use case
           </h2>
@@ -198,7 +206,7 @@ export default async function Home() {
         <Separator />
 
         {/* Implement in minutes */}
-        <div className="flex w-full flex-col items-center justify-center gap-2">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
           <h2 className="marketing-second-title text-balance text-center">
             Generate new images with just a URL
           </h2>
@@ -216,7 +224,7 @@ export default async function Home() {
         <Separator />
 
         {/* Validator */}
-        <div className="flex w-full flex-col items-center justify-center gap-2">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
           <h2 className="marketing-second-title text-balance text-center">
             Social Card Validator
           </h2>
@@ -232,7 +240,7 @@ export default async function Home() {
         <Separator />
 
         {/* Open Source */}
-        <div className="flex w-full flex-col items-center justify-center gap-2">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
           <h2 className="marketing-second-title text-balance text-center">
             Proudly open-source
           </h2>

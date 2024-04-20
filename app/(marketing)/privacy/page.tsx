@@ -5,7 +5,7 @@ export default async function PrivacyPolicy() {
   const { isAuthenticated } = await getUser()
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4 pt-20 lg:gap-20">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-8 p-4 pt-16 lg:gap-20">
       <h1 className="marketing-title pt-4 lg:p-0">Privacy Policy</h1>
       <p>
         Last updated on April 05, 2024

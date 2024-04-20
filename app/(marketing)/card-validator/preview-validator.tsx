@@ -198,9 +198,9 @@ export default function PreviewValidator({
       <motion.div
         className={`${
           isApp
-            ? 'min-h-[calc(100dvh-18px)] p-4 lg:p-12'
-            : 'min-h-[calc(100dvh-72px)]'
-        } flex w-full max-w-7xl flex-col items-start justify-start gap-4`}
+            ? 'min-h-[calc(100dvh-18px)] gap-4 p-4 lg:p-12'
+            : 'min-h-[calc(100dvh-72px)] gap-8 px-4'
+        } flex w-full flex-col items-start justify-start`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -214,7 +214,7 @@ export default function PreviewValidator({
             <span className="self-center text-sm">Back</span>
           </Link>
         ) : (
-          <div className="flex w-full flex-col items-center justify-start gap-4 py-8">
+          <div className="flex w-full flex-col items-center justify-start gap-4 pt-16">
             <h1 className="marketing-title text-balance text-center">
               Preview Card Validator
             </h1>
@@ -224,7 +224,9 @@ export default function PreviewValidator({
             </p>
           </div>
         )}
-        <div className="mb-4 flex w-full items-center justify-between">
+        <div
+          className={`${isApp ? 'mb-4' : ''} flex w-full items-center justify-between`}
+        >
           <h1 className="title line-clamp-4 break-all">
             {titleUrl || 'Preview Card Validator'}
           </h1>
