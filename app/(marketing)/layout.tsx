@@ -1,6 +1,7 @@
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
-import Header from '@/app/ui/header'
+import HeaderMarketing from '@/app/ui/header-marketing'
+import HeaderMobile from '@/app/ui/header-mobile'
 import { Analytics } from '@vercel/analytics/react'
 import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -17,7 +18,7 @@ export default async function MarketingLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user } = await getUser()
+  const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
 
   return (
@@ -29,13 +30,27 @@ export default async function MarketingLayout({
           defaultTheme="system"
           enableSystem
         >
-          <div className="flex h-fit min-h-dvh flex-col items-center justify-start">
-            <Header
-              authorizationUrl={authorizationUrl}
-              isApp={false}
-              user={user}
-            />
-            <main className="mx-auto h-full w-full max-w-7xl">{children}</main>
+          <div
+            className="flex h-fit min-h-dvh flex-col items-center justify-start lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800"
+            style={{
+              backgroundImage: 'url(/noise-light.png)',
+              backgroundBlendMode: 'overlay',
+            }}
+          >
+            <main className="mx-auto h-full w-full max-w-5xl lg:rounded-md lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none ">
+              <HeaderMobile
+                isAuthenticated={isAuthenticated}
+                user={user}
+                authorizationUrl={authorizationUrl}
+                isApp={false}
+              />
+              <HeaderMarketing
+                isAuthenticated={isAuthenticated}
+                user={user}
+                authorizationUrl={authorizationUrl}
+              />
+              {children}
+            </main>
           </div>
         </Providers>
         <Analytics />

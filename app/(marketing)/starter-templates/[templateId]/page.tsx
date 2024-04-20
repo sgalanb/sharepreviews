@@ -28,7 +28,7 @@ export default async function StarterTemplatePage({
   }
 
   return (
-    <div className="flex w-full max-w-7xl flex-col items-start justify-start gap-8 p-4 pt-20">
+    <div className="flex w-full flex-col items-start justify-start gap-8 p-4 pt-20">
       <Link
         href="/starter-templates"
         className="flex items-center justify-center text-muted-foreground"

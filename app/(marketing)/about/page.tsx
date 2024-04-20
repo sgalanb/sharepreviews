@@ -30,8 +30,8 @@ export default async function AboutPage() {
   const { isAuthenticated } = await getUser()
 
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-20 px-4 pt-20">
-      <div className="flex w-full max-w-3xl flex-col items-start justify-start gap-4 self-center lg:px-4">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-8 pt-16">
+      <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-4 self-center px-4">
         {/* <span className="self-center text-muted-foreground">
           {dayjs('03/29/2024').format('MMM D, YYYY')}
         </span> */}
@@ -44,7 +44,7 @@ export default async function AboutPage() {
         </p>
       </div>
 
-      <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-10">
+      <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-10 px-4">
         <div className="flex flex-col items-start justify-start gap-2">
           <h2 className="marketing-third-title">What are social cards?</h2>
           <p className="w-full text-base text-muted-foreground">

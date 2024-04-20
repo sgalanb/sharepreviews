@@ -1,7 +1,8 @@
 import { getUserProjects } from '@/app/db/operations/projects'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
-import Header from '@/app/ui/header'
+import HeaderApp from '@/app/ui/header-app'
+import HeaderMobile from '@/app/ui/header-mobile'
 import { get } from '@vercel/edge-config'
 import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -43,10 +44,21 @@ export default async function AppLayout({
           enableSystem
         >
           <div className="flex min-h-dvh flex-col justify-between">
-            <div className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:dark:bg-neutral-800">
-              <Header
+            <div
+              className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:dark:bg-neutral-800"
+              style={{
+                backgroundImage: 'url(/noise-light.png)',
+                backgroundBlendMode: 'overlay',
+              }}
+            >
+              <HeaderMobile
+                isAuthenticated={isAuthenticated}
+                user={user}
                 authorizationUrl={authorizationUrl}
-                isApp
+                isApp={true}
+              />
+              <HeaderApp
+                isAuthenticated={isAuthenticated}
                 user={user}
                 userProjects={userProjects}
                 reservedNames={reservedNames}

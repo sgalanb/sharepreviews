@@ -22,7 +22,7 @@ export default async function AboutPage() {
   const { isAuthenticated } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
   return (
-    <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-10 px-4 pt-20 lg:gap-20">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-10 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
         <h1 className="marketing-title">Straightforward pricing</h1>
 
