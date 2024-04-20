@@ -44,7 +44,13 @@ export default async function AppLayout({
           enableSystem
         >
           <div className="flex min-h-dvh flex-col justify-between">
-            <div className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:dark:bg-neutral-800">
+            <div
+              className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:dark:bg-neutral-800"
+              style={{
+                backgroundImage: 'url(/noise-light.png)',
+                backgroundBlendMode: 'overlay',
+              }}
+            >
               <HeaderMobile
                 isAuthenticated={isAuthenticated}
                 user={user}
