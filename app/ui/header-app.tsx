@@ -104,9 +104,8 @@ export default function HeaderApp({
 
   return (
     <header
-      className="z-50 col-span-1 hidden h-screen w-64 border-none bg-background bg-neutral-50 p-2 transition-colors duration-200 dark:bg-neutral-800 lg:flex"
+      className="lg:bg-noise z-50 col-span-1 hidden h-screen w-64 border-none bg-background bg-neutral-50 p-2 transition-colors duration-200 dark:bg-neutral-800 lg:flex"
       style={{
-        backgroundImage: 'url(/noise-light.png)',
         backgroundBlendMode: 'overlay',
       }}
     >

@@ -31,9 +31,8 @@ export default async function MarketingLayout({
           enableSystem
         >
           <div
-            className="flex h-fit min-h-dvh flex-col items-center justify-start lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800"
+            className="lg:bg-noise flex h-fit min-h-dvh flex-col items-center justify-start lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800"
             style={{
-              backgroundImage: 'url(/noise-light.png)',
               backgroundBlendMode: 'overlay',
             }}
           >

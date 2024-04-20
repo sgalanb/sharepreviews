@@ -47,11 +47,11 @@ export default async function Home() {
         {/* Text */}
         <div className="flex w-full flex-col items-center justify-center gap-8">
           <h1 className="marketing-title text-balance text-center">
-            Dynamic Social Card Images Generator
+            Create Dynamic Open Graph Images
           </h1>
-          <p className="marketing-subtitle text-balance text-center text-muted-foreground xl:px-72">
+          <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-40">
             Boost your links engagement with sharepreviews, the no-code dynamic
-            Open Graph (OG) images generator.
+            Open Graph images generator.
           </p>
           <div className="flex items-center justify-center gap-2">
             <StartForFreeButtonHome
