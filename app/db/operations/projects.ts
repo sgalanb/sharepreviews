@@ -21,10 +21,12 @@ export async function getProjectByPathname(pathname: string) {
 async function generateUniqueProjectPathname(
   projectName: string
 ): Promise<string> {
+  // Lowercase the project name and replace spaces and specific special characters with '-'
   const basePathname = projectName
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
+    .replace(/[\s\?:@&=+$,\/%#<>\^\*|`!{};\\[\]"'~()]+/g, '-') // Replaces these special characters with '-'
+    .replace(/^-+|-+$/g, '') // Remove leading and trailing dashes
+
   let uniquePathname = basePathname
   let counter = 1
 
