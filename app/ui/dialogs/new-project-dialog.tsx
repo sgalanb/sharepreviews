@@ -35,7 +35,7 @@ export default function NewProjectDialog({
     setOpen(false)
   }
 
-  const [error, setError] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
 
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
@@ -46,10 +46,27 @@ export default function NewProjectDialog({
         <form
           action={(formData: FormData) => {
             const name = formData.get('name') as string
-
+            const latinCharactersOrNumbers = /^[A-Za-z0-9]+$/
             if (name) {
               if (reservedNames.includes(name)) {
-                setError(true)
+                setError(
+                  'This project name is reserved. Please choose another name.'
+                )
+                inputRef?.current?.focus()
+                return
+              }
+              if (name.length < 3) {
+                setError('Project name must be at least 3 characters.')
+                inputRef?.current?.focus()
+                return
+              }
+              if (name.length > 50) {
+                setError('Project name must be at most 50 characters.')
+                inputRef?.current?.focus()
+                return
+              }
+              if (!name.match(latinCharactersOrNumbers)) {
+                setError('Project name must contain only latin characters.')
                 inputRef?.current?.focus()
                 return
               }
@@ -85,11 +102,7 @@ export default function NewProjectDialog({
             </div>
           </div>
           <DialogFooter>
-            {error && (
-              <span className="text-sm text-red-500">
-                This project name is reserved. Please choose another name.
-              </span>
-            )}
+            {!!error && <span className="text-sm text-red-500">{error}</span>}
             <DialogClose>
               <Button type="button" variant="outline">
                 Close

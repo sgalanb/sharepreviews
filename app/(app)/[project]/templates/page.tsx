@@ -3,6 +3,7 @@ import { getProjectByPathname } from '@/app/db/operations/projects'
 import { ProjectType } from '@/app/db/schema'
 import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 export async function generateMetadata({
   params,
@@ -25,6 +26,10 @@ export default async function TemplatesPage({ params, searchParams }: Props) {
   const selectedProject = (await getProjectByPathname(
     params.project
   )) as ProjectType
+
+  if (!selectedProject || selectedProject.userId !== user?.id) {
+    redirect('/')
+  }
 
   return <TemplatesDashboard project={selectedProject} user={user!} />
 }
