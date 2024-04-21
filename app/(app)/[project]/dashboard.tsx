@@ -134,7 +134,7 @@ export default function OverviewDashboard({
                         {((userUsage / FREE_IMAGES) * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <Progress value={projectTemplates?.length} />
+                    <Progress value={(userUsage / FREE_IMAGES) * 100} />
                   </>
                 )}
               </CardContent>
@@ -394,7 +394,9 @@ export default function OverviewDashboard({
                           %
                         </span>
                       </div>
-                      <Progress value={projectTemplates?.length} />
+                      <Progress
+                        value={(projectUsage / PRO_IMAGES_PACKAGE) * 100}
+                      />
                     </>
                   )}
                 </CardContent>
