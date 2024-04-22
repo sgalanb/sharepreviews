@@ -346,7 +346,7 @@ export default function HeaderApp({
                     aria-expanded={openProjectsCombobox}
                     className="col-span-2 w-full justify-between"
                   >
-                    <span className="line-clamp-1 w-full">
+                    <span className="line-clamp-1 w-full text-left">
                       {projectsComboboxValue
                         ? projectsList?.find(
                             (project) => project.value === projectsComboboxValue
