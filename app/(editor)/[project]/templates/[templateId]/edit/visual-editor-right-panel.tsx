@@ -1710,7 +1710,7 @@ export default function VisualEditorRightPanel({
                   </span>
                 </TabsContent>
                 <TabsContent value="yes">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="break-all text-sm text-muted-foreground">
                     {`The layer will be visible only when the variable "${selectedLayer.name
                       .replace(/[^a-zA-Z0-9]/g, '_')
                       .toLowerCase()}_isVisible" is true.`}
