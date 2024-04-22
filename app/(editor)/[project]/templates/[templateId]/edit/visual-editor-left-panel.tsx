@@ -342,7 +342,7 @@ const Layer = ({
             />
           )
         )}
-        <span className="line-clamp-1 text-sm">{layer.name}</span>
+        <span className="line-clamp-1 break-all text-sm">{layer.name}</span>
       </div>
       <TooltipProvider>
         <div className="flex">
@@ -476,7 +476,7 @@ const VariablesElement = ({
   return (
     <div
       key={layer.id}
-      className="mb-2 rounded-sm bg-accent px-2 py-1.5"
+      className="mb-2 break-all rounded-sm bg-accent px-2 py-1.5"
       onClick={(e) => {
         e.stopPropagation()
         setSelectedLayer(layer)
