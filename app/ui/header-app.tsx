@@ -104,7 +104,7 @@ export default function HeaderApp({
 
   return (
     <header
-      className="lg:bg-noise z-50 col-span-1 hidden h-screen w-64 border-none bg-background bg-neutral-50 p-2 transition-colors duration-200 dark:bg-neutral-800 lg:flex"
+      className="z-50 col-span-1 hidden h-screen w-64 border-none bg-background bg-neutral-50 p-2 transition-colors duration-200 dark:bg-neutral-800 lg:flex lg:bg-noise"
       style={{
         backgroundBlendMode: 'overlay',
       }}
@@ -344,13 +344,15 @@ export default function HeaderApp({
                     variant="outline"
                     role="combobox"
                     aria-expanded={openProjectsCombobox}
-                    className="col-span-2 justify-between"
+                    className="col-span-2 w-full justify-between"
                   >
-                    {projectsComboboxValue
-                      ? projectsList?.find(
-                          (project) => project.value === projectsComboboxValue
-                        )?.label
-                      : 'Select project...'}
+                    <span className="line-clamp-1 w-full">
+                      {projectsComboboxValue
+                        ? projectsList?.find(
+                            (project) => project.value === projectsComboboxValue
+                          )?.label
+                        : 'Select project...'}
+                    </span>
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>

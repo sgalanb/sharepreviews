@@ -46,7 +46,7 @@ export default function NewProjectDialog({
         <form
           action={(formData: FormData) => {
             const name = formData.get('name') as string
-            const latinCharactersOrNumbers = /^[A-Za-z0-9]+$/
+            const latinCharactersOrNumbersOrSpaces = /^[a-zA-Z0-9 ]+$/
             if (name) {
               if (reservedNames.includes(name)) {
                 setError(
@@ -65,7 +65,7 @@ export default function NewProjectDialog({
                 inputRef?.current?.focus()
                 return
               }
-              if (!name.match(latinCharactersOrNumbers)) {
+              if (!name.match(latinCharactersOrNumbersOrSpaces)) {
                 setError('Project name must contain only latin characters.')
                 inputRef?.current?.focus()
                 return

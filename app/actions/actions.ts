@@ -62,6 +62,7 @@ export async function createProjectAction({
   })
 
   revalidatePath('/', 'layout')
+  redirect(`/${createdProject[0].pathname}`)
 }
 
 export async function createTemplateAction({
