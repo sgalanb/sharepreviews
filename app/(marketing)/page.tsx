@@ -12,9 +12,10 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title:
-    'sharepreviews: Boost your links engagement with stunning social cards',
+    'sharepreviews: Dynamic Open Graph images Generator. No-code & Open-source.',
   description:
-    'Auto generate social images for your website with sharepreviews, the no-code Open Graph image generator.',
+    'Increase click-through rates using a Figma-like editor to design your dynamic OG images.',
+
   alternates: {
     canonical: 'https://sharepreviews.com',
   },
