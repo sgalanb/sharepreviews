@@ -1,3 +1,4 @@
+import Footer from '@/app/(marketing)/footer'
 import AddTemplateToProjectButton from '@/app/(marketing)/starter-templates/[templateId]/AddTemplateToProjectButton'
 import GetTestUrlButton from '@/app/(marketing)/starter-templates/[templateId]/GetTestUrlButton'
 import { getUserProjects } from '@/app/db/operations/projects'
@@ -16,7 +17,7 @@ export default async function StarterTemplatePage({
 }: {
   params: { templateId: string }
 }) {
-  const { user } = await getUser()
+  const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
 
   const userProjects = await getUserProjects(user?.id ?? '')
@@ -28,15 +29,15 @@ export default async function StarterTemplatePage({
   }
 
   return (
-    <div className="flex w-full flex-col items-start justify-start gap-8 p-4 pt-20">
+    <div className="flex w-full flex-col items-start justify-start gap-8 pt-8">
       <Link
         href="/starter-templates"
-        className="flex items-center justify-center text-muted-foreground"
+        className="flex items-center justify-center px-4 text-muted-foreground lg:px-8"
       >
         <ChevronLeft className="ml-[-4px]" />
         <span className="self-center text-sm">Starter Templates</span>
       </Link>
-      <div className="flex w-full flex-col gap-8 rounded-lg lg:flex-row">
+      <div className="flex w-full flex-col gap-8 rounded-lg px-4 lg:flex-row lg:px-8">
         <div className="order-2 w-full lg:order-1 lg:w-1/3">
           <div className="flex h-full flex-col justify-between gap-4">
             <div className="flex flex-col gap-4">
@@ -88,6 +89,7 @@ export default async function StarterTemplatePage({
           </div>
         )}
       </div>
+      <Footer isAuthenticated={isAuthenticated} />
     </div>
   )
 }

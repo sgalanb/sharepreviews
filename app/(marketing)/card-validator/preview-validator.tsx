@@ -199,7 +199,7 @@ export default function PreviewValidator({
         className={`${
           isApp
             ? 'min-h-[calc(100dvh-18px)] gap-4 p-4 lg:p-12'
-            : 'min-h-[calc(100dvh-72px)] gap-8 px-4'
+            : 'min-h-[calc(100dvh-72px)] gap-8 px-4 lg:px-8'
         } flex w-full flex-col items-start justify-start`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

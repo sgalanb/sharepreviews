@@ -37,7 +37,7 @@ export default async function BlogPage() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-8 pt-16">
       <h1 className="marketing-title pt-4 lg:p-0">Blog</h1>
-      <div className="mb-10 flex flex-col items-center justify-center gap-10 p-4 lg:mb-0 lg:flex-row">
+      <div className="mb-10 flex flex-col items-center justify-center gap-10 p-4 lg:mb-0 lg:flex-row lg:px-8">
         <Card className="max-w-[30rem]">
           <Link
             href="/about"

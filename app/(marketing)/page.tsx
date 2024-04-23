@@ -94,7 +94,7 @@ export default async function Home() {
       <Separator />
 
       {/* Design template*/}
-      <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+      <div className="flex w-full flex-col items-center justify-center gap-2 p-4 lg:px-8">
         <h2 className="marketing-second-title text-balance text-center">
           Design your custom template
         </h2>
@@ -118,7 +118,7 @@ export default async function Home() {
       </div>
       <div className="flex w-full flex-col gap-20">
         {/* Choose a template */}
-        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4 lg:px-8">
           <h2 className="marketing-second-title text-balance text-center">
             Or choose a template that fits your use case
           </h2>
@@ -207,7 +207,7 @@ export default async function Home() {
         <Separator />
 
         {/* Implement in minutes */}
-        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4 lg:px-8">
           <h2 className="marketing-second-title text-balance text-center">
             Generate new images with just a URL
           </h2>
@@ -225,7 +225,7 @@ export default async function Home() {
         <Separator />
 
         {/* Validator */}
-        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4 px-8">
           <h2 className="marketing-second-title text-balance text-center">
             Social Card Validator
           </h2>
@@ -241,7 +241,7 @@ export default async function Home() {
         <Separator />
 
         {/* Open Source */}
-        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4 px-8">
           <h2 className="marketing-second-title text-balance text-center">
             Proudly open-source
           </h2>

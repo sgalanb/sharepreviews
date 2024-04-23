@@ -25,7 +25,7 @@ export default function UrlExample() {
     exit: { scale: 1, transition: { duration: 0.2 } },
   }
   return (
-    <pre className="mt-6 flex w-full items-center justify-between gap-8 overflow-hidden break-all rounded-lg border py-4 pl-6 pr-4 text-card-foreground shadow-sm lg:w-fit">
+    <pre className="mt-6 flex w-full items-center justify-between gap-2 overflow-hidden break-all rounded-lg border py-4 pl-6 pr-4 text-card-foreground shadow-sm lg:w-fit">
       <code className="w-full overflow-hidden text-ellipsis break-all font-mono lg:w-fit">
         sharepreviews.com/og/
         {

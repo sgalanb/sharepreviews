@@ -24,14 +24,14 @@ export default async function AboutPage() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-10 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
-        <h1 className="marketing-title">Straightforward pricing</h1>
+        <h1 className="marketing-title text-center">Straightforward pricing</h1>
 
         <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
           Pay for what you use. No hidden fees. Cancel anytime.
         </p>
       </div>
-      <div className="flex w-full flex-col gap-4 lg:gap-8">
-        <div className="flex w-full flex-col items-center justify-center gap-4 lg:flex-row">
+      <div className="flex w-full flex-col gap-4 px-4 lg:gap-8 lg:px-8">
+        <div className="flex w-full flex-col items-center justify-center gap-4 md:flex-row">
           {/* Free */}
           <Card className="flex w-full max-w-64 flex-col items-start justify-start gap-6 p-4">
             <div className="flex flex-col gap-2">
