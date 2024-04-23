@@ -66,7 +66,9 @@ export default async function Home() {
             />
             <StarOnGithubButton variant="short" />
           </div>
-          <TestimonialsBadge />
+          <div className="h-10">
+            <TestimonialsBadge />
+          </div>
         </div>
         <Image
           src="/marketing/hardcoded-header-image.png"

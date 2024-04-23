@@ -1,8 +1,26 @@
 'use client'
 
-import Script from 'next/script'
+import { useEffect } from 'react'
 
 export default function TestimonialsBadge() {
+  useEffect(() => {
+    const scriptIds = [
+      '1a012f35-b416-4a43-b367-c650737b3195',
+      'b750cc73-45fa-4776-9e43-b8af631d55b6',
+    ]
+
+    scriptIds.forEach((id) => {
+      const script = document.createElement('script')
+      script.src = `https://widget.senja.io/widget/${id}/platform.js`
+      script.async = true
+      document.body.appendChild(script)
+
+      return () => {
+        document.body.removeChild(script)
+      }
+    })
+  }, [])
+
   return (
     <>
       <div
@@ -11,22 +29,12 @@ export default function TestimonialsBadge() {
         data-mode="shadow"
         data-lazyload="false"
       ></div>
-      <Script
-        async
-        type="text/javascript"
-        src="https://widget.senja.io/widget/1a012f35-b416-4a43-b367-c650737b3195/platform.js"
-      ></Script>
       <div
         className="senja-embed hidden dark:block"
         data-id="b750cc73-45fa-4776-9e43-b8af631d55b6"
         data-mode="shadow"
         data-lazyload="false"
       ></div>
-      <Script
-        async
-        type="text/javascript"
-        src="https://widget.senja.io/widget/b750cc73-45fa-4776-9e43-b8af631d55b6/platform.js"
-      ></Script>
     </>
   )
 }
