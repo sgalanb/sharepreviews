@@ -1,12 +1,17 @@
 import { TypeEventUserData } from '@/app/api/auth/webhooks/user-events/route'
 import { db } from '@/app/db'
 import { users } from '@/app/db/schema'
-import { eq } from 'drizzle-orm'
+import { count, eq } from 'drizzle-orm'
 
 export async function getDbUserById(id: string) {
   return await db.query['users'].findFirst({
     where: eq(users.id, id),
   })
+}
+
+export async function getAllUsersCount() {
+  const usersCount = await db.select({ count: count() }).from(users)
+  return usersCount[0].count - 1 // Exclude the local test user
 }
 
 export async function createDbUser(eventUserData: TypeEventUserData) {

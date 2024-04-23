@@ -2,9 +2,11 @@ import StarOnGithubButton from '@/app/(marketing)/StarOnGithubButton'
 import StartForFreeButtonHome from '@/app/(marketing)/StartForFreeButtonHome'
 import UrlExample from '@/app/(marketing)/UrlExample'
 import Footer from '@/app/(marketing)/footer'
+import { getAllUsersCount } from '@/app/db/operations/users'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import { Separator } from '@/app/ui/components/Separator'
+import TestimonialsWOL from '@/app/ui/testimonials-WOL'
 import ValidatorInput from '@/app/ui/validator-input'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -40,6 +42,8 @@ export const metadata: Metadata = {
 export default async function Home() {
   const { isAuthenticated } = await getUser()
   const authorizationUrl = getAuthorizationUrl()
+
+  const usersCount = await getAllUsersCount()
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-10">
@@ -220,6 +224,19 @@ export default async function Home() {
           </p>
           <UrlExample />
           {/* TODO: Add example of meta tag implementation with Next.js, Astro, etc. */}
+        </div>
+
+        <Separator />
+
+        <div className="flex w-full flex-col items-center justify-center gap-2 p-4 lg:px-8">
+          <h2 className="marketing-second-title text-balance text-center">
+            Users testimonials
+          </h2>
+          <p className="marketing-subtitle text-balance text-center text-muted-foreground">
+            Join {usersCount} users who create dynamic Open Graph images with
+            sharepreviews.
+          </p>
+          <TestimonialsWOL />
         </div>
 
         <Separator />

@@ -1,6 +1,6 @@
 import { db } from '@/app/db'
 import { templates } from '@/app/db/schema'
-import { eq, inArray } from 'drizzle-orm'
+import { count, eq, inArray } from 'drizzle-orm'
 
 export async function getProjectsTemplates(projectId: string) {
   return await db.query['templates'].findMany({
@@ -18,6 +18,11 @@ export async function getTemplateByArrayOfIds(ids: string[]) {
   return await db.query['templates'].findMany({
     where: inArray(templates.id, ids),
   })
+}
+
+export async function getAllTemplatesCount() {
+  const templatesCount = await db.select({ count: count() }).from(templates)
+  return templatesCount[0].count
 }
 
 export async function createTemplate({
