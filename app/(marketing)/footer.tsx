@@ -98,52 +98,6 @@ export default function Footer({
             Pricing
           </Link>
         </div>
-        {/* Use cases */}
-        <div className="flex flex-col items-start justify-start gap-3">
-          <h3 className="font-semibold">Use cases</h3>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            eCommerce
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Blogs & News
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Social Profiles
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Fintech
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Dev Tools Docs
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Recruitment
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Events
-          </Link>
-        </div>
         {/* Free Tools */}
         <div className="flex flex-col items-start justify-start gap-3">
           <h3 className="font-semibold">Free tools</h3>
