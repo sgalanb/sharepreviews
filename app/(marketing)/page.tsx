@@ -6,6 +6,7 @@ import { getAllUsersCount } from '@/app/db/operations/users'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import { Separator } from '@/app/ui/components/Separator'
+import TestimonialsBadge from '@/app/ui/testimonial-badge'
 import TestimonialsWOL from '@/app/ui/testimonials-WOL'
 import ValidatorInput from '@/app/ui/validator-input'
 import { Metadata } from 'next'
@@ -50,7 +51,7 @@ export default async function Home() {
       {/* Main */}
       <div className="mt-10 flex min-w-full flex-col items-center gap-20 p-4 lg:mt-0 lg:gap-16 lg:p-16">
         {/* Text */}
-        <div className="flex w-full flex-col items-center justify-center gap-8">
+        <div className="flex w-full flex-col items-center justify-center gap-4">
           <h1 className="marketing-title text-balance text-center">
             Create Dynamic Open Graph Images
           </h1>
@@ -63,28 +64,9 @@ export default async function Home() {
               isAuthenticated={isAuthenticated}
               authorizationUrl={authorizationUrl}
             />
-            <Link
-              href="https://www.producthunt.com/posts/sharepreviews?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sharepreviews"
-              target="_blank"
-              className="h-fit w-fit"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=452625&theme=dark"
-                alt="sharepreviews on ProductHunt"
-                className="h-11 rounded-md dark:hidden"
-                loading="lazy"
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=452625&theme=neutral"
-                alt="sharepreviews on ProductHunt"
-                className="hidden h-11 rounded-md dark:block"
-                loading="lazy"
-              />
-            </Link>
-            {/* <StarOnGithubButton variant="short" /> */}
+            <StarOnGithubButton variant="short" />
           </div>
+          <TestimonialsBadge />
         </div>
         <Image
           src="/marketing/hardcoded-header-image.png"
@@ -228,6 +210,7 @@ export default async function Home() {
 
         <Separator />
 
+        {/* Testimonials */}
         <div className="flex w-full flex-col items-center justify-center gap-2 p-4 lg:px-8">
           <h2 className="marketing-second-title text-balance text-center">
             Users testimonials
