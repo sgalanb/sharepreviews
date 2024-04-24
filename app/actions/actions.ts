@@ -85,7 +85,6 @@ export async function createStartWithProProject({
     ownerUserId: userId,
   })
 
-  revalidatePath('/', 'layout')
   return { id: createdProject[0].insertId, name }
 }
 
