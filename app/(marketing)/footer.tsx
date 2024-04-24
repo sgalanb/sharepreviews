@@ -15,12 +15,12 @@ export default function Footer({
     <footer className="flex w-full flex-col items-center justify-between border-t lg:h-80 lg:flex-row">
       <div className="flex h-full w-full flex-col items-center justify-between gap-8 p-4 py-8 lg:aspect-square lg:w-auto lg:items-start lg:gap-0 lg:p-8">
         {/* Logo */}
-        <div className=" flex flex-col items-center justify-start gap-4 lg:items-start">
+        <div className=" flex flex-col items-center justify-start gap-8 lg:items-start">
           <Link
             href={isAuthenticated ? '/home' : '/'}
             className="flex items-center justify-center gap-2"
           >
-            <Image src="/icon.svg" alt="SharePreviews" width={48} height={48} />
+            <Image src="/icon.svg" alt="SharePreviews" width={40} height={40} />
           </Link>
           <p className="text-muted-foreground">Built in Buenos Aires 🇦🇷</p>
         </div>

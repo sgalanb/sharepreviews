@@ -65,6 +65,30 @@ export async function createProjectAction({
   redirect(`/${createdProject[0].pathname}`)
 }
 
+// This creates creates a project for users that pay at sign up (because a project is required at checkout)
+export async function createStartWithProProject({
+  userId,
+}: {
+  userId: string
+}) {
+  const name = 'Project 1'
+  const createdProject = await createProject({
+    name,
+    userId,
+  })
+
+  await createOrUpdateProjectRedis({
+    id: createdProject[0].insertId,
+    name: name,
+    pathname: createdProject[0].pathname,
+    plan: 'free',
+    ownerUserId: userId,
+  })
+
+  revalidatePath('/', 'layout')
+  return { id: createdProject[0].insertId, name }
+}
+
 export async function createTemplateAction({
   name,
   projectId,

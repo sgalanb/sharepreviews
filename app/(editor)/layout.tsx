@@ -19,7 +19,7 @@ export default async function EditorLayout({
   children: React.ReactNode
 }) {
   const { isAuthenticated, user } = await getUser()
-  const authorizationUrl = getAuthorizationUrl()
+  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-in' })
 
   if (!isAuthenticated) {
     redirect(authorizationUrl)

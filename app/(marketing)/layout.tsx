@@ -19,7 +19,7 @@ export default async function MarketingLayout({
   children: React.ReactNode
 }) {
   const { isAuthenticated, user } = await getUser()
-  const authorizationUrl = getAuthorizationUrl()
+  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
 
   return (
     <html lang="en">
@@ -31,7 +31,7 @@ export default async function MarketingLayout({
           enableSystem
         >
           <div
-            className="lg:bg-noise flex h-fit min-h-dvh flex-col items-center justify-start lg:bg-neutral-50 lg:p-2 lg:dark:bg-neutral-800"
+            className="flex h-fit min-h-dvh flex-col items-center justify-start lg:bg-neutral-50 lg:bg-noise lg:p-2 lg:dark:bg-neutral-800"
             style={{
               backgroundBlendMode: 'overlay',
             }}

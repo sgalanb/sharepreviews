@@ -9,16 +9,23 @@ const secret = new Uint8Array(
 )
 const redirectUri = process.env.WORKOS_REDIRECT_URI ?? ''
 
-export function getAuthorizationUrl(redirectPathname?: string) {
+export function getAuthorizationUrl({
+  screenHint,
+  redirectPathname,
+}: {
+  screenHint: 'sign-in' | 'sign-up'
+  redirectPathname?: string
+}) {
   if (!clientId) {
     throw new Error('WORKOS_CLIENT_ID is not defined')
   }
   const authorizationUrl = workos.userManagement.getAuthorizationUrl({
     // Specify that we'd like AuthKit to handle the authentication flow
     provider: 'authkit',
-    // The callback endpoint that WorkOS will redirect to after a user authenticates
+    // Callback endpoint URL. WorkOS will redirect to this after a user authenticates with them.
     redirectUri,
     clientId,
+    screenHint: screenHint ?? 'sign-in',
     state: redirectPathname,
   })
 

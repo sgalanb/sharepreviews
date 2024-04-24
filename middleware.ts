@@ -1,19 +1,15 @@
+import { createStartWithProProject } from '@/app/actions/actions'
+import { suscribeToProAction } from '@/app/actions/lemonActions'
 import { db } from '@/app/db'
 import { projects } from '@/app/db/schema'
-import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
+import { getUser } from '@/app/lib/workos'
 import { eq } from 'drizzle-orm'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const { isAuthenticated, user } = await getUser()
-  const authorizationUrl = getAuthorizationUrl(request.nextUrl.pathname)
 
-  // If the user is not authenticated, redirect to login
-  if (request.nextUrl.pathname !== '/' && !isAuthenticated) {
-    return NextResponse.redirect(authorizationUrl)
-  }
   if (request.nextUrl.pathname === '/' && isAuthenticated) {
     // Don't use the cached function because it throws an error when used in the middleware.
     // "incrementalCache missing in unstable_cache"
@@ -33,10 +29,25 @@ export async function middleware(request: NextRequest) {
       )
     }
   }
+
+  if (request.nextUrl.pathname === '/start-with-pro' && isAuthenticated) {
+    const { user } = await getUser()
+
+    await createStartWithProProject({
+      userId: user?.id!,
+    }).then(async (project) => {
+      // Redirect to Lemon Squeezy checkout with user data pre-filled
+      await suscribeToProAction({
+        projectId: project.id,
+        projectName: project.name,
+        userId: user?.id!,
+        email: user?.email!,
+        name: `${user?.firstName} ${user?.lastName}`,
+      })
+    })
+  }
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  // Match all app paths
-  matcher: ['/'],
+  matcher: ['/', '/buy-pro'], // Only run this middleware on these paths
 }

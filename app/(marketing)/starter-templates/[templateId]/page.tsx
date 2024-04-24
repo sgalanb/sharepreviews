@@ -18,7 +18,7 @@ export default async function StarterTemplatePage({
   params: { templateId: string }
 }) {
   const { isAuthenticated, user } = await getUser()
-  const authorizationUrl = getAuthorizationUrl()
+  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
 
   const userProjects = await getUserProjects(user?.id ?? '')
 

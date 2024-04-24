@@ -30,7 +30,9 @@ export default function ValidatorLaunchScreen({
             <h1 className="marketing-title text-balance text-center">
               Social Card Validator
             </h1>
-            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-40">
+            <p
+              className={`${isApp ? 'xl:px-80' : ''} marketing-subtitle text-balance text-center text-muted-foreground lg:px-40`}
+            >
               Check how your links look when shared. Validate that you have the
               right metatags in place so your cards are displayed correctly.
             </p>

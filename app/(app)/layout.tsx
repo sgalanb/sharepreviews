@@ -24,7 +24,7 @@ export default async function AppLayout({
   children: React.ReactNode
 }) {
   const { isAuthenticated, user } = await getUser()
-  const authorizationUrl = getAuthorizationUrl()
+  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
 
   if (!isAuthenticated) {
     redirect(authorizationUrl)
@@ -45,7 +45,7 @@ export default async function AppLayout({
         >
           <div className="flex min-h-dvh flex-col justify-between">
             <div
-              className="lg:bg-noise flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:dark:bg-neutral-800"
+              className="flex flex-col justify-start lg:grid lg:grid-cols-[256px,1fr] lg:bg-neutral-50 lg:bg-noise lg:dark:bg-neutral-800"
               style={{
                 backgroundBlendMode: 'overlay',
               }}

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const { isAuthenticated } = await getUser()
-  const authorizationUrl = getAuthorizationUrl()
+  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
 
   const usersCount = await getAllUsersCount()
 

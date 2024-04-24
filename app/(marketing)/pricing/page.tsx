@@ -20,7 +20,12 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const { isAuthenticated } = await getUser()
-  const authorizationUrl = getAuthorizationUrl()
+  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
+  const authorizationUrlBuyPro = getAuthorizationUrl({
+    redirectPathname: '/start-with-pro',
+    screenHint: 'sign-up',
+  })
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-10 pt-20 lg:gap-20">
       <div className="flex w-full flex-col items-center justify-start gap-4">
@@ -97,7 +102,7 @@ export default async function AboutPage() {
               </span>
             </div>
 
-            <StartWithProButton authorizationUrl={authorizationUrl} />
+            <StartWithProButton authorizationUrl={authorizationUrlBuyPro} />
 
             <Separator />
 
