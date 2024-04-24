@@ -33,17 +33,19 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === '/start-with-pro' && isAuthenticated) {
     const { user } = await getUser()
 
-    await createStartWithProProject({
+    const checkoutUrl = await createStartWithProProject({
       userId: user?.id!,
     }).then(async (project) => {
       // Redirect to Lemon Squeezy checkout with user data pre-filled
-      await suscribeToProAction({
+      return await suscribeToProAction({
         projectId: project.id,
         userId: user?.id!,
         email: user?.email!,
         name: `${user?.firstName} ${user?.lastName}`,
       })
     })
+
+    return NextResponse.redirect(checkoutUrl)
   }
 }
 

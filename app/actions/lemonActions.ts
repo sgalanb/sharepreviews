@@ -8,12 +8,14 @@ export async function suscribeToProAction({
   userId,
   email,
   name,
+  returnInteadOfRedirect,
 }: {
   projectId: string
   projectName?: string
   userId: string
   email: string
   name: string
+  returnInteadOfRedirect?: boolean
 }) {
   const checkout = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
     method: 'POST',
@@ -57,6 +59,10 @@ export async function suscribeToProAction({
   }).then((response) => response.json())
 
   const checkoutUrl = checkout.data.attributes.url
+
+  if (returnInteadOfRedirect) {
+    return checkoutUrl as string
+  }
   redirect(checkoutUrl)
 }
 
