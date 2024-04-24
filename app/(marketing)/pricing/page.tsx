@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
-  const authorizationUrlBuyPro = getAuthorizationUrl({
+  const authorizationUrlStartWithPro = getAuthorizationUrl({
     redirectPathname: '/start-with-pro',
     screenHint: 'sign-up',
   })
@@ -111,7 +111,7 @@ export default async function AboutPage() {
 
             <StartWithProButton
               isAuthenticated={isAuthenticated}
-              authorizationUrl={authorizationUrlBuyPro}
+              authorizationUrl={authorizationUrlStartWithPro}
               user={user}
               userProjects={userProjects}
             />

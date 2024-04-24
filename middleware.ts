@@ -48,5 +48,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/buy-pro'], // Only run this middleware on these paths
+  matcher: ['/', '/start-with-pro'], // Only run this middleware on these paths
 }
