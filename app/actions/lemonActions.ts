@@ -10,7 +10,7 @@ export async function suscribeToProAction({
   name,
 }: {
   projectId: string
-  projectName: string
+  projectName?: string
   userId: string
   email: string
   name: string
@@ -27,7 +27,7 @@ export async function suscribeToProAction({
         type: 'checkouts',
         attributes: {
           product_options: {
-            name: `sharepreviews Pro - ${projectName}`,
+            name: `sharepreviews Pro${projectName ? ` - ${projectName}` : ''}`,
           },
           checkout_data: {
             email: email,

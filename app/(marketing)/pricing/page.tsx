@@ -1,6 +1,7 @@
 import Footer from '@/app/(marketing)/footer'
 import StartForFreeButton from '@/app/(marketing)/pricing/StartForFreeButton'
 import StartWithProButton from '@/app/(marketing)/pricing/StartWithProButton'
+import { getUserProjects } from '@/app/db/operations/projects'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Card } from '@/app/ui/components/Card'
 import { Separator } from '@/app/ui/components/Separator'
@@ -19,12 +20,15 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const { isAuthenticated } = await getUser()
+  const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
   const authorizationUrlBuyPro = getAuthorizationUrl({
     redirectPathname: '/start-with-pro',
     screenHint: 'sign-up',
   })
+
+  const userProjects =
+    isAuthenticated && user ? await getUserProjects(user?.id) : []
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-10 pt-20 lg:gap-20">
@@ -53,7 +57,10 @@ export default async function AboutPage() {
               </span>
             </div>
 
-            <StartForFreeButton authorizationUrl={authorizationUrl} />
+            <StartForFreeButton
+              isAuthenticated={isAuthenticated}
+              authorizationUrl={authorizationUrl}
+            />
 
             <Separator />
 
@@ -102,7 +109,12 @@ export default async function AboutPage() {
               </span>
             </div>
 
-            <StartWithProButton authorizationUrl={authorizationUrlBuyPro} />
+            <StartWithProButton
+              isAuthenticated={isAuthenticated}
+              authorizationUrl={authorizationUrlBuyPro}
+              user={user}
+              userProjects={userProjects}
+            />
 
             <Separator />
 

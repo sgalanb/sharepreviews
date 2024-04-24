@@ -5,17 +5,19 @@ import { track } from '@vercel/analytics/react'
 import Link from 'next/link'
 
 export default function StartForFreeButton({
+  isAuthenticated,
   authorizationUrl,
 }: {
+  isAuthenticated: boolean
   authorizationUrl: string
 }) {
   return (
     <Button variant="outline" className="w-full" asChild>
       <Link
-        href={authorizationUrl}
+        href={isAuthenticated ? '/' : authorizationUrl}
         onClick={() => track('start_for_free_pricing')}
       >
-        Start for Free
+        {isAuthenticated ? 'Go to dashboard' : 'Start for Free'}
       </Link>
     </Button>
   )

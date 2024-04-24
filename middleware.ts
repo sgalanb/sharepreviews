@@ -39,7 +39,6 @@ export async function middleware(request: NextRequest) {
       // Redirect to Lemon Squeezy checkout with user data pre-filled
       await suscribeToProAction({
         projectId: project.id,
-        projectName: project.name,
         userId: user?.id!,
         email: user?.email!,
         name: `${user?.firstName} ${user?.lastName}`,
