@@ -42,6 +42,7 @@ export async function middleware(request: NextRequest) {
         userId: user?.id!,
         email: user?.email!,
         name: `${user?.firstName} ${user?.lastName}`,
+        returnInteadOfRedirect: true,
       })
     })
 
