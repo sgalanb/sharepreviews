@@ -168,17 +168,7 @@ export default async function BlogPage() {
         </h2>
         <p className="text-base dark:text-muted-foreground">
           Social card metatags are <strong>snippets of code</strong> that
-          control the content of a{' '}
-          <strong>
-            <Link
-              href="/about"
-              target="_blank"
-              className="underline underline-offset-2 hover:text-foreground/70"
-            >
-              social card
-            </Link>
-          </strong>
-          .
+          control the content of a <strong>social card</strong>.
         </p>
         <p className="text-base dark:text-muted-foreground">
           For example when you share a link on Facebook, Twitter or LinkedIn,

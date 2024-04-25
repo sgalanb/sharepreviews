@@ -141,21 +141,6 @@ export default function HeaderMobile({
                   <SheetClose asChild>
                     <Button variant="ghost" asChild>
                       <Link
-                        href="/about"
-                        className={`${
-                          pathname.startsWith('/about')
-                            ? 'bg-accent text-accent-foreground'
-                            : ''
-                        } w-full !justify-start`}
-                      >
-                        About
-                      </Link>
-                    </Button>
-                  </SheetClose>
-
-                  <SheetClose asChild>
-                    <Button variant="ghost" asChild>
-                      <Link
                         href="/starter-templates"
                         className={`${
                           pathname.startsWith('/starter-templates')

@@ -40,49 +40,6 @@ export default async function BlogPage() {
       <div className="mb-10 flex flex-col items-center justify-center gap-10 p-4 lg:mb-0 lg:flex-row lg:px-8">
         <Card className="max-w-[30rem]">
           <Link
-            href="/about"
-            className="flex flex-col gap-4 rounded-md p-4 hover:bg-accent lg:flex-row"
-          >
-            <div className="order-2 w-full lg:order-1">
-              <div className="flex h-full flex-col justify-between gap-8">
-                <div className="flex flex-col gap-4">
-                  <h2 className="marketing-second-title lg:text-balance">
-                    A platform to generate and manage social cards
-                  </h2>
-                  <p className="marketing-subtitle text-muted-foreground lg:text-balance">
-                    Why social cards are one of the most undervalued aspects of
-                    digital marketing and how sharepreviews want to change that.
-                  </p>
-                </div>
-                <div className="flex items-center justify-start gap-2">
-                  <Image
-                    src="/pfp.jpeg"
-                    alt="author profile picture"
-                    width={40}
-                    height={40}
-                    className="h-10 w-10 rounded-full object-cover"
-                  />
-                  <span className="text-balance font-medium leading-5">
-                    Santiago Galán
-                  </span>
-                  <span className="text-balance font-medium leading-5">·</span>
-                  <span className="text-muted-foreground">
-                    {dayjs('03/29/2024').format('MMM D, YYYY')}
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* <Image
-          src="/mvp-thumbnail.webp"
-          alt=""
-          width={1200}
-          height={630}
-          className="order-1 w-full rounded-md object-cover lg:order-2 lg:w-2/3"
-        /> */}
-          </Link>
-        </Card>
-        <Card className="max-w-[30rem]">
-          <Link
             href="/blog/everything-you-should-know-about-social-card-metatags"
             className="flex flex-col gap-4 rounded-md p-4 hover:bg-accent lg:flex-row"
           >

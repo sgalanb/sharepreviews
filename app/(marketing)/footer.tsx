@@ -74,22 +74,16 @@ export default function Footer({
         <div className="flex flex-col items-start justify-start gap-3">
           <h3 className="font-semibold">Product</h3>
           <Link
-            href="/about"
+            href="/starter-templates"
             className="text-muted-foreground hover:text-foreground"
           >
-            About
+            Starter Templates
           </Link>
           <Link
             href="/blog"
             className="text-muted-foreground hover:text-foreground"
           >
             Blog
-          </Link>
-          <Link
-            href="/starter-templates"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Starter Templates
           </Link>
           <Link
             href="/pricing"

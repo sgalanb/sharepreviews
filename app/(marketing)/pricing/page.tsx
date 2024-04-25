@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: 'Pricing | sharepreviews',
 }
 
-export default async function AboutPage() {
+export default async function PricingPage() {
   const { isAuthenticated, user } = await getUser()
   const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
   const authorizationUrlStartWithPro = getAuthorizationUrl({
