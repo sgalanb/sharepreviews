@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "basehub dev & next dev",
-    "build": "basehub && next",
+    "build": "next",
     "start": "next start",
     "lint": "next lint",
     "migration:generate": "drizzle-kit generate:pg",
-    "migration:push": "drizzle-kit push:pg"
+    "migration:push": "drizzle-kit push:pg",
+    "postinstall": "basehub"
   },
   "dependencies": {
     "@dnd-kit/modifiers": "^7.0.0",
