@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "basehub dev & next dev",
-    "build": "next",
+    "dev": "basehub dev && next dev",
+    "build": "basehub && next build",
     "start": "next start",
     "lint": "next lint",
     "migration:generate": "drizzle-kit generate:pg",
-    "migration:push": "drizzle-kit push:pg",
-    "postinstall": "basehub"
+    "migration:push": "drizzle-kit push:pg"
   },
   "dependencies": {
     "@dnd-kit/modifiers": "^7.0.0",
