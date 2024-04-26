@@ -1,89 +1,122 @@
 import Footer from '@/app/(marketing)/footer'
 import { getUser } from '@/app/lib/workos'
 import { Card } from '@/app/ui/components/Card'
+import { QueryGenqlSelection, basehub } from 'basehub'
+import { Pump } from 'basehub/react-pump'
 import dayjs from 'dayjs'
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'Blog | sharepreviews',
-  description:
-    'Learn how to generate and manage social card images with sharepreviews. Stay up to date on how social platforms handle Open Graph metatags.',
-  alternates: {
-    canonical: 'https://sharepreviews.com/blog',
-  },
-  openGraph: {
-    url: 'https://sharepreviews.com/blog',
-    type: 'website',
-    siteName: 'sharepreviews',
-    images: [
-      'https://utfs.io/f/aeb5dc22-a68d-4d6b-8c54-b3bd3a6fce38-cqgxy.png',
-    ],
-  },
-  twitter: {
-    site: '@sgalanb',
-    creator: '@sgalanb',
-    card: 'summary_large_image',
-    images: [
-      'https://utfs.io/f/aeb5dc22-a68d-4d6b-8c54-b3bd3a6fce38-cqgxy.png',
-    ],
-  },
+const postBySlugQuery = () => {
+  return {
+    blog: {
+      meta: { title: true, description: true, ogImageUrl: true },
+      posts: {
+        __args: { first: 10, orderBy: 'publishDate__DESC' },
+        items: {
+          _id: true,
+          _title: true,
+          _slug: true,
+          subtitle: true,
+          publishDate: true,
+        },
+      },
+    },
+  } satisfies QueryGenqlSelection
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { blog } = await basehub({
+    next: { revalidate: 60 },
+    draft: draftMode().isEnabled,
+  }).query(postBySlugQuery())
+
+  return {
+    title: blog.meta.title,
+    description: blog.meta.description,
+    alternates: {
+      canonical: 'https://sharepreviews.com/blog',
+    },
+    openGraph: {
+      url: 'https://sharepreviews.com/blog',
+      type: 'article',
+      siteName: 'sharepreviews',
+      images: [blog?.meta.ogImageUrl!],
+    },
+    twitter: {
+      site: '@sgalanb',
+      creator: '@sgalanb',
+      card: 'summary_large_image',
+      images: [blog?.meta.ogImageUrl!],
+    },
+  }
 }
 
 export default async function BlogPage() {
   const { isAuthenticated } = await getUser()
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-start gap-8 pt-16">
-      <h1 className="marketing-title pt-4 lg:p-0">Blog</h1>
-      <div className="mb-10 flex flex-col items-center justify-center gap-10 p-4 lg:mb-0 lg:flex-row lg:px-8">
-        <Card className="max-w-[30rem]">
-          <Link
-            href="/blog/everything-you-should-know-about-social-card-metatags"
-            className="flex flex-col gap-4 rounded-md p-4 hover:bg-accent lg:flex-row"
-          >
-            <div className="order-2 w-full lg:order-1">
-              <div className="flex h-full flex-col justify-between gap-8">
-                <div className="flex flex-col gap-4">
-                  <h2 className="marketing-second-title lg:text-balance">
-                    Everything you should know about social card metatags
-                  </h2>
-                  <p className="marketing-subtitle text-muted-foreground lg:text-balance">
-                    Learn how to use Open Graph and Twitter metatags to control
-                    how your website is displayed when shared on social media.
-                  </p>
-                </div>
-                <div className="flex items-center justify-start gap-2">
-                  <Image
-                    src="/pfp.jpeg"
-                    alt="author profile picture"
-                    width={40}
-                    height={40}
-                    className="h-10 w-10 rounded-full object-cover"
-                  />
-                  <span className="text-balance font-medium leading-5">
-                    Santiago Galán
-                  </span>
-                  <span className="text-balance font-medium leading-5">·</span>
-                  <span className="text-muted-foreground">
-                    {dayjs('02/15/2024').format('MMM D, YYYY')}
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* <Image
-          src="/mvp-thumbnail.webp"
-          alt=""
-          width={1200}
-          height={630}
-          className="order-1 w-full rounded-md object-cover lg:order-2 lg:w-2/3"
-        /> */}
-          </Link>
-        </Card>
-      </div>
+    <Pump queries={[postBySlugQuery()]} next={{ revalidate: 60 }}>
+      {async ([{ blog }]) => {
+        'use server'
 
-      <Footer isAuthenticated={isAuthenticated} />
-    </div>
+        return (
+          <div className="flex h-full w-full flex-col items-center justify-start gap-8 pt-16">
+            <h1 className="marketing-title pt-4 lg:p-0">Blog</h1>
+            <div className="mb-10 flex flex-col items-center justify-center gap-10 p-4 lg:mb-0 lg:flex-row lg:px-8">
+              <ul>
+                {blog.posts.items.map((post) => {
+                  return (
+                    <li key={post._id}>
+                      <Card className="max-w-[30rem]">
+                        <Link
+                          href={`/blog/${post._slug}`}
+                          className="flex flex-col gap-4 rounded-md p-4 hover:bg-accent lg:flex-row"
+                        >
+                          <div className="order-2 w-full lg:order-1">
+                            <div className="flex h-full flex-col justify-between gap-8">
+                              <div className="flex flex-col gap-4">
+                                <h2 className="marketing-second-title lg:text-balance">
+                                  {post._title}
+                                </h2>
+                                <p className="marketing-subtitle text-muted-foreground lg:text-balance">
+                                  {post.subtitle}
+                                </p>
+                              </div>
+                              <div className="flex items-center justify-start gap-2">
+                                <Image
+                                  src="/pfp.jpeg"
+                                  alt="author profile picture"
+                                  width={40}
+                                  height={40}
+                                  className="h-10 w-10 rounded-full object-cover"
+                                />
+                                <span className="text-balance font-medium leading-5">
+                                  Santiago Galán
+                                </span>
+                                <span className="text-balance font-medium leading-5">
+                                  ·
+                                </span>
+                                <span className="text-muted-foreground">
+                                  {dayjs('02/15/2024').format('MMM D, YYYY')}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      </Card>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+
+            <Footer isAuthenticated={isAuthenticated} />
+          </div>
+        )
+      }}
+    </Pump>
   )
 }

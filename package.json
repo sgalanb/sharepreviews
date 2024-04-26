@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "basehub dev & next dev",
+    "build": "basehub && next",
     "start": "next start",
     "lint": "next lint",
     "migration:generate": "drizzle-kit generate:pg",
@@ -37,6 +37,7 @@
     "@vercel/edge": "^1.1.1",
     "@vercel/edge-config": "^1.1.0",
     "@workos-inc/node": "^7.1.0",
+    "basehub": "^4.0.13",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.1",
