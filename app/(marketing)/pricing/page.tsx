@@ -69,9 +69,7 @@ export default async function PricingPage() {
                 <div className="flex items-center justify-start gap-1">
                   <CircleCheck className="h-5 w-5 fill-foreground stroke-background" />
                   <div className="flex items-center justify-start gap-1">
-                    <span className="text-muted-foreground">
-                      500 new images
-                    </span>
+                    <span className="text-muted-foreground">500 images</span>
                   </div>
                 </div>
 
@@ -124,7 +122,7 @@ export default async function PricingPage() {
                   <CircleCheck className="h-5 w-5 fill-primary stroke-background" />
                   <div className="flex items-center justify-start gap-1">
                     <span className="text-muted-foreground">
-                      5,000 new images/mo
+                      5,000 images/mo
                     </span>
                     <Tooltip>
                       <TooltipTrigger asChild>
