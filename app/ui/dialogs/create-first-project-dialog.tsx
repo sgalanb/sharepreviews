@@ -45,7 +45,7 @@ export default function CreateFirstProjectDialog({
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <form
-          action={(formData: FormData) => {
+          action={async (formData: FormData) => {
             const name = formData.get('name') as string
 
             if (name) {
@@ -54,11 +54,9 @@ export default function CreateFirstProjectDialog({
                 inputRef?.current?.focus()
                 return
               }
-              createProjectAction({
+              await createProjectAction({
                 name,
                 userId,
-              }).then(() => {
-                router.push('/')
               })
             } else {
               inputRef?.current?.focus()
