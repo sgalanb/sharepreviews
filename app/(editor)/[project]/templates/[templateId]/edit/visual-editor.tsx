@@ -1,9 +1,9 @@
 'use client'
 
 import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
+import VisualEditorCanvas from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-canvas'
 import VisualEditorHeader from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-header'
 import VisualEditorLeftPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-left-panel'
-import VisualEditorPreview from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-preview'
 import VisualEditorRightPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-right-panel'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 
@@ -178,8 +178,6 @@ export default function VisualEditor({
     getAvailableFonts()
   }, [])
 
-  console.log(availableFonts)
-
   return (
     <div className="grid h-full w-full grid-cols-[280px,1fr,280px] overflow-hidden">
       {/* HEADER */}
@@ -206,7 +204,7 @@ export default function VisualEditor({
         handleOnLayerClick={handleOnLayerClick}
       />
       {/* PREVIEW */}
-      <VisualEditorPreview
+      <VisualEditorCanvas
         layers={layers}
         setLayers={setLayers}
         selectedLayer={selectedLayer}

@@ -105,13 +105,25 @@ export default function VisualEditorRightPanel({
   useEffect(() => {
     if (multiSelectedLayers.length > 1) {
       // Find the smallest X value of the all selected layers
-      const xValues = multiSelectedLayers.map((layer) => layer.x)
+      const xLayers = layers.filter((layer) =>
+        multiSelectedLayers.some(
+          (selectedLayer) => selectedLayer.id === layer.id
+        )
+      )
+      const xValues = xLayers.map((layer) => layer.x)
       setSelectionX(Math.min(...xValues))
+
       // Find the smallest Y value of the all selected layers
-      const yValues = multiSelectedLayers.map((layer) => layer.y)
+      const yLayers = layers.filter((layer) =>
+        multiSelectedLayers.some(
+          (selectedLayer) => selectedLayer.id === layer.id
+        )
+      )
+      const yValues = yLayers.map((layer) => layer.y)
+
       setSelectionY(Math.min(...yValues))
     }
-  }, [multiSelectedLayers])
+  }, [multiSelectedLayers, layers])
 
   // Update selected text layer height when font size, line height or line-clamp changes
   const isTextLayer = selectedLayer?.type === 'text'
@@ -207,8 +219,10 @@ export default function VisualEditorRightPanel({
                 <Input
                   id="x"
                   type="number"
-                  step={10}
-                  defaultValue={selectedLayer.x}
+                  step={1}
+                  value={
+                    layers.find((layer) => selectedLayer.id === layer.id)?.x
+                  }
                   onChange={(e) => {
                     if (e.target.value === '') return
                     setSelectedLayer({
@@ -241,8 +255,10 @@ export default function VisualEditorRightPanel({
                 <Input
                   id="y"
                   type="number"
-                  step={10}
-                  defaultValue={selectedLayer.y}
+                  step={1}
+                  value={
+                    layers.find((layer) => selectedLayer.id === layer.id)?.y
+                  }
                   onChange={(e) => {
                     if (e.target.value === '') return
                     setSelectedLayer({
@@ -1074,7 +1090,6 @@ export default function VisualEditorRightPanel({
                     <Select
                       value={selectedLayer.fontWeight.toString()}
                       onValueChange={(variant: string) => {
-                        console.log(variant)
                         setSelectedLayer({
                           ...selectedLayer,
                           fontWeight:

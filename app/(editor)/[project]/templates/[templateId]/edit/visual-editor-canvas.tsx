@@ -6,7 +6,7 @@ import { convertOpacityToHex } from '@/app/utils'
 import { Minus, Plus } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 
-export default function VisualEditorPreview({
+export default function VisualEditorCanvas({
   layers,
   setLayers,
   selectedLayer,
@@ -31,19 +31,14 @@ export default function VisualEditorPreview({
   shiftPressed: boolean
   handleOnLayerClick: (layer: LayerType) => void
 }) {
-  // Canvas settings
-  const minScale = 1
-  const maxScale = 5
-  const [scale, setScale] = useState(1) // For zoom levels
-  const [origin, setOrigin] = useState({ x: 0, y: 0 }) // For pan origin
-  const [isGrabbing, setIsGrabbing] = useState<boolean>(false)
-
   const parentDivRef = useRef<any>(null)
 
-  // Clamp function to limit the scale within the min and max values
-  const clamp = (value: any, min: any, max: any) => {
-    return Math.min(Math.max(value, min), max)
-  }
+  const [origin, setOrigin] = useState({ x: 0, y: 0 })
+
+  // CANVAS ZOOMING
+  const minZoomScale = 1
+  const maxZoomScale = 5
+  const [zoomScale, setZoomScale] = useState(1)
 
   // Prevent default zoom behavior
   useEffect(() => {
@@ -59,6 +54,11 @@ export default function VisualEditorPreview({
       document.removeEventListener('wheel', handleWheel)
     }
   }, [])
+
+  // Clamp function to limit the scale within the min and max values
+  const clamp = (value: any, min: any, max: any) => {
+    return Math.min(Math.max(value, min), max)
+  }
 
   const adjustOriginForScale = (newScale: number) => {
     const parentWidth = parentDivRef.current.offsetWidth
@@ -81,31 +81,40 @@ export default function VisualEditorPreview({
     return { x: newX, y: newY }
   }
 
-  const handleWheel = (e: any) => {
+  const handleCanvasWheelZoom = (e: any) => {
     e.preventDefault()
     e.stopPropagation()
-    const scaleAdjustment = e.deltaY > 0 ? 0.9 : 1.1
-    let newScale = scale * scaleAdjustment
-    newScale = clamp(newScale, minScale, maxScale)
+    let newZoomScale = zoomScale + (e.deltaY > 0 ? -1 : 1)
+    newZoomScale = clamp(newZoomScale, minZoomScale, maxZoomScale)
 
-    setScale(newScale)
+    setZoomScale(newZoomScale)
 
     // Adjust origin based on the new scale
-    const adjustedOrigin = adjustOriginForScale(newScale)
+    const adjustedOrigin = adjustOriginForScale(newZoomScale)
     setOrigin(adjustedOrigin)
   }
 
-  const handleManualZoom = (newScale: number) => {
-    const newScaleNumber = clamp(newScale, minScale, maxScale)
+  const handleCanvasManualZoomButtons = (
+    oldZoomScale: number,
+    positive: boolean
+  ) => {
+    const newZoomScale = clamp(
+      positive ? oldZoomScale + 1 : oldZoomScale - 1,
+      minZoomScale,
+      maxZoomScale
+    )
 
-    setScale(newScaleNumber)
+    setZoomScale(newZoomScale)
 
     // Adjust origin based on the new scale
-    const adjustedOrigin = adjustOriginForScale(newScale)
+    const adjustedOrigin = adjustOriginForScale(newZoomScale)
     setOrigin(adjustedOrigin)
   }
 
-  const handleMouseDown = (e: any) => {
+  // CANVAS PANNING
+  const [isGrabbingCanvas, setIsGrabbingCanvas] = useState<boolean>(false)
+
+  const handleCanvasMousePanning = (e: any) => {
     // Check if the middle mouse button is pressed or the space key is pressed
     if (e.button !== 1 && !spacePressed) {
       // If not, do nothing
@@ -114,7 +123,7 @@ export default function VisualEditorPreview({
 
     e.preventDefault()
     e.stopPropagation()
-    setIsGrabbing(true)
+    setIsGrabbingCanvas(true)
     const startX = e.pageX - origin.x
     const startY = e.pageY - origin.y
     const parentWidth = parentDivRef.current.offsetWidth
@@ -126,12 +135,14 @@ export default function VisualEditorPreview({
       let newY = e.pageY - startY
 
       // Adjust boundaries based on the scaled size of the child
-      const scaledWidth = parentDivRef.current.firstChild.offsetWidth * scale
-      const scaledHeight = parentDivRef.current.firstChild.offsetHeight * scale
+      const scaledWidth =
+        parentDivRef.current.firstChild.offsetWidth * zoomScale
+      const scaledHeight =
+        parentDivRef.current.firstChild.offsetHeight * zoomScale
 
       // Calculate the effective boundaries considering the scale
-      const maxX = Math.max(0, (scaledWidth - parentWidth) / 2 / scale)
-      const maxY = Math.max(0, (scaledHeight - parentHeight) / 2 / scale)
+      const maxX = Math.max(0, (scaledWidth - parentWidth) / 2 / zoomScale)
+      const maxY = Math.max(0, (scaledHeight - parentHeight) / 2 / zoomScale)
 
       // Apply boundary checks for both X and Y coordinates
       newX = Math.min(Math.max(newX, -maxX), maxX)
@@ -147,13 +158,95 @@ export default function VisualEditorPreview({
     function onMouseUp() {
       document.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseup', onMouseUp)
-      setIsGrabbing(false)
+      setIsGrabbingCanvas(false)
     }
 
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp)
   }
 
+  // LAYER TRANSFORMATIONS
+  const handleLayerMouseDown = (
+    e: React.MouseEvent,
+    selectedLayer: LayerType
+  ) => {
+    // Check if left mouse button is pressed
+    if (e.button !== 0) {
+      if (e.button === 1) {
+        // Middle mouse button
+        setIsGrabbingCanvas(true)
+        handleCanvasMousePanning(e)
+        return
+      } else {
+        return
+      }
+    }
+
+    // This executes once when the mouse is down
+    const startMouseX = e.clientX
+    const startMouseY = e.clientY
+
+    const startSingleLayerX = selectedLayer.x
+    const startSingleLayerY = selectedLayer.y
+
+    const multipleLayersStartPositions = new Map()
+    multiSelectedLayers.forEach((layer) => {
+      multipleLayersStartPositions.set(layer.id, { x: layer.x, y: layer.y })
+    })
+
+    function onMouseMove(e: MouseEvent) {
+      // This executes on every mouse move while the mouse is down
+      const diffMouseX = e.clientX - startMouseX
+      const diffMouseY = e.clientY - startMouseY
+
+      if (
+        multiSelectedLayers.length < 2 ||
+        !multiSelectedLayers.some((layer) => layer.id === selectedLayer.id)
+      ) {
+        // Move one layer
+        setLayers((prevLayers) =>
+          prevLayers.map((layer) => {
+            if (layer.id === selectedLayer.id) {
+              return {
+                ...layer,
+                x: Math.round(startSingleLayerX + (diffMouseX * 2) / zoomScale),
+                y: Math.round(startSingleLayerY + (diffMouseY * 2) / zoomScale),
+              }
+            }
+            return layer
+          })
+        )
+      } else {
+        // Move multiple layers
+        setLayers((prevLayers) =>
+          prevLayers.map((layer) => {
+            if (
+              multiSelectedLayers.find((findLayer) => findLayer.id === layer.id)
+            ) {
+              const startPos = multipleLayersStartPositions.get(layer.id)
+
+              return {
+                ...layer,
+                x: Math.round(startPos.x + (diffMouseX * 2) / zoomScale),
+                y: Math.round(startPos.y + (diffMouseY * 2) / zoomScale),
+              }
+            }
+            return layer
+          })
+        )
+      }
+    }
+
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove)
+      document.removeEventListener('mouseup', onMouseUp)
+    }
+
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+  }
+
+  // Load all fonts used in the text layers
   useEffect(() => {
     const style = document.createElement('style')
 
@@ -168,17 +261,17 @@ export default function VisualEditorPreview({
     const uniqueFonts = [...new Set(usedFonts)]
 
     style.innerHTML = `
-      ${uniqueFonts
-        .map(
-          (font) => `
-        @font-face {
-          font-family: '${font?.fontName}';
-          src: url('${font?.fontUrl}') format('truetype');
-        }
+        ${uniqueFonts
+          .map(
+            (font) => `
+          @font-face {
+            font-family: '${font?.fontName}';
+            src: url('${font?.fontUrl}') format('truetype');
+          }
+        `
+          )
+          .join('')}
       `
-        )
-        .join('')}
-    `
     document.head.appendChild(style)
 
     return () => {
@@ -196,11 +289,11 @@ export default function VisualEditorPreview({
       }}
     >
       <div
-        className={`${isGrabbing ? 'cursor-grabbing' : spacePressed ? 'cursor-grab' : 'cursor-default'} relative order-none flex h-full w-full items-center justify-center overflow-hidden bg-neutral-100`}
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
+        className={`${isGrabbingCanvas ? 'cursor-grabbing' : spacePressed ? 'cursor-grab' : 'cursor-default'} relative order-none flex h-full w-full items-center justify-center overflow-hidden bg-neutral-100`}
+        onWheel={handleCanvasWheelZoom}
+        onMouseDown={handleCanvasMousePanning}
         style={{
-          transform: `scale(${scale}) translate(${origin.x}px, ${origin.y}px)`,
+          transform: `scale(${zoomScale}) translate(${origin.x}px, ${origin.y}px)`,
         }}
       >
         <div className="absolute h-[630px] w-[1200px] scale-50">
@@ -223,6 +316,10 @@ export default function VisualEditorPreview({
                     onClick={(e) => {
                       e.stopPropagation()
                       handleOnLayerClick(layer)
+                    }}
+                    onMouseDown={(e) => {
+                      e.stopPropagation()
+                      handleLayerMouseDown(e, layer)
                     }}
                     style={{
                       position: 'absolute',
@@ -292,6 +389,10 @@ export default function VisualEditorPreview({
                       e.stopPropagation()
                       handleOnLayerClick(layer)
                     }}
+                    onMouseDown={(e) => {
+                      e.stopPropagation()
+                      handleLayerMouseDown(e, layer)
+                    }}
                     style={{
                       position: 'absolute',
                       left: layer.x,
@@ -346,6 +447,10 @@ export default function VisualEditorPreview({
                       e.stopPropagation()
                       handleOnLayerClick(layer)
                     }}
+                    onMouseDown={(e) => {
+                      e.stopPropagation()
+                      handleLayerMouseDown(e, layer)
+                    }}
                     style={{
                       position: 'absolute',
                       left: layer.x,
@@ -383,19 +488,19 @@ export default function VisualEditorPreview({
           onClick={(e) => {
             e.stopPropagation()
             e.currentTarget.blur()
-            handleManualZoom(scale - 0.25)
+            handleCanvasManualZoomButtons(zoomScale, false)
           }}
         >
           <Minus className="h-6 w-6" />
         </Button>
-        <span className="select-none">{scale.toFixed(2)}x</span>
+        <span className="select-none">{zoomScale.toFixed(2)}x</span>
         <Button
           variant="outline"
           className="border-none px-3"
           onClick={(e) => {
             e.stopPropagation()
             e.currentTarget.blur()
-            handleManualZoom(scale + 0.25)
+            handleCanvasManualZoomButtons(zoomScale, true)
           }}
         >
           <Plus className="h-6 w-6" />
