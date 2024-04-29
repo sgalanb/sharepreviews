@@ -4,28 +4,28 @@
 
 @layer components {
   .title {
-    @apply text-3xl font-bold tracking-tight;
+    @apply text-3xl font-bold;
   }
   .second-title {
-    @apply text-2xl font-medium tracking-tight;
+    @apply text-2xl font-medium;
   }
   .third-title {
-    @apply text-xl font-medium tracking-tight;
+    @apply text-xl font-medium;
   }
   .subtitle {
-    @apply text-lg font-normal leading-6 tracking-tight;
+    @apply text-lg font-normal leading-6;
   }
   .marketing-title {
-    @apply text-4xl font-extrabold tracking-tight;
+    @apply text-4xl font-extrabold;
   }
   .marketing-second-title {
-    @apply text-3xl font-semibold tracking-tight;
+    @apply text-3xl font-semibold;
   }
   .marketing-third-title {
-    @apply text-xl font-medium tracking-tight;
+    @apply text-xl font-medium;
   }
   .marketing-subtitle {
-    @apply text-lg font-normal tracking-tight;
+    @apply text-lg font-normal;
   }
 }
 

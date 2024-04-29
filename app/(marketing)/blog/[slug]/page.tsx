@@ -26,7 +26,12 @@ const postBySlugQuery = (slug: string) => {
           _title: true,
           subtitle: true,
           publishDate: true,
-          author: { name: true, avatar: { url: true, alt: true } },
+          author: {
+            name: true,
+            avatar: {
+              url: true,
+            },
+          },
           content: {
             json: { content: true },
           },
@@ -91,10 +96,10 @@ export default async function BlogIndividualPage({
           if (!post) notFound()
 
           return (
-            <div className="flex w-full flex-col items-start justify-start gap-8 pb-4 pt-8">
+            <div className="mx-auto flex w-full flex-col items-center justify-start gap-8 pb-4 pt-8">
               <Link
                 href="/blog"
-                className="flex items-center justify-center px-4 text-muted-foreground"
+                className="flex w-full max-w-[36rem] items-center justify-start px-4 text-muted-foreground"
               >
                 <ChevronLeft className="ml-[-4px]" />
                 <span className="self-center text-sm">Blog</span>
@@ -112,32 +117,33 @@ export default async function BlogIndividualPage({
                 <div className="flex items-center justify-start gap-2 self-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={post?.author?.avatar?.url ?? '/pfp.jpeg'}
-                    alt={post?.author?.avatar?.alt ?? 'author profile picture'}
+                    src={post?.author[0].avatar?.url ?? '/pfp.jpeg'}
+                    alt="author profile picture"
                     width={32}
                     height={32}
                     className="h-8 w-8 rounded-full object-cover"
                     loading="lazy"
                   />
                   <span className="text-balance font-medium leading-5 text-muted-foreground">
-                    {post?.author?.name}
+                    {post?.author[0].name}
                   </span>
                 </div>
-                <div className="flex w-full flex-col items-start justify-center gap-2">
+                <div className="flex w-full flex-col">
                   <RichText
                     blocks={post?.content?.json.content}
                     components={{
-                      // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-                      img: (props) => (
-                        <img className="self-center" {...props} />
-                      ),
+                      p: (p) => <p className="pb-4 text-base">{p.children}</p>,
                       h2: (h2) => (
-                        <h2 className="marketing-third-title pt-8">
+                        <h2 className="marketing-third-title pb-2 pt-6">
                           {h2.children}
                         </h2>
                       ),
                       pre: (pre) => (
                         <CodeBlock className="w-full">{pre.code}</CodeBlock>
+                      ),
+                      img: (props) => (
+                        // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+                        <img className="self-center" {...props} />
                       ),
                     }}
                   >
