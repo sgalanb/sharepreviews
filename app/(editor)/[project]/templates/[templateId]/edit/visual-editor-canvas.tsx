@@ -298,7 +298,9 @@ export default function VisualEditorCanvas({
           transform: `scale(${zoomScale}) translate(${origin.x}px, ${origin.y}px)`,
         }}
       >
-        <div className="absolute h-[630px] w-[1200px] scale-50">
+        <div
+          className={`${floatingLabelTwitter ? 'rounded-[32px] border border-[#cfd9de]' : ''} absolute h-[630px] w-[1200px] scale-50 overflow-hidden`}
+        >
           {floatingLabelTwitter && (
             <div className="absolute bottom-6 left-6 right-6 z-50 line-clamp-1 w-fit">
               <div className="flex h-10 items-center justify-center self-start rounded-[8px] bg-black/30 px-2">
@@ -311,7 +313,7 @@ export default function VisualEditorCanvas({
           )}
 
           <div
-            className={`${floatingLabelTwitter ? 'rounded-[32px] border border-[#cfd9de]' : ''} flex h-full w-full`}
+            className="flex h-full w-full"
             style={{ backgroundColor: canvasBackgroundColor }}
           >
             {/* This is replicated with satori on og generation*/}

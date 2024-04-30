@@ -8,7 +8,6 @@ import dayjs from 'dayjs'
 import { ChevronLeft } from 'lucide-react'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -152,18 +151,6 @@ export default async function BlogIndividualPage({
                 className="my-12 flex flex-col gap-4 self-center rounded-lg border bg-card p-4 text-muted-foreground shadow-sm hover:bg-foreground/5"
               >
                 <span>Got questions or ideas? Feel free to DM me on X!</span>
-                <div className="flex items-center justify-center gap-2 self-center">
-                  <Image
-                    src="/pfp.jpeg"
-                    alt="author profile picture"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-full object-cover"
-                  />
-                  <span className="text-balance font-medium leading-5">
-                    Santiago Galán
-                  </span>
-                </div>
               </Link>
               <Footer isAuthenticated={isAuthenticated} />
             </div>
