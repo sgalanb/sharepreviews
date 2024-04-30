@@ -125,7 +125,7 @@ export default async function BlogIndividualPage({
                     loading="lazy"
                   />
                   <span className="text-balance font-medium leading-5 text-muted-foreground">
-                    {post?.author[0].name}
+                    {post?.author[0]?.name}
                   </span>
                 </div>
                 <div className="flex w-full flex-col">

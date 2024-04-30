@@ -10,8 +10,6 @@ import { useState } from 'react'
 export default function Posts({ posts }: { posts: any[] }) {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
-  console.log(posts)
-
   return (
     <Tabs
       value={selectedCategory}
@@ -37,14 +35,14 @@ export default function Posts({ posts }: { posts: any[] }) {
         {posts
           .filter(
             (post) =>
-              post.category._slug === selectedCategory ||
+              post.category?._slug === selectedCategory ||
               selectedCategory === 'all'
           )
           .map((post) => {
             return (
               <Card key={post._id} className="h-full max-w-[30rem]">
                 <Link
-                  href={`/blog/${post._slug}`}
+                  href={`/blog/${post?._slug}`}
                   className="flex h-full flex-col gap-4 rounded-md p-4 hover:bg-accent lg:flex-row"
                 >
                   <div className="order-2 w-full lg:order-1">
@@ -63,11 +61,11 @@ export default function Posts({ posts }: { posts: any[] }) {
                           className="h-7 w-7 rounded-full object-cover"
                         />
                         <span className="font-medium leading-5">
-                          {post.author[0].name}
+                          {post?.author[0]?.name}
                         </span>
                         <span className="font-medium leading-5">·</span>
                         <span className="text-muted-foreground">
-                          {dayjs(post.publishDate).format('MMM D, YYYY')}
+                          {dayjs(post?.publishDate).format('MMM D, YYYY')}
                         </span>
                       </div>
                     </div>
