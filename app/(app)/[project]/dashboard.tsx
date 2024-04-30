@@ -70,9 +70,11 @@ export default function OverviewDashboard({
   return (
     <TooltipProvider>
       <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-8 p-4 lg:p-12">
-        <div className="flex w-full items-start justify-between gap-4 md:h-16">
+        <div className="flex w-full flex-col items-start justify-between gap-4 md:h-16 lg:flex-row">
           <div className="flex h-10 items-center justify-start gap-4">
-            <span className="title leading-none">{project?.name}</span>
+            <span className="title line-clamp-1 leading-none">
+              {project?.name}
+            </span>
             <Badge
               variant={project.plan === 'free' ? 'secondary' : 'default'}
               className="h-fit font-normal"
@@ -83,7 +85,11 @@ export default function OverviewDashboard({
 
           {project?.plan === 'free' && (
             <UpgradeToProDialog
-              trigger={<Button className="flex gap-2">Upgrade to Pro</Button>}
+              trigger={
+                <Button className="flex w-full gap-2 lg:w-fit">
+                  Upgrade to Pro
+                </Button>
+              }
               project={project}
               user={user}
             />

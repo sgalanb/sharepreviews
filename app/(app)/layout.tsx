@@ -52,9 +52,11 @@ export default async function AppLayout({
             >
               <HeaderMobile
                 isAuthenticated={isAuthenticated}
-                user={user}
                 authorizationUrl={authorizationUrl}
+                user={user}
+                userProjects={userProjects}
                 isApp={true}
+                reservedNames={reservedNames}
               />
               <HeaderApp
                 isAuthenticated={isAuthenticated}

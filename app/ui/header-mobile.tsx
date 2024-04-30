@@ -15,6 +15,13 @@ import {
   DropdownMenuTrigger,
 } from '@/app/ui/components/DropdownMenu'
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+} from '@/app/ui/components/Select'
+import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -33,8 +40,8 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function HeaderMobile({
   isAuthenticated,
@@ -42,13 +49,16 @@ export default function HeaderMobile({
   authorizationUrl,
   userProjects,
   isApp,
+  reservedNames,
 }: {
   isAuthenticated: boolean
   user: User | undefined
   authorizationUrl: string
   userProjects?: ProjectType[]
   isApp: boolean
+  reservedNames?: string[]
 }) {
+  const router = useRouter()
   const pathname = usePathname()
   const projectPathname = pathname.split('/')[1]
 
@@ -63,10 +73,30 @@ export default function HeaderMobile({
     userProjects?.find((project) => project.pathname === projectPathname)
       ?.suscriptionId ?? undefined
 
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false)
+
+  // Project Selector
+  const [openProjectsCombobox, setOpenProjectsCombobox] =
+    useState<boolean>(false)
+  const [projectsComboboxValue, setProjectsComboboxValue] =
+    useState<string>(projectPathname)
+
+  const projectsList = userProjects
+    ?.sort((a, b) => a.name.localeCompare(b.name))
+    ?.map((project) => ({
+      value: project.pathname,
+      label: project.name,
+    }))
+
+  useEffect(() => {
+    setProjectsComboboxValue(projectPathname)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background transition-colors duration-200 lg:hidden">
       <nav className="w-fulls flex items-center justify-between p-2">
-        <Sheet>
+        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger aria-label="Open navigation">
             <div className={isAuthenticated ? 'w-24' : ''}>
               <MenuIcon className="m-2 h-6 w-6" />
@@ -120,6 +150,44 @@ export default function HeaderMobile({
                       </Link>
                     </Button>
                   </SheetClose>
+                  {/* Project selector */}
+                  <Select
+                    onValueChange={(newValue) => {
+                      setProjectsComboboxValue(newValue)
+                      if (newValue !== projectsComboboxValue) {
+                        // replace projectPathname with new value but keep the rest of the path
+                        router.push(pathname.replace(projectPathname, newValue))
+                      }
+                      setIsSheetOpen(false)
+                    }}
+                    open={openProjectsCombobox}
+                    onOpenChange={(isOpen) => setOpenProjectsCombobox(isOpen)}
+                    value={projectsComboboxValue}
+                  >
+                    <SelectTrigger>
+                      <span className="line-clamp-1 w-full text-left">
+                        {projectsComboboxValue
+                          ? projectsList?.find(
+                              (project) =>
+                                project.value === projectsComboboxValue
+                            )?.label
+                          : 'Select project...'}
+                      </span>
+                    </SelectTrigger>
+                    <SelectContent
+                      className="w-full p-0"
+                      align="end"
+                      sideOffset={8}
+                    >
+                      <SelectGroup>
+                        {projectsList?.map((project) => (
+                          <SelectItem key={project.value} value={project.value}>
+                            {project.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </>
               ) : (
                 <>
@@ -217,7 +285,7 @@ export default function HeaderMobile({
           </SheetContent>
         </Sheet>
         <Link
-          href={isApp ? '/' : '/home'}
+          href={isApp ? `/${projectPathname}` : '/home'}
           className="flex items-center justify-center gap-2"
         >
           <Image src="/icon.svg" alt="SharePreviews" width={40} height={40} />
