@@ -117,7 +117,7 @@ export default async function BlogIndividualPage({
                 <div className="flex items-center justify-start gap-2 self-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={post?.author[0].avatar?.url ?? '/pfp.jpeg'}
+                    src={post?.author[0]?.avatar?.url ?? '/pfp.jpeg'}
                     alt="author profile picture"
                     width={32}
                     height={32}
