@@ -1,6 +1,9 @@
 'use client'
 
-import { deleteTemplateAction } from '@/app/actions/actions'
+import {
+  deleteTemplateAction,
+  duplicateTemplateAction,
+} from '@/app/actions/actions'
 import { FREE_TEMPLATES } from '@/app/constants'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 import { Button } from '@/app/ui/components/Button'
@@ -43,6 +46,7 @@ import { motion } from 'framer-motion'
 import {
   Check,
   Copy,
+  CopyPlus,
   Edit,
   Link2,
   MoreHorizontal,
@@ -89,6 +93,10 @@ export default function TemplatesDashboard({
     animate: { scale: 1.2, transition: { duration: 0.2 } },
     exit: { scale: 1, transition: { duration: 0.2 } },
   }
+
+  const [selectedDialog, setSelectedDialog] = useState<'delete' | 'duplicate'>(
+    'duplicate'
+  )
 
   return (
     <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-8 p-4 lg:p-12">
@@ -192,7 +200,7 @@ export default function TemplatesDashboard({
                               <DropdownMenuTrigger asChild>
                                 <Button
                                   variant="outline"
-                                  className="aspect-square w-10 p-0 "
+                                  className="hidden aspect-square w-10 p-0 lg:flex"
                                 >
                                   <MoreHorizontal className="h-4 w-4" />
                                 </Button>
@@ -221,7 +229,26 @@ export default function TemplatesDashboard({
                                     className="cursor-pointer"
                                     asChild
                                   >
-                                    <DialogTrigger className="w-full">
+                                    <DialogTrigger
+                                      onClick={() =>
+                                        setSelectedDialog('duplicate')
+                                      }
+                                      className="w-full"
+                                    >
+                                      <CopyPlus className="mr-2 h-4 w-4" />
+                                      Duplicate
+                                    </DialogTrigger>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    className="cursor-pointer"
+                                    asChild
+                                  >
+                                    <DialogTrigger
+                                      onClick={() =>
+                                        setSelectedDialog('delete')
+                                      }
+                                      className="w-full"
+                                    >
                                       <Trash2 className="mr-2 h-4 w-4" />
                                       Delete
                                     </DialogTrigger>
@@ -233,25 +260,45 @@ export default function TemplatesDashboard({
                               <form
                                 className="flex flex-col gap-4"
                                 action={async () =>
-                                  await deleteTemplateAction({
-                                    id: template?.id!,
-                                  }).then(() => {
-                                    revalidateTemplates()
-                                  })
+                                  selectedDialog === 'delete'
+                                    ? await deleteTemplateAction({
+                                        id: template?.id!,
+                                      }).then(() => {
+                                        revalidateTemplates()
+                                      })
+                                    : await duplicateTemplateAction({
+                                        templateToDuplicateId: template?.id!,
+                                        targetProjectId: project?.id!,
+                                        targetProjectPathname:
+                                          project?.pathname,
+                                      }).then(() => {
+                                        revalidateTemplates()
+                                      })
                                 }
                               >
                                 <DialogHeader>
-                                  <DialogTitle>Delete template</DialogTitle>
-                                  <DialogDescription>
-                                    Are you sure you want to delete this
-                                    template?{' '}
-                                    <strong>
-                                      All URLs associated with this template
-                                      will stop working.
-                                    </strong>{' '}
-                                    <br />
-                                    This action cannot be undone.
-                                  </DialogDescription>
+                                  <DialogTitle>
+                                    {selectedDialog === 'delete'
+                                      ? 'Delete template'
+                                      : 'Duplicate template'}
+                                  </DialogTitle>
+                                  {selectedDialog === 'delete' ? (
+                                    <DialogDescription>
+                                      Are you sure you want to delete this
+                                      template?{' '}
+                                      <strong>
+                                        All URLs associated with this template
+                                        will stop working.
+                                      </strong>{' '}
+                                      <br />
+                                      This action cannot be undone.
+                                    </DialogDescription>
+                                  ) : (
+                                    <DialogDescription>
+                                      Are you sure you want to duplicate this
+                                      template?
+                                    </DialogDescription>
+                                  )}
                                 </DialogHeader>
                                 <DialogFooter className="gap-2">
                                   <DialogClose asChild>
@@ -261,7 +308,11 @@ export default function TemplatesDashboard({
                                     </Button>
                                   </DialogClose>
 
-                                  <DeleteTemplateButton />
+                                  {selectedDialog === 'delete' ? (
+                                    <DeleteTemplateButton />
+                                  ) : (
+                                    <DuplicateTemplateButton />
+                                  )}
                                 </DialogFooter>
                               </form>
                             </DialogContent>
@@ -356,6 +407,20 @@ function DeleteTemplateButton() {
         <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
       ) : (
         'Delete'
+      )}
+    </Button>
+  )
+}
+
+function DuplicateTemplateButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button type="submit" disabled={pending} className="min-w-20">
+      {pending ? (
+        <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
+      ) : (
+        'Duplicate'
       )}
     </Button>
   )
