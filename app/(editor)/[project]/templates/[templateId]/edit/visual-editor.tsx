@@ -178,6 +178,10 @@ export default function VisualEditor({
     getAvailableFonts()
   }, [])
 
+  // Guides
+  const [floatingLabelTwitter, setFloatingLabelTwitter] =
+    useState<boolean>(false)
+
   return (
     <div className="grid h-full w-full grid-cols-[280px,1fr,280px] overflow-hidden">
       {/* HEADER */}
@@ -216,6 +220,7 @@ export default function VisualEditor({
         spacePressed={spacePressed}
         shiftPressed={shiftPressed}
         handleOnLayerClick={handleOnLayerClick}
+        floatingLabelTwitter={floatingLabelTwitter}
       />
       {/* RIGHT PANEL */}
       <VisualEditorRightPanel
@@ -229,6 +234,8 @@ export default function VisualEditor({
         multiSelectedLayers={multiSelectedLayers}
         setMultiSelectedLayers={setMultiSelectedLayers}
         availableFonts={availableFonts}
+        floatingLabelTwitter={floatingLabelTwitter}
+        setFloatingLabelTwitter={setFloatingLabelTwitter}
       />
     </div>
   )

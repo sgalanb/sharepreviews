@@ -18,6 +18,7 @@ export default function VisualEditorCanvas({
   spacePressed,
   shiftPressed,
   handleOnLayerClick,
+  floatingLabelTwitter,
 }: {
   layers: LayerType[]
   setLayers: Dispatch<SetStateAction<LayerType[]>>
@@ -30,6 +31,7 @@ export default function VisualEditorCanvas({
   spacePressed: boolean
   shiftPressed: boolean
   handleOnLayerClick: (layer: LayerType) => void
+  floatingLabelTwitter: boolean
 }) {
   const parentDivRef = useRef<any>(null)
 
@@ -297,8 +299,19 @@ export default function VisualEditorCanvas({
         }}
       >
         <div className="absolute h-[630px] w-[1200px] scale-50">
+          {floatingLabelTwitter && (
+            <div className="absolute bottom-6 left-6 right-6 z-50 line-clamp-1 w-fit">
+              <div className="flex h-10 items-center justify-center self-start rounded-[8px] bg-black/30 px-2">
+                <span className="line-clamp-1 break-words break-all text-left text-[30px] font-normal leading-8 text-white">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                  nec odio ut mi ultricies vehicula. Nullam quis ante.
+                </span>
+              </div>
+            </div>
+          )}
+
           <div
-            className="flex h-full w-full"
+            className={`${floatingLabelTwitter ? 'rounded-[32px] border border-[#cfd9de]' : ''} flex h-full w-full`}
             style={{ backgroundColor: canvasBackgroundColor }}
           >
             {/* This is replicated with satori on og generation*/}

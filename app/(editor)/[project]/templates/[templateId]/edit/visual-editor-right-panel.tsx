@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from '@/app/ui/components/Select'
 import { Separator } from '@/app/ui/components/Separator'
+import { Switch } from '@/app/ui/components/Switch'
 import {
   Tabs,
   TabsContent,
@@ -78,6 +79,8 @@ export default function VisualEditorRightPanel({
   multiSelectedLayers,
   setMultiSelectedLayers,
   availableFonts,
+  floatingLabelTwitter,
+  setFloatingLabelTwitter,
 }: {
   userId: string
   template: TemplateType | undefined
@@ -89,6 +92,8 @@ export default function VisualEditorRightPanel({
   multiSelectedLayers: LayerType[]
   setMultiSelectedLayers: Dispatch<SetStateAction<LayerType[]>>
   availableFonts: any[]
+  floatingLabelTwitter: boolean
+  setFloatingLabelTwitter: Dispatch<SetStateAction<boolean>>
 }) {
   const [openFontsCombobox, setOpenFontsCombobox] = useState<boolean>(false)
   const [fontsComboboxValue, setFontsComboboxValue] = useState<string>()
@@ -1836,7 +1841,7 @@ export default function VisualEditorRightPanel({
         </>
       ) : (
         <ScrollArea className="flex h-full w-full flex-col items-start justify-start">
-          {/* PROPERTIES */}
+          {/* Template properties */}
           <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
             <span className="h-8 text-lg font-semibold">Template</span>
             <div className="grid w-full grid-cols-2 items-center gap-2">
@@ -1897,6 +1902,23 @@ export default function VisualEditorRightPanel({
                   />
                 </>
               )}
+            </div>
+          </div>
+          {/* Visual Guides */}
+          <div className="flex h-fit w-full flex-col items-start justify-start gap-2 p-4">
+            <span className="h-8 text-lg font-semibold">Visual guides</span>
+            <div className="flex w-full flex-col items-start justify-center gap-2">
+              <div className="flex w-full items-center justify-between gap-2">
+                <Label className="w-full text-muted-foreground">
+                  Twitter/X floating label
+                </Label>
+                <Switch
+                  checked={floatingLabelTwitter}
+                  onCheckedChange={(checked) => {
+                    setFloatingLabelTwitter(checked)
+                  }}
+                />
+              </div>
             </div>
           </div>
         </ScrollArea>

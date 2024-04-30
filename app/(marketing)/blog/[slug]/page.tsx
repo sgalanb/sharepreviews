@@ -24,7 +24,6 @@ const postBySlugQuery = (slug: string) => {
         items: {
           _id: true,
           _title: true,
-          subtitle: true,
           publishDate: true,
           author: {
             name: true,
@@ -36,7 +35,6 @@ const postBySlugQuery = (slug: string) => {
             json: { content: true },
           },
           meta: { title: true, description: true, ogImageUrl: true },
-          coverImage: { url: true },
         },
       },
     },
@@ -108,12 +106,9 @@ export default async function BlogIndividualPage({
                 <span className="self-center text-muted-foreground">
                   {dayjs(post.publishDate).format('MMM D, YYYY')}
                 </span>
-                <h1 className="marketing-title text-balance text-center">
+                <h1 className="marketing-second-title text-balance text-center">
                   {post._title}
                 </h1>
-                <p className="marketing-subtitle text-balance text-center text-muted-foreground">
-                  {post.subtitle}
-                </p>
                 <div className="flex items-center justify-start gap-2 self-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

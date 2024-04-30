@@ -16,7 +16,6 @@ const postBySlugQuery = () => {
           _id: true,
           _title: true,
           _slug: true,
-          subtitle: true,
           publishDate: true,
           category: { _slug: true },
           author: {
