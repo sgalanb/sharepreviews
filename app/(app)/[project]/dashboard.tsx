@@ -72,7 +72,7 @@ export default function OverviewDashboard({
       <div className="flex h-full w-full max-w-7xl flex-col items-center justify-start gap-8 p-4 lg:p-12">
         <div className="flex w-full flex-col items-start justify-between gap-4 md:h-16 lg:flex-row">
           <div className="flex h-10 items-center justify-start gap-4">
-            <span className="title line-clamp-1 leading-none">
+            <span className="title line-clamp-1 leading-10">
               {project?.name}
             </span>
             <Badge
