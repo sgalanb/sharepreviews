@@ -60,11 +60,14 @@ export default function Posts({ posts }: { posts: any[] }) {
                           height={28}
                           className="h-7 w-7 rounded-full object-cover"
                         />
-                        {post?.author[0]?.name && (
-                          <span className="font-medium leading-5">
-                            {post?.author[0]?.name}
+                        {post?.author.map((author: any) => (
+                          <span
+                            key={author?._id}
+                            className="font-medium leading-5"
+                          >
+                            {author?.name}
                           </span>
-                        )}
+                        ))}
                         <span className="font-medium leading-5">·</span>
                         <span className="text-muted-foreground">
                           {dayjs(post?.publishDate).format('MMM D, YYYY')}

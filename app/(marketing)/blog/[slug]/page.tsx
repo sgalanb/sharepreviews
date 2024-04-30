@@ -114,26 +114,25 @@ export default async function BlogIndividualPage({
                 <p className="marketing-subtitle text-balance text-center text-muted-foreground">
                   {post.subtitle}
                 </p>
-                <div className="flex items-center justify-start gap-2 self-center">
-                  {post?.author[0]?.avatar?.url && (
-                    <>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={post?.author[0]?.avatar?.url ?? '/pfp.jpeg'}
-                        alt="author profile picture"
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 rounded-full object-cover"
-                        loading="lazy"
-                      />
-                    </>
-                  )}
-                  {post?.author[0]?.name && (
+                {post?.author?.map((author: any) => (
+                  <div
+                    key={author?._id}
+                    className="flex items-center justify-start gap-2 self-center"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={author?.url ?? '/pfp.jpeg'}
+                      alt="author profile picture"
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 rounded-full object-cover"
+                      loading="lazy"
+                    />
                     <span className="text-balance font-medium leading-5 text-muted-foreground">
-                      {post?.author[0]?.name}
+                      {author?.name}
                     </span>
-                  )}
-                </div>
+                  </div>
+                ))}
                 <div className="flex w-full flex-col">
                   <RichText
                     blocks={post?.content?.json.content}
