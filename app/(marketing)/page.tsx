@@ -15,7 +15,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title:
-    'sharepreviews: Dynamic Open Graph images Generator. No-code & Open-source.',
+    'SharePreviews: Dynamic Open Graph images Generator. No-code & Open-source.',
   description:
     'Increase click-through rates using a Figma-like editor to design your dynamic OG images.',
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     url: 'https://sharepreviews.com',
     type: 'website',
-    siteName: 'sharepreviews',
+    siteName: 'SharePreviews',
     images: [
       'https://utfs.io/f/23b3b4dd-700f-45de-bb17-81ad985db1ed-k3d9cr.png',
     ],
@@ -56,7 +56,7 @@ export default async function Home() {
             Create Dynamic Open Graph Images
           </h1>
           <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-40">
-            Boost your links engagement with sharepreviews, the no-code dynamic
+            Boost your links engagement with SharePreviews, the no-code dynamic
             Open Graph images generator.
           </p>
           <div className="flex items-center justify-center gap-2">
@@ -219,7 +219,7 @@ export default async function Home() {
           </h2>
           <p className="marketing-subtitle text-balance text-center text-muted-foreground">
             Join {usersCount} users who create dynamic Open Graph images with
-            sharepreviews.
+            SharePreviews.
           </p>
           <TestimonialsWOL />
         </div>

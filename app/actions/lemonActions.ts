@@ -29,7 +29,7 @@ export async function suscribeToProAction({
         type: 'checkouts',
         attributes: {
           product_options: {
-            name: `sharepreviews Pro${projectName ? ` - ${projectName}` : ''}`,
+            name: `SharePreviews Pro${projectName ? ` - ${projectName}` : ''}`,
           },
           checkout_data: {
             email: email,

@@ -11,7 +11,7 @@ import {
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Starter Templates | sharepreviews',
+  title: 'Starter Templates | SharePreviews',
 }
 
 const starterTemplatesIds = [
@@ -57,7 +57,7 @@ export default async function StarterTemplatesPage() {
         <h1 className="marketing-title text-center">Starter Templates</h1>
         <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
           A curated collection of dynamic card images made with{' '}
-          <span className="text-primary">sharepreviews</span>. You can use them
+          <span className="text-primary">SharePreviews</span>. You can use them
           as starter templates for your own projects.
         </p>
       </div>

@@ -14,7 +14,7 @@ export async function generateMetadata({
   const selectedProject = await getProjectByPathname(params.project)
 
   return {
-    title: `${selectedProject?.name} | sharepreviews`,
+    title: `${selectedProject?.name} | SharePreviews`,
   }
 }
 

@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       url: 'https://sharepreviews.com/blog',
       type: 'article',
-      siteName: 'sharepreviews',
+      siteName: 'SharePreviews',
       images: [blog?.meta.ogImageUrl!],
     },
     twitter: {

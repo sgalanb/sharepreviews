@@ -12,7 +12,7 @@ export async function generateMetadata({
   const selectedProject = await getProjectByPathname(params.project)
 
   return {
-    title: `Templates - ${selectedProject?.name} | sharepreviews`,
+    title: `Templates - ${selectedProject?.name} | SharePreviews`,
   }
 }
 

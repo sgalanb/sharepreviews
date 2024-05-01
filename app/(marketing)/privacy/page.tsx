@@ -12,17 +12,17 @@ export default async function PrivacyPolicy() {
         <br />
         <br />
         <br />
-        This privacy notice for sharepreviews(&quot;we,&quot; &quot;us,&quot; or
+        This privacy notice for SharePreviews(&quot;we,&quot; &quot;us,&quot; or
         &quot;our&quot;), describes how and why we might collect, store, use,
         and/or share (&quot;process&quot;) your information when you use our
         services (&quot;Services&quot;), such as when you: Visit our website at
-        sharepreviews.com, or any website of ours that links to this privacy
+        SharePreviews.com, or any website of ours that links to this privacy
         notice Engage with us in other related ways, including any sales,
         marketing, or events Questions or concerns? Reading this privacy notice
         will help you understand your privacy rights and choices. If you do not
         agree with our policies and practices, please do not use our Services.
         If you still have any questions or concerns, please contact us at
-        support@sharepreviews.com.
+        support@SharePreviews.com.
         <br />
         <br />
         SUMMARY OF KEY POINTS
@@ -70,7 +70,7 @@ export default async function PrivacyPolicy() {
         your personal information. Learn more about your privacy rights.
         <br />
         How do you exercise your rights? The easiest way to exercise your rights
-        is by visiting support@sharepreviews.com, or by contacting us. We will
+        is by visiting support@SharePreviews.com, or by contacting us. We will
         consider and act upon any request in accordance with applicable data
         protection laws.
         <br />
@@ -285,7 +285,7 @@ export default async function PrivacyPolicy() {
         will deactivate the account and take reasonable measures to promptly
         delete such data from our records. If you become aware of any data we
         may have collected from children under age 18, please contact us at
-        support@sharepreviews.com.
+        support@SharePreviews.com.
         <br />
         <br />
         8. WHAT ARE YOUR PRIVACY RIGHTS?
@@ -326,7 +326,7 @@ export default async function PrivacyPolicy() {
         legal requirements.
         <br />
         If you have questions or comments about your privacy rights, you may
-        email us at support@sharepreviews.com.
+        email us at support@SharePreviews.com.
         <br />
         <br />
         9. CONTROLS FOR DO-NOT-TRACK FEATURES
@@ -361,7 +361,7 @@ export default async function PrivacyPolicy() {
         11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
         <br />
         If you have questions or comments about this notice, you may email us at
-        support@sharepreviews.com or contact us by post at:
+        support@SharePreviews.com or contact us by post at:
         <br />
         <br />
         12. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
@@ -369,7 +369,7 @@ export default async function PrivacyPolicy() {
         Based on the applicable laws of your country, you may have the right to
         request access to the personal information we collect from you, change
         that information, or delete it. To request to review, update, or delete
-        your personal information, please visit: support@sharepreviews.com.
+        your personal information, please visit: support@SharePreviews.com.
       </p>
       <Footer isAuthenticated={isAuthenticated} />
     </div>

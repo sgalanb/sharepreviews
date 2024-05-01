@@ -14,7 +14,7 @@ export async function generateMetadata({
 
   if (!inputUrl) {
     return {
-      title: 'Card Validator | sharepreviews',
+      title: 'Card Validator | SharePreviews',
       description:
         'Check how your links look when shared. Validate that you have the right metatags in place so your cards are displayed correctly. Free tool for Open Graph and Twitter Cards.',
       alternates: {
@@ -23,7 +23,7 @@ export async function generateMetadata({
       openGraph: {
         url: 'https://sharepreviews.com/card-validator',
         type: 'website',
-        siteName: 'sharepreviews',
+        siteName: 'SharePreviews',
         images: [
           'https://utfs.io/f/5d0c1c4a-2d8c-433b-b140-aabcfc3f97ba-67kr6v.png',
         ],
@@ -43,7 +43,7 @@ export async function generateMetadata({
     // TODO
 
     return {
-      title: `${cleanUrl} | sharepreviews`,
+      title: `${cleanUrl} | SharePreviews`,
       description:
         'Check how your links look when shared. Validate that you have the right metatags in place so your cards are displayed correctly. Free tool for Open Graph and Twitter Cards.',
       alternates: {
@@ -52,7 +52,7 @@ export async function generateMetadata({
       openGraph: {
         url: 'https://sharepreviews.com/card-validator',
         type: 'website',
-        siteName: 'sharepreviews',
+        siteName: 'SharePreviews',
         images: [
           'https://utfs.io/f/5d0c1c4a-2d8c-433b-b140-aabcfc3f97ba-67kr6v.png',
         ],

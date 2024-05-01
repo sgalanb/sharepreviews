@@ -14,15 +14,15 @@ export default async function Terms() {
         <br />
         AGREEMENT TO OUR LEGAL TERMS
         <br />
-        We are sharepreviews (&quot;Company,&quot; &quot;we,&quot;
+        We are SharePreviews (&quot;Company,&quot; &quot;we,&quot;
         &quot;us,&quot; &quot;our&quot;).
         <br />
-        We operate the website https://sharepreviews.com (the &quot;Site&quot;),
+        We operate the website https://SharePreviews.com (the &quot;Site&quot;),
         as well as any other related products and services that refer or link to
         these legal terms (the &quot;Legal Terms&quot;) (collectively, the
         &quot;Services&quot;).
         <br />
-        You can contact us by email at support@sharepreviews.com.
+        You can contact us by email at support@SharePreviews.com.
         <br />
         These Legal Terms constitute a legally binding agreement made between
         you, whether personally or on behalf of an entity (&quot;you&quot;), and
@@ -160,7 +160,7 @@ export default async function Terms() {
         <br />
         If you wish to make any use of the Services, Content, or Marks other
         than as set out in this section or elsewhere in our Legal Terms, please
-        address your request to: support@sharepreviews.com. If we ever grant you
+        address your request to: support@SharePreviews.com. If we ever grant you
         the permission to post, reproduce, or publicly display any part of our
         Services or Content, you must identify us as the owners or licensors of
         the Services, Content, or Marks and ensure that any copyright or
@@ -324,7 +324,7 @@ export default async function Terms() {
         any time by logging into your account. Your cancellation will take
         effect at the end of the current paid term. If you have any questions or
         are unsatisfied with our Services, please email us at
-        support@sharepreviews.com.
+        support@SharePreviews.com.
         <br />
         Fee Changes
         <br />
@@ -593,7 +593,7 @@ export default async function Terms() {
         13. PRIVACY POLICY
         <br />
         We care about data privacy and security. Please review our Privacy
-        Policy: sharepreviews.com/privacy. By using the Services, you agree to
+        Policy: SharePreviews.com/privacy. By using the Services, you agree to
         be bound by our Privacy Policy, which is incorporated into these Legal
         Terms. Please be advised the Services are hosted in the United States.
         If you access the Services from any other region of the world with laws
@@ -785,7 +785,7 @@ export default async function Terms() {
         <br />
         In order to resolve a complaint regarding the Services or to receive
         further information regarding use of the Services, please contact us at:
-        support@sharepreviews.com
+        support@SharePreviews.com
       </p>
       <Footer isAuthenticated={isAuthenticated} />
     </div>
