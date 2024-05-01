@@ -1,5 +1,6 @@
 import Footer from '@/app/(marketing)/footer'
 import { getUser } from '@/app/lib/workos'
+import { Badge } from '@/app/ui/components/Badge'
 import CodeBlock from '@/app/ui/components/CodeBlock'
 import { QueryGenqlSelection, basehub } from 'basehub'
 import { Pump } from 'basehub/react-pump'
@@ -24,6 +25,7 @@ const postBySlugQuery = (slug: string) => {
           _id: true,
           _title: true,
           publishDate: true,
+          category: { _title: true },
           author: {
             name: true,
             avatar: {
@@ -102,9 +104,7 @@ export default async function BlogIndividualPage({
                 <span className="self-center text-sm">Blog</span>
               </Link>
               <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-4 self-center px-4">
-                <span className="self-center text-muted-foreground">
-                  {dayjs(post.publishDate).format('MMM D, YYYY')}
-                </span>
+                <Badge className="self-center">{post?.category?._title}</Badge>
                 <h1 className="marketing-second-title text-balance text-center">
                   {post._title}
                 </h1>
@@ -119,7 +119,8 @@ export default async function BlogIndividualPage({
                     loading="lazy"
                   />
                   <span className="text-balance font-medium leading-5 text-muted-foreground">
-                    {post?.author?.name}
+                    {post?.author?.name} -{' '}
+                    {dayjs(post.publishDate).format('MMM D, YYYY')}
                   </span>
                 </div>
                 <div className="flex w-full flex-col">
@@ -139,6 +140,15 @@ export default async function BlogIndividualPage({
                         // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
                         <img className="self-center" {...props} />
                       ),
+                      video: (props) => (
+                        <video
+                          className="self-center pb-8 pt-4"
+                          controls
+                          muted
+                          autoPlay
+                          {...props}
+                        ></video>
+                      ),
                     }}
                   >
                     {post?.content?.json.content}
@@ -148,7 +158,7 @@ export default async function BlogIndividualPage({
               <Link
                 href="https://x.com/sgalanb"
                 target="_blank"
-                className="my-12 flex flex-col gap-4 self-center rounded-lg border bg-card p-4 text-muted-foreground shadow-sm hover:bg-foreground/5"
+                className="mb-8 mt-4 flex flex-col gap-4 self-center rounded-lg border bg-card p-4 text-muted-foreground shadow-sm hover:bg-foreground/5"
               >
                 <span>Got questions or ideas? Feel free to DM me on X!</span>
               </Link>
