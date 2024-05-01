@@ -14,7 +14,7 @@ export async function generateMetadata({
   const selectedTemplate = await getTemplateById(params.templateId)
 
   return {
-    title: `${selectedTemplate?.name} - ${selectedProject?.name} | sharepreviews`,
+    title: `${selectedTemplate?.name} - ${selectedProject?.name} | SharePreviews`,
   }
 }
 

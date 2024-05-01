@@ -14,11 +14,11 @@ export async function generateMetadata({
 
   if (!inputUrl) {
     return {
-      title: `Card Validator - ${selectedProject?.name} | sharepreviews`,
+      title: `Card Validator - ${selectedProject?.name} | SharePreviews`,
     }
   }
   return {
-    title: `${cleanUrl} - ${selectedProject?.name} | sharepreviews`,
+    title: `${cleanUrl} - ${selectedProject?.name} | SharePreviews`,
   }
 }
 

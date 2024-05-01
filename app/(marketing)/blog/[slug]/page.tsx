@@ -63,7 +63,7 @@ export async function generateMetadata({
     openGraph: {
       url: `https://sharepreviews.com/blog/${params.slug}`,
       type: 'article',
-      siteName: 'sharepreviews',
+      siteName: 'SharePreviews',
       images: [post?.meta.ogImageUrl ?? blog?.meta?.ogImageUrl!],
     },
     twitter: {

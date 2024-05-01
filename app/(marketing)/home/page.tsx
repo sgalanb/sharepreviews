@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title:
-    'sharepreviews | Boost your links engagement with stunning social cards',
+    'SharePreviews | Boost your links engagement with stunning social cards',
   robots: {
     index: false,
   },
