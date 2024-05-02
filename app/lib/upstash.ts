@@ -195,7 +195,3 @@ export async function getAllProjectsUsage() {
     withScores: true,
   })) as (string | number)[] | undefined
 }
-
-export async function resetProjectsUsage() {
-  return await redis.del('projects-images-usage')
-}

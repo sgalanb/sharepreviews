@@ -1,17 +1,13 @@
 import Footer from '@/app/(marketing)/footer'
 import StartForFreeButton from '@/app/(marketing)/pricing/StartForFreeButton'
 import StartWithProButton from '@/app/(marketing)/pricing/StartWithProButton'
+import { FREE_IMAGES } from '@/app/constants'
 import { getUserProjects } from '@/app/db/operations/projects'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Card } from '@/app/ui/components/Card'
 import { Separator } from '@/app/ui/components/Separator'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/app/ui/components/Tooltip'
-import { CircleCheck, CircleX, Info } from 'lucide-react'
+import { TooltipProvider } from '@/app/ui/components/Tooltip'
+import { CircleCheck, CircleX } from 'lucide-react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -36,7 +32,7 @@ export default async function PricingPage() {
         <h1 className="marketing-title text-center">Straightforward pricing</h1>
 
         <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
-          Pay for what you use. No hidden fees. Cancel anytime.
+          No hidden fees. Cancel anytime.
         </p>
       </div>
       <div className="flex w-full flex-col gap-4 px-4 lg:gap-8 lg:px-8">
@@ -69,7 +65,9 @@ export default async function PricingPage() {
                 <div className="flex items-center justify-start gap-1">
                   <CircleCheck className="h-5 w-5 fill-foreground stroke-background" />
                   <div className="flex items-center justify-start gap-1">
-                    <span className="text-muted-foreground">500 images</span>
+                    <span className="text-muted-foreground">
+                      {FREE_IMAGES} images
+                    </span>
                   </div>
                 </div>
 
@@ -101,7 +99,7 @@ export default async function PricingPage() {
               </span>
             </div>
             <div className="flex items-end justify-start gap-1">
-              <span className="title leading-none">$24</span>
+              <span className="title leading-none">$9</span>
               <span className="pb-[7.5px] leading-3 text-muted-foreground">
                 / mo
               </span>
@@ -122,17 +120,8 @@ export default async function PricingPage() {
                   <CircleCheck className="h-5 w-5 fill-primary stroke-background" />
                   <div className="flex items-center justify-start gap-1">
                     <span className="text-muted-foreground">
-                      5,000 images/mo
+                      Unlimited images
                     </span>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 stroke-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent className="w-64 text-center">
-                        Once this limit is reached, you will be charged $24 per
-                        additional 5,000 images.
-                      </TooltipContent>
-                    </Tooltip>
                   </div>
                 </div>
 

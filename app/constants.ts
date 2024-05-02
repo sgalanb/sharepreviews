@@ -1,6 +1,5 @@
-export const FREE_IMAGES = 500
+export const FREE_IMAGES = 200
 export const FREE_TEMPLATES = 5
-export const PRO_IMAGES_PACKAGE = 5000
 
 export const GOOGLE_FAVICON_URL =
   'https://www.google.com/s2/favicons?sz=64&domain_url='

@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  FREE_IMAGES,
-  FREE_TEMPLATES,
-  PRO_IMAGES_PACKAGE,
-} from '@/app/constants'
+import { FREE_IMAGES, FREE_TEMPLATES } from '@/app/constants'
 import { ProjectType, TemplateType } from '@/app/db/schema'
 import { Badge } from '@/app/ui/components/Badge'
 import { Button } from '@/app/ui/components/Button'
@@ -27,8 +23,7 @@ import {
 import UpgradeToProDialog from '@/app/ui/dialogs/upgrade-to-pro-dialog'
 import { fetcher } from '@/app/utils'
 import { User } from '@workos-inc/node'
-import dayjs from 'dayjs'
-import { Info } from 'lucide-react'
+import { InfinityIcon, Info } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
@@ -356,26 +351,6 @@ export default function OverviewDashboard({
                     <span className="subtitle font-medium">
                       Generated Images
                     </span>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Badge
-                          variant="outline"
-                          className="cursor-default text-sm font-normal text-muted-foreground"
-                        >
-                          {dayjs(projectUsagePeriodStart).format('MMM D')} -{' '}
-                          {dayjs(projectUsagePeriodEnd).format('MMM D')}
-                        </Badge>
-                      </TooltipTrigger>
-                      <TooltipContent
-                        className="w-fit"
-                        align="center"
-                        alignOffset={-96}
-                      >
-                        <span className="font-normal">
-                          Current billing period.
-                        </span>
-                      </TooltipContent>
-                    </Tooltip>
                   </div>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 pt-4">
@@ -384,25 +359,14 @@ export default function OverviewDashboard({
                   ) : (
                     <>
                       <div className="flex items-end justify-between">
-                        <div className="flex items-center justify-start gap-2">
-                          <span className="second-title">{projectUsage}</span>
-                          <span className="second-title text-neutral-400 dark:text-neutral-500">
+                        <div className="marketing-second-title flex h-14 items-center justify-start gap-2">
+                          <span>{projectUsage}</span>
+                          <span className="text-neutral-400 dark:text-neutral-500">
                             /
                           </span>
-                          <span className="second-title text-neutral-400 dark:text-neutral-500">
-                            {PRO_IMAGES_PACKAGE}
-                          </span>
+                          <InfinityIcon className="h-10 w-10 stroke-neutral-400 dark:stroke-neutral-500" />
                         </div>
-                        <span className="font-medium text-neutral-400 dark:text-neutral-500">
-                          {((projectUsage / PRO_IMAGES_PACKAGE) * 100).toFixed(
-                            1
-                          )}
-                          %
-                        </span>
                       </div>
-                      <Progress
-                        value={(projectUsage / PRO_IMAGES_PACKAGE) * 100}
-                      />
                     </>
                   )}
                 </CardContent>
@@ -424,7 +388,7 @@ export default function OverviewDashboard({
                         /
                       </span>
                       <span className="text-neutral-400 dark:text-neutral-500">
-                        {FREE_TEMPLATES}
+                        <InfinityIcon className="h-10 w-10 stroke-neutral-400 dark:stroke-neutral-500" />
                       </span>
                     </div>
                   )}
