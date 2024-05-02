@@ -13,15 +13,10 @@ import {
   DialogTrigger,
 } from '@/app/ui/components/Dialog'
 import Spinner from '@/app/ui/components/Spinner'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/app/ui/components/Tooltip'
+import { TooltipProvider } from '@/app/ui/components/Tooltip'
 import { track } from '@vercel/analytics/server'
 import { User } from '@workos-inc/node'
-import { CircleCheck, Info } from 'lucide-react'
+import { CircleCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useFormStatus } from 'react-dom'
 
@@ -73,7 +68,7 @@ export default function UpgradeToProDialog({
           <Card className="flex flex-col items-start justify-start gap-4 p-4">
             <span className="text-muted-foreground">sharepreviews Pro</span>
             <div className="flex items-end justify-start gap-1">
-              <span className="title leading-none">$24</span>
+              <span className="title leading-none">$9</span>
               <span className="pb-[7.5px] leading-3 text-muted-foreground">
                 / mo
               </span>
@@ -82,20 +77,9 @@ export default function UpgradeToProDialog({
               <TooltipProvider>
                 <div className="flex items-center justify-start gap-1">
                   <CircleCheck className="h-5 w-5 fill-green-500 stroke-background" />
-                  <div className="flex items-center justify-start gap-1">
-                    <span className="text-muted-foreground">
-                      5,000 new images/mo
-                    </span>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Info className="h-4 w-4 stroke-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent className="w-64 text-center">
-                        Once this limit is reached, you will be charged $24 per
-                        additional 5,000 images.
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
+                  <span className="text-muted-foreground">
+                    Unlimited images
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-start gap-1">
