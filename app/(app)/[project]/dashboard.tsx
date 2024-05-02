@@ -35,15 +35,11 @@ export default function OverviewDashboard({
   project,
   userUsage,
   projectUsage,
-  projectUsagePeriodStart,
-  projectUsagePeriodEnd,
 }: {
   user: User
   userUsage: number
   project: ProjectType
   projectUsage: number
-  projectUsagePeriodStart: string
-  projectUsagePeriodEnd: string
 }) {
   const {
     data: projectTemplates,

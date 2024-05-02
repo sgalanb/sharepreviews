@@ -174,7 +174,7 @@ export async function getTemplateUrlsRedis(templateId: string) {
 
 // Usage
 export async function logUserUsage(userId: string) {
-  return await redis.zincrby('users-images-usage', 1, userId) // This zset never resets
+  return await redis.zincrby('users-images-usage', 1, userId)
 }
 
 export async function getUserUsage(userId: string) {
@@ -182,11 +182,10 @@ export async function getUserUsage(userId: string) {
 }
 
 export async function logProjectUsage(projectId: string) {
-  return await redis.zincrby('projects-images-usage', 1, projectId) // This zset resets every hour
+  return await redis.zincrby('projects-images-usage', 1, projectId)
 }
 
-export async function getProjectUsageQueue(projectId: string) {
-  // This queue resets every hour with the cron function /update-usage that moves the usage to Lemon Squeezy
+export async function getProjectUsage(projectId: string) {
   return await redis.zscore('projects-images-usage', projectId)
 }
 
