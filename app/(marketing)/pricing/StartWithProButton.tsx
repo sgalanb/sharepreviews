@@ -23,7 +23,7 @@ export default function StartWithProButton({
       {isAuthenticated ? (
         <UpgradeProjectComboBox user={user!} userProjects={userProjects!} />
       ) : (
-        <Button className="w-full" asChild>
+        <Button className="w-full cursor-pointer" asChild>
           <Link
             href={authorizationUrl}
             onClick={() => track('start_with_pro_pricing')}

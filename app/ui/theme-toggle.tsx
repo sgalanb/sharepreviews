@@ -19,7 +19,7 @@ export function ThemeToggle({ ghost = false }: { ghost?: boolean }) {
         <Button
           variant={ghost ? 'ghost' : 'outline'}
           size="icon"
-          className={ghost ? '' : 'lg:w-full lg:px-4 lg:py-2'}
+          className={ghost ? '' : 'cursor-pointer lg:w-full lg:px-4 lg:py-2'}
         >
           <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />

@@ -131,7 +131,7 @@ export default function NewLayerDialog({
         <div className="flex justify-between gap-4">
           <DialogClose asChild>
             <button
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
+              className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
                 setLayers([newTextLayer, ...layers])
                 setSelectedLayer(newTextLayer)
@@ -143,7 +143,7 @@ export default function NewLayerDialog({
           </DialogClose>
           <DialogClose asChild>
             <button
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
+              className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
                 setLayers([newImageLayer, ...layers])
                 setSelectedLayer(newImageLayer)
@@ -156,7 +156,7 @@ export default function NewLayerDialog({
           </DialogClose>
           <DialogClose asChild>
             <button
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
+              className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
                 setLayers([newRectangleLayer, ...layers])
                 setSelectedLayer(newRectangleLayer)

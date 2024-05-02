@@ -65,7 +65,7 @@ export default async function AppLayout({
                 reservedNames={reservedNames}
               />
               <main className="mx-auto w-full rounded-md lg:pb-2 lg:pr-2 lg:pt-2">
-                <div className="mx-auto w-full rounded-md lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
+                <div className="mx-auto w-full cursor-default select-none rounded-md lg:flex lg:min-h-full lg:justify-center lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none">
                   {children}
                 </div>
               </main>

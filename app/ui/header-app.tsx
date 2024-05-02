@@ -278,7 +278,6 @@ export default function HeaderApp({
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
                     <DropdownMenuItem
-                      className="cursor-pointer"
                       disabled={isLoadingBillingRedirect}
                       asChild
                     >
@@ -288,7 +287,6 @@ export default function HeaderApp({
                       </Link>
                     </DropdownMenuItem>
                     {/* <DropdownMenuItem
-                          className="cursor-pointer"
                           onClick={() => redirectAction('/account-settings')}
                         >
                           <UserRoundCog className="mr-2 h-4 w-4" />
@@ -297,12 +295,11 @@ export default function HeaderApp({
                     {hasProjectWithSubscription &&
                       selectedProjectSubscriptionId && (
                         <DropdownMenuItem
-                          className="cursor-pointer"
                           onSelect={(event) => event.preventDefault()}
                           asChild
                         >
                           <button
-                            className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full cursor-pointer items-center justify-between`}
+                            className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full items-center justify-between`}
                             onClick={async () => {
                               if (!isLoadingBillingRedirect) {
                                 setIsLoadingBillingRedirect(true)
@@ -324,7 +321,6 @@ export default function HeaderApp({
                       )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      className="cursor-pointer"
                       disabled={isLoadingBillingRedirect}
                       onClick={() => logout()}
                     >
@@ -396,7 +392,7 @@ export default function HeaderApp({
                         </CommandItem>
                       ))}
                       <CommandSeparator className="my-1" />
-                      <CommandItem className="cursor-pointer">
+                      <CommandItem>
                         <NewProjectDialog
                           userId={user.id}
                           trigger={

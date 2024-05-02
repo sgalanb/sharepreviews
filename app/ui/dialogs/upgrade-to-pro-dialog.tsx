@@ -58,22 +58,24 @@ export default function UpgradeToProDialog({
           className="flex flex-col gap-4"
         >
           <DialogHeader className="flex items-center justify-center gap-2">
-            <DialogTitle className="w-full text-center">
+            <DialogTitle className="w-full cursor-default select-none text-center">
               {`Upgrade ${project?.name} to Pro`}
             </DialogTitle>
-            <DialogDescription className="w-96 text-balance text-center">
+            <DialogDescription className="w-96 cursor-default select-none text-balance text-center">
               Higher limits, extra features and priority support.
             </DialogDescription>
           </DialogHeader>
           <Card className="flex flex-col items-start justify-start gap-4 p-4">
-            <span className="text-muted-foreground">sharepreviews Pro</span>
-            <div className="flex items-end justify-start gap-1">
+            <span className="cursor-default select-none text-muted-foreground">
+              sharepreviews Pro
+            </span>
+            <div className="flex cursor-default select-none items-end justify-start gap-1">
               <span className="title leading-none">$9</span>
               <span className="pb-[7.5px] leading-3 text-muted-foreground">
                 / mo
               </span>
             </div>
-            <div className="flex w-full flex-col items-start justify-start gap-2">
+            <div className="flex w-full cursor-default select-none flex-col items-start justify-start gap-2">
               <TooltipProvider>
                 <div className="flex items-center justify-start gap-1">
                   <CircleCheck className="h-5 w-5 fill-green-500 stroke-background" />
@@ -102,7 +104,7 @@ export default function UpgradeToProDialog({
           <Link
             href="mailto:santiago@sharepreviews.com"
             target="_blank"
-            className="w-full text-center text-muted-foreground underline-offset-2 hover:underline"
+            className="w-full cursor-default text-center text-muted-foreground underline-offset-2 hover:underline"
           >
             Need custom solutions? Contact us.
           </Link>

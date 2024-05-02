@@ -267,7 +267,7 @@ export default function PreviewValidator({
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="outline"
-                      className="aspect-square w-10 p-0 "
+                      className="aspect-square w-10 cursor-pointer p-0"
                     >
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>

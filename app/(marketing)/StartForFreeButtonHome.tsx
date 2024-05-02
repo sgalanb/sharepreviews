@@ -12,7 +12,7 @@ export default function StartForFreeButtonHome({
   authorizationUrl: string
 }) {
   return (
-    <Button size="lg" className="my-1 text-base" asChild>
+    <Button size="lg" className="my-1 cursor-pointer text-base" asChild>
       <Link
         href={isAuthenticated ? '/' : authorizationUrl}
         onClick={() => {

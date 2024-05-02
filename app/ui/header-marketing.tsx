@@ -131,6 +131,7 @@ export default function HeaderMarketing({
               <Link
                 href={authorizationUrl}
                 onClick={() => track('start_for_free_header')}
+                className="cursor-pointer"
               >
                 Start for Free
               </Link>

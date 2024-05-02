@@ -106,6 +106,44 @@ export default function HeaderMobile({
             <div className="flex flex-col items-start justify-start gap-1">
               {isApp ? (
                 <>
+                  {/* Project selector */}
+                  <Select
+                    onValueChange={(newValue) => {
+                      setProjectsComboboxValue(newValue)
+                      if (newValue !== projectsComboboxValue) {
+                        // replace projectPathname with new value but keep the rest of the path
+                        router.push(pathname.replace(projectPathname, newValue))
+                      }
+                      setIsSheetOpen(false)
+                    }}
+                    open={openProjectsCombobox}
+                    onOpenChange={(isOpen) => setOpenProjectsCombobox(isOpen)}
+                    value={projectsComboboxValue}
+                  >
+                    <SelectTrigger className="mb-5">
+                      <span className="line-clamp-1 w-full text-left">
+                        {projectsComboboxValue
+                          ? projectsList?.find(
+                              (project) =>
+                                project.value === projectsComboboxValue
+                            )?.label
+                          : 'Select project...'}
+                      </span>
+                    </SelectTrigger>
+                    <SelectContent
+                      className="w-full p-0"
+                      align="end"
+                      sideOffset={8}
+                    >
+                      <SelectGroup>
+                        {projectsList?.map((project) => (
+                          <SelectItem key={project.value} value={project.value}>
+                            {project.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                   <SheetClose asChild>
                     <Button variant="ghost" asChild>
                       <Link
@@ -150,44 +188,6 @@ export default function HeaderMobile({
                       </Link>
                     </Button>
                   </SheetClose>
-                  {/* Project selector */}
-                  <Select
-                    onValueChange={(newValue) => {
-                      setProjectsComboboxValue(newValue)
-                      if (newValue !== projectsComboboxValue) {
-                        // replace projectPathname with new value but keep the rest of the path
-                        router.push(pathname.replace(projectPathname, newValue))
-                      }
-                      setIsSheetOpen(false)
-                    }}
-                    open={openProjectsCombobox}
-                    onOpenChange={(isOpen) => setOpenProjectsCombobox(isOpen)}
-                    value={projectsComboboxValue}
-                  >
-                    <SelectTrigger>
-                      <span className="line-clamp-1 w-full text-left">
-                        {projectsComboboxValue
-                          ? projectsList?.find(
-                              (project) =>
-                                project.value === projectsComboboxValue
-                            )?.label
-                          : 'Select project...'}
-                      </span>
-                    </SelectTrigger>
-                    <SelectContent
-                      className="w-full p-0"
-                      align="end"
-                      sideOffset={8}
-                    >
-                      <SelectGroup>
-                        {projectsList?.map((project) => (
-                          <SelectItem key={project.value} value={project.value}>
-                            {project.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                 </>
               ) : (
                 <>
@@ -295,7 +295,7 @@ export default function HeaderMobile({
           {isAuthenticated && user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar className="mr-2 cursor-pointer">
+                <Avatar className="mr-2">
                   <AvatarImage src={user.profilePictureUrl ?? ''} alt="" />
                   {user.firstName && user.lastName ? (
                     <AvatarFallback>
@@ -337,7 +337,6 @@ export default function HeaderMobile({
                 <DropdownMenuGroup>
                   {isApp ? (
                     <DropdownMenuItem
-                      className="cursor-pointer"
                       disabled={isLoadingBillingRedirect}
                       asChild
                     >
@@ -348,7 +347,6 @@ export default function HeaderMobile({
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem
-                      className="cursor-pointer"
                       disabled={isLoadingBillingRedirect}
                       asChild
                     >
@@ -361,12 +359,11 @@ export default function HeaderMobile({
                   {hasProjectWithSubscription &&
                     selectedProjectSubscriptionId && (
                       <DropdownMenuItem
-                        className="cursor-pointer"
                         onSelect={(event) => event.preventDefault()}
                         asChild
                       >
                         <button
-                          className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full cursor-pointer items-center justify-between`}
+                          className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full items-center justify-between`}
                           onClick={async () => {
                             if (!isLoadingBillingRedirect) {
                               setIsLoadingBillingRedirect(true)
@@ -387,7 +384,6 @@ export default function HeaderMobile({
                       </DropdownMenuItem>
                     )}
                   <DropdownMenuItem
-                    className="cursor-pointer"
                     disabled={isLoadingBillingRedirect}
                     onClick={() => logout()}
                   >

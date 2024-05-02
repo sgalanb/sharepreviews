@@ -39,7 +39,11 @@ export default function AddTemplateToProjectButton({
   return (
     <Popover open={openProjectsCombobox} onOpenChange={setOpenProjectsCombobox}>
       <PopoverTrigger asChild>
-        <Button role="combobox" aria-expanded={openProjectsCombobox}>
+        <Button
+          className="cursor-pointer"
+          role="combobox"
+          aria-expanded={openProjectsCombobox}
+        >
           {isLoading ? (
             <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
           ) : (

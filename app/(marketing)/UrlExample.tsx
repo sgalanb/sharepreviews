@@ -44,7 +44,7 @@ export default function UrlExample() {
       >
         <Button
           variant="outline"
-          className="aspect-square w-10 p-0"
+          className="aspect-square w-10 cursor-pointer p-0"
           aria-label="Copy to clipboard"
           onClick={() =>
             copyToClipboard(

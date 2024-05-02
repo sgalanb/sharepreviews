@@ -41,7 +41,7 @@ export default function UpgradeProjectComboBox({
     <Popover open={openProjectsCombobox} onOpenChange={setOpenProjectsCombobox}>
       <PopoverTrigger asChild>
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           role="combobox"
           aria-expanded={openProjectsCombobox}
         >

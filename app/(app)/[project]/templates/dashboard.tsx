@@ -110,7 +110,7 @@ export default function TemplatesDashboard({
               <Link
                 href="/starter-templates"
                 target="_blank"
-                className="hidden h-fit !p-0 xl:inline"
+                className="hidden h-fit cursor-default !p-0 xl:inline"
               >
                 See starter templates.
               </Link>
@@ -212,23 +212,20 @@ export default function TemplatesDashboard({
                               >
                                 <DropdownMenuGroup>
                                   <DropdownMenuItem
-                                    className="hidden cursor-pointer md:flex"
+                                    className="hidden md:flex"
                                     asChild
                                   >
                                     <Link
                                       href={`
                                         /${project?.pathname}/templates/${template.id}/edit
                                         `}
-                                      className="flex items-center justify-start gap-2"
+                                      className="flex cursor-default items-center justify-start gap-2"
                                     >
                                       <Edit className="h-4 w-4" />
                                       Edit
                                     </Link>
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    className="cursor-pointer"
-                                    asChild
-                                  >
+                                  <DropdownMenuItem asChild>
                                     <DialogTrigger
                                       onClick={() =>
                                         setSelectedDialog('duplicate')
@@ -239,10 +236,7 @@ export default function TemplatesDashboard({
                                       Duplicate
                                     </DialogTrigger>
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    className="cursor-pointer"
-                                    asChild
-                                  >
+                                  <DropdownMenuItem asChild>
                                     <DialogTrigger
                                       onClick={() =>
                                         setSelectedDialog('delete')

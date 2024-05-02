@@ -51,7 +51,7 @@ export default function CodeBlock({
       >
         <Button
           variant="ghost"
-          className="aspect-square w-10 p-0"
+          className="aspect-square w-10 cursor-pointer p-0"
           onClick={() => copyToClipboard(children)}
         >
           {isCopied ? (

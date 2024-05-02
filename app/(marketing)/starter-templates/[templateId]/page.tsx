@@ -1,6 +1,5 @@
 import Footer from '@/app/(marketing)/footer'
 import AddTemplateToProjectButton from '@/app/(marketing)/starter-templates/[templateId]/AddTemplateToProjectButton'
-import GetTestUrlButton from '@/app/(marketing)/starter-templates/[templateId]/GetTestUrlButton'
 import { getUserProjects } from '@/app/db/operations/projects'
 import { getTemplateById } from '@/app/db/operations/templates'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
@@ -68,13 +67,13 @@ export default async function StarterTemplatePage({
                 />
               ) : (
                 <Button asChild>
-                  <Link href={authorizationUrl} className="mt-4 w-full">
+                  <Link
+                    href={authorizationUrl}
+                    className="mt-4 w-full cursor-pointer"
+                  >
                     Log in to customize
                   </Link>
                 </Button>
-              )}
-              {selectedTemplate && (
-                <GetTestUrlButton template={selectedTemplate} />
               )}
             </div>
           </div>

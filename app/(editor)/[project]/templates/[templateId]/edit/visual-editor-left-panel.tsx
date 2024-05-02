@@ -311,7 +311,7 @@ const Layer = ({
             : 'border-background hover:border-ring'
       } ${
         selected ? 'bg-accent' : 'bg-background'
-      } flex cursor-pointer select-none items-center justify-between gap-2 rounded-sm border-2 p-1.5`}
+      } flex select-none items-center justify-between gap-2 rounded-sm border-2 p-1.5`}
     >
       <div className="flex items-center justify-start gap-2">
         {layer.type === 'text' ? (

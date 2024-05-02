@@ -16,7 +16,7 @@ export default function StarOnGithubButton({
         <Button
           variant="outline"
           size="lg"
-          className="my-1 flex items-center justify-center gap-2 bg-white px-3 text-base text-[#0E1117] dark:bg-[#0E1117] dark:text-white dark:hover:opacity-90"
+          className="my-1 flex cursor-pointer items-center justify-center gap-2 bg-white px-3 text-base text-[#0E1117] dark:bg-[#0E1117] dark:text-white dark:hover:opacity-90"
           asChild
         >
           <Link

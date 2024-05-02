@@ -12,7 +12,7 @@ export default function StartForFreeButton({
   authorizationUrl: string
 }) {
   return (
-    <Button variant="outline" className="w-full" asChild>
+    <Button variant="outline" className="w-full cursor-pointer" asChild>
       <Link
         href={isAuthenticated ? '/' : authorizationUrl}
         onClick={() => track('start_for_free_pricing')}

@@ -190,7 +190,7 @@ export default function OverviewDashboard({
                         setLastestImagesSelectedTemplate(value)
                       }
                     >
-                      <SelectTrigger className="w-fit gap-2">
+                      <SelectTrigger className="w-fit cursor-default gap-2">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent align="end">
@@ -231,7 +231,7 @@ export default function OverviewDashboard({
                               href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
                               target="_blank"
                               key={url + index}
-                              className="rounded-md border ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
+                              className="cursor-default rounded-md border ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                             >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
@@ -248,7 +248,7 @@ export default function OverviewDashboard({
                           No images generated.{' '}
                           <Link
                             href={`/${project.pathname}/templates`}
-                            className="text-primary hover:underline hover:underline-offset-4"
+                            className="cursor-default text-primary hover:underline hover:underline-offset-4"
                           >
                             Create a template.
                           </Link>
@@ -309,7 +309,7 @@ export default function OverviewDashboard({
                             <Link
                               href={`/${project.pathname}/templates`}
                               key={template.id}
-                              className="flex w-full items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
+                              className="flex w-full cursor-default items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                             >
                               <span className="">{template.name}</span>
                               <span className="font-medium text-foreground">
@@ -324,7 +324,7 @@ export default function OverviewDashboard({
                           No templates created.{' '}
                           <Link
                             href={`/${project.pathname}/templates`}
-                            className="text-primary hover:underline hover:underline-offset-4"
+                            className="cursor-default text-primary hover:underline hover:underline-offset-4"
                           >
                             Create a template.
                           </Link>
@@ -403,7 +403,7 @@ export default function OverviewDashboard({
                           setLastestImagesSelectedTemplate(value)
                         }
                       >
-                        <SelectTrigger className="w-fit gap-2">
+                        <SelectTrigger className="w-fit cursor-default gap-2">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent align="end">
@@ -444,7 +444,7 @@ export default function OverviewDashboard({
                                 href={`/og/${new URLSearchParams(url).get('templateId')}?${url}`}
                                 target="_blank"
                                 key={url + index}
-                                className="rounded-md border ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
+                                className="cursor-default rounded-md border ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                               >
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
@@ -461,7 +461,7 @@ export default function OverviewDashboard({
                             No images generated.{' '}
                             <Link
                               href={`/${project.pathname}/templates`}
-                              className="text-primary hover:underline hover:underline-offset-4"
+                              className="cursor-default text-primary hover:underline hover:underline-offset-4"
                             >
                               Create a template.
                             </Link>
@@ -522,7 +522,7 @@ export default function OverviewDashboard({
                               <Link
                                 href={`/${project.pathname}/templates`}
                                 key={template.id}
-                                className="flex w-full items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
+                                className="flex w-full cursor-default items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-neutral-600 ring-primary hover:ring-2 focus:outline-none focus:ring-2 dark:text-neutral-300"
                               >
                                 <span className="">{template.name}</span>
                                 <span className="font-medium text-foreground">
@@ -537,7 +537,7 @@ export default function OverviewDashboard({
                             No templates created.{' '}
                             <Link
                               href={`/${project.pathname}/templates`}
-                              className="text-primary hover:underline hover:underline-offset-4"
+                              className="cursor-default text-primary hover:underline hover:underline-offset-4"
                             >
                               Create a template.
                             </Link>

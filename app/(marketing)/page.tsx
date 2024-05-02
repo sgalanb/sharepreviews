@@ -187,7 +187,7 @@ export default async function Home() {
               </div>
             </Link>
           </div>
-          <Button className="mt-8" variant="outline" asChild>
+          <Button className="mt-8 cursor-pointer" variant="outline" asChild>
             <Link href="/starter-templates">View all templates</Link>
           </Button>
         </div>

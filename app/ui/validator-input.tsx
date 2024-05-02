@@ -91,7 +91,7 @@ export default function ValidatorInput({
           <div className="text-sm text-red-500">Please enter a valid URL.</div>
         )}
       </div>
-      <Button type="submit" className="min-w-24">
+      <Button type="submit" className="min-w-24 cursor-pointer">
         {isLoading || isValidating ? (
           <Spinner className="h-6 w-6 fill-primary-foreground text-primary-foreground/25" />
         ) : (

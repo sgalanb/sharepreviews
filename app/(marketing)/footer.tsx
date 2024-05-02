@@ -26,7 +26,11 @@ export default function Footer({
         </div>
         {/* Social Profiles */}
         <div className="flex gap-2">
-          <Button variant="outline" className="aspect-square w-10 p-0 " asChild>
+          <Button
+            variant="outline"
+            className="aspect-square w-10 cursor-pointer p-0"
+            asChild
+          >
             <Link
               href="https://twitter.com/sharepreviews"
               target="_blank"
@@ -36,7 +40,11 @@ export default function Footer({
               <span className="sr-only">Go to the project Twitter profile</span>
             </Link>
           </Button>
-          <Button variant="outline" className="aspect-square w-10 p-0 " asChild>
+          <Button
+            variant="outline"
+            className="aspect-square w-10 cursor-pointer p-0"
+            asChild
+          >
             <Link
               href="https://github.com/sgalanb/sharepreviews"
               target="_blank"
@@ -48,7 +56,11 @@ export default function Footer({
               </span>
             </Link>
           </Button>
-          <Button variant="outline" className="aspect-square w-10 p-0" asChild>
+          <Button
+            variant="outline"
+            className="aspect-square w-10 cursor-pointer p-0"
+            asChild
+          >
             <Link
               href="https://www.linkedin.com/company/sharepreviews"
               target="_blank"
@@ -58,14 +70,6 @@ export default function Footer({
               <span className="sr-only">Go to the project LinkedIn page</span>
             </Link>
           </Button>
-          {/* <Button variant="outline" className="aspect-square w-10 p-0" asChild>
-            <Link
-              href="https://github.com/sgalanb/sharepreviews"
-              target="_blank"
-            >
-              <YouTube className="h-5 w-5" fillClassName="fill-foreground" />
-            </Link>
-          </Button> */}
         </div>
       </div>
       <Separator orientation="vertical" className="hidden h-full lg:block" />
