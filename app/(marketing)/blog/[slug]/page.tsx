@@ -15,7 +15,7 @@ import { notFound } from 'next/navigation'
 const postBySlugQuery = (slug: string) => {
   return {
     blog: {
-      meta: { title: true, ogImageUrl: true },
+      meta: { title: true, ogImageUrl: true, twitterImageUrl: true },
       posts: {
         __args: {
           first: 1,
@@ -35,7 +35,12 @@ const postBySlugQuery = (slug: string) => {
           content: {
             json: { content: true },
           },
-          meta: { title: true, description: true, ogImageUrl: true },
+          meta: {
+            title: true,
+            description: true,
+            ogImageUrl: true,
+            twitterImageUrl: true,
+          },
         },
       },
     },
@@ -64,13 +69,13 @@ export async function generateMetadata({
       url: `https://sharepreviews.com/blog/${params.slug}`,
       type: 'article',
       siteName: 'SharePreviews',
-      images: [post?.meta.ogImageUrl ?? blog?.meta?.ogImageUrl!],
+      images: [post?.meta?.ogImageUrl ?? blog?.meta?.ogImageUrl!],
     },
     twitter: {
       site: '@sgalanb',
       creator: '@sgalanb',
       card: 'summary_large_image',
-      images: [post?.meta.ogImageUrl ?? blog?.meta?.ogImageUrl!],
+      images: [post?.meta?.twitterImageUrl ?? blog?.meta?.twitterImageUrl!],
     },
   }
 }
