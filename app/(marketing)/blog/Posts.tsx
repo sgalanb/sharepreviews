@@ -40,7 +40,7 @@ export default function Posts({ posts }: { posts: any[] }) {
           )
           .map((post) => {
             return (
-              <Card key={post._id} className="h-full max-w-[30rem]">
+              <Card key={post._id} className="h-fit max-w-[22rem]">
                 <Link
                   href={`/blog/${post?._slug}`}
                   className="flex h-full flex-col gap-4 rounded-md p-4 hover:bg-accent lg:flex-row"

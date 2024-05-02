@@ -69,9 +69,9 @@ export default function Footer({
         </div>
       </div>
       <Separator orientation="vertical" className="hidden h-full lg:block" />
-      <div className="grid h-full w-full grid-cols-2 gap-4 px-4 py-8 lg:flex lg:items-start lg:justify-between lg:gap-0 lg:p-8">
+      <div className="grid h-fit w-full grid-cols-[repeat(auto-fit,minmax(160px,1fr))] items-start justify-start gap-4 px-4 py-8 lg:flex lg:justify-between lg:gap-0 lg:self-start lg:p-8">
         {/* Product */}
-        <div className="flex flex-col items-start justify-start gap-3">
+        <div className="flex h-fit flex-col items-start justify-start gap-3">
           <h3 className="font-semibold">Product</h3>
           <Link
             href="/starter-templates"
@@ -93,7 +93,7 @@ export default function Footer({
           </Link>
         </div>
         {/* Free Tools */}
-        <div className="flex flex-col items-start justify-start gap-3">
+        <div className="flex h-fit flex-col items-start justify-start gap-3">
           <h3 className="font-semibold">Free tools</h3>
           <Link
             href="/card-validator"
@@ -103,7 +103,7 @@ export default function Footer({
           </Link>
         </div>
         {/* Legal */}
-        <div className="flex flex-col items-start justify-start gap-3">
+        <div className="flex h-fit flex-col items-start justify-start gap-3">
           <h3 className="font-semibold">Legal</h3>
           <Link
             href="/privacy"
