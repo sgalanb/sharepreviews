@@ -118,12 +118,12 @@ export default async function BlogIndividualPage({
                   <img
                     src={post?.author?.avatar?.url ?? '/pfp.jpeg'}
                     alt="author profile picture"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-full object-cover"
+                    width={28}
+                    height={28}
+                    className="h-7 w-7 rounded-full object-cover"
                     loading="lazy"
                   />
-                  <span className="text-balance font-medium leading-5 text-muted-foreground">
+                  <span className="text-balance leading-5 text-muted-foreground">
                     {post?.author?.name} -{' '}
                     {dayjs(post.publishDate).format('MMM D, YYYY')}
                   </span>
