@@ -26,7 +26,7 @@ export default function UrlExample() {
   }
   return (
     <pre className="mt-6 flex w-full items-center justify-between gap-2 overflow-hidden break-all rounded-lg border py-4 pl-6 pr-4 text-card-foreground shadow-sm lg:w-fit">
-      <code className="w-full overflow-hidden text-ellipsis break-all font-mono lg:w-fit">
+      <code className="w-full overflow-x-auto py-2 font-mono lg:w-fit">
         sharepreviews.com/og/
         {
           <span className="text-blue-600">

@@ -16,10 +16,10 @@
     @apply text-lg font-normal leading-6;
   }
   .marketing-title {
-    @apply text-4xl font-extrabold;
+    @apply text-[2rem] font-bold leading-9;
   }
   .marketing-second-title {
-    @apply text-3xl font-semibold;
+    @apply text-2xl font-medium;
   }
   .marketing-third-title {
     @apply text-xl font-medium;

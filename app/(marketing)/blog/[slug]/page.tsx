@@ -110,7 +110,7 @@ export default async function BlogIndividualPage({
               </Link>
               <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-4 self-center px-4">
                 <Badge className="self-center">{post?.category?._title}</Badge>
-                <h1 className="marketing-second-title text-balance text-center">
+                <h1 className="marketing-title text-balance text-center">
                   {post._title}
                 </h1>
                 <div className="flex items-center justify-start gap-2 self-center">
@@ -132,14 +132,33 @@ export default async function BlogIndividualPage({
                   <RichText
                     blocks={post?.content?.json.content}
                     components={{
-                      p: (p) => <p className="pb-4 text-base">{p.children}</p>,
+                      p: (p) => (
+                        <p className="pb-2 text-base text-muted-foreground">
+                          {p.children}
+                        </p>
+                      ),
                       h2: (h2) => (
-                        <h2 className="marketing-third-title pb-2 pt-6">
+                        <h2 className="marketing-second-title pb-2 pt-4">
                           {h2.children}
                         </h2>
                       ),
+                      a: (a) => (
+                        <Link
+                          href={a.href}
+                          className="text-primary underline-offset-2 hover:underline"
+                          target={a.target}
+                          rel={a.rel}
+                        >
+                          {a.children}
+                        </Link>
+                      ),
                       pre: (pre) => (
                         <CodeBlock className="w-full">{pre.code}</CodeBlock>
+                      ),
+                      code: (code) => (
+                        <code className="rounded-md bg-foreground/5 px-2 py-0.5 font-mono  text-sm">
+                          {code.children}
+                        </code>
                       ),
                       img: (props) => (
                         // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
@@ -153,6 +172,19 @@ export default async function BlogIndividualPage({
                           autoPlay
                           {...props}
                         ></video>
+                      ),
+                      table: (table) => (
+                        <table className="mb-2 w-full">{table.children}</table>
+                      ),
+                      th: (th) => (
+                        <th className="self-center border p-2 text-center align-middle">
+                          {th.children}
+                        </th>
+                      ),
+                      td: (td) => (
+                        <td className="self-center border px-2 pt-2 text-center align-middle">
+                          {td.children}
+                        </td>
                       ),
                     }}
                   >

@@ -41,9 +41,7 @@ export default function CodeBlock({
       )}
       {...props}
     >
-      <code className="w-full overflow-hidden text-ellipsis break-all font-mono">
-        {children}
-      </code>
+      <code className="w-full overflow-x-scroll font-mono">{children}</code>
       <motion.div
         initial="initial"
         animate={isCopied ? 'animate' : 'exit'}
