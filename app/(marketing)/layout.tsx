@@ -1,6 +1,4 @@
-import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Providers } from '@/app/providers'
-import HeaderMarketing from '@/app/ui/header-marketing'
 import HeaderMobile from '@/app/ui/header-mobile'
 import { Analytics } from '@vercel/analytics/react'
 import { Metadata } from 'next'
@@ -18,18 +16,10 @@ export default async function MarketingLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { isAuthenticated, user } = await getUser()
-  const authorizationUrl = getAuthorizationUrl({ screenHint: 'sign-up' })
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers
-          attribute="class"
-          user={user!}
-          defaultTheme="system"
-          enableSystem
-        >
+        <Providers attribute="class" defaultTheme="system" enableSystem>
           <div
             className="flex h-fit min-h-dvh flex-col items-center justify-start lg:bg-neutral-50 lg:bg-noise lg:p-2 lg:dark:bg-neutral-800"
             style={{
@@ -37,17 +27,7 @@ export default async function MarketingLayout({
             }}
           >
             <main className="mx-auto h-full w-full max-w-5xl lg:rounded-md lg:border lg:bg-background lg:shadow-sm dark:lg:shadow-none ">
-              <HeaderMobile
-                isAuthenticated={isAuthenticated}
-                user={user}
-                authorizationUrl={authorizationUrl}
-                isApp={false}
-              />
-              <HeaderMarketing
-                isAuthenticated={isAuthenticated}
-                user={user}
-                authorizationUrl={authorizationUrl}
-              />
+              <HeaderMobile />
               {children}
             </main>
           </div>

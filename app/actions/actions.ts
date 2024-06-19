@@ -1,20 +1,11 @@
 'use server'
 
-import { createProject } from '@/app/db/operations/projects'
 import {
-  createTemplate,
-  deleteTemplate,
-  getTemplateById,
-  updateTemplate,
-} from '@/app/db/operations/templates'
-import { createUploadedImage } from '@/app/db/operations/uploaded_images'
-import {
-  createOrUpdateProjectRedis,
   createOrUpdateTemplateRedis,
   deleteTemplateRedis,
+  getTemplateInfoRedis,
+  getTemplateRedis,
 } from '@/app/lib/upstash'
-import { logOutUser } from '@/app/lib/workos'
-import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -22,181 +13,65 @@ export async function redirectAction(href: string) {
   return redirect(href)
 }
 
-export async function logout() {
-  logOutUser()
-  redirect('/')
-}
-
-export async function createProjectAction({
+export async function createOrUpdateTemplateAction({
+  action,
   name,
-  userId,
-}: {
-  name: string
-  userId: string
-}) {
-  const createdProject = await createProject({
-    name,
-    userId,
-  })
-
-  await createOrUpdateProjectRedis({
-    id: createdProject[0].insertId,
-    name: name,
-    pathname: createdProject[0].pathname,
-    plan: 'free',
-    ownerUserId: userId,
-  })
-
-  revalidatePath('/', 'layout')
-  redirect(`/${createdProject[0].pathname}`)
-}
-
-// This creates creates a project for users that pay at sign up (because a project is required at checkout)
-export async function createStartWithProProject({
-  userId,
-}: {
-  userId: string
-}) {
-  const name = 'Project 1'
-  const createdProject = await createProject({
-    name,
-    userId,
-  })
-
-  await createOrUpdateProjectRedis({
-    id: createdProject[0].insertId,
-    name: name,
-    pathname: createdProject[0].pathname,
-    plan: 'free',
-    ownerUserId: userId,
-  })
-
-  return { id: createdProject[0].insertId, name }
-}
-
-export async function createTemplateAction({
-  name,
-  projectId,
-  projectPathname,
   layersData,
 }: {
+  action: 'create' | 'update'
   name: string
-  projectId: string
-  projectPathname: string
   layersData: string
 }) {
   const newId = uuidv4()
 
-  const createPostgres = await createTemplate({
-    id: newId,
-    name,
-    projectId,
-    layersData,
-    canvasBackgroundColor: '#ffffff',
-  })
-
-  const createRedis = createOrUpdateTemplateRedis({
+  const createOrUpdateRedis = createOrUpdateTemplateRedis({
     templateId: newId,
     layersData,
-    projectId,
-    canvasBackgroundColor: '#ffffff',
+    name,
   })
 
-  await Promise.all([createPostgres, createRedis]).then(() => {
-    redirect(`/${projectPathname}/templates/${newId}/edit`)
-  })
+  await createOrUpdateRedis
+    .then(() => {
+      if (action === 'create') {
+        redirect(`/t/${newId}`)
+      } else return 'Template updated'
+    })
+    .catch((e) => {
+      console.error(e)
+      throw new Error('Error creating template')
+    })
 }
 
 export async function duplicateTemplateAction({
-  templateToDuplicateId,
-  targetProjectId,
-  targetProjectPathname,
+  templateId,
 }: {
-  templateToDuplicateId: string
-  targetProjectId: string
-  targetProjectPathname: string
+  templateId: string
 }) {
-  const templateToDuplicate = await getTemplateById(templateToDuplicateId)
+  const templateToDuplicateInfo = await getTemplateInfoRedis(templateId)
+  const templateToDuplicate = await getTemplateRedis(templateId)
 
   const newId = uuidv4()
 
-  if (!templateToDuplicate) {
-    return
+  if (templateToDuplicate && templateToDuplicateInfo) {
+    const createRedis = createOrUpdateTemplateRedis({
+      templateId: newId,
+      name: templateToDuplicateInfo.name,
+      layersData: JSON.stringify(templateToDuplicate),
+    })
+
+    await createRedis
+      .then(() => {
+        redirect(`/t/${templateId}t`)
+      })
+      .catch((e) => {
+        console.error(e)
+        throw new Error('Error duplicating template')
+      })
+  } else {
+    throw new Error('Template not found')
   }
-
-  const createPostgres = await createTemplate({
-    id: newId,
-    name: templateToDuplicate?.name + ' copy',
-    projectId: targetProjectId,
-    layersData: templateToDuplicate?.layersData,
-    canvasBackgroundColor: templateToDuplicate.canvasBackgroundColor,
-  })
-
-  const createRedis = createOrUpdateTemplateRedis({
-    templateId: newId,
-    layersData: templateToDuplicate?.layersData,
-    projectId: targetProjectId,
-    canvasBackgroundColor: templateToDuplicate.canvasBackgroundColor,
-  })
-
-  await Promise.all([createPostgres, createRedis]).then(() => {
-    redirect(`/${targetProjectPathname}/templates/${newId}/edit`)
-  })
-}
-
-export async function updateTemplateAction({
-  id,
-  name,
-  projectId,
-  projectPathname,
-  layersData,
-  canvasBackgroundColor,
-}: {
-  id: string
-  name: string
-  projectId: string
-  projectPathname: string
-  layersData: string
-  canvasBackgroundColor: string
-}) {
-  const updatePostgres = await updateTemplate({
-    id,
-    name,
-    layersData,
-    canvasBackgroundColor,
-  })
-
-  const updateRedis = createOrUpdateTemplateRedis({
-    templateId: id,
-    layersData,
-    projectId,
-    canvasBackgroundColor,
-  })
-
-  await Promise.all([updatePostgres, updateRedis]).then(() => {
-    redirect(`/${projectPathname}/templates`)
-  })
 }
 
 export async function deleteTemplateAction({ id }: { id: string }) {
-  const deletePostgres = await deleteTemplate(id)
-  const deleteRedis = deleteTemplateRedis(id)
-
-  await Promise.all([deletePostgres, deleteRedis])
-}
-
-export async function createUploadedImageAction({
-  key,
-  url,
-  userId,
-}: {
-  key: string
-  url: string
-  userId: string
-}) {
-  await createUploadedImage({
-    key,
-    url,
-    userId,
-  })
+  await deleteTemplateRedis(id)
 }

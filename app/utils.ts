@@ -4,7 +4,6 @@ import {
   SPECIAL_APEX_DOMAINS,
   ccTLDs,
 } from '@/app/constants'
-import { TemplateType } from '@/app/db/schema'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -220,22 +219,6 @@ const getVariablesArray = (layers: LayerType[]) => {
     ...getConditionalVisibilityVariables(layers),
     ...getConditionalValueVariables(layers),
   ]
-}
-
-export const getUrlWithConditionalVariablesTrue = (template: TemplateType) => {
-  return `/og/${template.id}?${getConditionalVisibilityVariables(
-    JSON.parse(template.layersData)
-  )
-    .map((variable) => `${variable}=true`)
-    .join('&')}`
-}
-
-export const getUrlWithVariables = (template: TemplateType) => {
-  return `${window.location.origin}/og/${template.id}?${getVariablesArray(
-    JSON.parse(template.layersData)
-  )
-    .map((variable) => `${variable}={VALUE}`)
-    .join('&')}`
 }
 
 // TODO: Encrypt and decrypt functions that also works in edge functions
