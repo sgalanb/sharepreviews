@@ -44,7 +44,7 @@ export default async function Home() {
           right metatags in place so your cards are displayed correctly.
         </p>
         <div className="mt-8 flex w-full items-center justify-center">
-          <ValidatorInput isApp={false} isHome />
+          <ValidatorInput />
         </div>
       </div>
 

@@ -1,4 +1,3 @@
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import {
   SECOND_LEVEL_DOMAINS,
   SPECIAL_APEX_DOMAINS,
@@ -178,47 +177,6 @@ export async function getImageSizeFromUrl(url: string) {
   } catch (e) {
     throw new Error('Error getting image size')
   }
-}
-
-// Templates
-export const getConditionalValueVariableName = (layer: LayerType) => {
-  const formattedLayerName = layer.name
-    .replace(/[^a-zA-Z0-9]/g, '_')
-    .toLowerCase()
-  const postfix = layer.type === 'text' ? 'value' : 'src'
-  return `${formattedLayerName}_${postfix}`
-}
-
-export const getConditionalVisibilityVariableName = (layer: LayerType) => {
-  const formattedLayerName = layer.name
-    .replace(/[^a-zA-Z0-9]/g, '_')
-    .toLowerCase()
-  return `${formattedLayerName}_isVisible`
-}
-
-const getConditionalValueVariables = (layers: LayerType[]) => {
-  return layers
-    .filter(
-      (layer) =>
-        (layer.type === 'text' || layer.type === 'image') &&
-        layer.conditionalValue === true
-    )
-    .map(
-      (layer) =>
-        (layer.type === 'text' || layer.type === 'image') &&
-        layer?.conditionalValueVariableName
-    )
-}
-const getConditionalVisibilityVariables = (layers: LayerType[]) => {
-  return layers
-    .filter((layer) => layer.conditionalVisibility === true)
-    .map((layer) => layer.conditionalVisibilityVariableName)
-}
-const getVariablesArray = (layers: LayerType[]) => {
-  return [
-    ...getConditionalVisibilityVariables(layers),
-    ...getConditionalValueVariables(layers),
-  ]
 }
 
 export function convertOpacityToHex(opacity: number) {

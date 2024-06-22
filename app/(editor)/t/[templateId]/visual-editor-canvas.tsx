@@ -12,9 +12,12 @@ import {
   useCollaboratorIDs,
   useCollaboratorStates,
   useLayerByID,
+  useLayers,
   useLayersIDs,
   useSelectionState,
+  useTemplates,
 } from '@/app/lib/reflect/datamodel/subscriptions'
+import { TemplateType } from '@/app/lib/reflect/datamodel/template'
 import type { Reflect } from '@rocicorp/reflect/client'
 import { UndoManager } from '@rocicorp/undo'
 import { isHotkey } from 'is-hotkey'
@@ -22,21 +25,19 @@ import { ImageIcon } from 'lucide-react'
 import React, { useRef, useState } from 'react'
 import { DraggableCore, DraggableData, DraggableEvent } from 'react-draggable'
 
-const OG_IMAGE_WIDTH = 1200
-const OG_IMAGE_HEIGHT = 630
-
 export default function VisualEditorCanvas({
   reflect,
   undoManager,
-  floatingLabelTwitter,
 }: {
   reflect: Reflect<M>
   undoManager: UndoManager
-  floatingLabelTwitter: boolean
 }) {
   const ids = useLayersIDs(reflect)
   const { selectedID, overID } = useSelectionState(reflect)
   const collaboratorIDs = useCollaboratorIDs(reflect)
+
+  const layers = useLayers(reflect)
+  const templates = useTemplates(reflect) // Will be only one template
 
   const ref = useRef<HTMLDivElement | null>(null)
   const [dragging, setDragging] = useState(false)
@@ -58,40 +59,37 @@ export default function VisualEditorCanvas({
 
   const parentDivRef = useRef<any>(null)
 
-  const [origin, setOrigin] = useState({ x: 0, y: 0 })
-
   // Load all fonts used in the text layers
-  // useEffect(() => {
-  //   const style = document.createElement('style')
+  const fontsCSS = React.useMemo(() => {
+    const usedFonts = layers
+      .filter((layer) => layer.type === 'text')
+      .map((layer) => {
+        if (layer.type === 'text') {
+          return {
+            fontFamily: layer.fontFamily,
+            fontUrl: layer.fontUrl,
+            fontWeight: layer.fontWeight,
+          }
+        }
+      })
+    // Remove duplicates
+    const uniqueFonts = [...new Set(usedFonts)]
 
-  //   const usedFonts = layers
-  //     .filter((layer) => layer.type === 'text')
-  //     .map((layer) => {
-  //       if (layer.type === 'text') {
-  //         return { fontName: layer.fontName, fontUrl: layer.fontUrl }
-  //       }
-  //     })
-  //   // Remove duplicates
-  //   const uniqueFonts = [...new Set(usedFonts)]
-
-  //   style.innerHTML = `
-  //       ${uniqueFonts
-  //         .map(
-  //           (font) => `
-  //         @font-face {
-  //           font-family: '${font?.fontName}';
-  //           src: url('${font?.fontUrl}') format('truetype');
-  //         }
-  //       `
-  //         )
-  //         .join('')}
-  //     `
-  //   document.head.appendChild(style)
-
-  //   return () => {
-  //     document.head.removeChild(style)
-  //   }
-  // }, [layers])
+    return `
+          ${uniqueFonts
+            .map(
+              (font) => `
+            @font-face {
+              font-family: '${font?.fontFamily}';
+              src: url('${font?.fontUrl}') format('truetype');
+              font-weight: ${font?.fontWeight};
+              fallback: block;
+            }
+          `
+            )
+            .join('')}
+        `
+  }, [layers])
 
   return (
     <DraggableCore
@@ -107,37 +105,28 @@ export default function VisualEditorCanvas({
           className={`relative order-none flex h-full w-full items-center justify-center overflow-hidden bg-neutral-100`}
         >
           <div
-            className={`${floatingLabelTwitter ? 'rounded-[32px] border border-[#cfd9de]' : ''} absolute h-[630px] w-[1200px] scale-50 overflow-hidden`}
+            className={`absolute scale-50 overflow-hidden`}
+            style={{
+              width: templates[0].width,
+              height: templates[0].height,
+            }}
           >
-            {floatingLabelTwitter && (
-              <div className="absolute bottom-6 left-6 right-6 z-50 line-clamp-1 w-fit">
-                <div className="flex h-10 items-center justify-center self-start rounded-[8px] bg-black/30 px-2">
-                  <span className="line-clamp-1 break-words break-all text-left text-[30px] font-normal leading-8 text-white">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec nec odio ut mi ultricies vehicula. Nullam quis ante.
-                  </span>
-                </div>
-              </div>
-            )}
-
+            <style>{fontsCSS}</style>
             <div className="flex h-full w-full">
-              {/* This is replicated with satori on og generation*/}
-              {ids.toReversed().map((layer, index) => {
-                const isSelected = false
-
-                return (
-                  <LayerController
-                    key={layer}
-                    reflect={reflect}
-                    undoManager={undoManager}
-                    id={layer}
-                    selectedID={selectedID}
-                    overID={overID}
-                    index={index}
-                    layersLength={ids.length}
-                  />
-                )
-              })}
+              {/* This is replicated with satori */}
+              {ids.toReversed().map((layer, index) => (
+                <LayerController
+                  key={layer}
+                  reflect={reflect}
+                  undoManager={undoManager}
+                  id={layer}
+                  selectedID={selectedID}
+                  overID={overID}
+                  index={index}
+                  layersLength={ids.length}
+                  templates={templates}
+                />
+              ))}
 
               {collaboratorIDs.map((collaboratorID) => (
                 <Cursor
@@ -162,6 +151,7 @@ function LayerController({
   overID,
   index,
   layersLength,
+  templates,
 }: {
   reflect: Reflect<M>
   undoManager: UndoManager
@@ -170,6 +160,7 @@ function LayerController({
   overID: string
   index: number
   layersLength: number
+  templates: TemplateType[]
 }) {
   const layer = useLayerByID(reflect, id)
   const isBackgroundLayer = index === layersLength
@@ -292,7 +283,7 @@ function LayerController({
     const startLayerHeight = layer.height
 
     const onMouseMove = async (e: MouseEvent) => {
-      const scaleFactor = 600 / OG_IMAGE_WIDTH
+      const scaleFactor = 600 / templates[0].width
 
       const diffX = Math.round((e.clientX - startX) / scaleFactor)
       const diffY = Math.round((e.clientY - startY) / scaleFactor)
@@ -340,8 +331,8 @@ function LayerController({
         newWidth = startLayerWidth + diffX
 
         // Ensure the new width does not exceed the container's width
-        if (newX + newWidth > OG_IMAGE_WIDTH) {
-          newWidth = OG_IMAGE_WIDTH - newX
+        if (newX + newWidth > templates[0].width) {
+          newWidth = templates[0].width - newX
         }
       }
 
@@ -349,13 +340,13 @@ function LayerController({
         newHeight = startLayerHeight + diffY
 
         // Ensure the new height does not exceed the container's height
-        if (newY + newHeight > OG_IMAGE_HEIGHT) {
-          newHeight = OG_IMAGE_HEIGHT - newY
+        if (newY + newHeight > templates[0].height) {
+          newHeight = templates[0].height - newY
         }
       }
 
-      const maxX = OG_IMAGE_WIDTH - newWidth
-      const maxY = OG_IMAGE_HEIGHT - newHeight
+      const maxX = templates[0].width - newWidth
+      const maxY = templates[0].height - newHeight
 
       reflect.mutate.setLayer({
         ...layer,
@@ -364,14 +355,14 @@ function LayerController({
         width:
           newWidth <= 0
             ? 1
-            : newWidth > OG_IMAGE_WIDTH
-              ? OG_IMAGE_WIDTH
+            : newWidth > templates[0].width
+              ? templates[0].width
               : newWidth,
         height:
           newHeight <= 0
             ? 1
-            : newHeight > OG_IMAGE_HEIGHT
-              ? OG_IMAGE_HEIGHT
+            : newHeight > templates[0].height
+              ? templates[0].height
               : newHeight,
       })
     }
@@ -408,7 +399,7 @@ function LayerController({
     const startLayerHeight = layer.height
 
     const onMouseMove = async (e: MouseEvent) => {
-      const scaleFactor = 600 / OG_IMAGE_WIDTH
+      const scaleFactor = 600 / templates[0].width
 
       const diffX = Math.round((e.clientX - startX) / scaleFactor)
       const diffY = Math.round((e.clientY - startY) / scaleFactor)
@@ -436,15 +427,15 @@ function LayerController({
       if (control === 'r') {
         newWidth = startLayerWidth + diffX
         // Ensure the new width does not exceed the container's width
-        if (newX + newWidth > OG_IMAGE_WIDTH) {
-          newWidth = OG_IMAGE_WIDTH - newX
+        if (newX + newWidth > templates[0].width) {
+          newWidth = templates[0].width - newX
         }
       }
       if (control === 'b') {
         newHeight = startLayerHeight + diffY
         // Ensure the new height does not exceed the container's height
-        if (newY + newHeight > OG_IMAGE_HEIGHT) {
-          newHeight = OG_IMAGE_HEIGHT - newY
+        if (newY + newHeight > templates[0].height) {
+          newHeight = templates[0].height - newY
         }
       }
       if (control === 'l') {
@@ -463,8 +454,8 @@ function LayerController({
         }
       }
 
-      const maxX = OG_IMAGE_WIDTH - newWidth
-      const maxY = OG_IMAGE_HEIGHT - newHeight
+      const maxX = templates[0].width - newWidth
+      const maxY = templates[0].height - newHeight
 
       reflect.mutate.setLayer({
         ...layer,
@@ -473,14 +464,14 @@ function LayerController({
         width:
           newWidth <= 0
             ? 1
-            : newWidth > OG_IMAGE_WIDTH
-              ? OG_IMAGE_WIDTH
+            : newWidth > templates[0].width
+              ? templates[0].width
               : newWidth,
         height:
           newHeight <= 0
             ? 1
-            : newHeight > OG_IMAGE_HEIGHT
-              ? OG_IMAGE_HEIGHT
+            : newHeight > templates[0].height
+              ? templates[0].height
               : newHeight,
       })
     }

@@ -1,6 +1,11 @@
 'use client'
 
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
+import {
+  ImageLayerType,
+  ShapeLayerType,
+  TextLayerType,
+} from '@/app/lib/reflect/datamodel/layers'
+import { M } from '@/app/lib/reflect/datamodel/mutators'
 import {
   Dialog,
   DialogClose,
@@ -15,100 +20,78 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
+import type { Reflect } from '@rocicorp/reflect/client'
 import { Image, Square, Type } from 'lucide-react'
-import { Dispatch, SetStateAction } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function NewLayerDialog({
   trigger,
-  layers,
-  setLayers,
-  setSelectedLayer,
+  reflect,
 }: {
   trigger: React.ReactNode
-  layers: LayerType[]
-  setLayers: Dispatch<SetStateAction<LayerType[]>>
-  setSelectedLayer: Dispatch<SetStateAction<LayerType | undefined>>
+  reflect: Reflect<M>
 }) {
-  //number of layers that start with Text
-  const textNameLayers = layers.filter(
-    (layer) => layer.name.startsWith('Text') && layer.type === 'text'
-  ).length
-  const imageLayers = layers.filter(
-    (layer) => layer.name.startsWith('Image') && layer.type === 'image'
-  ).length
-  const rectangleLayers = layers.filter(
-    (layer) => layer.name.startsWith('Rectangle') && layer.type === 'rectangle'
-  ).length
+  // TODO: Get the number of layers from reflect
+  const textLayers = 999
+  const imageLayers = 999
+  const rectangleLayers = 999
 
-  const newTextLayer: LayerType = {
+  const newTextLayer: TextLayerType = {
     id: uuidv4(),
+    name: `Text ${textLayers + 1}`,
     type: 'text',
-    name: `Text${textNameLayers + 1 !== 1 ? ` ${textNameLayers + 1}` : ''}`,
+    positionX: 400,
+    positionY: 215,
+    positionZ: 9999,
     width: 400,
     height: 200,
-    x: 500,
-    y: 265,
     rotation: 0,
     opacity: 1,
-    widthType: 'fit',
-    heightType: 'fit',
+    textValue: 'Text',
+    color: '#F3F3F3',
     lineClamp: 1,
-    fontName: 'Roboto_400',
-    fontFamily: 'Roboto',
+    fontFamily: 'Geist',
     fontWeight: 400,
     fontUrl:
-      'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf',
-    size: 48,
-    lineHeight: 1.2,
-    alignHorizontal: 'flex-start',
-    alignVertical: 'flex-start',
-    background: false,
-    color: '#000000',
-    bgColor: '#000000',
-    bgOpacity: 1,
-    bgPaddingX: 0,
-    bgPaddingY: 0,
-    bgCornerRadius: 0,
-    conditionalVisibility: false,
-    conditionalValue: false,
-    conditionalValueVariableName: '',
-    conditionalVisibilityVariableName: '',
-    value: 'Text',
+      'https://utfs.io/f/7b7c064b-76b8-4cce-ab60-262ba59ed706-5ho58b.otf',
+    size: 64,
+    lineHeight: 76,
+    alignHorizontal: 'center',
+    alignVertical: 'middle',
   }
 
-  const newImageLayer: LayerType = {
+  const newImageLayer: ImageLayerType = {
     id: uuidv4(),
+    name: `Image ${imageLayers + 1}`,
     type: 'image',
-    name: `Image${imageLayers + 1 !== 1 ? ` ${imageLayers + 1}` : ''}`,
-    width: 100,
-    height: 100,
-    x: 550,
-    y: 265,
+    positionX: 400,
+    positionY: 215,
+    positionZ: 9999,
+    width: 400,
+    height: 200,
     rotation: 0,
     opacity: 1,
     cornerRadius: 0,
     objectFit: 'cover',
-    conditionalVisibility: false,
-    conditionalValue: false,
-    conditionalValueVariableName: '',
-    conditionalVisibilityVariableName: '',
-    src: '',
+    imageValue: {
+      type: 'static',
+      value: '',
+    },
   }
-  const newRectangleLayer: LayerType = {
+
+  const newShapeLayer: ShapeLayerType = {
     id: uuidv4(),
-    type: 'rectangle',
-    name: `Rectangle${rectangleLayers + 1 !== 1 ? ` ${rectangleLayers + 1}` : ''}`,
+    name: `Shape ${rectangleLayers + 1}`,
+    type: 'shape',
+    positionX: 500,
+    positionY: 215,
+    positionZ: 9999,
     width: 200,
-    height: 100,
-    x: 500,
-    y: 265,
+    height: 200,
     rotation: 0,
     opacity: 1,
     cornerRadius: 0,
-    color: '#000000',
-    conditionalVisibility: false,
-    conditionalVisibilityVariableName: '',
+    color: '#F3F3F3',
   }
 
   return (
@@ -133,8 +116,8 @@ export default function NewLayerDialog({
             <button
               className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
-                setLayers([newTextLayer, ...layers])
-                setSelectedLayer(newTextLayer)
+                reflect.mutate.setLayer(newTextLayer)
+                reflect.mutate.selectLayer(newTextLayer.id)
               }}
             >
               <Type className="h-7 w-7 stroke-foreground" />
@@ -145,8 +128,8 @@ export default function NewLayerDialog({
             <button
               className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
-                setLayers([newImageLayer, ...layers])
-                setSelectedLayer(newImageLayer)
+                reflect.mutate.setLayer(newImageLayer)
+                reflect.mutate.selectLayer(newImageLayer.id)
               }}
             >
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -158,12 +141,12 @@ export default function NewLayerDialog({
             <button
               className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-md bg-accent outline-primary ring-primary transition-all duration-100 hover:ring"
               onClick={() => {
-                setLayers([newRectangleLayer, ...layers])
-                setSelectedLayer(newRectangleLayer)
+                reflect.mutate.setLayer(newShapeLayer)
+                reflect.mutate.selectLayer(newShapeLayer.id)
               }}
             >
               <Square className="h-7 w-7 stroke-foreground" />
-              <span className="select-none">Rectangle</span>
+              <span className="select-none">Shape</span>
             </button>
           </DialogClose>
         </div>

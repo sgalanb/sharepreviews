@@ -1,9 +1,6 @@
 import Footer from '@/app/(marketing)/footer'
-import { getUser } from '@/app/lib/workos'
 
 export default async function PrivacyPolicy() {
-  const { isAuthenticated } = await getUser()
-
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-8 p-4 pt-16 lg:gap-20">
       <h1 className="marketing-title pt-4 lg:p-0">Privacy Policy</h1>
@@ -371,7 +368,7 @@ export default async function PrivacyPolicy() {
         that information, or delete it. To request to review, update, or delete
         your personal information, please visit: support@SharePreviews.com.
       </p>
-      <Footer isAuthenticated={isAuthenticated} />
+      <Footer />
     </div>
   )
 }

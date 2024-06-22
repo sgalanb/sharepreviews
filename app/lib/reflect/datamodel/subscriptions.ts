@@ -2,10 +2,23 @@ import {
   getClientState,
   mustGetClientState,
 } from '@/app/lib/reflect/datamodel/client-state'
-import { getLayer, listLayersIDs } from '@/app/lib/reflect/datamodel/layers'
+import {
+  getLayer,
+  listLayers,
+  listLayersIDs,
+} from '@/app/lib/reflect/datamodel/layers'
 import { M } from '@/app/lib/reflect/datamodel/mutators'
+import { listTemplates } from '@/app/lib/reflect/datamodel/template'
 import type { Reflect } from '@rocicorp/reflect/client'
 import { usePresence, useSubscribe } from '@rocicorp/reflect/react'
+
+export function useTemplates(reflect: Reflect<M>) {
+  return useSubscribe(reflect, listTemplates, [])
+}
+
+export function useLayers(reflect: Reflect<M>) {
+  return useSubscribe(reflect, listLayers, [])
+}
 
 export function useLayersIDs(reflect: Reflect<M>) {
   return useSubscribe(reflect, listLayersIDs, [])

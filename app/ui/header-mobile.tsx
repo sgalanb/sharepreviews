@@ -3,15 +3,8 @@
 import { ThemeToggle } from '@/app/ui/theme-toggle'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 export default function HeaderMobile() {
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false)
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background transition-colors duration-200 lg:hidden">
       <nav className="w-fulls flex items-center justify-between p-2">

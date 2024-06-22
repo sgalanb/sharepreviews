@@ -1,4 +1,3 @@
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
 import { getDomainWithoutWWW } from '@/app/utils'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
@@ -36,49 +35,4 @@ export async function recordMetatags(url: string, error: boolean) {
 
   const domain = getDomainWithoutWWW(url)
   return await redis.zincrby('metatags-zset', 1, domain)
-}
-
-// Templates
-type TemplateInfoType = {
-  name: string
-  createdAt: string
-  updatedAt: string
-}
-
-export async function getTemplateInfoRedis(templateId: string) {
-  return (await redis.json.get(`template:${templateId}:info`)) as
-    | TemplateInfoType
-    | undefined
-}
-
-export async function getTemplateRedis(templateId: string) {
-  return (await redis.json.get(`template:${templateId}`)) as
-    | LayerType[]
-    | undefined
-}
-
-export async function createOrUpdateTemplateRedis({
-  templateId,
-  name,
-  layersData,
-}: {
-  templateId: string
-  name: string
-  layersData: string
-}) {
-  const existingTemplate = await getTemplateInfoRedis(templateId)
-
-  await redis.json.set(`template:${templateId}:info`, '$', {
-    name,
-    createdAt: existingTemplate?.createdAt ?? new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  })
-  await redis.json.set(`template:${templateId}`, '$', layersData)
-  return true
-}
-
-export async function deleteTemplateRedis(templateId: string) {
-  await redis.del(`template:${templateId}`)
-  await redis.del(`template:${templateId}:info`)
-  return
 }

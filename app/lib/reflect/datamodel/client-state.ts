@@ -55,16 +55,16 @@ export async function setCursor(
 
 export async function overLayer(
   tx: WriteTransaction,
-  shapeID: string
+  layerID: string
 ): Promise<void> {
-  await updateClientState(tx, { overID: shapeID })
+  await updateClientState(tx, { overID: layerID })
 }
 
 export async function selectLayer(
   tx: WriteTransaction,
-  shapeID: string
+  layerID: string
 ): Promise<void> {
-  await updateClientState(tx, { selectedID: shapeID })
+  await updateClientState(tx, { selectedID: layerID })
 }
 
 export function randUserInfo(): UserInfo {
