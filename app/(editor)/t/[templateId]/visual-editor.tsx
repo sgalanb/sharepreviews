@@ -1,27 +1,54 @@
 'use client'
 
-import { LayerType } from '@/app/(editor)/[project]/templates/[templateId]/edit/page'
-import VisualEditorCanvas from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-canvas'
-import VisualEditorHeader from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-header'
-import VisualEditorLeftPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-left-panel'
-import VisualEditorRightPanel from '@/app/(editor)/[project]/templates/[templateId]/edit/visual-editor-right-panel'
-import { ProjectType, TemplateType } from '@/app/db/schema'
+import VisualEditorCanvas from '@/app/(editor)/t/[templateId]/visual-editor-canvas'
+import { TemplateInfoType } from '@/app/api/templates/[templateId]/route'
+import { randUserInfo } from '@/app/lib/reflect/datamodel/client-state'
+import { LayerType } from '@/app/lib/reflect/datamodel/layers'
+import { M, clientMutators } from '@/app/lib/reflect/datamodel/mutators'
+import { Reflect } from '@rocicorp/reflect/client'
+import { UndoManager } from '@rocicorp/undo'
+import { nanoid } from 'nanoid'
 
 import { useCallback, useEffect, useState } from 'react'
 
-export default function VisualEditor({
-  userId,
-  project,
-  templateId,
-}: {
-  userId: string
-  project: ProjectType
-  templateId: string
-}) {
-  const [template, setTemplate] = useState<TemplateType | undefined>(undefined)
-  const [originalTemplate, setOriginalTemplate] = useState<
-    TemplateType | undefined
-  >(undefined)
+export const reflectServer = process.env.NEXT_PUBLIC_REFLECT_SERVER!
+
+if (!reflectServer) {
+  throw new Error('Required env var NEXT_PUBLIC_REFLECT_SERVER is not defined')
+}
+
+export default function VisualEditor({ templateId }: { templateId: string }) {
+  const [reflect, setReflectClient] = useState<Reflect<M> | null>(null)
+  const [online, setOnline] = useState(false)
+
+  useEffect(() => {
+    const [, , roomID] = location.pathname.split('/')
+
+    console.info(`Connecting to Reflect server at ${reflectServer}`)
+    const userID = nanoid()
+
+    const r = new Reflect<M>({
+      server: reflectServer,
+      onOnlineChange: setOnline,
+      userID,
+      roomID,
+      mutators: clientMutators,
+    })
+
+    const defaultUserInfo = randUserInfo()
+    void r.mutate.initClientState({
+      cursor: null,
+      overID: '',
+      selectedID: '',
+      userInfo: defaultUserInfo,
+    })
+
+    setReflectClient(r)
+  }, [])
+
+  const [template, setTemplate] = useState<TemplateInfoType | undefined>(
+    undefined
+  )
 
   const [canvasBackgroundColor, setCanvasBackgroundColor] = useState<string>('')
 
@@ -31,18 +58,9 @@ export default function VisualEditor({
     const res = await fetch(`/api/templates/${templateId}`)
     const data = await res.json()
     setTemplate(data)
-    setOriginalTemplate(data)
     setCanvasBackgroundColor(data.canvasBackgroundColor)
     setLayers(JSON.parse(data.layersData))
   }
-
-  useEffect(() => {
-    // Make sure the template is loaded only once
-    if (!template) {
-      getTemplate()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const [selectedLayer, setSelectedLayer] = useState<LayerType | undefined>()
   const [multiSelectedLayers, setMultiSelectedLayers] = useState<LayerType[]>(
@@ -121,27 +139,6 @@ export default function VisualEditor({
 
   // Check if there are unsaved changes
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false)
-  useEffect(() => {
-    if (
-      !template?.id ||
-      (JSON.stringify(layers) === template?.layersData &&
-        canvasBackgroundColor === template?.canvasBackgroundColor &&
-        originalTemplate?.name === template?.name)
-    ) {
-      setHasUnsavedChanges(false)
-    } else {
-      setHasUnsavedChanges(true)
-    }
-  }, [
-    canvasBackgroundColor,
-    layers,
-    originalTemplate,
-    template?.canvasBackgroundColor,
-    template?.id,
-    template?.layersData,
-    template?.name,
-  ])
-
   // Prevent leaving the page if there are unsaved changes
   useEffect(() => {
     if (!hasUnsavedChanges) return
@@ -157,7 +154,6 @@ export default function VisualEditor({
         capture: true,
       })
   }, [hasUnsavedChanges])
-
   const promptUnsavedChanges = useCallback(() => {
     return window.confirm(
       'You have unsaved changes. Are you sure you want to leave?'
@@ -182,20 +178,24 @@ export default function VisualEditor({
   const [floatingLabelTwitter, setFloatingLabelTwitter] =
     useState<boolean>(false)
 
+  const undoManager = new UndoManager()
+
+  if (!reflect) {
+    return null
+  }
+
   return (
     <div className="grid h-full w-full grid-cols-[280px,1fr,280px] overflow-hidden">
       {/* HEADER */}
-      <VisualEditorHeader
+      {/* <VisualEditorHeader
         layers={layers}
-        project={project}
         template={template}
         canvasBackgroundColor={canvasBackgroundColor}
-        originalTemplate={originalTemplate}
         hasUnsavedChanges={hasUnsavedChanges}
         promptUnsavedChanges={promptUnsavedChanges}
-      />
+      /> */}
       {/* LEFT PANEL */}
-      <VisualEditorLeftPanel
+      {/* <VisualEditorLeftPanel
         layers={layers}
         setLayers={setLayers}
         selectedLayer={selectedLayer}
@@ -206,24 +206,15 @@ export default function VisualEditor({
         setCanvasBackgroundColor={setCanvasBackgroundColor}
         isLoadingTemplate={!template}
         handleOnLayerClick={handleOnLayerClick}
-      />
+      /> */}
       {/* PREVIEW */}
       <VisualEditorCanvas
-        layers={layers}
-        setLayers={setLayers}
-        selectedLayer={selectedLayer}
-        setSelectedLayer={setSelectedLayer}
-        multiSelectedLayers={multiSelectedLayers}
-        setMultiSelectedLayers={setMultiSelectedLayers}
-        canvasBackgroundColor={canvasBackgroundColor}
-        setCanvasBackgroundColor={setCanvasBackgroundColor}
-        spacePressed={spacePressed}
-        shiftPressed={shiftPressed}
-        handleOnLayerClick={handleOnLayerClick}
+        reflect={reflect}
+        undoManager={undoManager}
         floatingLabelTwitter={floatingLabelTwitter}
       />
       {/* RIGHT PANEL */}
-      <VisualEditorRightPanel
+      {/* <VisualEditorRightPanel
         userId={userId}
         template={template}
         setTemplate={setTemplate}
@@ -236,7 +227,7 @@ export default function VisualEditor({
         availableFonts={availableFonts}
         floatingLabelTwitter={floatingLabelTwitter}
         setFloatingLabelTwitter={setFloatingLabelTwitter}
-      />
+      /> */}
     </div>
   )
 }

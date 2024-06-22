@@ -1,9 +1,6 @@
 import ValidatorLaunchScreen from '@/app/(marketing)/card-validator/launch-screen'
 import PreviewValidator from '@/app/(marketing)/card-validator/preview-validator'
 import Footer from '@/app/(marketing)/footer'
-import { getProjectByPathname } from '@/app/db/operations/projects'
-import { ProjectType } from '@/app/db/schema'
-import { getUser } from '@/app/lib/workos'
 import { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -75,29 +72,14 @@ type Props = {
 }
 
 export default async function Validator({ params, searchParams }: Props) {
-  const { isAuthenticated } = await getUser()
-
   const inputUrl = searchParams?.url as string
-  const selectedProject = (await getProjectByPathname(
-    params.project
-  )) as ProjectType
 
   return (
     <div
       className={`${inputUrl ? 'gap-20' : ''} flex flex-col justify-between lg:min-h-[calc(100dvh-72px)]`}
     >
-      {inputUrl ? (
-        <PreviewValidator
-          isApp={false}
-          projectPathname={selectedProject?.pathname}
-        />
-      ) : (
-        <ValidatorLaunchScreen
-          isApp={false}
-          projectPathname={selectedProject?.pathname}
-        />
-      )}
-      <Footer isAuthenticated={isAuthenticated} />
+      {inputUrl ? <PreviewValidator /> : <ValidatorLaunchScreen />}
+      <Footer />
     </div>
   )
 }

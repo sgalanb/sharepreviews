@@ -456,7 +456,7 @@ const Layer = ({
               isDragging ? 'cursor-grabbing ' : 'cursor-grab'
             } aspect-square h-8 p-0`}
           >
-            <GripHorizontal className="h-4 w-4" />
+            <GripHorizontal className="h-4 w-4 fill-muted-foreground" />
           </Button>
         </div>
       </TooltipProvider>

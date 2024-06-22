@@ -13,17 +13,11 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 
 export default function ValidatorInput({
-  isApp,
-  isHome,
   isLoading,
-  projectPathname,
   revalidateMetatags,
   isValidating,
 }: {
-  isApp: boolean
-  isHome?: boolean
   isLoading?: boolean
-  projectPathname?: string
   revalidateMetatags?: () => void
   isValidating?: boolean
 }) {
@@ -45,15 +39,7 @@ export default function ValidatorInput({
     )
 
     if (!!normalizedUrl) {
-      router.push(
-        `${
-          eventUrl
-            ? isApp
-              ? `/${projectPathname}/validator?url=${normalizedUrl}`
-              : `/card-validator?url=${normalizedUrl}`
-            : ''
-        }`
-      )
+      router.push(`${eventUrl ? `/card-validator?url=${normalizedUrl}` : ''}`)
       revalidateMetatags && revalidateMetatags()
     } else {
       setInputError(true)
@@ -73,7 +59,7 @@ export default function ValidatorInput({
           name="url"
           id="url"
           type="text"
-          autoFocus={!isHome}
+          autoFocus={true}
           defaultValue={urlWithoutWWWOrProtocol || ''}
           placeholder="Enter a URL"
           aria-invalid="true"

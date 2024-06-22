@@ -4,15 +4,7 @@ import {
   ValidatedMetatagType,
   ValidatedMetatagsType,
 } from '@/app/api/metatags/validate/utils'
-import { Button } from '@/app/ui/components/Button'
 import { Card, CardContent, CardHeader } from '@/app/ui/components/Card'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/app/ui/components/DropdownMenu'
 import {
   Table,
   TableBody,
@@ -54,28 +46,14 @@ import {
   getImageSizeFromUrl,
   getUrlFromStringWithoutWWW,
 } from '@/app/utils'
-import { Crisp } from 'crisp-sdk-web'
 import { AnimatePresence, motion } from 'framer-motion'
-import {
-  AlertCircle,
-  Check,
-  ChevronLeft,
-  MoreHorizontal,
-  ShieldAlert,
-  XCircle,
-} from 'lucide-react'
+import { AlertCircle, Check, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-export default function PreviewValidator({
-  isApp,
-  projectPathname,
-}: {
-  isApp: boolean
-  projectPathname: string
-}) {
+export default function PreviewValidator() {
   const searchParams = useSearchParams()
   const inputUrl = searchParams?.get('url') || ''
   const normalizedUrl = getUrlFromStringWithoutWWW(inputUrl)
@@ -196,37 +174,21 @@ export default function PreviewValidator({
   return (
     <AnimatePresence>
       <motion.div
-        className={`${
-          isApp
-            ? 'min-h-[calc(100dvh-18px)] gap-4 p-4 lg:p-12'
-            : 'min-h-[calc(100dvh-72px)] gap-8 px-4 lg:px-8'
-        } flex w-full flex-col items-start justify-start`}
+        className="flex min-h-[calc(100dvh-72px)] w-full flex-col items-start justify-start gap-8 px-4 lg:px-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {isApp ? (
-          <Link
-            href={isApp ? `/${projectPathname}/validator` : '/card-validator'}
-            className="flex items-center justify-center text-muted-foreground"
-          >
-            <ChevronLeft className="ml-[-4px]" />
-            <span className="self-center text-sm">Back</span>
-          </Link>
-        ) : (
-          <div className="flex w-full flex-col items-center justify-start gap-4 pt-16">
-            <h1 className="marketing-title text-balance text-center">
-              Preview Card Validator
-            </h1>
-            <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
-              Check how your links look when shared. Validate that you have the
-              right metatags configured so your images are displayed correctly.
-            </p>
-          </div>
-        )}
-        <div
-          className={`${isApp ? 'mb-4' : ''} flex w-full items-center justify-between`}
-        >
+        <div className="flex w-full flex-col items-center justify-start gap-4 pt-16">
+          <h1 className="marketing-title text-balance text-center">
+            Preview Card Validator
+          </h1>
+          <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-28">
+            Check how your links look when shared. Validate that you have the
+            right metatags configured so your images are displayed correctly.
+          </p>
+        </div>
+        <div className="flex w-full items-center justify-between">
           <h1 className="title line-clamp-4 break-all">
             {titleUrl || 'Preview Card Validator'}
           </h1>
@@ -237,9 +199,7 @@ export default function PreviewValidator({
             <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-2">
               <div className="w-full lg:w-1/2 lg:pr-2 2xl:w-full 2xl:p-0">
                 <ValidatorInput
-                  isApp={isApp}
                   isLoading={!!isLoadingData}
-                  projectPathname={projectPathname}
                   revalidateMetatags={mutate}
                   isValidating={isValidating}
                 />
@@ -263,53 +223,6 @@ export default function PreviewValidator({
                     )}
                   </TabsTrigger>
                 </TabsList>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="aspect-square w-10 cursor-pointer p-0"
-                    >
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    className="w-48 p-2"
-                    align="end"
-                    sideOffset={8}
-                  >
-                    <DropdownMenuGroup>
-                      {/* <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>
-                        <Plus className="mr-2 h-4 w-4" />
-                        <span>Add to project</span>
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent className="p-2">
-                          TODO: Fetch projects and show them or show "no projects" text with button to create your first one
-                          <DropdownMenuItem>
-                            <span>Project 1</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <span>Project 2</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <Plus className="mr-2 h-4 w-4" />
-                            <span>New project</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub> */}
-                      <DropdownMenuItem
-                        onClick={() => Crisp.chat.open()}
-                        className="cursor-pointer"
-                      >
-                        <ShieldAlert className="mr-2 h-4 w-4" />
-                        Report issue
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </div>
             </div>
             <AnimatePresence>
@@ -441,30 +354,14 @@ export default function PreviewValidator({
                                       }`}
                                     >
                                       <TableCell className="p-0 py-4 pl-4">
-                                        <TooltipProvider>
-                                          <Tooltip>
-                                            <TooltipTrigger asChild>
-                                              {item.errors.length === 0 &&
-                                              item.warnings.length === 0 ? (
-                                                <Check className="h-5 w-5 stroke-green-500" />
-                                              ) : item.warnings.length === 0 ? (
-                                                <XCircle className="h-5 w-5 stroke-destructive" />
-                                              ) : (
-                                                <AlertCircle className="h-5 w-5 stroke-yellow-500" />
-                                              )}
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                              <span>
-                                                {item.errors.length === 0 &&
-                                                item.warnings.length === 0
-                                                  ? 'Valid'
-                                                  : item.warnings.length === 0
-                                                    ? 'Invalid'
-                                                    : 'Warning'}
-                                              </span>
-                                            </TooltipContent>
-                                          </Tooltip>
-                                        </TooltipProvider>
+                                        {item.errors.length === 0 &&
+                                        item.warnings.length === 0 ? (
+                                          <Check className="h-5 w-5 stroke-green-500" />
+                                        ) : item.warnings.length === 0 ? (
+                                          <XCircle className="h-5 w-5 stroke-destructive" />
+                                        ) : (
+                                          <AlertCircle className="h-5 w-5 stroke-yellow-500" />
+                                        )}
                                       </TableCell>
                                       <TableCell className="font-medium">
                                         {key}

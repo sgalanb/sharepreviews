@@ -221,17 +221,15 @@ const getVariablesArray = (layers: LayerType[]) => {
   ]
 }
 
-// TODO: Encrypt and decrypt functions that also works in edge functions
-// export function encrypt(text: string, secret: string): string {
-// }
-
-// export function decrypt(encrypted: string, secret: string): string {
-
-// }
-
 export function convertOpacityToHex(opacity: number) {
   // Convert decimal opacity to a 0-255 range, then to a hex string
   const hexOpacity = Math.floor(opacity * 255).toString(16)
   // Ensure single digits are preceded by a 0
   return hexOpacity.padStart(2, '0')
+}
+
+export function randomInt(min: number, max: number) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1) + min) //The maximum is inclusive and the minimum is inclusive
 }

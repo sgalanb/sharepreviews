@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="flex w-full flex-col items-center justify-between gap-4 border-t pt-4 lg:flex-row">
+    <footer className="flex w-full flex-col items-center justify-between gap-4 border-t p-4 lg:flex-row">
       {/* Logo */}
       <Link href="/" className="flex items-center justify-center gap-2">
         <Image src="/icon.svg" alt="SharePreviews" width={40} height={40} />
