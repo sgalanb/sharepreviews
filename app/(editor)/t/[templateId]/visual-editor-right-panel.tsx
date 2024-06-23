@@ -84,6 +84,8 @@ export default function VisualEditorRightPanel({
     )
   }, [selectedLayer])
 
+  if (!templates[0]) return null
+
   return (
     <div className="flex h-full w-full flex-col items-start justify-between overflow-hidden border-l">
       {selectedLayer ? (

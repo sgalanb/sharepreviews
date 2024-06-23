@@ -31,6 +31,8 @@ export default function VisualEditorLeftPanel({
     (layer) => layer.positionZ === 0 && layer.type === 'shape'
   ) as ShapeLayerType
 
+  if (!layers) return null
+
   return (
     <div
       className="flex h-full w-full flex-col items-start justify-between rounded-l-lg border-r"

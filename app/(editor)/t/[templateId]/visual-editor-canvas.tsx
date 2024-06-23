@@ -91,6 +91,10 @@ export default function VisualEditorCanvas({
         `
   }, [layers])
 
+  if (!templates[0] || !layers) {
+    return null
+  }
+
   return (
     <DraggableCore
       onStart={() => setDragging(true)}

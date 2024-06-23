@@ -17,7 +17,7 @@ export const reflectServer = process.env.NEXT_PUBLIC_REFLECT_SERVER!
 //   throw new Error('Required env var NEXT_PUBLIC_REFLECT_SERVER is not defined')
 // }
 
-export default function VisualEditor({ templateId }: { templateId: string }) {
+export default function VisualEditor() {
   const [reflect, setReflectClient] = useState<Reflect<M> | null>(null)
   const [online, setOnline] = useState(false)
 
@@ -28,8 +28,8 @@ export default function VisualEditor({ templateId }: { templateId: string }) {
     const userID = nanoid()
 
     const r = new Reflect<M>({
-      server: 'http://localhost:8080',
-      // server: reflectServer,
+      server: 'http://127.0.0.1:8080/',
+      // nserver: reflectServer,
       onOnlineChange: setOnline,
       userID,
       roomID,
