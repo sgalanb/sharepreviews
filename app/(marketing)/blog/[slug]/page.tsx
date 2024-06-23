@@ -110,10 +110,14 @@ export default async function BlogIndividualPage({
               </Link>
               <div className="flex w-full max-w-[36rem] flex-col items-start justify-start gap-4 self-center px-4">
                 <Badge className="self-center">{post?.category?._title}</Badge>
-                <h1 className="marketing-title text-balance text-center">
+                <h1 className="marketing-title w-full text-balance text-center">
                   {post._title}
                 </h1>
-                <div className="flex items-center justify-start gap-2 self-center">
+                <Link
+                  href="https://x.com/sgalanb"
+                  target="_blank"
+                  className="flex items-center justify-start gap-2 self-center"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={post?.author?.avatar?.url ?? '/pfp.jpeg'}
@@ -127,8 +131,8 @@ export default async function BlogIndividualPage({
                     {post?.author?.name} -{' '}
                     {dayjs(post.publishDate).format('MMM D, YYYY')}
                   </span>
-                </div>
-                <div className="flex w-full flex-col">
+                </Link>
+                <div className="mt-2 flex w-full flex-col">
                   <RichText
                     blocks={post?.content?.json.content}
                     components={{
