@@ -6,8 +6,6 @@ import { getAllUsersCount } from '@/app/db/operations/users'
 import { getAuthorizationUrl, getUser } from '@/app/lib/workos'
 import { Button } from '@/app/ui/components/Button'
 import { Separator } from '@/app/ui/components/Separator'
-import TestimonialsBadge from '@/app/ui/testimonial-badge'
-import TestimonialsWOL from '@/app/ui/testimonials-WOL'
 import ValidatorInput from '@/app/ui/validator-input'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -49,15 +47,15 @@ export default async function Home() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-10">
       {/* Main */}
-      <div className="mt-10 flex min-w-full flex-col items-center gap-20 p-4 lg:mt-0 lg:gap-16 lg:p-16">
+      <div className="mt-10 flex min-w-full flex-col items-center gap-20 p-4 lg:mt-0 lg:gap-16 lg:p-16 lg:pb-4">
         {/* Text */}
         <div className="flex w-full flex-col items-center justify-center gap-4">
           <h1 className="marketing-title text-balance text-center">
-            Create Dynamic Open Graph Images
+            Dynamic Open Graph Images
           </h1>
           <p className="marketing-subtitle text-balance text-center text-muted-foreground lg:px-40">
-            Boost your links engagement with SharePreviews, the no-code dynamic
-            Open Graph images generator.
+            Create social cards faster with an easy to use visual editor. Free
+            and open-source project.
           </p>
           <div className="flex items-center justify-center gap-2">
             <StartForFreeButtonHome
@@ -66,17 +64,7 @@ export default async function Home() {
             />
             <StarOnGithubButton variant="short" />
           </div>
-          <div className="h-10">
-            <TestimonialsBadge />
-          </div>
         </div>
-        <Image
-          src="/marketing/hardcoded-header-image.png"
-          alt="Picture of 4 different social card examples"
-          width={800}
-          height={400}
-          priority
-        />
       </div>
 
       <Separator />
@@ -212,20 +200,6 @@ export default async function Home() {
 
         <Separator />
 
-        {/* Testimonials */}
-        <div className="flex w-full flex-col items-center justify-center gap-2 p-4 lg:px-8">
-          <h2 className="marketing-second-title text-balance text-center">
-            Users testimonials
-          </h2>
-          <p className="marketing-subtitle text-balance text-center text-muted-foreground">
-            Join {usersCount} users who create dynamic Open Graph images with
-            SharePreviews.
-          </p>
-          <TestimonialsWOL />
-        </div>
-
-        <Separator />
-
         {/* Validator */}
         <div className="flex w-full flex-col items-center justify-center gap-2 p-4 px-8">
           <h2 className="marketing-second-title text-balance text-center">
@@ -245,10 +219,9 @@ export default async function Home() {
         {/* Open Source */}
         <div className="flex w-full flex-col items-center justify-center gap-2 p-4 px-8">
           <h2 className="marketing-second-title text-balance text-center">
-            Proudly open-source
+            Open-Source Project
           </h2>
           <p className="marketing-subtitle text-balance text-center text-muted-foreground">
-            Source code is available on GitHub. <br />
             Feel free to read, review, or contribute to it however you want!
           </p>
           <StarOnGithubButton variant="long" />

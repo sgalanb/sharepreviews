@@ -62,13 +62,6 @@ export default function HeaderMarketing({
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/pricing" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Pricing
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
               <Link href="/blog" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Blog
@@ -133,7 +126,7 @@ export default function HeaderMarketing({
                 onClick={() => track('start_for_free_header')}
                 className="cursor-pointer"
               >
-                Start for Free
+                Get Started
               </Link>
             </Button>
           )}

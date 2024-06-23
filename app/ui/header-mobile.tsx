@@ -239,21 +239,6 @@ export default function HeaderMobile({
                   <SheetClose asChild>
                     <Button variant="ghost" asChild>
                       <Link
-                        href="/pricing"
-                        className={`${
-                          pathname.startsWith('/pricing')
-                            ? 'bg-accent text-accent-foreground'
-                            : ''
-                        } w-full !justify-start`}
-                      >
-                        Pricing
-                      </Link>
-                    </Button>
-                  </SheetClose>
-
-                  <SheetClose asChild>
-                    <Button variant="ghost" asChild>
-                      <Link
                         href="/blog"
                         className={`${
                           pathname.startsWith('/blog')
@@ -274,7 +259,7 @@ export default function HeaderMobile({
                           className="mt-4 w-full"
                           onClick={() => track('start_for_free_header')}
                         >
-                          Start for Free
+                          Get Started
                         </Link>
                       </Button>
                     </SheetClose>
