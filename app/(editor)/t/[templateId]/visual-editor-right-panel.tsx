@@ -45,7 +45,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/app/ui/components/Tooltip'
-import { UploadButton } from '@/app/ui/components/UploadThingComponents'
 import { cn } from '@/app/utils'
 import type { Reflect } from '@rocicorp/reflect/client'
 import {
@@ -484,61 +483,34 @@ export default function VisualEditorRightPanel({
                     </TabsList>
                   </div>
                   <TabsContent value="no" className="w-full">
-                    <div className="mflex w-full flex-col gap-2">
-                      <Input
-                        type="text"
-                        id="src"
-                        defaultValue={
-                          selectedLayer.imageValue.type === 'static'
-                            ? selectedLayer.imageValue.value
-                            : ''
-                        }
-                        onChange={(e) => {
-                          reflect.mutate.setLayer({
-                            ...selectedLayer,
-                            imageValue: {
-                              type: 'static',
-                              value: e.target.value,
-                            },
-                          })
-                        }}
-                        leftLabel={
-                          <Label
-                            htmlFor="src"
-                            className="w-10 text-center text-muted-foreground"
-                          >
-                            URL
-                          </Label>
-                        }
-                        className="w-full pl-[4rem]"
-                        containerClassName="mt-2"
-                      />
-                      <UploadButton
-                        className="mt-2 w-full ut-button:w-full ut-button:border-primary ut-button:bg-primary ut-button:ring-primary"
-                        endpoint="imageUploader"
-                        onBeforeUploadBegin={(files) => {
-                          // Rename the file to include the user id for easier manual manipulation
-                          return files.map(
-                            (f) => new File([f], `${f.name}`, { type: f.type })
-                          )
-                        }}
-                        onClientUploadComplete={async (res: any) => {
-                          const imageKey = res[0].key
-                          const imageUrl = res[0].url
-
-                          reflect.mutate.setLayer({
-                            ...selectedLayer,
-                            imageValue: {
-                              type: 'static',
-                              value: imageUrl,
-                            },
-                          })
-                        }}
-                        onUploadError={(error: Error) => {
-                          console.log(`ERROR! ${error.message}`)
-                        }}
-                      />
-                    </div>
+                    <Input
+                      type="text"
+                      id="src"
+                      defaultValue={
+                        selectedLayer.imageValue.type === 'static'
+                          ? selectedLayer.imageValue.value
+                          : ''
+                      }
+                      onChange={(e) => {
+                        reflect.mutate.setLayer({
+                          ...selectedLayer,
+                          imageValue: {
+                            type: 'static',
+                            value: e.target.value,
+                          },
+                        })
+                      }}
+                      leftLabel={
+                        <Label
+                          htmlFor="src"
+                          className="w-10 text-center text-muted-foreground"
+                        >
+                          URL
+                        </Label>
+                      }
+                      className="w-full pl-[4rem]"
+                      containerClassName="mt-2"
+                    />
                   </TabsContent>
                 </Tabs>
               </>

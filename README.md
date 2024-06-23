@@ -23,12 +23,7 @@
 - [Tailwind](https://tailwindcss.com) – CSS
 - [Vercel](https://vercel.com/) – deployments
 - [Vercel Analytics](https://vercel.com/analytics) – analytics
-- [WorkOS](https://workos.com) – auth
-- [Upstash](https://upstash.com) – redis
-- [Neon](https://neon.tech) – database
-- [Drizzle](https://orm.drizzle.team/) - ORM
-- [UploadThing](https://uploadthing.com/) - file storage
-- [Lemon Squeezy](https://lemonsqueezy.com) – payments
+- [Reflect](https://reflect.net/) - db & multiplayer
 
 ## License
 

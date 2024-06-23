@@ -33,7 +33,6 @@
     "@rocicorp/rails": "^0.10.0",
     "@rocicorp/reflect": "^0.39.202402230127",
     "@rocicorp/undo": "^0.2.1",
-    "@uploadthing/react": "^6.2.4",
     "@upstash/ratelimit": "^1.0.0",
     "@vercel/analytics": "^1.1.4",
     "@vercel/edge": "^1.1.1",
@@ -60,7 +59,6 @@
     "swr": "^2.2.4",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^6.5.2",
     "uuid": "^9.0.1",
     "zod": "^3.23.8"
   },
