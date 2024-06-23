@@ -23,7 +23,7 @@ export const projects = pgTable('projects', {
   id: uuid('uuid').defaultRandom().primaryKey().notNull(),
   name: text('name').notNull(),
   pathname: text('pathname').notNull().unique(),
-  plan: text('plan').default('free'), // 'free' or 'pro'
+  plan: text('plan').default('free'), // DEPRECATED - all projects are free now
   productId: text('product_id'), // Lemon Squeezy product ID
   variantId: text('variant_id'), // Lemon Squeezy variant ID
   suscriptionId: text('suscription_id'), // Lemon Squeezy subscription ID

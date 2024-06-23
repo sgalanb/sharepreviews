@@ -278,28 +278,6 @@ export default function PreviewValidator({
                     sideOffset={8}
                   >
                     <DropdownMenuGroup>
-                      {/* <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>
-                        <Plus className="mr-2 h-4 w-4" />
-                        <span>Add to project</span>
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent className="p-2">
-                          TODO: Fetch projects and show them or show "no projects" text with button to create your first one
-                          <DropdownMenuItem>
-                            <span>Project 1</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <span>Project 2</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <Plus className="mr-2 h-4 w-4" />
-                            <span>New project</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub> */}
                       <DropdownMenuItem
                         onClick={() => Crisp.chat.open()}
                         className="cursor-pointer"
