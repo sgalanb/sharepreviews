@@ -58,6 +58,7 @@ export type ImageLayerType = Extract<LayerType, { type: 'image' }>
 export type ShapeLayerType = Extract<LayerType, { type: 'shape' }>
 
 export const {
+  init: initLayer,
   get: getLayer,
   list: listLayers,
   listIDs: listLayersIDs,

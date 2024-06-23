@@ -4,7 +4,11 @@ import {
   selectLayer,
   setCursor,
 } from '@/app/lib/reflect/datamodel/client-state'
-import { deleteLayer, setLayer } from '@/app/lib/reflect/datamodel/layers'
+import {
+  deleteLayer,
+  initLayer,
+  setLayer,
+} from '@/app/lib/reflect/datamodel/layers'
 import { initTemplate, setTemplate } from '@/app/lib/reflect/datamodel/template'
 import type { WriteTransaction } from '@rocicorp/reflect'
 
@@ -15,6 +19,7 @@ export const serverMutators = {
   setCursor,
   initTemplate,
   setTemplate,
+  initLayer,
   setLayer,
   overLayer,
   selectLayer,

@@ -13,9 +13,9 @@ import { useEffect, useState } from 'react'
 
 export const reflectServer = process.env.NEXT_PUBLIC_REFLECT_SERVER!
 
-if (!reflectServer) {
-  throw new Error('Required env var NEXT_PUBLIC_REFLECT_SERVER is not defined')
-}
+// if (!reflectServer) {
+//   throw new Error('Required env var NEXT_PUBLIC_REFLECT_SERVER is not defined')
+// }
 
 export default function VisualEditor({ templateId }: { templateId: string }) {
   const [reflect, setReflectClient] = useState<Reflect<M> | null>(null)
@@ -28,7 +28,8 @@ export default function VisualEditor({ templateId }: { templateId: string }) {
     const userID = nanoid()
 
     const r = new Reflect<M>({
-      server: reflectServer,
+      server: 'http://localhost:8080',
+      // server: reflectServer,
       onOnlineChange: setOnline,
       userID,
       roomID,
@@ -48,6 +49,21 @@ export default function VisualEditor({ templateId }: { templateId: string }) {
       name: 'Untitled',
       width: 1200,
       height: 630,
+    })
+
+    void r.mutate.initLayer({
+      id: roomID,
+      name: `backgroundFirstLayerHidden`,
+      type: 'shape',
+      positionX: 0,
+      positionY: 0,
+      positionZ: 0,
+      width: 1200,
+      height: 630,
+      rotation: 0,
+      opacity: 1,
+      cornerRadius: 0,
+      color: '#F3F3F3',
     })
 
     setReflectClient(r)

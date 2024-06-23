@@ -66,7 +66,7 @@ export default function VisualEditorLeftPanel({
             <Input
               type="color"
               id="background-color"
-              value={backgroundLayer.color}
+              value={backgroundLayer?.color}
               onChange={(e) =>
                 reflect.mutate.setLayer({
                   ...backgroundLayer,
