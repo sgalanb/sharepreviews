@@ -201,7 +201,9 @@ export default async function BlogIndividualPage({
                 target="_blank"
                 className="mb-8 mt-4 flex flex-col gap-4 self-center rounded-lg border bg-card p-4 text-muted-foreground shadow-sm hover:bg-foreground/5"
               >
-                <span>Got questions or ideas? Feel free to DM me on X!</span>
+                <span>
+                  Got questions or ideas? Feel free to DM me on Twitter/X!
+                </span>
               </Link>
               <Footer isAuthenticated={isAuthenticated} />
             </div>
