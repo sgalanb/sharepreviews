@@ -9,12 +9,6 @@ import { draftMode } from 'next/headers'
 const postBySlugQuery = () => {
   return {
     blog: {
-      meta: {
-        title: true,
-        description: true,
-        ogImageUrl: true,
-        twitterImageUrl: true,
-      },
       posts: {
         __args: { first: 10, orderBy: 'publishDate__DESC' },
         items: {
@@ -29,6 +23,11 @@ const postBySlugQuery = () => {
               url: true,
             },
           },
+          ogImage: {
+            url: true,
+          },
+          title: true,
+          description: true,
         },
       },
     },
@@ -42,8 +41,9 @@ export async function generateMetadata(): Promise<Metadata> {
   }).query(postBySlugQuery())
 
   return {
-    title: blog?.meta?.title,
-    description: blog?.meta?.description,
+    title: 'Blog | sharepreviews',
+    description:
+      'Learn how to manage and generate Open Graph metatags with sharepreviews. Product updates, guides and technical articles.',
     alternates: {
       canonical: 'https://sharepreviews.com/blog',
     },
@@ -51,13 +51,11 @@ export async function generateMetadata(): Promise<Metadata> {
       url: 'https://sharepreviews.com/blog',
       type: 'article',
       siteName: 'SharePreviews',
-      images: [blog?.meta?.ogImageUrl!],
     },
     twitter: {
       site: '@sgalanb',
       creator: '@sgalanb',
       card: 'summary_large_image',
-      images: [blog?.meta?.twitterImageUrl!],
     },
   }
 }
