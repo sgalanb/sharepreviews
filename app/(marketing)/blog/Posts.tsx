@@ -10,6 +10,9 @@ import { useState } from 'react'
 export default function Posts({ posts }: { posts: any[] }) {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
+  console.log(selectedCategory)
+  console.log(posts)
+
   return (
     <Tabs
       value={selectedCategory}
@@ -22,9 +25,6 @@ export default function Posts({ posts }: { posts: any[] }) {
         </TabsTrigger>
         <TabsTrigger value="changelog" className="h-full py-[5px]">
           Changelog
-        </TabsTrigger>
-        <TabsTrigger value="guides" className="h-full py-[5px]">
-          Guides
         </TabsTrigger>
         <TabsTrigger value="technical-articles" className="h-full py-[5px]">
           Technical Articles
