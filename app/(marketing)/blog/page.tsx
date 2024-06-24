@@ -22,6 +22,7 @@ const postBySlugQuery = () => {
           _title: true,
           _slug: true,
           publishDate: true,
+          category: { _slug: true, _title: true },
           author: {
             name: true,
             avatar: {
