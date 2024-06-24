@@ -32,20 +32,6 @@ export default function Footer({
             asChild
           >
             <Link
-              href="https://twitter.com/sharepreviews"
-              target="_blank"
-              aria-label="Go to the project Twitter profile"
-            >
-              <X className="h-4 w-4" fillClassName="fill-foreground" />
-              <span className="sr-only">Go to the project Twitter profile</span>
-            </Link>
-          </Button>
-          <Button
-            variant="outline"
-            className="aspect-square w-10 cursor-pointer p-0"
-            asChild
-          >
-            <Link
               href="https://github.com/sgalanb/sharepreviews"
               target="_blank"
               aria-label="Go to the project GitHub repository"
@@ -62,12 +48,26 @@ export default function Footer({
             asChild
           >
             <Link
-              href="https://www.linkedin.com/company/sharepreviews"
+              href="https://twitter.com/sgalanb"
+              target="_blank"
+              aria-label="Go to the project Twitter profile"
+            >
+              <X className="h-3.5 w-3.5" fillClassName="fill-foreground" />
+              <span className="sr-only">Go to the creator Twitter profile</span>
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            className="aspect-square w-10 cursor-pointer p-0"
+            asChild
+          >
+            <Link
+              href="https://www.linkedin.com/in/sgalanb/"
               target="_blank"
               aria-label="Go to the project LinkedIn page"
             >
               <LinkedIn className="h-4 w-4" fillClassName="fill-foreground" />
-              <span className="sr-only">Go to the project LinkedIn page</span>
+              <span className="sr-only">Go to the creator LinkedIn page</span>
             </Link>
           </Button>
         </div>
@@ -98,7 +98,7 @@ export default function Footer({
         </div>
         {/* Free Tools */}
         <div className="flex h-fit flex-col items-start justify-start gap-3">
-          <h3 className="font-semibold">Free tools</h3>
+          <h3 className="font-semibold">Tools</h3>
           <Link
             href="/card-validator"
             className="text-muted-foreground hover:text-foreground"

@@ -1,5 +1,3 @@
-import { createStartWithProProject } from '@/app/actions/actions'
-import { suscribeToProAction } from '@/app/actions/lemonActions'
 import { db } from '@/app/db'
 import { projects } from '@/app/db/schema'
 import { getUser } from '@/app/lib/workos'
@@ -29,27 +27,8 @@ export async function middleware(request: NextRequest) {
       )
     }
   }
-
-  if (request.nextUrl.pathname === '/start-with-pro' && isAuthenticated) {
-    const { user } = await getUser()
-
-    const checkoutUrl = await createStartWithProProject({
-      userId: user?.id!,
-    }).then(async (project) => {
-      // Redirect to Lemon Squeezy checkout with user data pre-filled
-      return await suscribeToProAction({
-        projectId: project.id,
-        userId: user?.id!,
-        email: user?.email!,
-        name: `${user?.firstName} ${user?.lastName}`,
-        returnInteadOfRedirect: true,
-      })
-    })
-
-    return NextResponse.redirect(checkoutUrl)
-  }
 }
 
 export const config = {
-  matcher: ['/', '/start-with-pro'], // Only run this middleware on these paths
+  matcher: ['/'], // Only run this middleware on these paths
 }

@@ -28,7 +28,6 @@
 - [Neon](https://neon.tech) – database
 - [Drizzle](https://orm.drizzle.team/) - ORM
 - [UploadThing](https://uploadthing.com/) - file storage
-- [Lemon Squeezy](https://lemonsqueezy.com) – payments
 
 ## License
 

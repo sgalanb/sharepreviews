@@ -37,7 +37,7 @@ export default function StarOnGithubButton({
         <Link
           href="https://github.com/sgalanb/sharepreviews"
           target="_blank"
-          className="mt-8 flex items-center justify-center gap-2 rounded-md bg-[#0E1117] px-4 py-2 text-sm font-medium text-white dark:bg-white dark:text-[#0E1117]"
+          className="mt-4 flex items-center justify-center gap-2 rounded-md bg-[#0E1117] px-4 py-2 text-sm font-medium text-white dark:bg-white dark:text-[#0E1117]"
           onClick={() => {
             track('star_on_github')
           }}

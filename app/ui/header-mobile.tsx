@@ -1,7 +1,6 @@
 'use client'
 
 import { logout } from '@/app/actions/actions'
-import { goToLemonSubscriptionPortalAction } from '@/app/actions/lemonActions'
 import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Button } from '@/app/ui/components/Button'
@@ -27,12 +26,10 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/app/ui/components/Sheet'
-import Spinner from '@/app/ui/components/Spinner'
 import { ThemeToggle } from '@/app/ui/theme-toggle'
 import { track } from '@vercel/analytics/react'
 import { User } from '@workos-inc/node'
 import {
-  CreditCard,
   LayoutGrid,
   LogOut,
   MenuIcon,
@@ -61,17 +58,6 @@ export default function HeaderMobile({
   const router = useRouter()
   const pathname = usePathname()
   const projectPathname = pathname.split('/')[1]
-
-  const [isLoadingBillingRedirect, setIsLoadingBillingRedirect] =
-    useState<boolean>(false)
-
-  // check if at least one project has a subscription
-  const hasProjectWithSubscription =
-    userProjects?.some((project) => project.plan !== 'free') ?? false
-
-  const selectedProjectSubscriptionId =
-    userProjects?.find((project) => project.pathname === projectPathname)
-      ?.suscriptionId ?? undefined
 
   const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false)
 
@@ -239,21 +225,6 @@ export default function HeaderMobile({
                   <SheetClose asChild>
                     <Button variant="ghost" asChild>
                       <Link
-                        href="/pricing"
-                        className={`${
-                          pathname.startsWith('/pricing')
-                            ? 'bg-accent text-accent-foreground'
-                            : ''
-                        } w-full !justify-start`}
-                      >
-                        Pricing
-                      </Link>
-                    </Button>
-                  </SheetClose>
-
-                  <SheetClose asChild>
-                    <Button variant="ghost" asChild>
-                      <Link
                         href="/blog"
                         className={`${
                           pathname.startsWith('/blog')
@@ -274,7 +245,7 @@ export default function HeaderMobile({
                           className="mt-4 w-full"
                           onClick={() => track('start_for_free_header')}
                         >
-                          Start for Free
+                          Get Started
                         </Link>
                       </Button>
                     </SheetClose>
@@ -312,18 +283,6 @@ export default function HeaderMobile({
                 className="w-52 p-2"
                 align="end"
                 sideOffset={8}
-                onEscapeKeyDown={(e) => {
-                  isLoadingBillingRedirect && e.preventDefault()
-                }}
-                onPointerDownOutside={(e) => {
-                  isLoadingBillingRedirect && e.preventDefault()
-                }}
-                onFocusOutside={(e) => {
-                  isLoadingBillingRedirect && e.preventDefault()
-                }}
-                onInteractOutside={(e) => {
-                  isLoadingBillingRedirect && e.preventDefault()
-                }}
               >
                 <DropdownMenuLabel>
                   <div className="full flex flex-col items-start justify-center gap-1">
@@ -336,57 +295,21 @@ export default function HeaderMobile({
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   {isApp ? (
-                    <DropdownMenuItem
-                      disabled={isLoadingBillingRedirect}
-                      asChild
-                    >
+                    <DropdownMenuItem asChild>
                       <Link href="/home" target="_blank">
                         <SquareArrowOutUpRight className="mr-2 h-4 w-4" />
                         <span>Go to homepage</span>
                       </Link>
                     </DropdownMenuItem>
                   ) : (
-                    <DropdownMenuItem
-                      disabled={isLoadingBillingRedirect}
-                      asChild
-                    >
+                    <DropdownMenuItem asChild>
                       <Link href="/">
                         <LayoutGrid className="mr-2 h-4 w-4" />
                         <span>Go to dashboard</span>
                       </Link>
                     </DropdownMenuItem>
                   )}
-                  {hasProjectWithSubscription &&
-                    selectedProjectSubscriptionId && (
-                      <DropdownMenuItem
-                        onSelect={(event) => event.preventDefault()}
-                        asChild
-                      >
-                        <button
-                          className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full items-center justify-between`}
-                          onClick={async () => {
-                            if (!isLoadingBillingRedirect) {
-                              setIsLoadingBillingRedirect(true)
-                              await goToLemonSubscriptionPortalAction(
-                                selectedProjectSubscriptionId
-                              )
-                            }
-                          }}
-                        >
-                          <div className="flex items-center justify-center">
-                            <CreditCard className="mr-2 h-4 w-4" />
-                            <span>Billing</span>
-                          </div>
-                          {isLoadingBillingRedirect && (
-                            <Spinner className="h-4 w-4 fill-foreground text-foreground/25" />
-                          )}
-                        </button>
-                      </DropdownMenuItem>
-                    )}
-                  <DropdownMenuItem
-                    disabled={isLoadingBillingRedirect}
-                    onClick={() => logout()}
-                  >
+                  <DropdownMenuItem onClick={() => logout()}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                   </DropdownMenuItem>

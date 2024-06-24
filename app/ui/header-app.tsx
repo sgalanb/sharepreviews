@@ -1,7 +1,6 @@
 'use client'
 
 import { logout } from '@/app/actions/actions'
-import { goToLemonSubscriptionPortalAction } from '@/app/actions/lemonActions'
 import { ProjectType } from '@/app/db/schema'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/components/Avatar'
 import { Button } from '@/app/ui/components/Button'
@@ -32,14 +31,12 @@ import {
   PopoverTrigger,
 } from '@/app/ui/components/Popover'
 import { Separator } from '@/app/ui/components/Separator'
-import Spinner from '@/app/ui/components/Spinner'
 import NewProjectDialog from '@/app/ui/dialogs/new-project-dialog'
 import { cn } from '@/app/utils'
 import { User } from '@workos-inc/node'
 import {
   Check,
   ChevronsUpDown,
-  CreditCard,
   ImageIcon,
   LayoutGrid,
   LayoutTemplate,
@@ -90,17 +87,6 @@ export default function HeaderApp({
     setProjectsComboboxValue(projectPathname)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
-
-  const hasProjectWithSubscription =
-    // check if at least one project has a subscription
-    userProjects?.some((project) => project.plan !== 'free') ?? false
-
-  const selectedProjectSubscriptionId =
-    userProjects?.find((project) => project.pathname === projectsComboboxValue)
-      ?.suscriptionId ?? undefined
-
-  const [isLoadingBillingRedirect, setIsLoadingBillingRedirect] =
-    useState<boolean>(false)
 
   return (
     <header
@@ -213,18 +199,6 @@ export default function HeaderApp({
                   className="w-60 p-2"
                   align="start"
                   sideOffset={8}
-                  onEscapeKeyDown={(e) => {
-                    isLoadingBillingRedirect && e.preventDefault()
-                  }}
-                  onPointerDownOutside={(e) => {
-                    isLoadingBillingRedirect && e.preventDefault()
-                  }}
-                  onFocusOutside={(e) => {
-                    isLoadingBillingRedirect && e.preventDefault()
-                  }}
-                  onInteractOutside={(e) => {
-                    isLoadingBillingRedirect && e.preventDefault()
-                  }}
                 >
                   <DropdownMenuLabel>
                     <div className="full flex flex-col items-start justify-center gap-1">
@@ -238,23 +212,10 @@ export default function HeaderApp({
                   <DropdownMenuGroup>
                     {/* Theme toggle */}
                     <DropdownMenuSub>
-                      <DropdownMenuSubTrigger
-                        className="flex items-center justify-start gap-2"
-                        disabled={isLoadingBillingRedirect}
-                      >
-                        <Sun
-                          className={`${isLoadingBillingRedirect ? 'stroke-muted-foreground' : ''} h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0`}
-                        />
-                        <Moon
-                          className={`${isLoadingBillingRedirect ? 'stroke-muted-foreground' : ''} absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100`}
-                        />
-                        <span
-                          className={
-                            isLoadingBillingRedirect
-                              ? 'text-muted-foreground'
-                              : ''
-                          }
-                        >
+                      <DropdownMenuSubTrigger className="flex items-center justify-start gap-2">
+                        <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                        <Moon className="dark:scale-100` absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0" />
+                        <span>
                           {theme === 'dark'
                             ? 'Dark'
                             : theme === 'light'
@@ -277,10 +238,7 @@ export default function HeaderApp({
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
-                    <DropdownMenuItem
-                      disabled={isLoadingBillingRedirect}
-                      asChild
-                    >
+                    <DropdownMenuItem asChild>
                       <Link href="/home" target="_blank">
                         <SquareArrowOutUpRight className="mr-2 h-4 w-4" />
                         <span>Go to homepage</span>
@@ -292,38 +250,8 @@ export default function HeaderApp({
                           <UserRoundCog className="mr-2 h-4 w-4" />
                           <span>Account settings</span>
                         </DropdownMenuItem> */}
-                    {hasProjectWithSubscription &&
-                      selectedProjectSubscriptionId && (
-                        <DropdownMenuItem
-                          onSelect={(event) => event.preventDefault()}
-                          asChild
-                        >
-                          <button
-                            className={`${isLoadingBillingRedirect ? 'bg-accent' : ''} flex w-full items-center justify-between`}
-                            onClick={async () => {
-                              if (!isLoadingBillingRedirect) {
-                                setIsLoadingBillingRedirect(true)
-                                await goToLemonSubscriptionPortalAction(
-                                  selectedProjectSubscriptionId
-                                )
-                              }
-                            }}
-                          >
-                            <div className="flex items-center justify-center">
-                              <CreditCard className="mr-2 h-4 w-4" />
-                              <span>Billing</span>
-                            </div>
-                            {isLoadingBillingRedirect && (
-                              <Spinner className="h-4 w-4 fill-foreground text-foreground/25" />
-                            )}
-                          </button>
-                        </DropdownMenuItem>
-                      )}
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      disabled={isLoadingBillingRedirect}
-                      onClick={() => logout()}
-                    >
+                    <DropdownMenuItem onClick={() => logout()}>
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Log out</span>
                     </DropdownMenuItem>

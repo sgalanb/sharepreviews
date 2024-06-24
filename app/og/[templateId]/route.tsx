@@ -1,13 +1,8 @@
-import { FREE_IMAGES } from '@/app/constants'
 import {
   getProjectRedis,
   getTemplateInfoRedis,
   getTemplateRedis,
   getTemplateUrlsRedis,
-  getUserUsage,
-  logProjectUsage,
-  logTemplateUrlToListRedis,
-  logUserUsage,
 } from '@/app/lib/upstash'
 import { convertOpacityToHex } from '@/app/utils'
 import { ImageResponse } from 'next/og'
@@ -58,24 +53,6 @@ export async function GET(req: NextRequest) {
       const projectInfo = await getProjectRedis(templateInfo.projectId)
       if (!projectInfo) {
         return new Response('Project not found', { status: 404 })
-      }
-
-      if (projectInfo.subscriptionData?.plan === 'free') {
-        const projectOwnerUsage = await getUserUsage(projectInfo.ownerUserId)
-        if (!projectOwnerUsage || projectOwnerUsage < FREE_IMAGES) {
-          await logTemplateUrlToListRedis(templateId, searchParamsString)
-          await logUserUsage(projectInfo.ownerUserId)
-        } else {
-          return new Response(
-            'Free usage limit reached, upgrade to Pro to create more images.',
-            { status: 403 }
-          )
-        }
-      }
-
-      if (projectInfo.subscriptionData?.plan === 'pro') {
-        await logTemplateUrlToListRedis(templateId, searchParamsString)
-        await logProjectUsage(templateInfo.projectId)
       }
     }
 

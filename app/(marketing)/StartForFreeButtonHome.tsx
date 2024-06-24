@@ -19,7 +19,7 @@ export default function StartForFreeButtonHome({
           track('start_for_free_home')
         }}
       >
-        Start for Free
+        Get Started
       </Link>
     </Button>
   )
