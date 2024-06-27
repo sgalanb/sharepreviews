@@ -98,7 +98,7 @@ export default async function BlogIndividualPage({
           if (!post) notFound()
 
           return (
-            <div className="mx-auto flex w-full flex-col items-center justify-start gap-8 pb-4 pt-8">
+            <div className="mx-auto flex w-full flex-col items-center justify-start gap-8 pt-8">
               <Link
                 href="/blog"
                 className="flex w-full max-w-[36rem] items-center justify-start px-4 text-muted-foreground"
