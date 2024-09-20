@@ -89,12 +89,6 @@ export default function Footer({
           >
             Blog
           </Link>
-          <Link
-            href="/pricing"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Pricing
-          </Link>
         </div>
         {/* Free Tools */}
         <div className="flex h-fit flex-col items-start justify-start gap-3">
