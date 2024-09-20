@@ -15,6 +15,9 @@ const adminKey = process.env.ADMIN_VARIABLES_ENCRYPTION_KEY
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
+
+  const generateSquareImage = searchParams.get('generateSquareImage')
+
   const templateId = searchParams.get('templateId')
   const encryptedVariables = searchParams.get('variables') as string
   // const decryptedVariables = decrypt(variables, adminKey ?? '')
@@ -88,7 +91,7 @@ export async function GET(req: NextRequest) {
     )
 
     const options = {
-      width: 1200,
+      width: generateSquareImage ? 630 : 1200,
       height: 630,
       fonts: [...fontsToLoad],
       debug: false,
@@ -162,8 +165,8 @@ export async function GET(req: NextRequest) {
                     }}
                   >
                     {layer.conditionalValue
-                      ? getSearchParams(layer.conditionalValueVariableName) ??
-                        layer.exampleValue
+                      ? (getSearchParams(layer.conditionalValueVariableName) ??
+                        layer.exampleValue)
                       : layer.value}
                   </div>
                 </div>
@@ -181,8 +184,8 @@ export async function GET(req: NextRequest) {
                   alt=""
                   src={
                     layer.conditionalValue
-                      ? getSearchParams(layer.conditionalValueVariableName) ??
-                        layer.exampleSrc
+                      ? (getSearchParams(layer.conditionalValueVariableName) ??
+                        layer.exampleSrc)
                       : layer.src
                   }
                   width={layer.width}
