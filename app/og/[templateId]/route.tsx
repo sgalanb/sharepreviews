@@ -13,12 +13,15 @@ export const revalidate = 60
 
 const adminKey = process.env.ADMIN_VARIABLES_ENCRYPTION_KEY
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { templateId: string } }
+) {
   const { searchParams } = new URL(req.url)
 
   const generateSquareImage = searchParams.get('generateSquareImage')
 
-  const templateId = searchParams.get('templateId')
+  const templateId = params?.templateId ?? searchParams.get('templateId')
   const encryptedVariables = searchParams.get('variables') as string
   // const decryptedVariables = decrypt(variables, adminKey ?? '')
   // const { searchParams: decryptedParams } = new URL(

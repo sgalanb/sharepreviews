@@ -4,7 +4,7 @@ import {
   getDbUserById,
   updateDbUser,
 } from '@/app/db/operations/users'
-import WorkOS from '@workos-inc/node'
+import { WorkOS } from '@workos-inc/node'
 import { NextRequest } from 'next/server'
 
 type TypeEventType = 'user.created' | 'user.updated' | 'user.deleted'
